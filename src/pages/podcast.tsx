@@ -39,15 +39,14 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function About({ result }: { result: any[] }) {
+export default function Podcast({ result }: { result: any[] }) {
   return (
     <main
       //   className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
       className={`flex flex-col ${inter.className}`}
     >
       <Header />
-      <div>contact info</div>
-      <div>FAQ</div>
+      <div>Paginated pages linking to all podcasts</div>
       <Footer />
     </main>
   );

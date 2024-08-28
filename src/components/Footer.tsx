@@ -15,6 +15,7 @@ const BottomBar = () => {
   );
 };
 
+//also need to be visible at mobile breakpoint
 const ShareButtons = () => {
   return (
     <div>
@@ -52,7 +53,7 @@ export default function Footer() {
             ENGLAND AND WALES
           </p>
         </div>
-        <div className="flex flex-row w-2/3 space-x-24 flex-grow justify-center content-center self-center justify-self-center">
+        <div className="flex-row w-2/3 space-x-24 flex-grow justify-center content-center self-center justify-self-center hidden md:flex">
           <ul>
             <span className="text-lg font-bold flex justify-center">
               EXPLORE
