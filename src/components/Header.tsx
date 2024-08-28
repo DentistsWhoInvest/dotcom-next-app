@@ -77,12 +77,13 @@ export default function Header() {
               </li>
             );
           })}
-        </ul>
-        <Link href={"https://courses.dentistswhoinvest.com/login"}>
+             <Link href={"https://courses.dentistswhoinvest.com/login"}>
           <button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
             Members
           </button>
         </Link>
+        </ul>
+     
       </div>
     </>
   );

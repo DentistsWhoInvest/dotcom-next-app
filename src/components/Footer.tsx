@@ -2,8 +2,15 @@ import Link from "next/link";
 
 const BottomBar = () => {
   return (
-    <div className="bg-[#151f6d] text-white">
-      copyright name link to privacy policy t&cs
+    //on desktop, single line, copyright name is on the left, links on the right
+    //on mobile, stacked, copyright on the bottom, links on top
+    <div className="bg-[#151f6d] text-white flex items-center justify-between p-4 md:flex-row flex-col text-center md:text-left">
+      <span className="order-2 md:order-1">copyright name</span>
+      <span className="order-1 md:order-2 mb-2 md:mb-0">
+        <Link href="/privacy-policy"> Privacy Policy </Link>
+        <span> | </span>
+        <Link href="/terms-and-conditions"> Terms and conditions </Link>
+      </span>
     </div>
   );
 };
@@ -46,8 +53,10 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-row w-2/3 space-x-24 flex-grow justify-center content-center self-center justify-self-center">
-          <ul >
-            <span className="text-lg font-bold flex justify-center">EXPLORE</span>
+          <ul>
+            <span className="text-lg font-bold flex justify-center">
+              EXPLORE
+            </span>
             <p className="border-orange-400 border-solid border-t-2 flex justify-center"></p>
             {ExploreLinks.map((link) => {
               return (
@@ -62,7 +71,9 @@ export default function Footer() {
           </ul>
 
           <ul>
-            <span className="text-lg font-bold flex justify-center">COURSES</span>
+            <span className="text-lg font-bold flex justify-center">
+              COURSES
+            </span>
             <p className="border-orange-400 border-solid border-t-2 flex justify-center"></p>
             {CoursesLinks.map((link) => {
               return (
@@ -76,7 +87,9 @@ export default function Footer() {
             })}
           </ul>
           <ul>
-            <p className="text-lg font-bold flex justify-center">GET IN TOUCH</p>
+            <p className="text-lg font-bold flex justify-center">
+              GET IN TOUCH
+            </p>
             <p className="border-orange-400 border-solid border-t-2 flex justify-center"></p>
             <li className="hover:text-blue-secondary px-2 py-4 flex justify-center">
               <Link href={"/contact"}>Contact</Link>
