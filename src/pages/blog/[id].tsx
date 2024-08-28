@@ -3,6 +3,8 @@ import fm from "front-matter";
 import Head from "next/head";
 import { marked } from "marked";
 import Image from "next/image";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const getStaticPaths = async () => {
   let results: any = await fetch(`http://127.0.0.1:1337/api/blogs`);
@@ -41,6 +43,7 @@ export default function Post({ image, htmlString, data }: any) {
         <title>{data.title}</title>
         <meta name="description" content={data.description} />
       </Head>
+      <Header/>
       <div >
         <Image
           src={`${image}`}
@@ -52,6 +55,7 @@ export default function Post({ image, htmlString, data }: any) {
         />
         <div dangerouslySetInnerHTML={{ __html: htmlString }} />
       </div>
+      <Footer />
     </>
   );
 }
