@@ -1,11 +1,5 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Inter } from "next/font/google";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const getStaticProps = async () => {
   // const endpoint = `${process.env.NEXT_PUBLIC_STRAPI_URL}`;
@@ -42,8 +36,7 @@ export const getStaticProps = async () => {
 export default function Podcast({ result }: { result: any[] }) {
   return (
     <main
-      //   className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-      className={`flex flex-col ${inter.className}`}
+      className={`flex flex-col`}
     >
       <Header />
       <div>Paginated pages linking to all podcasts</div>
