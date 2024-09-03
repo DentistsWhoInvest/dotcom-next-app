@@ -25,7 +25,7 @@ export const getStaticProps = async () => {
     {
       id: 1,
       attributes: {
-        title: "Core mission",
+        title: "The Core Mission...",
         description:
           "...to create and share resources specifically designed to give dentists financial freedom",
       },
@@ -56,10 +56,13 @@ export const getStaticProps = async () => {
       id: 4,
       attributes: {
         title: "Man",
-        description:
-          "By directing this content to suit the requirements of the dental profession, James helps dentists understand and take charge of their finances. This means they are equipped to consistently grow their capital by opening up another revenue stream besides their own income. This permits them to protect their wealth and achieve financial freedom. To provide his network with reliable and factual and tailored knowledge, James has created an expansive library of content and also courses specifically for the dental community.",
-        imageUrl:
-          "https://picsum.photos/200/300",
+        description1:
+          "By directing this content to suit the requirements of the dental profession, James helps dentists understand and take charge of their finances.",
+        description2:
+          "This means they are equipped to consistently grow their capital by opening up another revenue stream besides their own income. This permits them to protect their wealth and achieve financial freedom.",
+        description3:
+          "To provide his network with reliable and factual and tailored knowledge, James has created an expansive library of content and also courses specifically for the dental community.",
+        imageUrl: "https://picsum.photos/200/300",
       },
     },
   ];
@@ -78,22 +81,86 @@ export default function About({ result }: { result: any[] }) {
       className={`flex flex-col ${inter.className}`}
     >
       <Header />
-      <div>
-        <div>
-          {result[0].attributes.title}
-          {result[0].attributes.description}
+
+      <div className="relative ">
+        <Image
+          className="w-[320px] h-[440px] object-cover "
+          src={
+            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+          }
+          alt={"Hero banner"}
+          width={"320"}
+          height={"440"}
+        />
+
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
+          <span className="text-white text-3xl font-bold p-4">
+            {result[0].attributes.title}
+          </span>
+          <span className="text-blue-light text-xl p-2">
+            {result[0].attributes.description}
+          </span>
         </div>
-        <p>{result[1].attributes.title}</p>
-        <ul>
-          <li>{result[1].attributes.text1}</li>
-          <li>{result[1].attributes.text2}</li>
-          <li>{result[1].attributes.text3}</li>
+      </div>
+
+      <div className="flex flex-col items-center justify-center w-full h-full p-8 text-center">
+        <p className="text-blue-primary font-bold text-2xl">
+          {result[1].attributes.title}
+        </p>
+        <span className="w-full h-0.5 bg-blue-primary m-4" />
+        <ul className="p-4">
+          <li>
+            <p className="text-2xl text-blue-secondary">01</p>
+            <p className="text-xl text-grey-primary text-left">
+              {result[1].attributes.text1}
+            </p>
+          </li>
+          <li>
+            <p className="text-2xl text-blue-secondary">02</p>
+            <p className="text-xl text-grey-primary text-left">
+              {result[1].attributes.text2}
+            </p>
+          </li>
+          <li>
+            <p className="text-2xl text-blue-secondary">03</p>
+            <p className="text-xl text-grey-primary text-left">
+              {result[1].attributes.text3}
+            </p>
+          </li>
         </ul>
-        <div>{result[2].attributes.title}</div>
-        <div>{result[2].attributes.description1}</div>
-        <div>{result[2].attributes.description2}</div>
-        <Image width={50} height={50} src={result[3].attributes.imageUrl} alt={"guy"} />
-        <div>{result[3].attributes.description}</div>
+      </div>
+
+      <div className="relative">
+        <Image
+          className="w-[320px] h-[533.58px] object-cover "
+          src={
+            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+          }
+          alt={"Hero banner"}
+          width={"320"}
+          height={"534"}
+        />
+
+        <div className="absolute top-0 left-0 w-full h-full flex items-center z-10 flex-col text-white p-10">
+          <p className="text-3xl font-bold p-4">{result[2].attributes.title}</p>
+          <p>{result[2].attributes.description1}</p>
+          <p>{result[2].attributes.description2}</p>
+        </div>
+
+        <div className="flex flex-col items-center justify-center w-full h-full p-8 text-left space-y-2">
+          <Image
+            className="w-[280px] h-[364px] object-cover rounded-3xl m-4"
+            width={280}
+            height={364}
+            src={
+              "https://storage.googleapis.com/dwi-dotcom-assets/wrap_up_founder_62d6e45255/wrap_up_founder_62d6e45255.webp"
+            }
+            alt={"guy"}
+          />
+          <p>{result[3].attributes.description1}</p>
+          <p>{result[3].attributes.description2}</p>
+          <p>{result[3].attributes.description3}</p>
+        </div>
       </div>
       <Footer />
     </main>

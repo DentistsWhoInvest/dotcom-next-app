@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const listOfLinks = [
@@ -41,26 +42,33 @@ export default function Header() {
 
   return (
     <>
-      <div className="bg-[#f0f3f6] flex flex-row">
-        <div className="w-1/3">Logo</div>
+      <div className="bg-[#f0f3f6] flex flex-row p-5 justify-between">
+        <div className="w-1/3">
+          <Image
+            src={
+              "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
+            }
+            alt={"Logo"}
+            width="78"
+            height={"26"}
+          />
+        </div>
 
         <button
-          className="md:hidden text-gray-700 hover:text-blue-500"
+          className="md:hidden text-gray-700 hover:text-blue-500 mr-[-20px]"
           onClick={() => setShowingOverlay(true)}
         >
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 text-blue-primary"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
+            <rect y="4" width="20" height="2" fill="currentColor" />
+            <rect y="10" width="20" height="2" fill="currentColor" />
+            <rect y="16" width="20" height="2" fill="currentColor" />
+            <rect y="22" width="20" height="2" fill="currentColor" />
           </svg>
         </button>
 
@@ -77,13 +85,12 @@ export default function Header() {
               </li>
             );
           })}
-             <Link href={"https://courses.dentistswhoinvest.com/login"}>
-          <button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
-            Members
-          </button>
-        </Link>
+          <Link href={"https://courses.dentistswhoinvest.com/login"}>
+            <button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
+              Members
+            </button>
+          </Link>
         </ul>
-     
       </div>
     </>
   );

@@ -1,11 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const BottomBar = () => {
   return (
     //on desktop, single line, copyright name is on the left, links on the right
     //on mobile, stacked, copyright on the bottom, links on top
-    <div className="bg-[#151f6d] text-white flex items-center justify-between p-4 md:flex-row flex-col text-center md:text-left">
-      <span className="order-2 md:order-1">copyright name</span>
+    <div className="bg-[#151f6d] text-white flex items-center justify-between p-4 md:flex-row flex-col text-center md:text-left text-xs">
+      <span className="order-2 md:order-1">
+        © 2024 Dentists Who Invest All Rights Reserved.
+      </span>
       <span className="order-1 md:order-2 mb-2 md:mb-0">
         <Link href="/privacy-policy"> Privacy Policy </Link>
         <span> | </span>
@@ -19,15 +22,24 @@ const BottomBar = () => {
 const ShareButtons = () => {
   return (
     <div>
-      <button className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1">
+      <Link
+        className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1"
+        href={"https://www.facebook.com/groups/dentistswhoinvest"}
+      >
         F
-      </button>
-      <button className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1">
+      </Link>
+      <Link
+        className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1"
+        href={"https://www.instagram.com/dentistswhoinvest/"}
+      >
         C
-      </button>
-      <button className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1">
+      </Link>
+      <Link
+        className="bg-blue-primary hover:bg-blue-secondary text-white hover:text-blue-primary rounded-3xl  px-3.5 py-2 m-1"
+        href={"https://www.linkedin.com/in/dr-james-martin/"}
+      >
         In
-      </button>
+      </Link>
     </div>
   );
 };
@@ -45,13 +57,19 @@ export default function Footer() {
   ];
   return (
     <>
-      <div className="bg-[#f0f3f6] flex flex-row text-blue-primary p-4 ">
-        <div className="w-1/3 m-8">
-          Logo
-          <p className="text-lg font-bold">
+      <div className="bg-[#f0f3f6] flex flex-row text-blue-primary p-2">
+        <div className="">
+          <Image
+            src="https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/Logo-Footer-2.png"
+            alt="logo"
+            height={"125"}
+            width={"61"}
+          />
+          <p className="text-xs font-bold my-4">
             DENTISTS WHO INVEST LIMITED IS A LIMITED COMPANY, REGISTERED IN
             ENGLAND AND WALES
           </p>
+          <ShareButtons />
         </div>
         <div className="flex-row w-2/3 space-x-24 flex-grow justify-center content-center self-center justify-self-center hidden md:flex">
           <ul>
