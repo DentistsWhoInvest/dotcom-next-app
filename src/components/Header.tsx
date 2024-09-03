@@ -2,7 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-const listOfLinks = [
+type MenuLink = {
+  href: string;
+  text: string;
+};
+
+const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
   { href: "/podcast", text: "Podcast" },
@@ -13,36 +18,55 @@ const listOfLinks = [
 ];
 
 export default function Header() {
-  const [showingOverlay, setShowingOverlay] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
+  //hamburger and button should be svgs? absolute top-2 right-2
   const MenuOverlay = () => {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <ul className="bg-[#f0f3f6] flex flex-col">
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        onClick={() => setShowOverlay(false)}
+      >
+        <div
+          className="bg-[#f0f3f6] flex flex-col w-2/5 h-full top-0 right-0 absolute items-end p-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button
-            className="absolute top-0 right-0 m-4 text-gray-700 hover:text-blue-500"
-            onClick={() => setShowingOverlay(false)}
+            className="text-gray-700 hover:text-blue-500 border-solid border-2 border-blue-primary w-4"
+            onClick={() => setShowOverlay(false)}
           >
             x
           </button>
-          {listOfLinks.map((link) => {
-            return (
-              <li
-                key={link.href}
-                className="text-blue-primary hover:text-blue-secondary text-lg px-2 py-4"
-              >
-                <Link href={link.href}>{link.text}</Link>
-              </li>
-            );
-          })}
-        </ul>
+          <ul className="text-right">
+            <MenuLinks menuLinksList={menuLinksList} />
+          </ul>
+        </div>
       </div>
     );
   };
 
+  const MenuLinks = ({ menuLinksList }: { menuLinksList: MenuLink[] }) => {
+    //current pages needs to be highlighted in blue secondary - for some reason not quite working locally?
+    const currentPath =
+      typeof window !== "undefined" ? window.location.pathname : "";
+
+    return menuLinksList.map((link) => (
+      <li
+        key={link.href}
+        className={`text-lg px-2 py-2 ${
+          currentPath === link.href
+            ? "text-blue-secondary"
+            : "text-blue-primary hover:text-blue-secondary"
+        }`}
+      >
+        <Link href={link.href}>{link.text}</Link>
+      </li>
+    ));
+  };
+
   return (
     <>
-      <div className="bg-[#f0f3f6] flex flex-row p-5 justify-between">
+      <div className="bg-[#f0f3f6] flex flex-row px-5 py-3 justify-between">
         <div className="w-1/3">
           <Image
             src={
@@ -55,8 +79,8 @@ export default function Header() {
         </div>
 
         <button
-          className="md:hidden text-gray-700 hover:text-blue-500 mr-[-20px]"
-          onClick={() => setShowingOverlay(true)}
+          className="md:hidden text-gray-700 hover:text-blue-500"
+          onClick={() => setShowOverlay(true)}
         >
           <svg
             className="w-6 h-6 text-blue-primary"
@@ -72,19 +96,10 @@ export default function Header() {
           </svg>
         </button>
 
-        {showingOverlay && <MenuOverlay />}
+        {showOverlay && <MenuOverlay />}
 
         <ul className="flex-row hidden md:flex">
-          {listOfLinks.map((link) => {
-            return (
-              <li
-                key={link.href}
-                className="text-blue-primary hover:text-blue-secondary text-lg px-2 py-4"
-              >
-                <Link href={link.href}>{link.text}</Link>
-              </li>
-            );
-          })}
+          <MenuLinks menuLinksList={menuLinksList} />
           <Link href={"https://courses.dentistswhoinvest.com/login"}>
             <button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
               Members
