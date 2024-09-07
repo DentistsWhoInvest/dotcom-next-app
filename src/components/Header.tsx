@@ -10,7 +10,7 @@ type MenuLink = {
 const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
-  { href: "/podcast", text: "Podcast" },
+  { href: "/podcasts", text: "Podcast" },
   { href: "/blog", text: "Blog" },
   { href: "/courses", text: "Courses" },
   { href: "/videos", text: "Videos" },
