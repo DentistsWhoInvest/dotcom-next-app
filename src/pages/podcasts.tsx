@@ -22,7 +22,7 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           return (
             <li key={page.id}>
               <h1>Episode {page.id}</h1>
-              <Link href={`/podcasts/${page.id}`}>
+              <Link href={`/podcasts/e${page.id}`}>
                 {page.attributes.title}
               </Link>
             </li>

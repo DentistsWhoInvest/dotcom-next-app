@@ -14,7 +14,7 @@ export const getStaticPaths = async () => {
   console.log("result", result);
   return {
     paths: result.data.map((result: { id: { toString: () => any } }) => ({
-      params: { podcastepisode: result.id.toString() },
+      params: { podcastepisode: "e" + result.id.toString() },
     })),
     fallback: false,
   };
@@ -22,7 +22,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   console.log("params", params);
-  const pageData = await fetchEndpointData(`/podcasts/${params.podcastepisode}`);
+  const podcastId = params.podcastepisode.replace("e", "");
+  const pageData = await fetchEndpointData(`/podcasts/${podcastId}`);
 
   return {
     props: {
