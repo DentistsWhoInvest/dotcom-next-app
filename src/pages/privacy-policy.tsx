@@ -1,13 +1,13 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { fetchStaticPropsEndpoint } from "@/lib/fetchUtils";
+import { fetchEndpointData } from "@/lib/fetchUtils";
 import { signJwt } from "@/lib/signJwt";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticProps = async () => {
-  const pageData = await fetchStaticPropsEndpoint("/privacy-policy");
+  const pageData = await fetchEndpointData("/privacy-policy");
 
   return {
     props: {

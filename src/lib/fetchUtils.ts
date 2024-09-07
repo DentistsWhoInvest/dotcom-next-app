@@ -6,7 +6,7 @@ import { signJwt } from "./signJwt";
  * @returns 
  * Can be used in getStaticProps: 
  * export const getStaticProps = async () => {
- *   const pageData = await fetchStaticPropsEndpoint('/about');
+ *   const pageData = await fetchEndpointData('/about');
  *   return {
  *       props: {
  *           pageData: pageData,
@@ -14,7 +14,7 @@ import { signJwt } from "./signJwt";
  *   };
  *   };
  */
-export async function fetchStaticPropsEndpoint(requestedEndpoint: string) {
+export async function fetchEndpointData(requestedEndpoint: string) {
   const endpoint = `${process.env.NEXT_ADMIN_STRAPI_URL}${requestedEndpoint}`;
   let jwt = await signJwt(endpoint);
   const headers = {

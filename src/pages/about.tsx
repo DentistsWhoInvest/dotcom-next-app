@@ -1,10 +1,10 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Image from "next/image";
-import { fetchStaticPropsEndpoint } from "@/lib/fetchUtils";
+import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
-  const pageData = await fetchStaticPropsEndpoint('/about');
+  const pageData = await fetchEndpointData('/about');
   // console.log('pageData', pageData)
 
   const testResult = [
@@ -62,7 +62,6 @@ export const getStaticProps = async () => {
 };
 
 export default function About({ result, pageData }: { result: any[], pageData: any }) {
-  console.log('pageData here', pageData)
   return (
     <main className={`flex flex-col `}>
       <Header />
