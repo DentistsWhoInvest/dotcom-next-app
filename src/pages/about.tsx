@@ -1,22 +1,11 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
+import { fetchStaticPropsEndpoint } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
-  // const endpoint = `${process.env.NEXT_PUBLIC_STRAPI_URL}`;
-
-  // const headers = {
-  //     "Authorization": `Bearer ${process.env.API_KEY}`,
-  //     "Content-Type": "application/json",
-  // };
-
-  // const resulting = await fetch(endpoint, { method: "GET", headers });
-
-  //   const resulting = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/blogs`); // e.g. http://localhost:1337/api
-
-  //   const result = await resulting.json();
+  const pageData = await fetchStaticPropsEndpoint('/about');
+  // console.log('pageData', pageData)
 
   const testResult = [
     {
@@ -67,11 +56,13 @@ export const getStaticProps = async () => {
   return {
     props: {
       result: testResult,
+      pageData: pageData.data,
     },
   };
 };
 
-export default function About({ result }: { result: any[] }) {
+export default function About({ result, pageData }: { result: any[], pageData: any }) {
+  console.log('pageData here', pageData)
   return (
     <main className={`flex flex-col `}>
       <Header />
@@ -89,10 +80,10 @@ export default function About({ result }: { result: any[] }) {
 
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
           <span className="text-white text-3xl font-bold p-4">
-            {result[0].attributes.title}
+            {pageData.attributes.hero_title}
           </span>
           <span className="text-blue-light text-xl p-2">
-            {result[0].attributes.description}
+            {pageData.attributes.hero_subtext}
           </span>
         </div>
       </div>
