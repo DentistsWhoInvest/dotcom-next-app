@@ -5,6 +5,7 @@
   "scripts": {
     "gcloud": "./gcloudLogin.sh",
     "dev": "npm run gcloud && next dev",
+    "local-build": "npm run gcloud && next build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
