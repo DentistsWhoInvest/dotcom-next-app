@@ -1,7 +1,8 @@
-import {GoogleAuth} from 'google-auth-library';
+import { GoogleAuth } from "google-auth-library";
 import { IAMCredentialsClient } from "@google-cloud/iam-credentials";
 
-let serviceAccountEmail: string = "build-service@electric-node-426223-s2.iam.gserviceaccount.com";
+let serviceAccountEmail: string =
+  "build-service@electric-node-426223-s2.iam.gserviceaccount.com";
 
 /**
  * Generates JWT payload for service account.
@@ -38,6 +39,9 @@ export async function signJwt(url: string) {
     payload: JSON.stringify(payload),
   });
   let jwt = response.signedJwt?.trim();
-  if (jwt) {return jwt}
-  else {return "error"};
+  if (jwt) {
+    return jwt;
+  } else {
+    return "error";
+  }
 }
