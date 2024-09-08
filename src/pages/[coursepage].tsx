@@ -1,0 +1,46 @@
+import React from "react";
+import fm from "front-matter";
+import Head from "next/head";
+import { marked } from "marked";
+import Image from "next/image";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { fetchEndpointData } from "@/lib/fetchUtils";
+
+export const getStaticPaths = async () => {
+  const results: any = await fetchEndpointData(`/courses`);
+  return {
+    paths: results.data.map((result: { id: { toString: () => any } }) => ({
+      params: { coursepage: result.id.toString() },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }: any) => {
+  const pageData = await fetchEndpointData(`/courses/${params.coursepage}`);
+
+  return {
+    props: {
+      pageData: pageData.data,
+    },
+  };
+};
+
+//does this need to not be /blog/[id] but rather something like [slug] directly under pages?
+export default function CoursePage({ pageData }: any) {
+  return (
+    <>
+      <Head>
+        <title>{pageData.attributes.title}</title>
+        <meta name="description" content={pageData.attributes.description} />
+      </Head>
+      <Header />
+      <div>
+        <h1>{pageData.attributes.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: pageData.attributes.description }} />
+      </div>
+      <Footer />
+    </>
+  );
+}
