@@ -2,7 +2,6 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/contact-page");
-  console.log("here", pageData);
   return {
     props: {
       pageData: pageData.data,
@@ -11,7 +10,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Contact({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col`}>
       <div>contact info</div>

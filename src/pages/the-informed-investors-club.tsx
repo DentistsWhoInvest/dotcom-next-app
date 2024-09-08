@@ -15,7 +15,6 @@ export default function InformedInvestorsLandingPage({
 }: {
   pageData: any;
 }) {
-  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col`}>
       <div>
