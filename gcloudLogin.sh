@@ -30,7 +30,7 @@ if [ -f "$CREDENTIALS_PATH" ]; then
     time_diff=$((current_time - last_modified))
 
     # Set the threshold for how old the credentials can be, in seconds (1 hour = 3600 seconds)
-    max_age_seconds=3600
+    max_age_seconds=2700
 
     echo "Credentials were last updated $((time_diff / 60)) minutes ago."
 
