@@ -2,18 +2,8 @@ import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 
-export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/courses`);
-  return {
-    paths: results.data.map((result: { id: { toString: () => any } }) => ({
-      params: { coursepage: result.id.toString() },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }: any) => {
-  const pageData = await fetchEndpointData(`/courses/${params.coursepage}`);
+export const getStaticProps = async () => {
+  const pageData = await fetchEndpointData(`/courses/1`);
 
   return {
     props: {
@@ -22,7 +12,7 @@ export const getStaticProps = async ({ params }: any) => {
   };
 };
 
-export default function CoursePage({ pageData }: any) {
+export default function CashflowCoursePage({ pageData }: any) {
   return (
     <>
       <Head>
