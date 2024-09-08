@@ -4,16 +4,30 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/courses`);
+
   return {
-    paths: results.data.map((result: { id: { toString: () => any } }) => ({
-      params: { coursepage: result.id.toString() },
-    })),
+    paths: results.data.map(
+      (result: { attributes: { navigation_url: string } }) => ({
+        params: {
+          courseSlug: result.attributes.navigation_url.replace(/^\//, ""),
+        },
+      })
+    ),
     fallback: false,
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const pageData = await fetchEndpointData(`/courses/${params.coursepage}`);
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { courseSlug: string };
+}) => {
+  const allCourses = await fetchEndpointData(`/courses`);
+  const matchingCourse = allCourses.data.find(
+    (course: { attributes: { navigation_url: string } }) =>
+      course.attributes.navigation_url.replace(/^\//, "") === params.courseSlug
+  );
+  const pageData = await fetchEndpointData(`/courses/${matchingCourse.id}`);
 
   return {
     props: {
