@@ -6,20 +6,30 @@ import { fetchEndpointData } from "../../lib/fetchUtils";
 export const getStaticPaths = async () => {
   const result = await fetchEndpointData("/podcasts");
   return {
-    paths: result.data.map((result: { id: { toString: () => any } }) => ({
-      params: { podcastepisode: "e" + result.id.toString() },
-    })),
+    paths: result.data.map(
+      (result: { attributes: { episode_number: number } }) => ({
+        params: { podcastepisode: "e" + result.attributes.episode_number },
+      })
+    ),
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const podcastId = params.podcastepisode.replace("e", "");
-  const pageData = await fetchEndpointData(`/podcasts/${podcastId}`);
+  const episodeNumber = Number(params.podcastepisode.replace("e", ""));
+  const allPodcasts = await fetchEndpointData(`/podcasts`);
+  const matchingPodcast = allPodcasts.data.find(
+    (podcast: { attributes: { episode_number: number } }) =>
+      podcast.attributes.episode_number === episodeNumber
+  );
+  // commenting out this api call, think it can be taken directly from the allPodcasts data if it matches with the episodeNumber
+  // keeping it here for reference
+  // const pageData = await fetchEndpointData(`/podcasts/${matchingPodcast.id}`);
 
   return {
     props: {
-      pageData: pageData.data,
+      // pageData: pageData.data,
+      pageData: matchingPodcast,
     },
   };
 };
