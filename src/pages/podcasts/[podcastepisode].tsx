@@ -9,7 +9,6 @@ import { fetchEndpointData } from "../../lib/fetchUtils";
 
 
 export const getStaticPaths = async () => {
-  console.log("getting paths");
   const result = await fetchEndpointData("/podcasts");
   console.log("result", result);
   return {
@@ -33,7 +32,7 @@ export const getStaticProps = async ({ params }: any) => {
 };
 
 //does this need to not be /blog/[id] but rather something like [slug] directly under pages?
-export default function Post({ pageData }: any) {
+export default function PodcastPage({ pageData }: any) {
   console.log("pageData", pageData);
   return (
     <>

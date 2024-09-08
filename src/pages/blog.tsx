@@ -1,32 +1,38 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { fetchEndpointData } from "@/lib/fetchUtils";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 
 export const getStaticProps = async () => {
-
-  const testResult = [
-    {
-      id: 1,
-      attributes: {
-        title: "Core mission",
-        description:
-          "...to create and share resources specifically designed to give dentists financial freedom",
-      },
-    },
-  ];
-
+  console.log("getting paths");
+  const result = await fetchEndpointData("/blog-posts");
+  console.log("result", result);
   return {
-    props: {
-      result: testResult,
-    },
+    props: { pageData: result.data },
   };
 };
 
-export default function Blog({ result }: { result: any[] }) {
+export default function Articles({ pageData }: { pageData: any }) {
+  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col`}>
       <Header />
-      <div>Paginated pages linking to all blogs</div>
+      <ul>
+        {pageData.map((page: any) => {
+          return (
+            <li key={page.id}>
+              <h1>Article {page.id}</h1>
+              <Link href={`/articles/${page.id}`}>
+                {page.attributes.title}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
       <Footer />
     </main>
   );
 }
+
