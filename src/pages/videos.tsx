@@ -7,7 +7,6 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
@@ -20,7 +19,14 @@ export const getStaticProps = async () => {
 
 //replace image url with actual image url
 export default function Videos({ pageData }: { pageData: any }) {
-  console.log("pageData banner", pageData.horizontal_banner);
+
+  const sortedData = pageData.sort(
+    (a: any, b: any) =>
+      new Date(b.attributes.updatedAt).getTime() -
+      new Date(a.attributes.updatedAt).getTime()
+  );
+
+
   return (
     <main className={`flex flex-col bg-[#f0f3f6]`}>
       <div className="relative">
@@ -42,7 +48,7 @@ export default function Videos({ pageData }: { pageData: any }) {
         </div>
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {pageData.map((page: any) => {
+        {sortedData.map((page: any) => {
           return (
             <>
               <Card className="m-6 border-blue-secondary border-2 justify-center">
