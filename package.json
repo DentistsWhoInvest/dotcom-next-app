@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@google-cloud/iam-credentials": "^3.3.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1", 
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.2.1",
     "front-matter": "^4.0.2",
     "google-auth-library": "^9.14.1",
     "lucide-react": "^0.439.0",
