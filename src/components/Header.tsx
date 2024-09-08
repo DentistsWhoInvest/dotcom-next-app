@@ -7,6 +7,7 @@ type MenuLink = {
   text: string;
 };
 
+//todo get these from the header data
 const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },

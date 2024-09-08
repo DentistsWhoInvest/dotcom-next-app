@@ -1,10 +1,8 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import Image from "next/image";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
-  const pageData = await fetchEndpointData('/about');
+  const pageData = await fetchEndpointData("/about");
 
   const testResult = [
     {
@@ -60,11 +58,15 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function About({ result, pageData }: { result: any[], pageData: any }) {
+export default function About({
+  result,
+  pageData,
+}: {
+  result: any[];
+  pageData: any;
+}) {
   return (
     <main className={`flex flex-col `}>
-      <Header />
-
       <div className="relative ">
         <Image
           className="w-[320px] h-[440px] object-cover "
@@ -145,7 +147,6 @@ export default function About({ result, pageData }: { result: any[], pageData: a
           <p>{result[3].attributes.description3}</p>
         </div>
       </div>
-      <Footer />
     </main>
   );
 }

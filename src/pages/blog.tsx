@@ -1,8 +1,4 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticProps = async () => {
@@ -15,7 +11,6 @@ export const getStaticProps = async () => {
 export default function Articles({ pageData }: { pageData: any }) {
   return (
     <main className={`flex flex-col`}>
-      <Header />
       <ul>
         {pageData.map((page: any) => {
           return (
@@ -28,7 +23,6 @@ export default function Articles({ pageData }: { pageData: any }) {
           );
         })}
       </ul>
-      <Footer />
     </main>
   );
 }

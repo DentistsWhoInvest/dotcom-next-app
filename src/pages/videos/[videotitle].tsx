@@ -1,10 +1,5 @@
 import React from "react";
-import fm from "front-matter";
 import Head from "next/head";
-import { marked } from "marked";
-import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticPaths = async () => {
@@ -37,7 +32,6 @@ export default function VideoPage({ pageData }: any) {
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <Header />
       <div>
         <h1>{pageData.attributes.name}</h1>
         <iframe
@@ -49,7 +43,6 @@ export default function VideoPage({ pageData }: any) {
           dangerouslySetInnerHTML={{ __html: pageData.attributes.description }}
         />
       </div>
-      <Footer />
     </>
   );
 }

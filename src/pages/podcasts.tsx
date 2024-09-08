@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 
@@ -13,7 +11,6 @@ export const getStaticProps = async () => {
 export default function Podcasts({ pageData }: { pageData: any }) {
   return (
     <main className={`flex flex-col`}>
-      <Header />
       <ul>
         {pageData.map((page: any) => {
           return (
@@ -26,7 +23,6 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           );
         })}
       </ul>
-      <Footer />
     </main>
   );
 }

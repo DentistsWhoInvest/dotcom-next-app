@@ -1,12 +1,7 @@
 import React from "react";
-import fm from "front-matter";
 import Head from "next/head";
-import { marked } from "marked";
 import Image from "next/image";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
 import { fetchEndpointData } from "../../lib/fetchUtils";
-
 
 export const getStaticPaths = async () => {
   const result = await fetchEndpointData("/podcasts");
@@ -24,7 +19,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-    pageData: pageData.data,
+      pageData: pageData.data,
     },
   };
 };
@@ -36,7 +31,6 @@ export default function PodcastPage({ pageData }: any) {
         <title>{pageData.attributes.title}</title>
         <meta name="description" content={pageData.description} />
       </Head>
-      <Header />
       <div>
         <div>{pageData.attributes.title}</div>
         <Image
@@ -47,9 +41,10 @@ export default function PodcastPage({ pageData }: any) {
           width={600}
           height={400}
         />
-        <div dangerouslySetInnerHTML={{ __html: pageData.attributes.description }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: pageData.attributes.description }}
+        />
       </div>
-      <Footer />
     </>
   );
 }
