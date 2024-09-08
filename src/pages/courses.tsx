@@ -16,7 +16,7 @@ export default function Courses({ pageData }: { pageData: any }) {
           return (
             <li key={page.id}>
               <h1>Episode {page.id}</h1>
-              <Link href={`/${page.id}`}>{page.attributes.title}</Link>
+              <Link href={`${page.attributes.navigation_url}`}>{page.attributes.title}</Link>
             </li>
           );
         })}
