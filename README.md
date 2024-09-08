@@ -1,5 +1,8 @@
 `npm i` -> install dependencies
-`npm run dev` -> run for local development
+
+Add strapi api key to .env
+
+`npm run dev` -> run for local development (should also go through the gcloud authentication flow)
 ___
 
 `npm run build` -> should output static content to /out
