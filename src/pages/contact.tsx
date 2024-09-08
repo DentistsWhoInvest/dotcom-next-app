@@ -1,35 +1,26 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
+import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
-
-  const testResult = [
-    {
-      id: 1,
-      attributes: {
-        title: "Core mission",
-        description:
-          "...to create and share resources specifically designed to give dentists financial freedom",
-      },
-    },
-  ];
-
+  const pageData = await fetchEndpointData("/contact-page");
+  console.log('here', pageData);
   return {
     props: {
-      result: testResult,
+      pageData: pageData.data,
     },
   };
 };
 
-export default function About({ result }: { result: any[] }) {
+export default function Contact({ pageData }: { pageData: any }) {
+  console.log('pageData', pageData);
   return (
     <main className={`flex flex-col`}>
       <Header />
       <div>contact info</div>
       <div>FAQ</div>
+      <div>{pageData.attributes.hero_title}</div>
+      <div>{pageData.attributes.hero_subtext}</div>
       <Footer />
     </main>
   );

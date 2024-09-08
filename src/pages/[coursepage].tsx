@@ -27,7 +27,6 @@ export const getStaticProps = async ({ params }: any) => {
   };
 };
 
-//does this need to not be /blog/[id] but rather something like [slug] directly under pages?
 export default function CoursePage({ pageData }: any) {
   return (
     <>
