@@ -10,7 +10,6 @@ import { fetchEndpointData } from "../../lib/fetchUtils";
 
 export const getStaticPaths = async () => {
   const result = await fetchEndpointData("/podcasts");
-  console.log("result", result);
   return {
     paths: result.data.map((result: { id: { toString: () => any } }) => ({
       params: { podcastepisode: "e" + result.id.toString() },
@@ -20,7 +19,6 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  console.log("params", params);
   const podcastId = params.podcastepisode.replace("e", "");
   const pageData = await fetchEndpointData(`/podcasts/${podcastId}`);
 
@@ -31,9 +29,7 @@ export const getStaticProps = async ({ params }: any) => {
   };
 };
 
-//does this need to not be /blog/[id] but rather something like [slug] directly under pages?
 export default function PodcastPage({ pageData }: any) {
-  console.log("pageData", pageData);
   return (
     <>
       <Head>

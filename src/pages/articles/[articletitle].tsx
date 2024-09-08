@@ -9,7 +9,6 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticPaths = async () => {
   let results: any = await fetchEndpointData(`/blog-posts`);
-  console.log("result", results);
   return {
     paths: results.data.map((result: { id: { toString: () => any } }) => ({
       params: { articletitle: result.id.toString() },
@@ -19,9 +18,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  console.log("params", params);
   const pageData = await fetchEndpointData(`/blog-posts/${params.articletitle}`);
-  console.log("res", pageData);
 
   return {
     props: {
@@ -30,7 +27,6 @@ export const getStaticProps = async ({ params }: any) => {
   };
 };
 
-//does this need to not be /blog/[id] but rather something like [slug] directly under pages?
 export default function ArticlePage({ pageData }: any) {
   return (
     <>

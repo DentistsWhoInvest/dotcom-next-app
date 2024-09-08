@@ -6,16 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticProps = async () => {
-  console.log("getting paths");
   const result = await fetchEndpointData("/blog-posts");
-  console.log("result", result);
   return {
     props: { pageData: result.data },
   };
 };
 
 export default function Articles({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col`}>
       <Header />

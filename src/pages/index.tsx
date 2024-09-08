@@ -12,7 +12,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main>
       <div>

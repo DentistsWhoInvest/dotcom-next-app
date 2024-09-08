@@ -5,7 +5,6 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData('/about');
-  // console.log('pageData', pageData)
 
   const testResult = [
     {
