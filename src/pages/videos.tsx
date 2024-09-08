@@ -41,8 +41,7 @@ export default function Videos({ pageData }: { pageData: any }) {
           </span>
         </div>
       </div>
-
-      <ul>
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {pageData.map((page: any) => {
           return (
             <>
