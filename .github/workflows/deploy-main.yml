@@ -1,0 +1,55 @@
+name: 'Build and Deploy to GCS'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/**'
+      - 'src/**'
+      - components.json
+      - next.config.js
+      - package.json
+      - package-lock.json
+      - postcss.config.mjs
+      - tailwind.config.ts
+      - tsconfig.json
+
+env:
+  PROJECT_ID: 'electric-node-426223-s2' # TODO: update to your Google Cloud project ID
+  REGION: 'europe-west2' # TODO: update to your region
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/276123986162/locations/global/workloadIdentityPools/default-pool/providers/default-provider'
+
+jobs:
+  deploy:
+    runs-on: 'ubuntu-latest'
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332' # actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: 'actions/setup-node@v4' # actions/setup-node@v2
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run build
+      
+      - name: 'Authenticate to Google Cloud'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v2' # google-github-actions/auth@v2
+        with:
+          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: "build-service@electric-node-426223-s2.iam.gserviceaccount.com"
+
+      - name: 'Deploy to GCS bucket'
+        run: |-
+          gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-static-assets
+
