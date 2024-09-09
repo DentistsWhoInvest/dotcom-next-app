@@ -1,25 +1,27 @@
 import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { createSlug } from "../blog";
 
 export const getStaticPaths = async () => {
-  let results: any = await fetchEndpointData(`/blog-posts`);
+  const results: any = await fetchEndpointData(`/blog-posts`);
   return {
-    paths: results.data.map((result: { id: { toString: () => any } }) => ({
-      params: { articletitle: result.id.toString() },
+    paths: results.data.map((result: { attributes: { title: string } }) => ({
+      params: { articletitle: createSlug(result.attributes.title) },
     })),
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const pageData = await fetchEndpointData(
-    `/blog-posts/${params.articletitle}`
+  const allArticles = await fetchEndpointData(`/blog-posts`);
+  const matchingArticle = allArticles.data.find(
+    (article: { attributes: { title: string } }) =>
+      createSlug(article.attributes.title) === params.articletitle
   );
-
   return {
     props: {
-      pageData: pageData.data,
+      pageData: matchingArticle,
     },
   };
 };
