@@ -1,4 +1,4 @@
-name: 'Build and Deploy to GCS'
+name: 'Build and Deploy beta to GCS'
 
 on:
   pull_request:
