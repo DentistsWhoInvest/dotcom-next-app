@@ -40,8 +40,6 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build
-      
       - name: 'Authenticate to Google Cloud'
         id: 'auth'
         uses: 'google-github-actions/auth@v2' # google-github-actions/auth@v2
@@ -49,7 +47,12 @@ jobs:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: "build-service@electric-node-426223-s2.iam.gserviceaccount.com"
 
+      # todo: replace this with a build secret that can only get/list, not full permissions.
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: 'https://admin.drjamesmartin.co.uk/api'
+          STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
+      
       - name: 'Deploy to GCS bucket'
         run: |-
           gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-beta-static-assets
-
