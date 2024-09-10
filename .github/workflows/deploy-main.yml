@@ -16,8 +16,8 @@ on:
       - tsconfig.json
 
 env:
-  PROJECT_ID: 'electric-node-426223-s2' # TODO: update to your Google Cloud project ID
-  REGION: 'europe-west2' # TODO: update to your region
+  PROJECT_ID: 'electric-node-426223-s2'
+  REGION: 'europe-west2'
   WORKLOAD_IDENTITY_PROVIDER: 'projects/276123986162/locations/global/workloadIdentityPools/default-pool/providers/default-provider'
 
 jobs:
@@ -40,8 +40,6 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run build
-      
       - name: 'Authenticate to Google Cloud'
         id: 'auth'
         uses: 'google-github-actions/auth@v2' # google-github-actions/auth@v2
@@ -49,7 +47,11 @@ jobs:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: "build-service@electric-node-426223-s2.iam.gserviceaccount.com"
 
+      - run: npm run build
+        env:
+          NEXT_ADMIN_STRAPI_URL: 'https://admin.drjamesmartin.co.uk/api'
+          STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
+
       - name: 'Deploy to GCS bucket'
         run: |-
           gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-static-assets
-
