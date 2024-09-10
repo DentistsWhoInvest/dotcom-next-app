@@ -48,7 +48,7 @@ jobs:
           service_account: "build-service@electric-node-426223-s2.iam.gserviceaccount.com"
 
       # todo: replace this with a build secret that can only get/list, not full permissions.
-      - run: npm run build
+      - run: npm run debug-build
         env:
           NEXT_ADMIN_STRAPI_URL: 'https://admin.drjamesmartin.co.uk/api'
           STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}

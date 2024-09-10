@@ -17,6 +17,8 @@ import { signJwt } from "./signJwt";
 export async function fetchEndpointData(requestedEndpoint: string) {
   const endpoint = `${process.env.NEXT_ADMIN_STRAPI_URL}${requestedEndpoint}`;
   let jwt = await signJwt(endpoint);
+  console.log(`endpoint: ${endpoint}`);
+  console.log(`signedJwt: ${jwt}`);
   const headers = {
     Authorization: `bearer ${process.env.STRAPI_API_KEY}`,
     "Proxy-Authorization": `Bearer ${jwt}`,
@@ -24,6 +26,9 @@ export async function fetchEndpointData(requestedEndpoint: string) {
   };
   const url: string = `${endpoint}?populate=*`;
   const fetchRequest = await fetch(url, { method: "GET", headers });
+  console.log(`fetchRequest: ${fetchRequest}`);
   const resultJSON = await fetchRequest.json();
+  console.log(`resultJSON:`);
+  console.log(JSON.stringify(resultJSON, null, 2));
   return resultJSON;
 }
