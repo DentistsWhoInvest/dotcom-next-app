@@ -28,34 +28,41 @@ jobs:
 
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332' # actions/checkout@v4
+        id: checkout
+        uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332'
 
       - name: Setup Node.js
-        uses: 'actions/setup-node@v4' # actions/setup-node@v2
+        id: setup-node
+        uses: 'actions/setup-node@v4'
         with:
           node-version: '18'
           cache: 'npm'
 
-      - run: npm ci
+      - name: Install Dependencies
+        id: install-deps
+        run: npm ci
 
       - name: 'Authenticate to Google Cloud'
-        id: 'auth'
-        uses: 'google-github-actions/auth@v2' # google-github-actions/auth@v2
+        id: auth
+        uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/276123986162/locations/global/workloadIdentityPools/default-pool/providers/default-provider'
           service_account: "build-service@electric-node-426223-s2.iam.gserviceaccount.com"
 
-      # todo: replace this with a build secret that can only get/list, not full permissions.
-      - run: npm run debug-build
+      - name: Compile Site by pulling content from API and building static html files
+        id: compile-site
+        run: npm run build
         env:
           NEXT_ADMIN_STRAPI_URL: 'https://admin.drjamesmartin.co.uk/api'
           STRAPI_API_KEY: ${{ secrets.STRAPI_API_KEY }}
 
       - name: 'Set up Cloud SDK'
+        id: setup-cloud-sdk
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: ${{ env.PROJECT_ID }}
       
       - name: 'Deploy to GCS bucket'
+        id: deploy-to-gcs
         run: |-
-          gsutil rsync -r -d ./out/ gs://dwi-dotcom-beta-static-assets
+          gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-beta-static-assets
