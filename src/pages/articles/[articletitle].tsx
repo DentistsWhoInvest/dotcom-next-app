@@ -4,8 +4,6 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 
 export const getStaticPaths = async () => {
   let results: any = await fetchEndpointData(`/blog-posts`);
-  console.log(`results: `)
-  console.log(JSON.stringify(results, null, 2));
   return {
     paths: results.data.map((result: { id: { toString: () => any } }) => ({
       params: { articletitle: result.id.toString() },
