@@ -3,7 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [`${process.env.DOMAIN}`],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.drjamesmartin.co.uk',
+        port: '',
+        pathname: '/**',
+      },
+    ],
     unoptimized: true,
   },
   output: "export",
