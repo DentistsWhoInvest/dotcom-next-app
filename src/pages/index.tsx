@@ -10,8 +10,6 @@ import lottieTreasure from "../../public/animations/treasure.json";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/home");
-  console.log("pageData");
-  console.log(JSON.stringify(pageData, null, 2));
   return {
     props: {
       pageData: pageData.data.attributes,
@@ -74,7 +72,7 @@ export default function Home({ pageData }: { pageData: any }) {
           })}
         </div>
 
-        <h2>Here's Why The Right People Want To Continue Reading</h2>
+        <h2>{`Here's Why The Right People Want To Continue Reading`}</h2>
         <div>
           {pageData.why_you_reasons.map((reason: any) => {
             return (
