@@ -28,8 +28,9 @@ export const getStaticProps = async () => {
   };
 };
 
+let assetDomain = "https://assets.drjamesmartin.co.uk";
 function replaceImageDomain(url: string): string {
-  return url.replace("https://storage.googleapis.com/dwi-dotcom-assets", "https://assets.drjamesmartin.co.uk");
+  return url.replace("https://storage.googleapis.com/dwi-dotcom-assets", assetDomain);
 }
 
 export default function Home({ pageData }: { pageData: any }) {
@@ -94,9 +95,13 @@ export default function Home({ pageData }: { pageData: any }) {
         <h2>{pageData.why_you_title}</h2>
         <div>
           {pageData.why_you_reasons.map((reason: any) => {
+            let tickUrl = `${assetDomain}/tick-in-circle-orange.svg`;
             return (
-              <div>
-                <img src="/tick-in-circle-orange.svg" alt="Checkmark" width="40px" height="40px"/>
+              <div key={reason.id}>
+                <Image src={tickUrl}
+                       alt="Checkmark"
+                       width="40"
+                       height="40"/>
                 <p key={reason.id}>{reason.reason}</p>
               </div>
             )
