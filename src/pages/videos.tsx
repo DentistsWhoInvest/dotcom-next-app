@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { createSlug } from "./blog";
+import { createSlug } from "./articles";
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/videos");
