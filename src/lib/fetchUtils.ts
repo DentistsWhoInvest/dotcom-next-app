@@ -21,7 +21,7 @@ export async function fetchEndpointData(requestedEndpoint: string, populateField
     "Proxy-Authorization": "",
     "Content-Type": "application/json",
   };
-  if (process.env["ENV"] === "dev") {
+  if (process.env["ENV"] !== "dev" || !endpoint.includes("localhost")) {
     let jwt = await signJwt(endpoint);
     headers["Proxy-Authorization"] = `Bearer ${jwt}`;
   }
