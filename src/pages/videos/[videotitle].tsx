@@ -56,7 +56,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className=" m-4 ">
+      <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mx-auto mt-5">
         <div className="bg-gray-100 flex flex-col justify-center">
           <div className="aspect-video m-6">
             <iframe
@@ -80,16 +80,19 @@ export default function VideoPage({
           </div>
         </div>
 
-        <div className="my-5">
+        <div className="w-full my-5">
           <Image
             src={
               associatedBanner.data.attributes.cover_image.data.attributes.url
             }
-            alt="banner"
-            width={"375"}
-            height={"440"}
+            alt="Want to increase your income?"
+            width={1200}
+            height={400}
+            layout="responsive"
+            className="w-full h-auto object-cover"
           />
         </div>
+
         <div className="italic text-sm">
           <span className="font-bold">Disclaimer: </span>
           All content on this channel is for education purposes only and does
@@ -105,7 +108,7 @@ export default function VideoPage({
           regulated, independent professional.
         </div>
 
-        <div className="bg-gray-100 flex flex-col justify-center mt-5">
+        <div className="bg-gray-100 flex flex-col justify-center my-5">
           <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
             Watch More
           </p>
