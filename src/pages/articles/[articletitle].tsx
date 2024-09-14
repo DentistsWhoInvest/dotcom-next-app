@@ -33,11 +33,17 @@ export const getStaticProps = async ({ params }: any) => {
       createSlug(article.attributes.title) === params.articletitle
   );
   //id might not be the right thing to look for? Horizontal/vertical might be different
+  console.log("matchingArticle", matchingArticle);
+  const associatedHorizontalBannerId =
+    matchingArticle.attributes.horizontal_banners &&
+    matchingArticle.attributes.horizontal_banners.data.length > 0
+      ? matchingArticle.attributes.horizontal_banners.data[0].id
+      : 1;
   const associatedHorizontalBanner = await fetchEndpointData(
-    `/horizontal-banners/${matchingArticle.attributes.horizontal_banners.data[0].id}`
+    `/horizontal-banners/${associatedHorizontalBannerId}`
   );
   const associatedVerticalBanner = await fetchEndpointData(
-    `/vertical-banners/${matchingArticle.attributes.horizontal_banners.data[0].id}`
+    `/vertical-banners/${associatedHorizontalBannerId}`
   );
   const otherArticles = allArticles.data.filter(
     (article: { id: number }) => article.id !== matchingArticle.id
@@ -126,8 +132,8 @@ export default function ArticlePage({
           <div className="w-full my-5 hidden md:block">
             <Image
               src={
-                associatedVerticalBanner.attributes.cover_image.data
-                  .attributes.url
+                associatedVerticalBanner.attributes.cover_image.data.attributes
+                  .url
               }
               alt="Want to increase your income?"
               width={1200}
