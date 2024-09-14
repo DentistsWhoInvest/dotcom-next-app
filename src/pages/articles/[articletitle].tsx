@@ -32,18 +32,21 @@ export const getStaticProps = async ({ params }: any) => {
     (article: { attributes: { title: string } }) =>
       createSlug(article.attributes.title) === params.articletitle
   );
-  //id might not be the right thing to look for? Horizontal/vertical might be different
-  console.log("matchingArticle", matchingArticle);
   const associatedHorizontalBannerId =
     matchingArticle.attributes.horizontal_banners &&
     matchingArticle.attributes.horizontal_banners.data.length > 0
       ? matchingArticle.attributes.horizontal_banners.data[0].id
       : 1;
+  const associatedVerticalBannerId =
+    matchingArticle.attributes.vertical_banners &&
+    matchingArticle.attributes.vertical_banners.data.length > 0
+      ? matchingArticle.attributes.vertical_banners.data[0].id
+      : 1;
   const associatedHorizontalBanner = await fetchEndpointData(
     `/horizontal-banners/${associatedHorizontalBannerId}`
   );
   const associatedVerticalBanner = await fetchEndpointData(
-    `/vertical-banners/${associatedHorizontalBannerId}`
+    `/vertical-banners/${associatedVerticalBannerId}`
   );
   const otherArticles = allArticles.data.filter(
     (article: { id: number }) => article.id !== matchingArticle.id
@@ -69,8 +72,6 @@ export default function ArticlePage({
   associatedVerticalBanner: any;
   otherArticles: any;
 }) {
-  console.log("otherArticles", otherArticles);
-
   const { publishedDate, publishedTime } = processDate(
     pageData.attributes.publish_date
   );
