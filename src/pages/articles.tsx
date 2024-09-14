@@ -1,26 +1,21 @@
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 import he from "he";
 
-//would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
-export function createSlug(title: string) {
-  return he
-    .decode(title)
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
-    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
-    .replace(/^-+/, "") // Remove leading hyphens
-    .replace(/-+$/, ""); // Remove trailing hyphens
-}
+  //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
+  export function createSlug(title: string) {
+    return he
+      .decode(title)
+      .toLowerCase()
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
+      .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
+      .replace(/^-+/, "") // Remove leading hyphens
+      .replace(/-+$/, ""); // Remove trailing hyphens
+  }
+  
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/blog-posts");
@@ -52,11 +47,14 @@ export default function Articles({ pageData }: { pageData: any }) {
         />
 
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">Blog </span>
+          <span className="text-white text-3xl font-bold p-4">Articles </span>
           <span className="text-blue-light text-xl p-2">
             Read to understand how you can accelerate your financial goals​
           </span>
         </div>
+      </div>
+      <div className="text-blue-secondary text-center font-bold text-3xl p-4">
+        All Articles
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
