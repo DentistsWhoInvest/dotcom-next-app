@@ -58,54 +58,63 @@ export default function VideoPage({
       </Head>
       <div className=" m-4 ">
         <div className="bg-gray-100 flex flex-col justify-center">
-          <iframe
-            className="m-4"
-            src={`https://player.vimeo.com/video/${videoUri}`}
-            allow="autoplay; fullscreen; picture-in-picture"
-            title={pageData.attributes.name}
-          ></iframe>
-          <h1 className="text-blue-primary text-xl font-bold m-4">
+          <div className="aspect-video m-6">
+            <iframe
+              src={`https://player.vimeo.com/video/${videoUri}`}
+              width="640"
+              height="360"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              className="top-0 left-0 w-full h-full"
+            ></iframe>
+          </div>
+          <h2 className="text-blue-primary text-xl font-bold mx-6">
             {pageData.attributes.name}
-          </h1>
-          <div
-            className="m-4"
-            dangerouslySetInnerHTML={{
-              __html: pageData.attributes.description,
-            }}
-          />
+          </h2>
+          <div className="m-5">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: pageData.attributes.description,
+              }}
+            />
+          </div>
         </div>
 
-        <div>
+        <div className="my-5">
           <Image
-            src={associatedBanner.data.attributes.cover_image.data.attributes.url}
+            src={
+              associatedBanner.data.attributes.cover_image.data.attributes.url
+            }
             alt="banner"
-            width={"320"}
+            width={"375"}
             height={"440"}
           />
         </div>
         <div className="italic text-sm">
-          <span className="font-bold">Disclaimer: </span>All content on this
-          channel is for education purposes only and does not constitute an
-          investment recommendation or individual financial advice. For that,
-          you should speak to a regulated, independent professional. The value
-          of investments and the income from them can go down as well as up, so
-          you may get back less than you invest. The views expressed on this
-          channel may no longer be current. The information provided is not a
-          personal recommendation for any particular investment. Tax treatment
-          depends on individual circumstances and all tax rules may change in
-          the future. If you are unsure about the suitability of an investment,
-          you should speak to a regulated, independent professional.
+          <span className="font-bold">Disclaimer: </span>
+          All content on this channel is for education purposes only and does
+          not constitute an investment recommendation or individual financial
+          advice. For that, you should speak to a regulated, independent
+          professional. The value of investments and the income from them can go
+          down as well as up, so you may get back less than you invest. The
+          views expressed on this channel may no longer be current. The
+          information provided is not a personal recommendation for any
+          particular investment. Tax treatment depends on individual
+          circumstances and all tax rules may change in the future. If you are
+          unsure about the suitability of an investment, you should speak to a
+          regulated, independent professional.
         </div>
 
-        <div className="bg-gray-100 flex flex-col justify-center">
+        <div className="bg-gray-100 flex flex-col justify-center mt-5">
           <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
             Watch More
           </p>
-          <p className="border-blue-secondary border-solid border-t-[3px] mx-28 "></p>
-
-          {otherVideos.map((page: any) => {
-            return <VideoCard key={page.id} page={page} />;
-          })}
+          <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+          <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 ">
+            {otherVideos.map((page: any) => {
+              return <VideoCard key={page.id} page={page} />;
+            })}
+          </ul>
         </div>
       </div>
     </>
