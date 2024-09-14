@@ -1,26 +1,21 @@
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 import he from "he";
 
-//would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
-export function createSlug(title: string) {
-  return he
-    .decode(title)
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with hyphens
-    .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
-    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
-    .replace(/^-+/, "") // Remove leading hyphens
-    .replace(/-+$/, ""); // Remove trailing hyphens
-}
+  //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
+  export function createSlug(title: string) {
+    return he
+      .decode(title)
+      .toLowerCase()
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
+      .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
+      .replace(/^-+/, "") // Remove leading hyphens
+      .replace(/-+$/, ""); // Remove trailing hyphens
+  }
+  
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/blog-posts");
@@ -58,7 +53,9 @@ export default function Articles({ pageData }: { pageData: any }) {
           </span>
         </div>
       </div>
-      <div className="text-blue-secondary text-center font-bold text-3xl p-4">All Articles</div>
+      <div className="text-blue-secondary text-center font-bold text-3xl p-4">
+        All Articles
+      </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
           const slug = createSlug(page.attributes.title);
