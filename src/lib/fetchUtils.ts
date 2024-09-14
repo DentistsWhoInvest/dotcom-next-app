@@ -14,15 +14,18 @@ import { signJwt } from "./signJwt";
  *   };
  *   };
  */
-export async function fetchEndpointData(requestedEndpoint: string) {
+export async function fetchEndpointData(requestedEndpoint: string, populateFields: string[] = ["*"]) {
   const endpoint = `${process.env.NEXT_ADMIN_STRAPI_URL}${requestedEndpoint}`;
-  let jwt = await signJwt(endpoint);
-  const headers = {
+  let headers = {
     Authorization: `bearer ${process.env.STRAPI_API_KEY}`,
-    "Proxy-Authorization": `Bearer ${jwt}`,
+    "Proxy-Authorization": "",
     "Content-Type": "application/json",
   };
-  const url: string = `${endpoint}?populate=*`;
+  if (process.env["ENV"] === "dev") {
+    let jwt = await signJwt(endpoint);
+    headers["Proxy-Authorization"] = `Bearer ${jwt}`;
+  }
+  const url: string = `${endpoint}?populate=${populateFields.join(",")}`;
   const fetchRequest = await fetch(url, { method: "GET", headers });
   const resultJSON = await fetchRequest.json();
   return resultJSON;
