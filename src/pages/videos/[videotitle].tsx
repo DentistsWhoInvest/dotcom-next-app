@@ -32,8 +32,9 @@ export const getStaticProps = async ({ params }: any) => {
   const associatedBanner = await fetchEndpointData(
     `/horizontal-banners/${matchingVideo.attributes.horizontal_banner.data.id}`
   );
-  const otherVideos = allVideos.data
-    .filter((video: { id: number }) => video.id !== matchingVideo.id)
+  const otherVideos = allVideos.data.filter(
+    (video: { id: number }) => video.id !== matchingVideo.id
+  );
 
   return {
     props: {
@@ -119,19 +120,22 @@ export default function VideoPage({
             Watch More
           </p>
           <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
-          <div>
-            <Carousel>
+          <div className="px-16">
+            <Carousel className="">
               <CarouselContent>
                 {otherVideos.map((page: any) => {
                   return (
-                    <CarouselItem key={page.id} className="basis-1/3">
+                    <CarouselItem
+                      key={page.id}
+                      className="sm:basis-full md:basis-1/2 lg:basis-1/3"
+                    >
                       <VideoCard page={page} />
                     </CarouselItem>
                   );
                 })}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious/>
+              <CarouselNext/>
             </Carousel>
           </div>
         </div>
