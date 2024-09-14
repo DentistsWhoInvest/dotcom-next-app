@@ -5,6 +5,13 @@ import { createSlug } from "../blog";
 import { Video } from "lucide-react";
 import { VideoCard } from "../videos";
 import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -27,7 +34,6 @@ export const getStaticProps = async ({ params }: any) => {
   );
   const otherVideos = allVideos.data
     .filter((video: { id: number }) => video.id !== matchingVideo.id)
-    .slice(0, 3); // limit to 3 other videos
 
   return {
     props: {
@@ -113,11 +119,21 @@ export default function VideoPage({
             Watch More
           </p>
           <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
-          <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 ">
-            {otherVideos.map((page: any) => {
-              return <VideoCard key={page.id} page={page} />;
-            })}
-          </ul>
+          <div>
+            <Carousel>
+              <CarouselContent>
+                {otherVideos.map((page: any) => {
+                  return (
+                    <CarouselItem key={page.id} className="basis-1/3">
+                      <VideoCard page={page} />
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
         </div>
       </div>
     </>
