@@ -12,7 +12,7 @@ const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
   { href: "/about", text: "About" },
   { href: "/podcasts", text: "Podcast" },
-  { href: "/blog", text: "Blog" },
+  { href: "/articles", text: "Articles" },
   { href: "/courses", text: "Courses" },
   { href: "/videos", text: "Videos" },
   { href: "/contact", text: "Contact" },

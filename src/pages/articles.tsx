@@ -52,12 +52,13 @@ export default function Articles({ pageData }: { pageData: any }) {
         />
 
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">Blog </span>
+          <span className="text-white text-3xl font-bold p-4">Articles </span>
           <span className="text-blue-light text-xl p-2">
             Read to understand how you can accelerate your financial goals​
           </span>
         </div>
       </div>
+      <div className="text-blue-secondary text-center font-bold text-3xl p-4">All Articles</div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
           const slug = createSlug(page.attributes.title);

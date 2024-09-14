@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import { createSlug } from "../blog";
+import { createSlug } from "../articles";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/blog-posts`);
