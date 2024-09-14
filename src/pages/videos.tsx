@@ -1,5 +1,4 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,6 +8,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import { createSlug } from "./blog";
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/videos");
@@ -19,13 +19,11 @@ export const getStaticProps = async () => {
 
 //replace image url with actual image url
 export default function Videos({ pageData }: { pageData: any }) {
-
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       new Date(b.attributes.updatedAt).getTime() -
       new Date(a.attributes.updatedAt).getTime()
   );
-
 
   return (
     <main className={`flex flex-col bg-[#f0f3f6]`}>
@@ -49,19 +47,22 @@ export default function Videos({ pageData }: { pageData: any }) {
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
+          const slug = createSlug(page.attributes.name);
           return (
             <>
               <Card className="m-6 border-blue-secondary border-2 justify-center">
-                <Image
-                  src="https://picsum.photos/200/150"
-                  alt={page.attributes.name}
-                  width={200}
-                  height={200}
-                  className="object-cover w-full rounded-t-md"
-                />
+                <Link href={`/videos/${slug}`}>
+                  <Image
+                    src="https://picsum.photos/200/150"
+                    alt={page.attributes.name}
+                    width={200}
+                    height={200}
+                    className="object-cover w-full rounded-t-md"
+                  />
+                </Link>
                 <CardContent className="p-2 text-center">
                   <CardTitle className="text-blue-primary p-2">
-                    {page.attributes.name}
+                    <Link href={`/videos/${slug}`}>{page.attributes.name}</Link>
                   </CardTitle>
                   <CardDescription className="text-grey-primary p-2">
                     {page.attributes.description}
@@ -70,7 +71,7 @@ export default function Videos({ pageData }: { pageData: any }) {
                 <CardFooter className="justify-center">
                   <Link
                     className={"text-blue-secondary text-xs font-semibold"}
-                    href={`/videos/${page.id}`}
+                    href={`/videos/${slug}`}
                   >
                     WATCH HERE
                   </Link>
