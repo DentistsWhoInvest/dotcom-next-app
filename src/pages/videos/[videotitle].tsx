@@ -1,25 +1,32 @@
 import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { createSlug } from "../blog";
 
 export const getStaticPaths = async () => {
-  let results: any = await fetchEndpointData(`/videos`);
+  const results: any = await fetchEndpointData(`/videos`);
+  console.log("results", results);
   return {
-    paths: results.data.map((result: { id: { toString: () => any } }) => ({
-      params: { videotitle: result.id.toString() },
+    paths: results.data.map((result: { attributes: { name: string } }) => ({
+      params: { videotitle: createSlug(result.attributes.name) },
     })),
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const pageData = await fetchEndpointData(`/videos/${params.videotitle}`);
+  const allVideos = await fetchEndpointData(`/videos`);
+  const matchingVideo = allVideos.data.find(
+    (video: { attributes: { name: string } }) =>
+      createSlug(video.attributes.name) === params.videotitle
+  );
   return {
     props: {
-      pageData: pageData.data,
+      pageData: matchingVideo,
     },
   };
 };
+
 
 export default function VideoPage({ pageData }: any) {
 
