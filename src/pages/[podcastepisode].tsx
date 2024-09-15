@@ -93,10 +93,10 @@ export default function PodcastPage({ pageData }: any) {
   const FullTranscript = ({ transcript }: any) => {
     return transcript.map((transcriptSection: any) => {
       return (
-        <div>
+        <div key={transcriptSection.id}>
           {transcriptSection.content.map((transcriptParagraph: any) => {
             return (
-              <div>
+              <div key={transcriptParagraph.children[0].text}>
                 <TranscriptParagraph
                   transcriptParagraph={transcriptParagraph.children}
                 />
