@@ -73,6 +73,16 @@ export const getStaticProps = async ({ params }: any) => {
   // keeping it here for reference
   // const pageData = await fetchEndpointData(`/podcasts/${matchingPodcast.id}`);
 
+  const someArticles = await fetchEndpointData(
+    "/blog-posts",
+    undefined,
+    true,
+    {
+      page: 1,
+      pageSize: 3,
+    }
+  );
+
   return {
     props: {
       // pageData: pageData.data,
@@ -80,6 +90,7 @@ export const getStaticProps = async ({ params }: any) => {
       associatedHorizontalBanner: associatedHorizontalBanner.data,
       associatedVerticalBanner: associatedVerticalBanner.data,
       otherPodcasts: otherPodcasts,
+      someArticles: someArticles.data,
     },
   };
 };
@@ -89,11 +100,13 @@ export default function PodcastPage({
   associatedHorizontalBanner,
   associatedVerticalBanner,
   otherPodcasts,
+  someArticles,
 }: {
   pageData: any;
   associatedHorizontalBanner: any;
   associatedVerticalBanner: any;
   otherPodcasts: any;
+  someArticles: any;
 }) {
   console.log("pagedata", pageData);
 
@@ -212,30 +225,44 @@ export default function PodcastPage({
               />
             </div>
 
-            <div>
-              {otherPodcasts.map((page: any) => {
-                //todo: might need to tweak the title
-                const viewMoreSlug = createSlug(page.attributes.title);
-                return (
-                  <ul
-                    key={page.id}
-                    className="sm:basis-full md:basis-1/2 lg:basis-1/3 p-4"
-                  >
-                    <ViewMoreCard
-                      page={page}
-                      contentType={"podcast"}
-                      slug={viewMoreSlug}
-                    />
-                  </ul>
-                );
-              })}
-            </div>
+            {otherPodcasts.map((page: any) => {
+              //todo: might need to tweak the title
+              const viewMoreSlug = createSlug(page.attributes.title);
+              return (
+                <ul
+                  key={page.id}
+                  className="sm:basis-full md:basis-1/2 lg:basis-1/3 p-4 md:hidden"
+                >
+                  <ViewMoreCard
+                    page={page}
+                    contentType={"podcast"}
+                    slug={viewMoreSlug}
+                  />
+                </ul>
+              );
+            })}
 
             <PodcastMarketingForm />
           </div>
         </div>
         <div className="md:col-start-2">
           <div className="w-full my-5 hidden md:block">
+            {otherPodcasts.map((page: any) => {
+              //todo: might need to tweak the title
+              const viewMoreSlug = createSlug(page.attributes.title);
+              return (
+                <ul
+                  key={page.id}
+                  className="sm:basis-full md:basis-1/2 lg:basis-1/3 p-4"
+                >
+                  <ViewMoreCard
+                    page={page}
+                    contentType={"podcast"}
+                    slug={viewMoreSlug}
+                  />
+                </ul>
+              );
+            })}
             <Image
               src={
                 associatedVerticalBanner.attributes.cover_image.data.attributes
@@ -248,6 +275,24 @@ export default function PodcastPage({
               className="w-full h-auto object-cover"
             />
           </div>
+        </div>
+        <div className="w-full my-5 hidden md:block flex:row">
+          {someArticles.map((page: any) => {
+            //todo: might need to tweak the title
+            const viewMoreSlug = createSlug(page.attributes.title);
+            return (
+              <ul
+                key={page.id}
+                className="p-4"
+              >
+                <ViewMoreCard
+                  page={page}
+                  contentType={"article"}
+                  slug={viewMoreSlug}
+                />
+              </ul>
+            );
+          })}
         </div>
       </div>
     </>
