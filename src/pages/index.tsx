@@ -120,7 +120,6 @@ export default function Home({ pageData }: { pageData: any }) {
         <div className="carousel-container">
             <div className="carousel">
               {pageData.why_you_familiar_thoughts.map((thought: any) => {
-                console.log(thought);
                 return (
                   <div className="thought" key={thought.id}>
                     <img src={replaceImageDomain(thought.cover.data.attributes.formats.large.url)}
