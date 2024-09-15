@@ -20,7 +20,6 @@ export const ViewMoreCard = ({
   contentType: string;
   slug: string;
 }) => {
-  console.log("ViewMoreCard", page);
 
   const { publishedDate } = processDate(page.attributes.publish_date);
 

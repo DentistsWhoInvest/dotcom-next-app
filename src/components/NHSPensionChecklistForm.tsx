@@ -1,7 +1,6 @@
 import { Button } from "./ui/button";
 
 export default function NHSPensionChecklistForm() {
-  console.log("NHSPensionChecklistForm");
   return (
     <div className="bg-orange-400 text-white flex flex-col justify-center m-4 p-4">
       <div className="text-center font-bold text-xl">

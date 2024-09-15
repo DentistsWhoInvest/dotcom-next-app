@@ -40,7 +40,6 @@ export async function getStaticPaths() {
   const totalPodcasts = await fetchAllItems("/podcasts");
   const podcastsPerPage = 12;
   const totalPages = Math.ceil(totalPodcasts.length / podcastsPerPage);
-  console.log("totalPages", totalPages);
 
   const paths = Array.from({ length: totalPages }, (_, i) => ({
     params: { page: String(i + 1) },
@@ -59,6 +58,7 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
   };
 }
 
+//and make sure it's the latest episodes first
 export default function Podcasts({ pageData }: { pageData: any }) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
@@ -92,7 +92,7 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           const trimmedTitle = page.attributes.title.replace(/\sDWI-EP\d+$/, '');
           return (
             <>
-              <Link href={`/podcasts/e${page.attributes.episode_number}`}>
+              <Link href={`/e${page.attributes.episode_number}`}>
                 <Card className="m-6 border-blue-secondary border-2 justify-center">
                   <Image
                     src={page.attributes.artwork_url}
