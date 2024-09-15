@@ -10,7 +10,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const getStaticProps = async () => {
-  const result = await fetchEndpointData("/podcasts");
+  const result = await fetchEndpointData(
+    "/podcasts",
+    undefined,
+    true,
+    { page: 2, pageSize: 100 }
+  );
+  console.log("result", result);
   return {
     props: { pageData: result.data },
   };

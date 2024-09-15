@@ -16,13 +16,14 @@ import { signJwt } from "./signJwt";
  */
 
 type PaginationOptions = {
-  makingPaginatedRequest: boolean;
-  paginatedQueryParams: { page: number; pageSize: number };
+  page: number;
+  pageSize: number;
 };
 
 export async function fetchEndpointData(
   requestedEndpoint: string,
   populateFields: string[] = ["*"],
+  makingPaginatedRequest: boolean = false,
   paginationOptions?: PaginationOptions
 ) {
   const endpoint = `${process.env.NEXT_ADMIN_STRAPI_URL}${requestedEndpoint}`;
@@ -36,16 +37,19 @@ export async function fetchEndpointData(
     headers["Proxy-Authorization"] = `Bearer ${jwt}`;
   }
 
-  function buildUrl(endpoint: string, paginationOptions?: PaginationOptions) {
+  function buildUrl(
+    endpoint: string,
+    makingPaginatedRequest: boolean,
+    paginationOptions?: PaginationOptions
+  ) {
     const baseUrl: string = `${endpoint}?populate=${populateFields.join(",")}`;
-    if (paginationOptions?.makingPaginatedRequest) {
-      return `${baseUrl}&page=${paginationOptions.paginatedQueryParams.page}&pageSize=${paginationOptions.paginatedQueryParams.pageSize}`;
+    if (makingPaginatedRequest && paginationOptions) {
+      return `${baseUrl}&pagination[page]=${paginationOptions.page}&pagination[pageSize]=${paginationOptions.pageSize}`;
     } else {
       return baseUrl;
     }
   }
-  const url = buildUrl(endpoint, paginationOptions);
-
+  const url = buildUrl(endpoint, makingPaginatedRequest, paginationOptions);
   const fetchRequest = await fetch(url, { method: "GET", headers });
   const resultJSON = await fetchRequest.json();
   return resultJSON;
