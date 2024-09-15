@@ -4,8 +4,6 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import * as gtag from "../lib/gtag";
 import Script from "next/script";
 
 const poppins = Poppins({
