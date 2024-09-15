@@ -9,20 +9,56 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 
-export const getStaticProps = async () => {
-  const result = await fetchEndpointData(
-    "/podcasts",
-    undefined,
-    true,
-    { page: 2, pageSize: 100 }
-  );
-  console.log("result", result);
+//probably will need to be moved to a utility file
+const fetchAllItems = async (url:string) => {
+  let allItems:any[] = [];
+  let page = 1;
+  const pageSize = 100
+  let hasMore = true;
+
+  while (hasMore) {
+    try {
+      const response = await fetchEndpointData(url,
+        undefined,
+        true,
+        { page: page, pageSize: pageSize }
+      );
+      const meta = response.meta;
+      allItems = allItems.concat(response.data);
+      hasMore = page < meta.pagination.pageCount;
+      page++;
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      hasMore = false; 
+    }
+  }
+  return allItems;
+};
+
+// figure out a way for the first page to not be /podcast/1 but just /podcast
+export async function getStaticPaths() {
+  const totalPodcasts = await fetchAllItems("/podcasts");
+  const podcastsPerPage = 12;
+  const totalPages = Math.ceil(totalPodcasts.length / podcastsPerPage);
+  console.log("totalPages", totalPages);
+
+  const paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+  }));
+
+  return { paths, fallback: false};
+}
+
+export async function getStaticProps({ params }: { params: { page: string } }) {
+  const page = parseInt(params.page, 10);
+  const podcastsPerPage = 12;
+  const result = await fetchEndpointData("/podcasts", undefined, true, {page, pageSize: podcastsPerPage});
+
   return {
     props: { pageData: result.data },
   };
-};
+}
 
-//todo: figure out pagination
 export default function Podcasts({ pageData }: { pageData: any }) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
@@ -79,6 +115,7 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           );
         })}
       </ul>
+      <div>todo: change page options</div>
     </main>
   );
 }
