@@ -2,48 +2,39 @@ import React from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { fetchEndpointData } from "../lib/fetchUtils";
+import Disclaimer from "@/components/Disclaimer";
 
-
-const fetchAllItems = async (url:string) => {
-  let allItems:any[] = [];
+const fetchAllItems = async (url: string) => {
+  let allItems: any[] = [];
   let page = 1;
-  const pageSize = 100
+  const pageSize = 100;
   let hasMore = true;
 
   while (hasMore) {
     try {
-      const response = await fetchEndpointData(url,
-        undefined,
-        true,
-        { page: page, pageSize: pageSize }
-      );
+      const response = await fetchEndpointData(url, undefined, true, {
+        page: page,
+        pageSize: pageSize,
+      });
       const meta = response.meta;
-      console.log("meta", meta);
       allItems = allItems.concat(response.data);
       hasMore = page < meta.pagination.pageCount;
-      console.log("allItems length", allItems.length);
-      console.log("total", meta.pagination.total);
-      console.log("hasMore", hasMore);
 
       page++;
     } catch (error) {
-      console.error('Error fetching items:', error);
-      hasMore = false; 
+      console.error("Error fetching items:", error);
+      hasMore = false;
     }
   }
   return allItems;
 };
 
-
-
 export const getStaticPaths = async () => {
-  const result = await fetchAllItems("/podcasts")
+  const result = await fetchAllItems("/podcasts");
   return {
-    paths: result.map(
-      (result: { attributes: { episode_number: number } }) => ({
-        params: { podcastepisode: "e" + result.attributes.episode_number },
-      })
-    ),
+    paths: result.map((result: { attributes: { episode_number: number } }) => ({
+      params: { podcastepisode: "e" + result.attributes.episode_number },
+    })),
     fallback: false,
   };
 };
@@ -69,6 +60,54 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function PodcastPage({ pageData }: any) {
   console.log("pagedata", pageData);
+
+  // const Transcript = ({ transcriptText }: any) => {
+  //   // console.log("transcripttext", transcriptText);
+  //   let classNames = "";
+  //   if (transcriptText.bold) classNames += " font-bold";
+  //   if (transcriptText.italic) classNames += " italic";
+
+  //   return (
+  //     <span key={transcriptText.id} className={classNames}>
+  //       {transcriptText.text}
+  //     </span>
+  //   );
+  // };
+
+  const TranscriptParagraph = ({ transcriptParagraph }: any) => {
+    console.log("transcriptParagraph", transcriptParagraph);
+    const person = transcriptParagraph[0].text;
+    const timestamp = transcriptParagraph[1].text;
+    const transcriptText = transcriptParagraph[2].text;
+    return (
+      <>
+        <p className="flex p-2">
+          <span className="italic">{person}</span>
+          <span>{timestamp}</span>
+        </p>
+        <p className="p-2">{transcriptText}</p>
+      </>
+    );
+  };
+
+  const FullTranscript = ({ transcript }: any) => {
+    return transcript.map((transcriptSection: any) => {
+      return (
+        <div>
+          {transcriptSection.content.map((transcriptParagraph: any) => {
+            return (
+              <div>
+                <TranscriptParagraph
+                  transcriptParagraph={transcriptParagraph.children}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    });
+  };
+
   return (
     <>
       <Head>
@@ -86,10 +125,30 @@ export default function PodcastPage({ pageData }: any) {
           scrolling="no"
           title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
         ></iframe>
-        <p className="font-bold text-2xl text-blue-primary">Full Transcript</p>
-        <div
-          dangerouslySetInnerHTML={{ __html: pageData.attributes.description }}
-        />
+        <div className="flex flex-col justify-center my-5">
+          <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+            Description
+          </p>
+          <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: pageData.attributes.description,
+            }}
+          />
+        </div>
+        <div className="flex flex-col justify-center my-5">
+          <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+            Transcription
+          </p>
+          <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+        </div>
+        <div className="p-2">
+          {" "}
+          <FullTranscript transcript={pageData.attributes.transcript} />
+        </div>
+        <div className="p-4">
+          <Disclaimer contentType="podcast" />
+        </div>
       </div>
     </>
   );
