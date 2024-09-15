@@ -73,15 +73,10 @@ export const getStaticProps = async ({ params }: any) => {
   // keeping it here for reference
   // const pageData = await fetchEndpointData(`/podcasts/${matchingPodcast.id}`);
 
-  const someArticles = await fetchEndpointData(
-    "/blog-posts",
-    undefined,
-    true,
-    {
-      page: 1,
-      pageSize: 3,
-    }
-  );
+  const someArticles = await fetchEndpointData("/blog-posts", undefined, true, {
+    page: 1,
+    pageSize: 3,
+  });
 
   return {
     props: {
@@ -162,17 +157,42 @@ export default function PodcastPage({
         <title>{pageData.attributes.title}</title>
         <meta name="description" content={pageData.description} />
       </Head>
+      <div className="relative ">
+        <Image
+          className="object-cover w-full"
+          src={
+            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+          }
+          alt={"Hero banner"}
+          width={"320"}
+          height={"440"}
+        />
 
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
+          <div className="flex flex-row">
+            <p className="basis-1/3">
+            <span className="text-blue-secondary text-3xl font-bold p-4">
+              Episodes {pageData.attributes.episode_number}
+            </span>
+            <span className="text-white text-3xl font-bold p-4">
+              {pageData.attributes.title}
+            </span>
+            <span className="text-blue-light text-xl p-2">
+              Hosted by: Dr. James Martin
+            </span>
+            </p>
+            <div className="">contributor images </div>
+          </div>
+        </div>
+      </div>
       <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="col-span-1">
-          <div>optional banner with title and image?</div>
           <iframe
             src="https://www.buzzsprout.com/1471306/15694076-is-marketing-a-naughty-word-with-john-williamson-and-dr-ferhan-ahmed-dwi-ep301?client_source=small_player&amp;iframe=true
           "
             loading="lazy"
             width="100%"
             height="200"
-            scrolling="no"
             title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
           ></iframe>
           <div className="w-full my-5">
@@ -281,10 +301,7 @@ export default function PodcastPage({
             //todo: might need to tweak the title
             const viewMoreSlug = createSlug(page.attributes.title);
             return (
-              <ul
-                key={page.id}
-                className="p-4"
-              >
+              <ul key={page.id} className="p-4">
                 <ViewMoreCard
                   page={page}
                   contentType={"article"}
