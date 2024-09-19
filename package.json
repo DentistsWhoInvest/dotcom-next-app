@@ -18,6 +18,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.3.0",
+    "eslint-plugin-tailwindcss": "^3.17.4",
     "front-matter": "^4.0.2",
     "google-auth-library": "^9.14.1",
     "he": "^1.2.0",
