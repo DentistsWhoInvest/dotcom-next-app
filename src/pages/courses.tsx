@@ -47,7 +47,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           height={200}
           className="h-[200px] w-full object-cover"
         />
-        <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 transform">
+        <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2">
           <Image
             src="/DWI-logo-circle.webp"
             alt="Course Logo"
@@ -77,45 +77,8 @@ const CourseCard = ({ course }: { course: Course }) => {
     </li>
   );
 };
-// const CourseCard = ({ course }: { course: any }) => {
-//   console.log("course", course.attributes.cover);
-//   return (
-//     <li className="bg-white rounded-sm border-solid border-2 shadow-md flex flex-col justify-center p-4">
-//       <p className="bg-blue-primary text-white font-bold text-center">
-//         {course.attributes.tagline}
-//         <br /> animation
-//       </p>
-//       <Image
-//         src={course.attributes.on_the_day_photo.data.attributes.url}
-//         alt={course.attributes.title}
-//         width={320}
-//         height={440}
-//       />
-
-//       <Image
-//         src="/DWI-logo-circle.webp"
-//         alt="Coruse Created By Dr. James Martin"
-//         width={320}
-//         height={440}
-//       ></Image>
-//       <Image
-//         src={course.attributes.cover.data.attributes.url}
-//         alt={course.attributes.title}
-//         width={320}
-//         height={440}
-//       />
-//       <p className="text-blue-primary text-center text-xs">
-//         {course.attributes.description}
-//       </p>
-//       <Button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
-//         <Link href={`${course.attributes.navigation_url}`}>Learn More</Link>
-//       </Button>
-//     </li>
-//   );
-// };
 
 export default function Courses({ pageData }: { pageData: any }) {
-  console.log("page", pageData);
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <div className="relative">
@@ -129,7 +92,7 @@ export default function Courses({ pageData }: { pageData: any }) {
           height={"440"}
         />
 
-        <div className="items-left absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16">
+        <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16">
           <span className="p-4 text-3xl font-bold text-white">Courses </span>
           <span className="p-2 text-xl text-blue-light">
             Complete courses for the dentist who wants to understand investing{" "}

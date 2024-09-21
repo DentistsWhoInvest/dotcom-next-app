@@ -38,7 +38,6 @@ const fetchAllItems = async (url:string) => {
 
 
 function writeToLocal(result: any[]) {
-  console.log("writing to local")
   const filePath = path.join(process.cwd(), 'public', 'podcasts.json');
   
   return new Promise<void>((resolve, reject) => {
@@ -46,7 +45,6 @@ function writeToLocal(result: any[]) {
       if (err) {
         reject(err);
       } else {
-        console.log("Data written to file");
         resolve();
       }
     });
@@ -56,7 +54,6 @@ function writeToLocal(result: any[]) {
 // figure out a way for the first page to not be /podcast/1 but just /podcast
 export async function getStaticPaths() {
   const fetchedPodcasts = await fetchAllItems("/podcasts");
-  console.log("fetched all podcasts")
 
   await writeToLocal(fetchedPodcasts)
 

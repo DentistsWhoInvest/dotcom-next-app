@@ -42,7 +42,6 @@ function writeToLocal(result: any[]) {
       if (err) {
         reject(err);
       } else {
-        console.log("Data written to file");
         resolve();
       }
     });
@@ -51,7 +50,6 @@ function writeToLocal(result: any[]) {
 
 export const getStaticPaths = async () => {
   const fetchedPodcasts = await fetchAllItems("/podcasts");
-  console.log("fetched all podcast episodes")
 
   await writeToLocal(fetchedPodcasts)
 
@@ -137,21 +135,7 @@ export default function PodcastPage({
   someArticles: any;
 }) {
 
-  // const Transcript = ({ transcriptText }: any) => {
-  //   // console.log("transcripttext", transcriptText);
-  //   let classNames = "";
-  //   if (transcriptText.bold) classNames += " font-bold";
-  //   if (transcriptText.italic) classNames += " italic";
-
-  //   return (
-  //     <span key={transcriptText.id} className={classNames}>
-  //       {transcriptText.text}
-  //     </span>
-  //   );
-  // };
-
   const TranscriptParagraph = ({ transcriptParagraph }: any) => {
-    console.log("transcript paragraph", transcriptParagraph)
     const person = transcriptParagraph[0]?.text;
     const timestamp = transcriptParagraph[1]?.text;
     const transcriptText = transcriptParagraph[2]?.text;
