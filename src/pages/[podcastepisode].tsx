@@ -151,16 +151,17 @@ export default function PodcastPage({
   // };
 
   const TranscriptParagraph = ({ transcriptParagraph }: any) => {
-    const person = transcriptParagraph[0].text;
-    const timestamp = transcriptParagraph[1].text;
-    const transcriptText = transcriptParagraph[2].text;
+    console.log("transcript paragraph", transcriptParagraph)
+    const person = transcriptParagraph[0]?.text;
+    const timestamp = transcriptParagraph[1]?.text;
+    const transcriptText = transcriptParagraph[2]?.text;
     return (
       <>
         <p className="flex p-2">
-          <span className="italic">{person}</span>
-          <span>{timestamp}</span>
+          {person && <span className="italic">{person}</span>}
+          {timestamp && <span>{timestamp}</span>}
         </p>
-        <p className="p-2">{transcriptText}</p>
+        {transcriptText && <p className="p-2">{transcriptText}</p>}
       </>
     );
   };
