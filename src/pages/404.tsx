@@ -10,14 +10,14 @@ export default function ErrorPage() {
     <main className={`flex flex-col `}>
       <DWIBanner />
       <Header />
-      <div className="bg-blue-primary text-white flex flex-col h-screen text-center justify-center ">
-        <span className="text-5xl font-bold my-6">Oops! This page can&apos;t be found </span>
+      <div className="flex h-screen flex-col justify-center bg-blue-primary text-center text-white ">
+        <span className="my-6 text-5xl font-bold">Oops! This page can&apos;t be found </span>
         <span>The content you&apos;re looking for may have moved</span>
 
         <Link
           href="/"
-          className="border-white border-solid border-2 hover:text-blue-primary hover:bg-white transition-all duration-300
-        max-w-xs mx-auto p-4 text-center bg-blue-800 m-4 ">
+          className="m-4 mx-auto max-w-xs border-2 border-solid border-white bg-blue-primary
+        p-4 text-center transition-all duration-300 hover:bg-white hover:text-blue-primary ">
           <Button className="text-xl">Back To Home Page</Button>
         </Link>
       </div>

@@ -35,8 +35,8 @@ interface Course {
 
 const CourseCard = ({ course }: { course: Course }) => {
   return (
-    <li className="bg-white rounded-sm border-solid border-2 shadow-md flex flex-col justify-center p-4 max-w-[300px]">
-      <div className="bg-blue-primary text-white p-4 text-center font-bold">
+    <li className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
+      <div className="bg-blue-primary p-4 text-center font-bold text-white">
         <h2 className="text-xl">{course.attributes.tagline}</h2>
       </div>
       <div className="relative">
@@ -45,9 +45,9 @@ const CourseCard = ({ course }: { course: Course }) => {
           alt={course.attributes.title}
           width={300}
           height={200}
-          className="w-full h-[200px] object-cover"
+          className="h-[200px] w-full object-cover"
         />
-        <div className="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 transform">
           <Image
             src="/DWI-logo-circle.webp"
             alt="Course Logo"
@@ -57,19 +57,19 @@ const CourseCard = ({ course }: { course: Course }) => {
           />
         </div>
       </div>
-      <div className="p-4 pt-8 items-center flex flex-col">
+      <div className="flex flex-col items-center p-4 pt-8">
         <Image
           src={course.attributes.cover.data.attributes.url}
           alt={course.attributes.title}
           width={180}
           height={440}
         />{" "}
-        <p className="text-blue-primary text-sm mb-4">
+        <p className="mb-4 text-sm text-blue-primary">
           {course.attributes.description}
         </p>
         <Button
           asChild
-          className="w-full bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 rounded-md"
+          className="w-full rounded-md bg-orange-400 py-2 font-bold text-white hover:bg-orange-500"
         >
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
@@ -129,23 +129,23 @@ export default function Courses({ pageData }: { pageData: any }) {
           height={"440"}
         />
 
-        <div className="absolute top-0 left-0 h-full flex items-left justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">Courses </span>
-          <span className="text-blue-light text-xl p-2">
+        <div className="items-left absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16">
+          <span className="p-4 text-3xl font-bold text-white">Courses </span>
+          <span className="p-2 text-xl text-blue-light">
             Complete courses for the dentist who wants to understand investing{" "}
           </span>
         </div>
       </div>
 
-      <ul className="flex space-y-8 justify-center p-4 flex-col">
+      <ul className="flex flex-col justify-center space-y-8 p-4">
         {pageData.map((course: any) => {
           return <CourseCard key={course.attributes.id} course={course} />;
         })}
       </ul>
-      <div className="shadow-md border-solid border-2 rounded-md m-4 bg-white">
+      <div className="m-4 rounded-md border-2 border-solid bg-white shadow-md">
         <Link
           href={"/100k"}
-          className="text-blue-primary hover:text-orange-400 text-md text-wrap text-center flex p-4"
+          className="text:md flex text-wrap p-4 text-center text-blue-primary hover:text-orange-400"
         >
           Psssssst – Principal dentists: want to add £100k to your turnover in
           the next 12 months..? ​

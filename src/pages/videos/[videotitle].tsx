@@ -63,19 +63,19 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mx-auto mt-5">
-        <div className="bg-gray-100 flex flex-col justify-center">
-          <div className="aspect-video m-6">
+      <div className="mx-auto mt-5 w-full max-w-md sm:max-w-xl md:max-w-4xl">
+        <div className="flex flex-col justify-center bg-gray-100">
+          <div className="m-6 aspect-video">
             <iframe
               src={`https://player.vimeo.com/video/${videoUri}`}
               width="640"
               height="360"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
-              className="top-0 left-0 w-full h-full"
+              className="left-0 top-0 h-full w-full"
             ></iframe>
           </div>
-          <h2 className="text-blue-primary text-xl font-bold mx-6">
+          <h2 className="mx-6 text-xl font-bold text-blue-primary">
             {pageData.attributes.name}
           </h2>
           <div className="m-5">
@@ -87,7 +87,7 @@ export default function VideoPage({
           </div>
         </div>
 
-        <div className="w-full my-5">
+        <div className="my-5 w-full">
           <Image
             src={
               associatedBanner.data.attributes.cover_image.data.attributes.url
@@ -96,11 +96,11 @@ export default function VideoPage({
             width={1200}
             height={400}
             layout="responsive"
-            className="w-full h-auto object-cover"
+            className="h-auto w-full object-cover"
           />
         </div>
 
-        <div className="italic text-sm">
+        <div className="text-sm italic">
           <span className="font-bold">Disclaimer: </span>
           All content on this channel is for education purposes only and does
           not constitute an investment recommendation or individual financial
@@ -115,11 +115,11 @@ export default function VideoPage({
           regulated, independent professional.
         </div>
 
-        <div className="bg-gray-100 flex flex-col justify-center my-5">
-          <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+        <div className="my-5 flex flex-col justify-center bg-gray-100">
+          <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
             Watch More
           </p>
-          <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+          <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
           <div className="px-16">
             <Carousel className="">
               <CarouselContent>

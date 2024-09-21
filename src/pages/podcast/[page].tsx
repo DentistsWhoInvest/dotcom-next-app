@@ -3,7 +3,6 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
@@ -137,7 +136,7 @@ export default function Podcasts({ pageData }: { pageData: any }) {
     <main className={`flex flex-col bg-[#f0f3f6]`}>
       <div className="relative">
         <Image
-          className="object-cover w-full"
+          className="w-full object-cover"
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
           }
@@ -146,9 +145,9 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           height={"440"}
         />
 
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">Podcasts </span>
-          <span className="text-blue-light text-xl p-2">
+        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
+          <span className="p-4 text-3xl font-bold text-white">Podcasts </span>
+          <span className="p-2 text-xl text-blue-light">
             The Dentists Who Invest Podcast Can&apos;t miss financial insights
             for UK dental professionals New episodes every: Monday | Wednesday |
             Friday
@@ -161,19 +160,19 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           return (
             <>
               <Link href={`/e${page.attributes.episode_number}`}>
-                <Card className="m-6 border-blue-secondary border-2 justify-center">
+                <Card className="m-6 justify-center border-2 border-blue-secondary">
                   <Image
                     src={page.attributes.artwork_url}
                     alt={page.attributes.name}
                     width={200}
                     height={200}
-                    className="object-cover w-full rounded-t-md"
+                    className="w-full rounded-t-md object-cover"
                   />
                   <CardContent className="p-2 text-center">
-                    <CardTitle className="text-blue-primary p-2">
+                    <CardTitle className="p-2 text-blue-primary">
                       {page.attributes.name}
                     </CardTitle>
-                    <CardDescription className="text-grey-primary p-2">
+                    <CardDescription className="p-2 text-grey-primary">
                       EP{page.attributes.episode_number} {trimmedTitle}
                     </CardDescription>
                   </CardContent>
