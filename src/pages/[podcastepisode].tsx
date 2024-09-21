@@ -6,6 +6,8 @@ import Disclaimer from "@/components/Disclaimer";
 import PodcastMarketingForm from "@/components/PodcastMarketingForm";
 import { createSlug } from "./articles";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
+import fs from 'fs'
+import path from 'path'
 
 const fetchAllItems = async (url: string) => {
   let allItems: any[] = [];
@@ -32,10 +34,35 @@ const fetchAllItems = async (url: string) => {
   return allItems;
 };
 
+function writeToLocal(result: any[]) {
+  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
+  
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(result), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log("Data written to file");
+        resolve();
+      }
+    });
+  });
+}
+
 export const getStaticPaths = async () => {
-  const result = await fetchAllItems("/podcasts");
+  const fetchedPodcasts = await fetchAllItems("/podcasts");
+  console.log("fetched all podcast episodes")
+
+  await writeToLocal(fetchedPodcasts)
+
+  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
+  const jsonData = fs.readFileSync(filePath, 'utf-8');  
+  const parsedData = JSON.parse(jsonData);
+
+
+
   return {
-    paths: result.map((result: { attributes: { episode_number: number } }) => ({
+    paths: parsedData.map((result: { attributes: { episode_number: number } }) => ({
       params: { podcastepisode: "e" + result.attributes.episode_number },
     })),
     fallback: false,
@@ -44,7 +71,13 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const episodeNumber = Number(params.podcastepisode.replace("e", ""));
-  const allPodcasts = await fetchAllItems(`/podcasts`);
+  // const allPodcasts = await fetchAllPodcasts()
+  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
+  const page = parseInt(params.page, 10) || 1;
+  const jsonData = fs.readFileSync(filePath, 'utf-8');
+  const allPodcasts = JSON.parse(jsonData);
+
+
   const matchingPodcast = allPodcasts.find(
     (podcast: { attributes: { episode_number: number } }) =>
       podcast.attributes.episode_number === episodeNumber
@@ -103,7 +136,6 @@ export default function PodcastPage({
   otherPodcasts: any;
   someArticles: any;
 }) {
-  console.log("pagedata", pageData);
 
   // const Transcript = ({ transcriptText }: any) => {
   //   // console.log("transcripttext", transcriptText);
