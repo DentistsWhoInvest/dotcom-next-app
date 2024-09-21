@@ -1,5 +1,11 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/contact-page");
@@ -10,14 +16,15 @@ export const getStaticProps = async () => {
   };
 };
 
-const ContactOptions =({ option }: { option: any }) => 
-{
-  return <div>test</div>
-}
+const ContactOptions = ({ option }: { option: any }) => {
+  return <div>test</div>;
+};
 
 export default function Contact({ pageData }: { pageData: any }) {
   console.log("pageData", pageData);
   console.log("pageData", pageData.attributes.contact_options);
+  const faqs = pageData.attributes.FAQs;
+  console.log("faqs", faqs);
   return (
     <main className={`flex flex-col`}>
       <div className="relative ">
@@ -41,11 +48,22 @@ export default function Contact({ pageData }: { pageData: any }) {
         </div>
       </div>
       <div>Get in touch with us</div>
-      <div>{pageData.attributes.contact_options.map((option:any) => <ContactOptions key={option} option={option} />)}
+      <div>
+        {pageData.attributes.contact_options.map((option: any) => (
+          <ContactOptions key={option} option={option} />
+        ))}
       </div>
       <div>FAQ</div>
-      
+      {pageData.attributes.FAQs.map((FAQ: any) => {
+        return (
+          <Accordion key={FAQ} type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>{FAQ.question}</AccordionTrigger>
+              <AccordionContent>{FAQ.answer[0]}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        );
+      })}
     </main>
-
   );
 }
