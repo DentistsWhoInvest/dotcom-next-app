@@ -6,6 +6,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/contact-page");
@@ -16,15 +24,61 @@ export const getStaticProps = async () => {
   };
 };
 
+// <>
+//       <Card className="m-6 justify-center border-2 border-blue-secondary">
+//         <Link href={`/videos/${slug}`}>
+//           <Image
+//             src="https://picsum.photos/200/150"
+//             alt={page.attributes.name}
+//             width={200}
+//             height={200}
+//             className="w-full rounded-t-md object-cover"
+//           />
+//         </Link>
+//         <CardContent className="p-2 text-center">
+//           <CardTitle className="p-2 text-blue-primary">
+//             <Link href={`/videos/${slug}`}>{page.attributes.name}</Link>
+//           </CardTitle>
+//           <CardDescription className="p-2 text-grey-primary">
+//             {page.attributes.description}
+//           </CardDescription>
+//         </CardContent>
+//         <CardFooter className="justify-center">
+//           <Link
+//             className={"text-xs font-semibold text-blue-secondary"}
+//             href={`/videos/${slug}`}
+//           >
+//             WATCH HERE
+//           </Link>
+//         </CardFooter>
+//       </Card>
+//     </>
+
 const ContactOptions = ({ option }: { option: any }) => {
-  return <div>test</div>;
+  console.log("option", option);
+  return (
+    <Card className="m-6 justify-center border-2 border-blue-secondary">
+      <div className="flex flex-col">
+        <CardContent className="p-2 text-center">
+          <p>icon</p>
+          <CardTitle className="p-2 text-blue-primary">
+            {option.title}
+          </CardTitle>
+          <CardDescription className="p-2 text-grey-primary">
+            {option.description}
+          </CardDescription>
+          <Link href={option.navigation_url}>
+            <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
+              {option.cta_text}
+            </button>
+          </Link>
+        </CardContent>
+      </div>
+    </Card>
+  );
 };
 
 export default function Contact({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
-  console.log("pageData", pageData.attributes.contact_options);
-  const faqs = pageData.attributes.FAQs;
-  console.log("faqs", faqs);
   return (
     <main className={`flex flex-col`}>
       <div className="relative ">
@@ -48,7 +102,7 @@ export default function Contact({ pageData }: { pageData: any }) {
         </div>
       </div>
       <div>Get in touch with us</div>
-      <div>
+      <div className="flex flex-row">
         {pageData.attributes.contact_options.map((option: any) => (
           <ContactOptions key={option} option={option} />
         ))}
