@@ -37,7 +37,7 @@ export default function Articles({ pageData }: { pageData: any }) {
     <main className={`flex flex-col bg-[#f0f3f6]`}>
       <div className="relative">
         <Image
-          className="object-cover w-full"
+          className="w-full object-cover"
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
           }
@@ -46,14 +46,14 @@ export default function Articles({ pageData }: { pageData: any }) {
           height={"440"}
         />
 
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">Articles </span>
-          <span className="text-blue-light text-xl p-2">
+        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
+          <span className="p-4 text-3xl font-bold text-white">Articles </span>
+          <span className="p-2 text-xl text-blue-light">
             Read to understand how you can accelerate your financial goals​
           </span>
         </div>
       </div>
-      <div className="text-blue-secondary text-center font-bold text-3xl p-4">
+      <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
         All Articles
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -62,16 +62,16 @@ export default function Articles({ pageData }: { pageData: any }) {
           return (
             <li key={page.id}>
               <Link href={`/articles/${slug}`}>
-                <Card className="m-6 border-blue-secondary border-2 justify-center">
+                <Card className="m-6 justify-center border-2 border-blue-secondary">
                   <Image
                     src={page.attributes.cover.data.attributes.url}
                     alt={page.attributes.name}
                     width={200}
                     height={200}
-                    className="object-cover w-full rounded-t-md"
+                    className="w-full rounded-t-md object-cover"
                   />
                   <CardContent className="p-2 text-center">
-                    <CardTitle className="text-blue-primary p-2">
+                    <CardTitle className="p-2 text-blue-primary">
                       {page.attributes.title}
                     </CardTitle>
                   </CardContent>

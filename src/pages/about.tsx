@@ -69,7 +69,7 @@ export default function About({
     <main className={`flex flex-col `}>
       <div className="relative ">
         <Image
-          className="w-[320px] h-[440px] object-cover "
+          className="h-[440px] w-[320px] object-cover "
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
           }
@@ -78,37 +78,37 @@ export default function About({
           height={"440"}
         />
 
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
-          <span className="text-white text-3xl font-bold p-4">
+        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
+          <span className="p-4 text-3xl font-bold text-white">
             {pageData.attributes.hero_title}
           </span>
-          <span className="text-blue-light text-xl p-2">
+          <span className="p-2 text-xl text-blue-light">
             {pageData.attributes.hero_subtext}
           </span>
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full h-full p-8 text-center">
-        <p className="text-blue-primary font-bold text-2xl">
+      <div className="flex size-full flex-col items-center justify-center p-8 text-center">
+        <p className="text-2xl font-bold text-blue-primary">
           {result[1].attributes.title}
         </p>
-        <span className="w-full h-0.5 bg-blue-primary m-4" />
+        <span className="m-4 h-0.5 w-full bg-blue-primary" />
         <ul className="p-4">
           <li>
             <p className="text-2xl text-blue-secondary">01</p>
-            <p className="text-xl text-grey-primary text-left">
+            <p className="text-left text-xl text-grey-primary">
               {result[1].attributes.text1}
             </p>
           </li>
           <li>
             <p className="text-2xl text-blue-secondary">02</p>
-            <p className="text-xl text-grey-primary text-left">
+            <p className="text-left text-xl text-grey-primary">
               {result[1].attributes.text2}
             </p>
           </li>
           <li>
             <p className="text-2xl text-blue-secondary">03</p>
-            <p className="text-xl text-grey-primary text-left">
+            <p className="text-left text-xl text-grey-primary">
               {result[1].attributes.text3}
             </p>
           </li>
@@ -117,7 +117,7 @@ export default function About({
 
       <div className="relative">
         <Image
-          className="w-[320px] h-[533.58px] object-cover "
+          className="h-[533.58px] w-[320px] object-cover "
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
           }
@@ -126,15 +126,15 @@ export default function About({
           height={"534"}
         />
 
-        <div className="absolute top-0 left-0 w-full h-full flex items-center z-10 flex-col text-white p-10">
-          <p className="text-3xl font-bold p-4">{result[2].attributes.title}</p>
+        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center p-10 text-white">
+          <p className="p-4 text-3xl font-bold">{result[2].attributes.title}</p>
           <p>{result[2].attributes.description1}</p>
           <p>{result[2].attributes.description2}</p>
         </div>
 
-        <div className="flex flex-col items-center justify-center w-full h-full p-8 text-left space-y-2">
+        <div className="flex size-full flex-col items-center justify-center space-y-2 p-8 text-left">
           <Image
-            className="w-[280px] h-[364px] object-cover rounded-3xl m-4"
+            className="m-4 h-[364px] w-[280px] rounded-3xl object-cover"
             width={280}
             height={364}
             src={

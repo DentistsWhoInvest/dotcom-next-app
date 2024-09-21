@@ -41,27 +41,27 @@ export const ViewMoreCard = ({
 
   return (
     <>
-      <Card className=" border-2 justify-start">
+      <Card className="justify-start border-2">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
             src="https://picsum.photos/200/150"
             alt={page.attributes.name}
             width={200}
             height={200}
-            className="object-cover w-full rounded-t-md"
+            className="w-full rounded-t-md object-cover"
           />
         </Link>
         <CardContent className="p-2 text-left">
-          <CardTitle className="text-blue-primary p-2">
+          <CardTitle className="p-2 text-blue-primary">
             <Link href={`/${hrefStarter}/${slug}`}>
               {page.attributes.title}
             </Link>
           </CardTitle>
-          <CardDescription className="text-grey-primary p-2">
+          <CardDescription className="p-2 text-grey-primary">
             {page.attributes.excerpt}
           </CardDescription>
           <Link
-            className={"text-blue-secondary text-xs font-semibold"}
+            className={"text-xs font-semibold text-blue-secondary"}
             href={`/${hrefStarter}/${slug}`}
           >
             <span className="flex p-2">
@@ -69,7 +69,7 @@ export const ViewMoreCard = ({
             </span>
           </Link>
         </CardContent>
-        <CardFooter className=" border-t-2 text-xs justify-start p-4">
+        <CardFooter className=" justify-start border-t-2 p-4 text-xs">
           {publishedDate}
         </CardFooter>
       </Card>

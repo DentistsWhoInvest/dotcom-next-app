@@ -192,7 +192,7 @@ export default function PodcastPage({
       </Head>
       <div className="relative ">
         <Image
-          className="object-cover w-full"
+          className="w-full object-cover"
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
           }
@@ -201,16 +201,16 @@ export default function PodcastPage({
           height={"440"}
         />
 
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 flex-col p-16">
+        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
           <div className="flex flex-row">
             <p className="basis-1/3">
-            <span className="text-blue-secondary text-3xl font-bold p-4">
+            <span className="p-4 text-3xl font-bold text-blue-secondary">
               Episodes {pageData.attributes.episode_number}
             </span>
-            <span className="text-white text-3xl font-bold p-4">
+            <span className="p-4 text-3xl font-bold text-white">
               {pageData.attributes.title}
             </span>
-            <span className="text-blue-light text-xl p-2">
+            <span className="p-2 text-xl text-blue-light">
               Hosted by: Dr. James Martin
             </span>
             </p>
@@ -218,7 +218,7 @@ export default function PodcastPage({
           </div>
         </div>
       </div>
-      <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
         <div className="col-span-1">
           <iframe
             src="https://www.buzzsprout.com/1471306/15694076-is-marketing-a-naughty-word-with-john-williamson-and-dr-ferhan-ahmed-dwi-ep301?client_source=small_player&amp;iframe=true
@@ -228,7 +228,7 @@ export default function PodcastPage({
             height="200"
             title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
           ></iframe>
-          <div className="w-full my-5">
+          <div className="my-5 w-full">
             <Image
               src={
                 associatedHorizontalBanner.attributes.cover_image.data
@@ -238,25 +238,25 @@ export default function PodcastPage({
               width={1200}
               height={400}
               layout="responsive"
-              className="w-full h-auto object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center my-5">
-            <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+          <div className="my-5 flex flex-col justify-center">
+            <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
               Description
             </p>
-            <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2 pb-8"></p>
+            <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary pb-8"></p>
             <div
               dangerouslySetInnerHTML={{
                 __html: pageData.attributes.description,
               }}
             />
           </div>
-          <div className="flex flex-col justify-center my-5">
-            <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+          <div className="my-5 flex flex-col justify-center">
+            <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
               Transcription
             </p>
-            <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+            <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
           </div>
           <div className="p-2">
             {" "}
@@ -264,7 +264,7 @@ export default function PodcastPage({
           </div>
           <div className="p-4">
             <Disclaimer contentType="podcast" />
-            <div className="w-full my-5">
+            <div className="my-5 w-full">
               <Image
                 src={
                   associatedHorizontalBanner.attributes.cover_image.data
@@ -274,7 +274,7 @@ export default function PodcastPage({
                 width={1200}
                 height={400}
                 layout="responsive"
-                className="w-full h-auto object-cover"
+                className="h-auto w-full object-cover"
               />
             </div>
 
@@ -284,7 +284,7 @@ export default function PodcastPage({
               return (
                 <ul
                   key={page.id}
-                  className="sm:basis-full md:basis-1/2 lg:basis-1/3 p-4 md:hidden"
+                  className="p-4 sm:basis-full md:hidden md:basis-1/2 lg:basis-1/3"
                 >
                   <ViewMoreCard
                     page={page}
@@ -299,14 +299,14 @@ export default function PodcastPage({
           </div>
         </div>
         <div className="md:col-start-2">
-          <div className="w-full my-5 hidden md:block">
+          <div className="my-5 hidden w-full md:block">
             {otherPodcasts.map((page: any) => {
               //todo: might need to tweak the title
               const viewMoreSlug = createSlug(page.attributes.title);
               return (
                 <ul
                   key={page.id}
-                  className="sm:basis-full md:basis-1/2 lg:basis-1/3 p-4"
+                  className="p-4 sm:basis-full md:basis-1/2 lg:basis-1/3"
                 >
                   <ViewMoreCard
                     page={page}
@@ -325,11 +325,11 @@ export default function PodcastPage({
               width={1200}
               height={400}
               layout="responsive"
-              className="w-full h-auto object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
         </div>
-        <div className="w-full my-5 hidden md:block flex:row">
+        <div className="my-5 hidden w-full flex-row md:block">
           {someArticles.map((page: any) => {
             //todo: might need to tweak the title
             const viewMoreSlug = createSlug(page.attributes.title);

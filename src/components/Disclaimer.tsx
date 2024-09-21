@@ -1,15 +1,10 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { Content } from "next/font/google";
-
 export default function Disclaimer({ contentType }: { contentType?: string }) {
   return (
     <div className="">
       {contentType === "article" && (
         <div className="font-bold">*Not Financial Advice⁣⁣⁣</div>
       )}
-      <div className="italic text-sm">
+      <div className="text-sm italic">
         <span className="font-bold">Disclaimer: </span>
         All content on this channel is for education purposes only and does not
         constitute an investment recommendation or individual financial advice.
