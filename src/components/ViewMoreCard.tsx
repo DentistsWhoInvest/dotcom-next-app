@@ -20,9 +20,10 @@ export const ViewMoreCard = ({
   contentType: string;
   slug: string;
 }) => {
-  console.log("ViewMoreCard", page);
-
-  const { publishedDate } = processDate(page.attributes.publish_date);
+  const { publishedDate } =
+    contentType === "article"
+      ? processDate(page.attributes.publish_date)
+      : processDate(page.attributes.publishedAt);
 
   function getHrefStarter(contentType: string) {
     switch (contentType) {

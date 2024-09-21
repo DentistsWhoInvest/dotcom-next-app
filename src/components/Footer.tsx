@@ -47,7 +47,7 @@ const ShareButtons = () => {
 export default function Footer() {
   const ExploreLinks = [
     { href: "/about", text: "About" },
-    { href: "/podcasts", text: "Podcast" },
+    { href: "/podcast/1", text: "Podcast" },
     { href: "/articles", text: "Articles" },
     { href: "/videos", text: "Videos" },
   ];

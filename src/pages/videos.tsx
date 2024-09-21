@@ -18,7 +18,6 @@ export const getStaticProps = async () => {
 };
 
 export const VideoCard = ({ page }: { page: any }) => {
-  console.log("page", page);
   const slug = createSlug(page.attributes.name);
   return (
     <>
