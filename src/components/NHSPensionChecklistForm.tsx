@@ -2,8 +2,8 @@ import { Button } from "./ui/button";
 
 export default function NHSPensionChecklistForm() {
   return (
-    <div className="bg-orange-400 text-white flex flex-col justify-center m-4 p-4">
-      <div className="text-center font-bold text-xl">
+    <div className="m-4 flex flex-col justify-center bg-orange-400 p-4 text-white">
+      <div className="text-center text-xl font-bold">
         Have you got your NHS Pension checklist yet?
       </div>
       <div>
@@ -11,16 +11,16 @@ export default function NHSPensionChecklistForm() {
         <input
           type="text"
           placeholder="Type your first name"
-          className="text-black w-full rounded-sm p-1"
+          className="w-full rounded-sm p-1 text-black"
         />
         <p>Email*</p>
         <input
           type="email"
           placeholder="Type your email"
-          className="text-black w-full rounded-sm p-1"
+          className="w-full rounded-sm p-1 text-black"
         />
       </div>
-      <Button className="bg-blue-secondary text-center m-4 ">
+      <Button className="m-4 bg-blue-secondary text-center ">
         SUBMIT & DOWNLOAD
       </Button>
       <div className="text-xs">

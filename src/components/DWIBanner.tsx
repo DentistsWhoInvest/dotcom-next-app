@@ -1,11 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-
 export default function DWIBanner() {
   return (
     <div className="bg-blue-primary">
-      <div className="p-2.5 flex justify-center">
+      <div className="flex justify-center p-2.5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="300"

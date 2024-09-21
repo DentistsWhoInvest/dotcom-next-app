@@ -25,15 +25,15 @@ export default function Header() {
   const MenuOverlay = () => {
     return (
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
         onClick={() => setShowOverlay(false)}
       >
         <div
-          className="bg-[#f0f3f6] flex flex-col w-2/5 h-full top-0 right-0 absolute items-end p-2"
+          className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2"
           onClick={(e) => e.stopPropagation()}
         >
           <button
-            className="text-gray-700 hover:text-blue-500 border-solid border-2 border-blue-primary w-4"
+            className="w-4 border-2 border-solid border-blue-primary text-gray-700 hover:text-blue-primary"
             onClick={() => setShowOverlay(false)}
           >
             x
@@ -54,7 +54,7 @@ export default function Header() {
     return menuLinksList.map((link) => (
       <li
         key={link.href}
-        className={`text-lg px-2 py-2 ${
+        className={`p-2 text-lg ${
           currentPath === link.href
             ? "text-blue-secondary"
             : "text-blue-primary hover:text-blue-secondary"
@@ -67,7 +67,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="bg-[#f0f3f6] flex flex-row px-5 py-3 justify-between">
+      <div className="flex flex-row justify-between bg-[#f0f3f6] px-5 py-3">
         <div className="w-1/3">
           <Image
             src={
@@ -80,11 +80,11 @@ export default function Header() {
         </div>
 
         <button
-          className="md:hidden text-gray-700 hover:text-blue-500"
+          className="text-gray-700 hover:text-blue-primary md:hidden"
           onClick={() => setShowOverlay(true)}
         >
           <svg
-            className="w-6 h-6 text-blue-primary"
+            className="size-6 text-blue-primary"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -99,10 +99,10 @@ export default function Header() {
 
         {showOverlay && <MenuOverlay />}
 
-        <ul className="flex-row hidden md:flex">
+        <ul className="hidden flex-row md:flex">
           <MenuLinks menuLinksList={menuLinksList} />
           <Link href={"https://courses.dentistswhoinvest.com/login"}>
-            <button className="bg-orange-400 text-white font-bold hover:text-blue-primary rounded-md px-4 py-3 m-2">
+            <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
               Members
             </button>
           </Link>

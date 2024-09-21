@@ -2,8 +2,8 @@ import { Button } from "./ui/button";
 
 export default function PodcastMarketingForm() {
   return (
-    <div className="bg-blue-primary text-white flex flex-col justify-center m-4 p-4">
-      <div className="text-center font-bold text-xl">
+    <div className="m-4 flex flex-col justify-center bg-blue-primary p-4 text-white">
+      <div className="text-center text-xl font-bold">
         Never Miss A Dentists Who Invest Podcast Episode Again And Also Receive
         A Free Report On Investing​
       </div>
@@ -12,16 +12,16 @@ export default function PodcastMarketingForm() {
         <input
           type="text"
           placeholder="Type your first name"
-          className="text-black w-full rounded-sm p-1"
+          className="w-full rounded-sm p-1 text-black"
         />
         <p>Email*</p>
         <input
           type="email"
           placeholder="Type your email"
-          className="text-black w-full rounded-sm p-1"
+          className="w-full rounded-sm p-1 text-black"
         />
       </div>
-      <Button className="bg-blue-secondary text-center m-4 ">
+      <Button className="m-4 bg-blue-secondary text-center ">
         SUBMIT & DOWNLOAD
       </Button>
       <div className="text-xs">
