@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/router";
+import Script from "next/script";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,10 +23,25 @@ export default function App({ Component, pageProps }: AppProps) {
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
 
   return (
-    <main className={poppins.className}>
-      {showHeaderAndFooter && <Header />}
-      <Component {...pageProps} />
-      {showHeaderAndFooter && <Footer />}
-    </main>
+    <>
+      {/* Google Tag Manager - Global base code */}
+      <Script id="gtm-script" strategy="afterInteractive">
+        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KMBJ6G57');
+        `}
+      </Script>
+      <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMBJ6G57" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
+      </noscript>
+
+      <main className={poppins.className}>
+        {showHeaderAndFooter && <Header />}
+        <Component {...pageProps} />
+        {showHeaderAndFooter && <Footer />}
+      </main>
+    </>
   );
 }
