@@ -12,7 +12,6 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
 
 export const getStaticProps = async () => {
@@ -24,38 +23,8 @@ export const getStaticProps = async () => {
   };
 };
 
-// <>
-//       <Card className="m-6 justify-center border-2 border-blue-secondary">
-//         <Link href={`/videos/${slug}`}>
-//           <Image
-//             src="https://picsum.photos/200/150"
-//             alt={page.attributes.name}
-//             width={200}
-//             height={200}
-//             className="w-full rounded-t-md object-cover"
-//           />
-//         </Link>
-//         <CardContent className="p-2 text-center">
-//           <CardTitle className="p-2 text-blue-primary">
-//             <Link href={`/videos/${slug}`}>{page.attributes.name}</Link>
-//           </CardTitle>
-//           <CardDescription className="p-2 text-grey-primary">
-//             {page.attributes.description}
-//           </CardDescription>
-//         </CardContent>
-//         <CardFooter className="justify-center">
-//           <Link
-//             className={"text-xs font-semibold text-blue-secondary"}
-//             href={`/videos/${slug}`}
-//           >
-//             WATCH HERE
-//           </Link>
-//         </CardFooter>
-//       </Card>
-//     </>
 
 const ContactOptions = ({ option }: { option: any }) => {
-  console.log("option", option);
   return (
     <Card className="m-6 justify-center border-2 border-blue-secondary">
       <div className="flex flex-col">
