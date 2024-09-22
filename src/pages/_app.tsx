@@ -16,9 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   // Defines the paths where the header and footer should not be displayed.
-  // for the moment it's the informed investors club page, which is a landing page.
+  // for the moment it's the courses pages and informed investors club page, which is a landing page.
   // The 404 page has these components added in its own file, since it also has a bigger banner on top of the header.
-  const noHeaderOrFooterRoute = ["/the-informed-investors-club", "/404"];
+  const noHeaderOrFooterRoute = ["/cash-flow-for-dentists", "/the-academy", "/100k", "/the-informed-investors-club", "/404"];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
 
