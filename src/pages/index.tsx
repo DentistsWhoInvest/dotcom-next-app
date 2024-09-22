@@ -1,13 +1,23 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import {
-  BlocksRenderer,
-} from "@strapi/blocks-react-renderer";
+// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import Link from "next/link";
 import Lottie from "lottie-react";
 import lottieProject from "../../public/animations/project.json";
 import lottieRocket from "../../public/animations/rocket.json";
 import lottieTreasure from "../../public/animations/treasure.json";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Icon } from "lucide-react";
+import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
+import { Button } from "@/components/ui/button";
+import { useState, useRef, useEffect } from "react";
+import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -37,30 +47,228 @@ function replaceImageDomain(url: string): string {
   );
 }
 
+const MetricCounter = ({ value }: { value: number }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Stop observing after it becomes visible
+        }
+      },
+      { threshold: 0.1 } // Trigger when 10% of the element is visible
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      let isMounted = true;
+      const duration = 1000; // Duration of the animation in milliseconds
+      const incrementTime = 10; // Time between increments in milliseconds
+      const totalSteps = duration / incrementTime; // Total number of increments
+      const incrementValue = Math.ceil(value / totalSteps); // Calculate increment value
+
+      const interval = setInterval(() => {
+        setCount((prevCount) => {
+          if (prevCount + incrementValue >= value) {
+            clearInterval(interval);
+            return value; // Ensure we don't exceed the target value
+          }
+          return prevCount + incrementValue;
+        });
+      }, incrementTime);
+
+      return () => {
+        isMounted = false; // Cleanup
+        clearInterval(interval);
+      };
+    }
+  }, [isVisible, value]);
+
+  return (
+    <span id="community-members" ref={ref}>
+      {count}+
+    </span>
+  );
+};
+
+const HomePageCourseCard = ({ course }: { course: any }) => {
+  return (
+    <li className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
+      <div className="bg-blue-primary p-4 text-center font-bold text-white">
+        <h2 className="text-xl">{course.attributes.tagline}</h2>
+      </div>
+      <div className="relative">
+        <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2">
+          <Image
+            src="/DWI-logo-circle.webp"
+            alt="Course Logo"
+            width={40}
+            height={40}
+            className="rounded-full border-2 border-white"
+          />
+        </div>
+      </div>
+      <div className="flex flex-col items-center p-4 pt-8">
+        <Image
+          src={course.attributes.cover.data.attributes.url}
+          alt={course.attributes.title}
+          width={180}
+          height={440}
+        />{" "}
+        <p className="mb-4 text-sm text-blue-primary">
+          {course.attributes.description}
+        </p>
+        <Button
+          asChild
+          className="w-full rounded-md bg-orange-400 py-2 font-bold text-white hover:bg-orange-500"
+        >
+          <Link href={course.attributes.navigation_url}>Learn More</Link>
+        </Button>
+      </div>
+    </li>
+  );
+};
+
+const ExtraCourseCard = () => {
+  return (
+    <div className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
+      <Link href="/100k" aria-label="Information about the 100k course">
+        Psssssst – Principal dentists: want to add £100k to your turnover in the
+        next 12 months..?
+      </Link>
+    </div>
+  );
+};
+
+const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
+  console.log("testimonial", testimonial);
+  return (
+    <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl">
+      <CardContent className="space-y-4 text-left">
+        <CardTitle className="p-2 text-lg font-bold">
+          <Image
+            id="quote"
+            src="/white-quote.png"
+            alt="quote-mark"
+            width={100}
+            height={100}
+          />
+          <h4>{testimonial.attributes.title}</h4>
+        </CardTitle>
+        <CardDescription>
+          {testimonial.attributes.review[0].children[0].text}
+          <div id="stars" className="flex space-x-1">
+            {Array.from({ length: 5 }, (_, index) => (
+              <svg
+                key={index}
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="gold"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
+                  fill="gold"
+                />
+              </svg>
+            ))}
+          </div>
+        </CardDescription>
+        <CardFooter className="flex flex-col">
+          <Image
+            src={replaceImageDomain(
+              testimonial.attributes.author_thumbnail.data.attributes.formats
+                .small.url
+            )}
+            alt={
+              testimonial.attributes.author_thumbnail.data.attributes
+                .alternativeText
+            }
+            width={60}
+            height={60}
+            id="testimonial-profile"
+            className="rounded-full"
+          />
+          <div id="description">
+            <p className="text-lg font-semibold">
+              {testimonial.attributes.author}
+            </p>
+            <p>{testimonial.attributes.author_job_location}</p>
+          </div>
+        </CardFooter>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default function Home({ pageData }: { pageData: any }) {
+  console.log("pageData", pageData);
   return (
     <main>
       <section>
-        <Image
-          src={replaceImageDomain(
-            pageData.hero_cover.data.attributes.formats.large.url
-          )}
-          alt={pageData.hero_cover.data.attributes.alternativeText}
-          width={pageData.hero_cover.data.attributes.width}
-          height={pageData.hero_cover.data.attributes.height}
-        />
-        <h2>{pageData.hero_text}</h2>
-        <p>{pageData.hero_subtext}</p>
-        <a
-          href="https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {pageData.hero_button_text}
-        </a>
+        <div className="relative h-[440px] w-full">
+          <Image
+            src={replaceImageDomain(
+              pageData.hero_cover.data.attributes.formats.large.url
+            )}
+            alt={pageData.hero_cover.data.attributes.alternativeText}
+            layout="fill"
+            objectPosition="center"
+            objectFit="cover"
+            priority
+          />
+
+          <div className="absolute inset-0 z-10 flex h-full flex-col justify-center p-4 text-center">
+            <p className="p-4 text-3xl font-bold text-white">
+              {pageData.hero_text}
+            </p>
+            <p className="p-2 text-blue-light">{pageData.hero_subtext}</p>
+            <Link
+              href="https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
+                {pageData.hero_button_text}
+              </button>
+            </Link>
+          </div>
+        </div>
       </section>
 
-      <section>
+      <section className="m-4 space-y-4 p-4">
+        <h3 className="text-center text-2xl font-bold text-blue-primary">
+          {pageData.founder_text}
+        </h3>
+        <h6 className="text-center text-blue-secondary">
+          {pageData.founder_subtext}
+        </h6>
+        {/* <BlocksRenderer content={pageData.founder_description} /> */}
+        {pageData.founder_description.map((block: any) => {
+          console.log("block", block);
+          return (
+            <div key={block.id}>
+              <p>{block.children[0].text}</p>
+            </div>
+          );
+        })}
+
         <Image
           src={replaceImageDomain(
             pageData.founder_image.data.attributes.formats.large.url
@@ -68,23 +276,14 @@ export default function Home({ pageData }: { pageData: any }) {
           alt={pageData.founder_image.data.attributes.alternativeText}
           width={pageData.founder_image.data.attributes.width}
           height={pageData.founder_image.data.attributes.height}
+          className="rounded-lg"
         />
-        <h3>{pageData.founder_text}</h3>
-        <h6>{pageData.founder_subtext}</h6>
-        <BlocksRenderer content={pageData.founder_description} />
-        {/* todo: add link description */}
-
-        <Link
-          href="/about"
-          id="orange-link-on-white"
-          aria-label={pageData.founder_cta_link_description}
-        >
-          {pageData.founder_cta_text}
-        </Link>
       </section>
 
-      <section>
-        <h2>{pageData.what_we_do_title}</h2>
+      <section className="bg-gray-100 py-4 text-center">
+        <h2 className="text-2xl font-bold text-blue-primary">
+          {pageData.what_we_do_title}
+        </h2>
         <div>
           {pageData.what_we_do_reasons.map((reason: any) => {
             let lottieVar;
@@ -96,137 +295,121 @@ export default function Home({ pageData }: { pageData: any }) {
               lottieVar = lottieRocket;
             }
             return (
-              <div key={reason.id}>
-                {/* learn to choose correct import */}
-                <Lottie
-                  animationData={lottieVar}
-                  loop={true}
-                  width="200"
-                  height="200"
-                  style={{ width: 200, height: 200 }}
-                />
-                <h3>{reason.title}</h3>
-                <BlocksRenderer content={reason.description} />
-                {/* todo: handle external links? */}
-                <Link
-                  href={reason.cta_navigation_url}
-                  aria-label={reason.cta_navigation_description}
-                >
-                  {reason.cta_text}
-                </Link>
-              </div>
+              <Card
+                key={reason.id}
+                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-2xl"
+              >
+                <CardContent className=" text-center">
+                  <div className="mx-auto my-4 size-20">
+                    <Lottie
+                      animationData={lottieVar}
+                      loop={true}
+                      width="200"
+                      height="200"
+                    />{" "}
+                  </div>
+                  <CardTitle className="p-2 text-lg font-bold text-blue-primary">
+                    <p>{reason.title}</p>
+                  </CardTitle>
+                  <CardDescription className="p-2 text-grey-primary">
+                    {/* <BlocksRenderer content={reason.description} />{" "} */}
+                    {reason.description.map((block: any) => {
+                      return (
+                        <div key={block.id}>
+                          <p>{block.children[0].text}</p>
+                        </div>
+                      );
+                    })}
+                  </CardDescription>
+                  <Link
+                    href={reason.cta_navigation_url}
+                    aria-label={reason.cta_navigation_description}
+                  >
+                    <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
+                      {reason.cta_text}
+                    </button>
+                  </Link>{" "}
+                </CardContent>
+              </Card>
             );
           })}
         </div>
       </section>
 
       <section>
-        <h2>{pageData.why_you_title}</h2>
-        <div>
-          {pageData.why_you_reasons.map((reason: any) => {
-            let tickUrl = `${assetDomain}/tick-in-circle-orange.svg`;
+        <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl ">
+          <CardTitle className="p-8 text-center text-2xl font-bold ">
+            {pageData.why_you_title}
+          </CardTitle>
+          {pageData.why_you_reasons.map((reason: any, index: number) => {
             return (
               <div key={reason.id}>
-                <Image src={tickUrl} alt="Checkmark" width="40" height="40" />
-                <p key={reason.id}>{reason.reason}</p>
+                <CardContent className=" flex flex-row space-x-2 text-left">
+                  <Image
+                    src={"/tick-in-circle-orange.svg"}
+                    alt="Checkmark"
+                    width="40"
+                    height="40"
+                  />
+                  <p key={reason.id}>{reason.reason}</p>
+                </CardContent>
+                {index < pageData.why_you_reasons.length - 1 && (
+                  <div className="mx-6 my-2 border border-orange-400" />
+                )}
               </div>
             );
-          })}
-        </div>
+          })}{" "}
+        </Card>
       </section>
 
-      <section id="familiar-section">
+      <section id="familiar-section" className="p-4">
         <div id="container">
-          <div id="text-content">
-            <h2>{pageData.why_you_familiar_title}</h2>
-            <p>{pageData.why_you_familiar_subtitle}</p>
+          <div id="text-content" className="text-center">
+            <h2 className="text-2xl font-bold text-blue-primary">
+              {pageData.why_you_familiar_title}
+            </h2>
+            <h6 className="text-center text-blue-secondary">
+              {pageData.why_you_familiar_subtitle}
+            </h6>
           </div>
 
           <div id="carousel-container">
-            <div id="carousel">
-              {pageData.why_you_familiar_thoughts.map((thought: any) => {
-                return (
-                  <div id="thought" key={thought.id}>
-                    <Image
-                      src={replaceImageDomain(
-                        thought.cover.data.attributes.formats.large.url
-                      )}
-                      alt={thought.cover.data.attributes.alternativeText}
-                      width={thought.cover.data.attributes.width}
-                      height={thought.cover.data.attributes.height}
-                    />
-                    <p>{thought.thought}</p>
-                  </div>
-                );
-              })}
-            </div>
+            {/* <CustomHomePageCarousel
+              thoughts={pageData.why_you_familiar_thoughts}
+            /> */}
           </div>
         </div>
       </section>
 
-      <section id="enrolment">
-        <h3>{pageData.courses_subtitle}</h3>
-        <h1>{pageData.courses_title}</h1>
+      <section id="enrolment" className="space-y-4 bg-gray-100 p-4 text-center">
+        <h3 className="text-blue-secondary">{pageData.courses_subtitle}</h3>
+        <h2 className="text-2xl font-bold text-blue-primary">
+          {pageData.courses_title}
+        </h2>
         <p>{pageData.courses_description}</p>
-        <div id="courses">
+        <div id="courses" className="space-y-4">
           {pageData.courses.data.map((course: any) => {
-            let ariaLabel = `Information about the ${course.attributes.title} course`;
-            return (
-              <div id="course" key={course.id}>
-                <Image
-                  src="/DWI-logo-circle.webp"
-                  alt="Coruse Created By Dr. James Martin"
-                  id="header"
-                  width={100}
-                  height={100}
-                />
-                <div id="course-title">
-                  <h2>{course.attributes.tagline}</h2>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 500 150"
-                    preserveAspectRatio="none"
-                  >
-                    <path d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"></path>
-                    <path d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"></path>
-                  </svg>
-                </div>
-                <Image
-                  src={replaceImageDomain(
-                    course.attributes.cover.data.attributes.formats.small.url
-                  )}
-                  alt={course.attributes.cover.data.attributes.alternativeText}
-                  width={course.attributes.cover.data.attributes.width}
-                  height={course.attributes.cover.data.attributes.height}
-                  id="course-logo"
-                />
-                <p id="tagline">{course.attributes.description}</p>
-                <Link
-                  href={course.attributes.navigation_url}
-                  aria-label={ariaLabel}
-                >
-                  {course.attributes.cta_text}
-                </Link>
-              </div>
-            );
+            return <HomePageCourseCard key={course.id} course={course} />;
           })}
         </div>
 
         <div id="extraCourse">
-          <Link href="/100k" aria-label="Information about the 100k course">
-            Psssssst – Principal dentists: want to add £100k to your turnover in
-            the next 12 months..?
-          </Link>
+          <ExtraCourseCard />
         </div>
       </section>
 
       <section id="stats">
-        <div id="stats-container">
+        <div
+          id="stats-container"
+          className="space-y-2 bg-blue-secondary/50 p-4 text-center text-xl font-bold text-white"
+        >
           {pageData.metrics.map((metric: any) => {
             return (
               <div id="stat" key={metric.id}>
                 <h2>
-                  <span id="community-members">{metric.value}</span>
+                  <span id="community-members">
+                    <MetricCounter value={metric.value} />
+                  </span>
                 </h2>
                 <p>{metric.title}</p>
               </div>
@@ -235,113 +418,21 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section id="testimonials">
-        <h2>{pageData.testimonials_title}</h2>
+      <section id="testimonials" className="p-4 text-center">
+        <h2 className="text-2xl font-bold text-blue-primary">
+          {pageData.testimonials_title}
+        </h2>
 
         <div id="testimonial-cards">
           {pageData.testimonials.data.map((testimonial: any) => {
             return (
-              <div id="card" key={testimonial.id}>
-                <div id="testimonial">
-                  <Image id="quote" src="/quote.webp" alt="quote-mark" width={100} height={100} />
-                  <h4>{testimonial.attributes.title}</h4>
-                  <BlocksRenderer content={testimonial.attributes.review} />
-                  <div id="stars">
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="yellow"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                        fill="yellow"
-                      />
-                    </svg>
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="yellow"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                        fill="yellow"
-                      />
-                    </svg>
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="yellow"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                        fill="yellow"
-                      />
-                    </svg>
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="yellow"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                        fill="yellow"
-                      />
-                    </svg>
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 24 24"
-                      fill="yellow"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                        fill="yellow"
-                      />
-                    </svg>
-                  </div>
-                  <div id="gap"></div>
-                  <div id="identity">
-                    <Image
-                      src={replaceImageDomain(
-                        testimonial.attributes.author_thumbnail.data.attributes
-                          .formats.small.url
-                      )}
-                      alt={
-                        testimonial.attributes.author_thumbnail.data.attributes
-                          .alternativeText
-                      }
-                      width={
-                        testimonial.attributes.author_thumbnail.data.attributes
-                          .width
-                      }
-                      height={
-                        testimonial.attributes.author_thumbnail.data.attributes
-                          .height
-                      }
-                      id="testimonial-profile"
-                    />
-                    <div id="description">
-                      <h5>{testimonial.attributes.author}</h5>
-                      <p>{testimonial.attributes.author_job_location}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             );
           })}
         </div>
       </section>
 
-      {/* todo: add NHS pension checklist */}
+      <HomePageNHSPensionForm />
     </main>
   );
 }

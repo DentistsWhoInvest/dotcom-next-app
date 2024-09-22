@@ -54,11 +54,12 @@ export default function Header() {
     return menuLinksList.map((link) => (
       <li
         key={link.href}
-        className={`p-2 text-lg ${
-          currentPath === link.href
-            ? "text-blue-secondary"
-            : "text-blue-primary hover:text-blue-secondary"
-        }`}
+        // className={`p-2 text-lg ${
+        //   currentPath === link.href
+        //     ? "text-blue-secondary"
+        //     : "text-blue-primary hover:text-blue-secondary"
+        // }`}
+        className="p-2 text-lg"
       >
         <Link href={link.href}>{link.text}</Link>
       </li>
