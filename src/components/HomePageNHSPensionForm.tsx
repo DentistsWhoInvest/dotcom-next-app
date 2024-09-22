@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 
-export default function NHSPensionChecklistForm() {
+export default function HomePageNHSPensionForm() {
   return (
     <div className="m-4 flex flex-col justify-center bg-orange-400 p-4 text-white">
       <div className="text-center text-xl font-bold">
