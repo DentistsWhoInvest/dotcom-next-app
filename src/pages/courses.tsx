@@ -2,6 +2,7 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { HundredKButton } from "@/components/HundredKButton";
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/courses");
@@ -35,7 +36,7 @@ interface Course {
 
 const CourseCard = ({ course }: { course: Course }) => {
   return (
-    <li className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
+    <li className="flex flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
       <div className="bg-blue-primary p-4 text-center font-bold text-white">
         <h2 className="text-xl">{course.attributes.tagline}</h2>
       </div>
@@ -68,8 +69,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           {course.attributes.description}
         </p>
         <Button
-          asChild
-          className="w-full rounded-md bg-orange-400 py-2 font-bold text-white hover:bg-orange-500"
+          className="rounded-md bg-orange-400 px-6 py-4 font-bold text-white hover:bg-orange-500"
         >
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
@@ -79,6 +79,7 @@ const CourseCard = ({ course }: { course: Course }) => {
 };
 
 export default function Courses({ pageData }: { pageData: any }) {
+  console.log("pageData", pageData);
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <div className="relative">
@@ -92,28 +93,20 @@ export default function Courses({ pageData }: { pageData: any }) {
           height={"440"}
         />
 
-        <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16">
+        <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16 text-center ">
           <span className="p-4 text-3xl font-bold text-white">Courses </span>
-          <span className="p-2 text-xl text-blue-light">
+          <span className=" p-2 text-blue-light">
             Complete courses for the dentist who wants to understand investing{" "}
           </span>
         </div>
       </div>
 
-      <ul className="flex flex-col justify-center space-y-8 p-4">
+      <ul className="m-4 space-y-4">
         {pageData.map((course: any) => {
           return <CourseCard key={course.attributes.id} course={course} />;
         })}
       </ul>
-      <div className="m-4 rounded-md border-2 border-solid bg-white shadow-md">
-        <Link
-          href={"/100k"}
-          className="text:md flex text-wrap p-4 text-center text-blue-primary hover:text-orange-400"
-        >
-          Psssssst – Principal dentists: want to add £100k to your turnover in
-          the next 12 months..? ​
-        </Link>
-      </div>
+    <HundredKButton />
     </main>
   );
 }

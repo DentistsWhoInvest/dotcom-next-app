@@ -18,6 +18,7 @@ import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
+import { HundredKButton } from "@/components/HundredKButton";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -144,16 +145,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
   );
 };
 
-const ExtraCourseCard = () => {
-  return (
-    <div className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
-      <Link href="/100k" aria-label="Information about the 100k course">
-        Psssssst – Principal dentists: want to add £100k to your turnover in the
-        next 12 months..?
-      </Link>
-    </div>
-  );
-};
+
 
 const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
   console.log("testimonial", testimonial);
@@ -394,7 +386,7 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
 
         <div id="extraCourse">
-          <ExtraCourseCard />
+          <HundredKButton />
         </div>
       </section>
 
