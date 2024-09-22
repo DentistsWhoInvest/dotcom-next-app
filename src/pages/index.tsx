@@ -177,6 +177,8 @@ export default function Home({ pageData }: { pageData: any }) {
                   src="/DWI-logo-circle.webp"
                   alt="Coruse Created By Dr. James Martin"
                   id="header"
+                  width={100}
+                  height={100}
                 />
                 <div id="course-title">
                   <h2>{course.attributes.tagline}</h2>
@@ -241,7 +243,7 @@ export default function Home({ pageData }: { pageData: any }) {
             return (
               <div id="card" key={testimonial.id}>
                 <div id="testimonial">
-                  <Image id="quote" src="/quote.webp" alt="quote-mark" />
+                  <Image id="quote" src="/quote.webp" alt="quote-mark" width={100} height={100} />
                   <h4>{testimonial.attributes.title}</h4>
                   <BlocksRenderer content={testimonial.attributes.review} />
                   <div id="stars">
