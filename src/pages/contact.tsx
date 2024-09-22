@@ -23,45 +23,68 @@ export const getStaticProps = async () => {
   };
 };
 
-
 const ContactOptions = ({ option }: { option: any }) => {
+  console.log("option", option);
+  function chooseIcon(id: number) {
+    switch (id) {
+      case 1:
+        return "https://storage.googleapis.com/dwi-dotcom-assets/call_f47e9e0be3/call_f47e9e0be3.svg";
+      case 2:
+        return "https://storage.googleapis.com/dwi-dotcom-assets/email_7cbf263306/email_7cbf263306.svg";
+      case 3:
+        return "https://storage.googleapis.com/dwi-dotcom-assets/follow_9f5618ae12/follow_9f5618ae12.svg";
+      default:
+        return "";
+    }
+  }
+  const Icon = () => (
+    <Image
+      src={chooseIcon(option.id)}
+      alt="contact icon"
+      width={2500}
+      height={2500}
+    />
+  );
+
   return (
-    <Card className="m-6 justify-center border-2 border-blue-secondary">
-      <div className="flex flex-col">
-        <CardContent className="p-2 text-center">
-          <p>icon</p>
-          <CardTitle className="p-2 text-blue-primary">
-            {option.title}
-          </CardTitle>
-          <CardDescription className="p-2 text-grey-primary">
-            {option.description}
-          </CardDescription>
-          <Link href={option.navigation_url}>
-            <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
-              {option.cta_text}
-            </button>
-          </Link>
-        </CardContent>
-      </div>
+    <Card className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-2xl">
+      <CardContent className=" text-center">
+        <p className="mx-auto my-4 size-20">
+          <Icon />
+        </p>
+        <CardTitle className="p-2 text-lg font-bold text-blue-primary">
+          {option.title}
+        </CardTitle>
+        <CardDescription className="p-2 text-grey-primary">
+          {option.description}
+        </CardDescription>
+        <Link href={option.navigation_url}>
+          <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
+            {option.cta_text}
+          </button>
+        </Link>
+      </CardContent>
     </Card>
   );
 };
 
 export default function Contact({ pageData }: { pageData: any }) {
+  console.log("page", pageData);
   return (
     <main className={`flex flex-col`}>
-      <div className="relative ">
+      <div className="relative h-[440px] w-full">
         <Image
-          className="w-full object-cover"
           src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+            "https://storage.googleapis.com/dwi-dotcom-assets/Contact_Hero_Banner_scaled_ed1836dfed/Contact_Hero_Banner_scaled_ed1836dfed.webp"
           }
           alt={"Hero banner"}
-          width={"320"}
-          height={"440"}
+          layout="fill"
+          objectPosition="center"
+          objectFit="cover"
+          priority
         />
 
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col justify-center p-16">
+        <div className="absolute inset-0 z-10 flex h-full flex-col justify-center p-4 text-center">
           <p className="p-4 text-3xl font-bold text-white">
             {pageData.attributes.hero_title}
           </p>
@@ -70,23 +93,36 @@ export default function Contact({ pageData }: { pageData: any }) {
           </p>
         </div>
       </div>
-      <div>Get in touch with us</div>
-      <div className="flex flex-row">
-        {pageData.attributes.contact_options.map((option: any) => (
-          <ContactOptions key={option} option={option} />
-        ))}
+      <div className="bg-gray-100">
+        <p className="pt-8 text-center text-2xl font-bold text-blue-primary">
+          Get in touch with us
+        </p>
+        <div className="flex flex-col">
+          {pageData.attributes.contact_options.map((option: any) => (
+            <ContactOptions key={option} option={option} />
+          ))}
+        </div>
       </div>
-      <div>FAQ</div>
-      {pageData.attributes.FAQs.map((FAQ: any) => {
-        return (
-          <Accordion key={FAQ} type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>{FAQ.question}</AccordionTrigger>
-              <AccordionContent>{FAQ.answer[0]}</AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        );
-      })}
+      <div className="p-5 text-blue-primary">
+        <p className="text-center text-2xl font-bold">
+          Frequently Asked Questions
+        </p>
+        {pageData.attributes.FAQs.map((FAQ: any) => {
+          console.log("FAQ", FAQ);
+          return (
+            <Accordion key={FAQ} type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left">
+                  {FAQ.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-[16px] text-black">
+                  {FAQ.answer[0].children[0].text}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          );
+        })}
+      </div>
     </main>
   );
 }
