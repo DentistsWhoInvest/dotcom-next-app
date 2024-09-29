@@ -4,6 +4,7 @@ import Link from "next/link";
 
 type BannerImage = {
   url: string;
+  alt?: string;
 };
 
 type ButtonData = {
@@ -19,13 +20,15 @@ type ButtonData = {
 export const HeroBanner = ({
   bannerImage,
   bannerText,
-  ctaButton,
+  ctaButton = undefined,
   subText,
+  podcastSubText = false,
 }: {
   bannerImage: BannerImage;
   bannerText: string;
   subText?: string;
   ctaButton?: ButtonData;
+  podcastSubText?: boolean;
 }) => {
   return (
     <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
@@ -58,6 +61,14 @@ export const HeroBanner = ({
           {subText && (
             <p className="text-[18px] leading-[21.6px] text-blue-light xl:text-xl">
               {subText}
+            </p>
+          )}
+          {podcastSubText && (
+            <p className="text-[16px] leading-[21.6px] ">
+              <span className="text-orange-400">New episodes every: </span>
+              <br />
+              <span className="text-white">
+                Monday | Wednesday | Friday</span>
             </p>
           )}
         </div>
