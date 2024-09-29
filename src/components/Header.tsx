@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { SquareX } from "lucide-react";
 
 type MenuLink = {
   href: string;
@@ -32,11 +33,8 @@ export default function Header() {
           className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2"
           onClick={(e) => e.stopPropagation()}
         >
-          <button
-            className="w-4 border-2 border-solid border-blue-primary text-gray-700 hover:text-blue-primary"
-            onClick={() => setShowOverlay(false)}
-          >
-            x
+          <button className="m-0.5 w-4" onClick={() => setShowOverlay(false)}>
+            <SquareX className="stroke-blue-primary " />
           </button>
           <ul className="text-right">
             <MenuLinks menuLinksList={menuLinksList} />
@@ -59,7 +57,7 @@ export default function Header() {
         //     ? "text-blue-secondary"
         //     : "text-blue-primary hover:text-blue-secondary"
         // }`}
-        className="p-2 text-lg"
+        className="p-2 text-sm lg:text-lg"
       >
         <Link href={link.href}>{link.text}</Link>
       </li>
@@ -68,20 +66,21 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex flex-row justify-between bg-[#f0f3f6] px-5 py-3">
-        <div className="w-1/3">
+      <div className="flex flex-row items-center justify-between bg-[#f0f3f6] px-5 py-3.5 md:px-8  md:py-4 lg:justify-evenly">
+        <div>
           <Image
             src={
               "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
             }
             alt={"Logo"}
-            width="78"
-            height={"26"}
+            width={"94"}
+            height={"31"}
+            className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
           />
         </div>
 
         <button
-          className="text-gray-700 hover:text-blue-primary md:hidden"
+          className="pr-2 text-gray-700 hover:text-blue-primary md:hidden"
           onClick={() => setShowOverlay(true)}
         >
           <svg
@@ -100,13 +99,15 @@ export default function Header() {
 
         {showOverlay && <MenuOverlay />}
 
-        <ul className="hidden flex-row md:flex">
+        <ul className="hidden flex-row items-center md:flex lg:mr-32">
           <MenuLinks menuLinksList={menuLinksList} />
-          <Link href={"https://courses.dentistswhoinvest.com/login"}>
-            <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
-              Members
-            </button>
-          </Link>
+          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+            <Link href={"https://courses.dentistswhoinvest.com/login"}>
+              <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
+                Members
+              </button>
+            </Link>
+          </div>
         </ul>
       </div>
     </>
