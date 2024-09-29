@@ -3,12 +3,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { HundredKButton } from "@/components/HundredKButton";
+import { HeroBanner } from "@/components/HeroBanner";
 
-export const getStaticProps = async () => {
-  const result = await fetchEndpointData("/courses");
-  return {
-    props: { pageData: result.data },
+type CoursePageData = {
+  title: string;
+  subtext: string;
+  hero_image: {
+    data: {
+      attributes: {
+        url: string;
+        alt: string;
+      };
+    };
   };
+  courses: {data: Course[]};
 };
 
 interface Course {
@@ -68,9 +76,7 @@ const CourseCard = ({ course }: { course: Course }) => {
         <p className="mb-4 text-sm text-blue-primary">
           {course.attributes.description}
         </p>
-        <Button
-          className="rounded-md bg-orange-400 px-6 py-4 font-bold text-white hover:bg-orange-500"
-        >
+        <Button className="rounded-md bg-orange-400 px-6 py-4 font-bold text-white hover:bg-orange-500">
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
       </div>
@@ -78,34 +84,23 @@ const CourseCard = ({ course }: { course: Course }) => {
   );
 };
 
-export default function Courses({ pageData }: { pageData: any }) {
+export const getStaticProps = async () => {
+  const result = await fetchEndpointData("/courses-page", ['courses, hero_image', 'courses.cover, courses.on_the_day_photo']);
+  return {
+    props: { pageData: result.data.attributes },
+  };
+};
+
+export default function Courses({ pageData }: { pageData: CoursePageData }) {
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
-      <div className="relative">
-        <Image
-          className="object-cover"
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"375"}
-          height={"440"}
-        />
-
-        <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center p-16 text-center ">
-          <span className="p-4 text-3xl font-bold text-white">Courses </span>
-          <span className=" p-2 text-blue-light">
-            Complete courses for the dentist who wants to understand investing{" "}
-          </span>
-        </div>
-      </div>
-
+      <HeroBanner bannerImage={pageData.hero_image.data.attributes} bannerText={pageData.title} subText={pageData.subtext}/>
       <ul className="m-4 space-y-4">
-        {pageData.map((course: any) => {
-          return <CourseCard key={course.attributes.id} course={course} />;
+        {pageData.courses.data.map((course: any) => {
+          return <CourseCard key={course.id} course={course} />;
         })}
       </ul>
-    <HundredKButton />
+      <HundredKButton />
     </main>
   );
 }

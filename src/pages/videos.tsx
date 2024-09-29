@@ -53,7 +53,6 @@ export const VideoCard = ({ page }: { page: any }) => {
   );
 };
 
-//replace image url with actual image url
 export default function Videos({ pageData }: { pageData: any }) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
@@ -70,24 +69,6 @@ export default function Videos({ pageData }: { pageData: any }) {
         bannerText={"Videos"}
         subText="Reflective insights on finance and wealth"
       />
-      {/* <div className="relative">
-        <Image
-          className="w-full object-cover"
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"320"}
-          height={"440"}
-        />
-
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
-          <span className="p-4 text-3xl font-bold text-white">Videos </span>
-          <span className="p-2 text-xl text-blue-light">
-            Reflective insights on finance and wealth
-          </span>
-        </div>
-      </div> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
           return <VideoCard key={page.id} page={page} />;
