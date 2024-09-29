@@ -50,11 +50,17 @@ export const HeroBanner = ({
           priority
         />
       </div>
-      <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:max-w-[58%] md:items-start md:justify-center md:px-[30px] md:text-left lg:max-w-[45%] xl:mx-[150px] xl:max-w-[35%] ">
-        <div className="absolute md:top-[30%] xl:top-[40%]"><h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px]">
-          {bannerText}
-        </h1>
-        {subText && <p className="text-[18px] leading-[21.6px] text-blue-light xl:text-xl">{subText}</p>}</div>
+      <div className="relative z-10 flex size-full flex-col items-center justify-center text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[40%] ">
+        <div className="absolute px-4 md:top-[30%] md:px-[30px] xl:top-[40%] ">
+          <h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px]">
+            {bannerText}
+          </h1>
+          {subText && (
+            <p className="text-[18px] leading-[21.6px] text-blue-light xl:text-xl">
+              {subText}
+            </p>
+          )}
+        </div>
 
         {ctaButton && (
           <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">

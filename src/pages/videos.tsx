@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createSlug } from "./articles";
+import { HeroBanner } from "@/components/HeroBanner";
 
 export const getStaticProps = async () => {
   const result = await fetchEndpointData("/videos");
@@ -62,7 +63,14 @@ export default function Videos({ pageData }: { pageData: any }) {
 
   return (
     <main className={`flex flex-col bg-[#f0f3f6]`}>
-      <div className="relative">
+      <HeroBanner
+        bannerImage={{
+          url: "https://storage.googleapis.com/dwi-dotcom-assets/james_recording_green_screen_3de155024b/james_recording_green_screen_3de155024b.webp",
+        }}
+        bannerText={"Videos"}
+        subText="Reflective insights on finance and wealth"
+      />
+      {/* <div className="relative">
         <Image
           className="w-full object-cover"
           src={
@@ -79,7 +87,7 @@ export default function Videos({ pageData }: { pageData: any }) {
             Reflective insights on finance and wealth
           </span>
         </div>
-      </div>
+      </div> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {sortedData.map((page: any) => {
           return <VideoCard key={page.id} page={page} />;
