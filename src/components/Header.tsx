@@ -66,7 +66,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="md:px-8 md:py-4 lg:justify-evenly flex flex-row items-center justify-between bg-[#f0f3f6]  px-5 py-3.5">
+      <div className="flex h-[60px] flex-row items-center justify-between bg-[#f0f3f6] px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly">
       <div>
           <Image
             src={

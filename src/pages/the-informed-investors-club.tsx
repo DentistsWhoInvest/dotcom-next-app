@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+
 type TextNode = {
   text: string;
   type: string;
@@ -104,9 +105,9 @@ export default function InformedInvestorsLandingPage({
 }) {
   return (
     <main className={`flex flex-col`}>
-      <section id="top banner">
-        <div className="md:h-[449px] relative h-[490px] w-full overflow-hidden xl:h-[660.75px]">
-          <div className="lg:hidden absolute inset-0">
+      <section id="hero banner">
+        <div className="relative h-[490px] w-full overflow-hidden md:h-[449px] xl:h-[660.75px]">
+          <div className="absolute inset-0 xl:hidden">
             <Image
               src={pageData.hero_cover.data.attributes.url}
               alt={"mobile"}
@@ -127,8 +128,8 @@ export default function InformedInvestorsLandingPage({
               priority
             />
           </div>
-          <div className="md:justify-center md:px-8 lg:px-16 relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
-            <h1 className="md:text-3xl lg:text-4xl mb-4 text-2xl font-bold">
+          <div className="relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white md:justify-center md:px-8 lg:px-16 xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
+            <h1 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
               {pageData.hero_title}
             </h1>
 

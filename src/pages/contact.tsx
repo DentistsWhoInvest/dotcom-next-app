@@ -13,6 +13,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { HeroBanner } from "@/components/HeroBanner";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/contact-page");
@@ -70,7 +71,13 @@ const ContactOptions = ({ option }: { option: any }) => {
 export default function Contact({ pageData }: { pageData: any }) {
   return (
     <main className={`flex flex-col`}>
-      <div className="relative h-[440px] w-full">
+      <HeroBanner
+        bannerImage={pageData.attributes.hero_cover.data.attributes}
+        bannerText={pageData.attributes.hero_title}
+        subText={pageData.attributes.hero_subtext}
+      />
+
+      {/* <div className="relative h-[440px] w-full">
         <Image
           src={
             "https://storage.googleapis.com/dwi-dotcom-assets/Contact_Hero_Banner_scaled_ed1836dfed/Contact_Hero_Banner_scaled_ed1836dfed.webp"
@@ -90,7 +97,7 @@ export default function Contact({ pageData }: { pageData: any }) {
             {pageData.attributes.hero_subtext}
           </p>
         </div>
-      </div>
+      </div> */}
       <div className="bg-gray-100">
         <p className="pt-8 text-center text-2xl font-bold text-blue-primary">
           Get in touch with us
