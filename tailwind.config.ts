@@ -9,6 +9,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+	screens: {
+		'xl': '1440px'
+	},
   	colors: {
   		'blue-primary': '#151f6d',
   		'blue-secondary': '#65AEC1',

@@ -49,8 +49,8 @@ type ImageAttributes = {
   width: number;
   height: number;
   formats: {
-    large?: ImageFormat;
-    small?: ImageFormat;
+    large: ImageFormat;
+    small: ImageFormat;
     medium?: ImageFormat;
     thumbnail?: ImageFormat;
   };
@@ -106,18 +106,34 @@ export default function InformedInvestorsLandingPage({
   return (
     <main className={`flex flex-col`}>
       <section id="top banner">
-        <div className="relative">
-          <Image
-            className="w-full object-cover"
-            src={pageData.hero_cover.data.attributes.url}
-            alt={"Hero banner"}
-            width={"320"}
-            height={"440"}
-          />
+        <div className="md:h-[449px] relative h-[490px] w-full overflow-hidden xl:h-[660.75px]">
+          <div className="lg:hidden absolute inset-0">
+            <Image
+              src={pageData.hero_cover.data.attributes.url}
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="right 50%"
+              priority
+            />
+            <div className="absolute inset-0 bg-blue-primary opacity-60"></div>
+          </div>
+          <div className="absolute inset-0 hidden xl:block">
+            <Image
+              src={pageData.hero_cover.data.attributes.url}
+              alt={"desktop"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="top"
+              priority
+            />
+          </div>
+          <div className="md:justify-center md:px-8 lg:px-16 relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
+            <h1 className="md:text-3xl lg:text-4xl mb-4 text-2xl font-bold">
+              {pageData.hero_title}
+            </h1>
 
-          <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16 text-white">
-            <h1>{pageData.hero_title}</h1>
-            <Button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
+            <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
               <Link href={pageData.cta_navigation_url}>
                 {pageData.cta_text}
               </Link>
@@ -130,7 +146,7 @@ export default function InformedInvestorsLandingPage({
           <div className="flex flex-col items-center space-y-4">
             <div
               id="blue background"
-              className="relative h-24 w-screen bg-blue-secondary"
+              className="relative h-[135px] w-screen bg-blue-secondary"
             >
               <div className="absolute m-4 flex flex-col items-center">
                 <Image
