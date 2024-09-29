@@ -3,6 +3,7 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 import he from "he";
+import { HeroBanner } from "@/components/HeroBanner";
 
   //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
   export function createSlug(title: string) {
@@ -34,25 +35,11 @@ export default function Articles({ pageData }: { pageData: any }) {
   );
 
   return (
-    <main className={`flex flex-col bg-[#f0f3f6]`}>
-      <div className="relative">
-        <Image
-          className="w-full object-cover"
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"320"}
-          height={"440"}
-        />
+    <main className={`flex flex-col`}>
 
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
-          <span className="p-4 text-3xl font-bold text-white">Articles </span>
-          <span className="p-2 text-xl text-blue-light">
-            Read to understand how you can accelerate your financial goals​
-          </span>
-        </div>
-      </div>
+      <HeroBanner bannerText={"Articles"} subText={"Read to understand how you can accelerate your financial goals​"} bannerImage={{
+        url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp"
+      }} />
       <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
         All Articles
       </div>
@@ -62,7 +49,7 @@ export default function Articles({ pageData }: { pageData: any }) {
           return (
             <li key={page.id}>
               <Link href={`/articles/${slug}`}>
-                <Card className="m-6 justify-center border-2 border-blue-secondary">
+                <Card className="m-6 justify-center border-2 border-blue-secondary shadow-lg">
                   <Image
                     src={page.attributes.cover.data.attributes.url}
                     alt={page.attributes.name}
