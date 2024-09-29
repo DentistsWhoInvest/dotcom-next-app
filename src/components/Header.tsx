@@ -57,7 +57,7 @@ export default function Header() {
         //     ? "text-blue-secondary"
         //     : "text-blue-primary hover:text-blue-secondary"
         // }`}
-        className="p-2 text-sm lg:text-lg"
+        className="lg:text-lg p-2 text-sm"
       >
         <Link href={link.href}>{link.text}</Link>
       </li>
@@ -66,8 +66,8 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between bg-[#f0f3f6] px-5 py-3.5 lg:justify-evenly  md:px-8 md:py-4">
-        <div>
+      <div className="md:px-8 md:py-4 lg:justify-evenly flex flex-row items-center justify-between bg-[#f0f3f6]  px-5 py-3.5">
+      <div>
           <Image
             src={
               "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
@@ -80,7 +80,7 @@ export default function Header() {
         </div>
 
         <button
-          className="pr-2 text-gray-700 hover:text-blue-primary md:hidden"
+          className="md:hidden pr-2 text-gray-700 hover:text-blue-primary"
           onClick={() => setShowOverlay(true)}
         >
           <svg
@@ -99,9 +99,9 @@ export default function Header() {
 
         {showOverlay && <MenuOverlay />}
 
-        <ul className="hidden flex-row items-center md:flex lg:mr-32">
+        <ul className="md:flex lg:mr-32 hidden flex-row items-center">
           <MenuLinks menuLinksList={menuLinksList} />
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="sm:ml-6 sm:flex sm:items-center hidden">
             <Link href={"https://courses.dentistswhoinvest.com/login"}>
               <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
                 Members
