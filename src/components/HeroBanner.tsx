@@ -28,7 +28,7 @@ export const HeroBanner = ({
   ctaButton?: ButtonData;
 }) => {
   return (
-    <div className="relative h-[490px] w-full overflow-hidden md:h-[449px] xl:h-[660.75px]">
+    <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
       <div className="absolute inset-0 xl:hidden">
         <Image
           src={bannerImage.url}
@@ -38,7 +38,7 @@ export const HeroBanner = ({
           objectPosition="right 50%"
           priority
         />
-        <div className="absolute inset-0 bg-blue-primary opacity-60"></div>
+        <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
       </div>
       <div className="absolute inset-0 hidden xl:block">
         <Image
@@ -46,15 +46,15 @@ export const HeroBanner = ({
           alt={"desktop"}
           layout="fill"
           objectFit="cover"
-          objectPosition="top"
+          objectPosition=""
           priority
         />
       </div>
-      <div className="relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white md:justify-center md:px-8 lg:px-16 xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
-        <h1 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
+      <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:max-w-[58%] md:items-start md:justify-center md:px-[30px] md:text-left lg:max-w-[45%] xl:mx-[150px] xl:max-w-[35%] ">
+        <div className="absolute md:top-[30%] xl:top-[40%]"><h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px]">
           {bannerText}
         </h1>
-        {subText && <p className="p-2 text-xl text-blue-light">{subText}</p>}
+        {subText && <p className="text-[18px] leading-[21.6px] text-blue-light xl:text-xl">{subText}</p>}</div>
 
         {ctaButton && (
           <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
