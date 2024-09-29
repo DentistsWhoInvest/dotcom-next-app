@@ -24,7 +24,6 @@ export const getStaticProps = async () => {
 };
 
 const ContactOptions = ({ option }: { option: any }) => {
-  console.log("option", option);
   function chooseIcon(id: number) {
     switch (id) {
       case 1:
@@ -69,7 +68,6 @@ const ContactOptions = ({ option }: { option: any }) => {
 };
 
 export default function Contact({ pageData }: { pageData: any }) {
-  console.log("page", pageData);
   return (
     <main className={`flex flex-col`}>
       <div className="relative h-[440px] w-full">
@@ -108,7 +106,6 @@ export default function Contact({ pageData }: { pageData: any }) {
           Frequently Asked Questions
         </p>
         {pageData.attributes.FAQs.map((FAQ: any) => {
-          console.log("FAQ", FAQ);
           return (
             <Accordion key={FAQ} type="single" collapsible>
               <AccordionItem value="item-1">

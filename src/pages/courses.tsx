@@ -79,7 +79,6 @@ const CourseCard = ({ course }: { course: Course }) => {
 };
 
 export default function Courses({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <div className="relative">

@@ -127,7 +127,6 @@ type CashflowCoursePageProps = {
 export default function CashflowCoursePage({
   courseData,
 }: CashflowCoursePageProps) {
-  console.log("courseData", courseData);
   return (
     <>
       {/* <Head>
@@ -200,7 +199,6 @@ export default function CashflowCoursePage({
       <section id="salescarousel">
         <div className="flex flex-col items-center space-y-8 p-8">
           {courseData.sales_carousel.map((paragraph: any, index: number) => {
-            console.log("sales carousel paragraph", courseData.sales_carousel);
             const subtitle = paragraph.description[0].children[0].text;
             const remainder = paragraph.description.slice(1);
             return (

@@ -102,7 +102,6 @@ export default function InformedInvestorsLandingPage({
 }: {
   pageData: InformedInvestorsClubData;
 }) {
-  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col`}>
       <section id="top banner">

@@ -133,7 +133,6 @@ export const getStaticProps = async () => {
     "sign_off_cover",
   ];
   const pageData = await fetchEndpointData(`/the-academy-page`, populateFields);
-  console.log("pageData here", pageData);
 
   return {
     props: {
@@ -147,7 +146,6 @@ export default function TheAcademyCoursePage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
-  console.log("pageData", courseData);
   return (
     <>
       <section id="topbanner">
@@ -220,7 +218,6 @@ export default function TheAcademyCoursePage({
           <div className="flex flex-col items-center space-y-4">
             {courseData.informed_investor_club.sales_cards.map(
               (card: any, index: number) => {
-                console.log("card", card);
                 return (
                   <div
                     key={index}

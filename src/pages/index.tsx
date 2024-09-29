@@ -151,7 +151,6 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 
 
 export default function Home({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main>
       <section>
@@ -194,7 +193,6 @@ export default function Home({ pageData }: { pageData: any }) {
         </h6>
         {/* <BlocksRenderer content={pageData.founder_description} /> */}
         {pageData.founder_description.map((block: any) => {
-          console.log("block", block);
           return (
             <div key={block.id}>
               <p>{block.children[0].text}</p>
