@@ -20,6 +20,7 @@ import { useState, useRef, useEffect } from "react";
 import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 import { HundredKButton } from "@/components/HundredKButton";
 import { TestimonialCard } from "@/components/TestimonialCard";
+import { HeroBanner } from "@/components/HeroBanner";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -146,41 +147,39 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
   );
 };
 
-
-
-
-
 export default function Home({ pageData }: { pageData: any }) {
+  //replace the image url depending on breakpoint
   return (
     <main>
       <section>
-        <div className="relative h-[440px] w-full">
-          <Image
-            src={replaceImageDomain(
-              pageData.hero_cover.data.attributes.formats.large.url
-            )}
-            alt={pageData.hero_cover.data.attributes.alternativeText}
-            layout="fill"
-            objectPosition="center"
-            objectFit="cover"
-            priority
+        <div className="sm:block md:hidden">
+          <HeroBanner
+            bannerText={pageData.hero_text}
+            bannerImage={{
+              url: pageData.hero_cover.data.attributes.url,
+              alt: pageData.hero_cover.data.attributes.alternativeText,
+            }}
+            subText={pageData.hero_subtext}
+            ctaButton={{
+              url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+              text: pageData.hero_button_text,
+            }}
           />
-
-          <div className="absolute inset-0 z-10 flex h-full flex-col justify-center p-4 text-center">
-            <p className="p-4 text-3xl font-bold text-white">
-              {pageData.hero_text}
-            </p>
-            <p className="p-2 text-blue-light">{pageData.hero_subtext}</p>
-            <Link
-              href="https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
-                {pageData.hero_button_text}
-              </button>
-            </Link>
-          </div>
+        </div>
+        <div className="sm:hidden md:block">
+          {" "}
+          <HeroBanner
+            bannerText={pageData.hero_text}
+            bannerImage={{
+              url: pageData.hero_cover.data.attributes.url,
+              alt: pageData.hero_cover.data.attributes.alternativeText,
+            }}
+            subText={pageData.hero_subtext}
+            ctaButton={{
+              url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+              text: pageData.hero_button_text,
+            }}
+          />
         </div>
       </section>
 

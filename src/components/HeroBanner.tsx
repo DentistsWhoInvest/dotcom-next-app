@@ -67,17 +67,15 @@ export const HeroBanner = ({
             <p className="text-[16px] leading-[21.6px] ">
               <span className="text-orange-400">New episodes every: </span>
               <br />
-              <span className="text-white">
-                Monday | Wednesday | Friday</span>
+              <span className="text-white">Monday | Wednesday | Friday</span>
             </p>
           )}
+          {ctaButton && (
+            <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
+              <Link href={ctaButton.url}>{ctaButton.text}</Link>
+            </Button>
+          )}
         </div>
-
-        {ctaButton && (
-          <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
-            <Link href={ctaButton.url}>{ctaButton.text}</Link>
-          </Button>
-        )}
       </div>
     </div>
   );
