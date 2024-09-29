@@ -18,6 +18,8 @@ import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
+import { HundredKButton } from "@/components/HundredKButton";
+import { TestimonialCard } from "@/components/TestimonialCard";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -144,81 +146,11 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
   );
 };
 
-const ExtraCourseCard = () => {
-  return (
-    <div className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
-      <Link href="/100k" aria-label="Information about the 100k course">
-        Psssssst – Principal dentists: want to add £100k to your turnover in the
-        next 12 months..?
-      </Link>
-    </div>
-  );
-};
 
-const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
-  console.log("testimonial", testimonial);
-  return (
-    <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl">
-      <CardContent className="space-y-4 text-left">
-        <CardTitle className="p-2 text-lg font-bold">
-          <Image
-            id="quote"
-            src="/white-quote.png"
-            alt="quote-mark"
-            width={100}
-            height={100}
-          />
-          <h4>{testimonial.attributes.title}</h4>
-        </CardTitle>
-        <CardDescription>
-          {testimonial.attributes.review[0].children[0].text}
-          <div id="stars" className="flex space-x-1">
-            {Array.from({ length: 5 }, (_, index) => (
-              <svg
-                key={index}
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="gold"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                  fill="gold"
-                />
-              </svg>
-            ))}
-          </div>
-        </CardDescription>
-        <CardFooter className="flex flex-col">
-          <Image
-            src={replaceImageDomain(
-              testimonial.attributes.author_thumbnail.data.attributes.formats
-                .small.url
-            )}
-            alt={
-              testimonial.attributes.author_thumbnail.data.attributes
-                .alternativeText
-            }
-            width={60}
-            height={60}
-            id="testimonial-profile"
-            className="rounded-full"
-          />
-          <div id="description">
-            <p className="text-lg font-semibold">
-              {testimonial.attributes.author}
-            </p>
-            <p>{testimonial.attributes.author_job_location}</p>
-          </div>
-        </CardFooter>
-      </CardContent>
-    </Card>
-  );
-};
+
+
 
 export default function Home({ pageData }: { pageData: any }) {
-  console.log("pageData", pageData);
   return (
     <main>
       <section>
@@ -261,7 +193,6 @@ export default function Home({ pageData }: { pageData: any }) {
         </h6>
         {/* <BlocksRenderer content={pageData.founder_description} /> */}
         {pageData.founder_description.map((block: any) => {
-          console.log("block", block);
           return (
             <div key={block.id}>
               <p>{block.children[0].text}</p>
@@ -394,7 +325,7 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
 
         <div id="extraCourse">
-          <ExtraCourseCard />
+          <HundredKButton />
         </div>
       </section>
 

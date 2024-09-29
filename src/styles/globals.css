@@ -36,4 +36,36 @@ body {
   :root {
     --radius: 0.5rem;
   }
+
+  ul,
+  ol {
+    list-style: revert;
+    padding-left: 1.5rem;
+  }
+}
+
+@layer components {
+  .show-bullet ul,
+  .show-bullet ol {
+    list-style: none; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
+    padding-left: 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Probably used in conjunction with the show-bullet class */
+  .custom-bullet ul li::before,
+  .custom-bullet ol li::before {
+    content: "✔"; /* Checkmark symbol, could try to replace with another icon */
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: orange;
+    color: white;
+    text-align: center;
+    font-size: 0.65rem;
+    line-height: 1rem;
+    margin-right: 0.5rem;
+    margin-left: -1.5rem; /* To make up for the default padding-left */
+  }
 }

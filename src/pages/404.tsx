@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function ErrorPage() {
-  console.log("Reached a 404");
   return (
     <main className={`flex flex-col `}>
       <DWIBanner />
