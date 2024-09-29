@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { HeroBanner } from "@/components/HeroBanner";
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/about");
@@ -67,26 +68,14 @@ export default function About({
 }) {
   return (
     <main className={`flex flex-col `}>
-      <div className="relative ">
-        <Image
-          className="h-[440px] w-[320px] object-cover "
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"320"}
-          height={"440"}
-        />
-
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
-          <span className="p-4 text-3xl font-bold text-white">
-            {pageData.attributes.hero_title}
-          </span>
-          <span className="p-2 text-xl text-blue-light">
-            {pageData.attributes.hero_subtext}
-          </span>
-        </div>
-      </div>
+      <HeroBanner
+        bannerText={pageData.attributes.hero_title}
+        bannerImage={{
+          url: pageData.attributes.hero_cover.data.attributes.url,
+          alt: pageData.attributes.hero_cover.data.attributes.alt,
+        }}
+        subText={pageData.attributes.hero_subtext}
+      />
 
       <div className="flex size-full flex-col items-center justify-center p-8 text-center">
         <p className="text-2xl font-bold text-blue-primary">
