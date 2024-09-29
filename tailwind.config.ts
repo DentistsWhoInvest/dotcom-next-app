@@ -10,7 +10,10 @@ const config: Config = {
   ],
   theme: {
 	screens: {
-		'xl': '1440px'
+		'sm': '320px',
+		'md': '768px',
+		'lg': '1024px',
+		'xl': '1440px',
 	},
   	colors: {
   		'blue-primary': '#151f6d',
