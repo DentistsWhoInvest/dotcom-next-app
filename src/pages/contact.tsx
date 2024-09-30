@@ -41,29 +41,29 @@ const ContactOptions = ({ option }: { option: any }) => {
     <Image
       src={chooseIcon(option.id)}
       alt="contact icon"
-      width={2500}
-      height={2500}
+      width={315}
+      height={100}
     />
   );
 
+  console.log(option);
+
   return (
-    <Card className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-2xl">
-      <CardContent className=" text-center">
-        <p className="mx-auto my-4 size-20">
+    <Card className="m-[10px] flex h-[382px] flex-col justify-center space-y-5 rounded-[2rem] border-2 text-center shadow-2xl md:h-[463px] md:w-[226px] md:justify-between lg:w-[328px] lg:h-[422px]">
+        <p className="mx-auto mt-8 size-[100px]">
           <Icon />
         </p>
-        <CardTitle className="p-2 text-lg font-bold text-blue-primary">
+        <CardTitle className="px-[80px] text-[20px] font-bold leading-[24px] text-blue-primary md:px-[20px]">
           {option.title}
         </CardTitle>
-        <CardDescription className="p-2 text-grey-primary">
+        <CardDescription className="px-5 text-base text-grey-primary">
           {option.description}
         </CardDescription>
         <Link href={option.navigation_url}>
-          <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
+          <button className="rounded-md bg-orange-400 px-[35px] py-3 text-white hover:text-blue-primary md:px-[20px] m-8">
             {option.cta_text}
           </button>
         </Link>
-      </CardContent>
     </Card>
   );
 };
@@ -76,47 +76,25 @@ export default function Contact({ pageData }: { pageData: any }) {
         bannerText={pageData.attributes.hero_title}
         subText={pageData.attributes.hero_subtext}
       />
-
-      {/* <div className="relative h-[440px] w-full">
-        <Image
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/Contact_Hero_Banner_scaled_ed1836dfed/Contact_Hero_Banner_scaled_ed1836dfed.webp"
-          }
-          alt={"Hero banner"}
-          layout="fill"
-          objectPosition="center"
-          objectFit="cover"
-          priority
-        />
-
-        <div className="absolute inset-0 z-10 flex h-full flex-col justify-center p-4 text-center">
-          <p className="p-4 text-3xl font-bold text-white">
-            {pageData.attributes.hero_title}
-          </p>
-          <p className="p-2 text-xl text-blue-light">
-            {pageData.attributes.hero_subtext}
-          </p>
-        </div>
-      </div> */}
       <div className="bg-gray-100">
-        <p className="pt-8 text-center text-2xl font-bold text-blue-primary">
+        <p className="px-16 py-8 text-center text-[30px] font-bold leading-[36px] text-blue-primary md:py-[50px] md:text-[35px] xl:text-[45px]">
           Get in touch with us
         </p>
-        <div className="flex flex-col">
+        <div className="flex flex-col p-5 md:flex-row justify-center">
           {pageData.attributes.contact_options.map((option: any) => (
             <ContactOptions key={option} option={option} />
           ))}
         </div>
       </div>
-      <div className="p-5 text-blue-primary">
-        <p className="text-center text-2xl font-bold">
+      <div className="pt-[70px] pb-[100px] text-blue-primary px-5">
+        <p className="text-center text-[30px] leading-[36px] font-bold">
           Frequently Asked Questions
         </p>
         {pageData.attributes.FAQs.map((FAQ: any) => {
           return (
             <Accordion key={FAQ} type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left">
+                <AccordionTrigger className="text-left text-[20px]">
                   {FAQ.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-[16px] text-black">
