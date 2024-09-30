@@ -5,7 +5,7 @@ const BottomBar = () => {
   return (
     //on desktop, single line, copyright name is on the left, links on the right
     //on mobile, stacked, copyright on the bottom, links on top
-    <div className="flex flex-col items-center justify-between bg-blue-primary p-4 text-center text-xs text-white md:flex-row md:text-left md:text-base">
+    <div className="flex flex-col items-center justify-between bg-blue-primary p-4 text-center text-xs text-white md:flex-row md:text-left md:text-base xl:px-[150px]">
       <span className="order-2 md:order-1">
         © 2024 Dentists Who Invest All Rights Reserved.
       </span>
