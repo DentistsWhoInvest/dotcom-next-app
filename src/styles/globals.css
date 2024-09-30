@@ -39,6 +39,43 @@ body {
 }
 
 @layer components {
+  .privacy-policy h5,
+  .t-and-c h5
+   {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: rgb(21, 31, 109);
+  }
+
+  .privacy-policy h4,
+  .t-and-c h4 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22.4px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: rgb(45, 55, 72);
+  }
+  .privacy-policy p,
+  .t-and-c p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    color: rgb(45, 55, 72);
+  }
+
+  .privacy-policy ul,
+  .privacy-policy ol,
+  .t-and-c ul,
+  .t-and-c ol {
+    list-style: revert;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+  }
+
   .show-bullet ul,
   .show-bullet ol {
     list-style: none; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
