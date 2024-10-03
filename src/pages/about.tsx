@@ -1,139 +1,187 @@
 import Image from "next/image";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { HeroBanner } from "@/components/HeroBanner";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+
+//todo add rootnode as type
+
+type TextNode = {
+  text: string;
+  type: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+};
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextNode[];
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  data: {
+    id: number;
+    attributes: ImageAttributes;
+  };
+};
+
+type ManifestoItem = {
+  id: number;
+  reason: string;
+};
+
+type AboutAttributes = {
+  hero_title: string;
+  hero_subtext: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  our_story_title: string;
+  our_story_description: any;
+  wrap_up_description: any;
+  hero_cover: ImageData;
+  manifesto: ManifestoItem[];
+  our_story_cover: ImageData;
+  wrap_up_image: ImageData;
+};
+
+type AboutData = {
+  id: number;
+  attributes: AboutAttributes;
+};
+
+type AboutResponse = {
+  data: AboutData;
+  meta: Record<string, unknown>;
+};
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/about");
 
-  const testResult = [
-    {
-      id: 1,
-      attributes: {
-        title: "The Core Mission...",
-        description:
-          "...to create and share resources specifically designed to give dentists financial freedom",
-      },
-    },
-    {
-      id: 2,
-      attributes: {
-        title: "Manifesto",
-        text1:
-          "Empower dentists to take charge of their financial future in an ethical and principled way.​",
-        text2:
-          "Give dentists the knowledge and tools required to no longer exchange time for money.​",
-        text3:
-          "Provide dentists with a platform and community which contains everything required to support growth both financially and on an individual and holistic basis​",
-      },
-    },
-    {
-      id: 3,
-      attributes: {
-        title: "Our story",
-        description1:
-          "Founded in 2020 by dentist and investor Dr. James Martin, Dentists Who Invest is a thriving community of dentists who have a keen interest in growing and sharing their knowledge on finance and wealth.",
-        description2:
-          "Through the Dentists Who Invest platform, James makes his broad knowledge of investing easy to understand, tangible and accessible by serving this community with an expansive repertoire of resources.",
-      },
-    },
-    {
-      id: 4,
-      attributes: {
-        title: "Man",
-        description1:
-          "By directing this content to suit the requirements of the dental profession, James helps dentists understand and take charge of their finances.",
-        description2:
-          "This means they are equipped to consistently grow their capital by opening up another revenue stream besides their own income. This permits them to protect their wealth and achieve financial freedom.",
-        description3:
-          "To provide his network with reliable and factual and tailored knowledge, James has created an expansive library of content and also courses specifically for the dental community.",
-        imageUrl: "https://picsum.photos/200/300",
-      },
-    },
-  ];
-
   return {
     props: {
-      result: testResult,
       pageData: pageData.data,
     },
   };
 };
 
-export default function About({
-  result,
-  pageData,
-}: {
-  result: any[];
-  pageData: any;
-}) {
+export default function About({ pageData }: { pageData: AboutData }) {
+  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col `}>
       <HeroBanner
         bannerText={pageData.attributes.hero_title}
         bannerImage={{
           url: pageData.attributes.hero_cover.data.attributes.url,
-          alt: pageData.attributes.hero_cover.data.attributes.alt,
+          alt: pageData.attributes.hero_cover.data.attributes.alternativeText,
         }}
         subText={pageData.attributes.hero_subtext}
       />
 
-      <div className="flex size-full flex-col items-center justify-center p-8 text-center">
-        <p className="text-2xl font-bold text-blue-primary">
-          {result[1].attributes.title}
-        </p>
-        <span className="m-4 h-0.5 w-full bg-blue-primary" />
-        <ul className="p-4">
-          <li>
-            <p className="text-2xl text-blue-secondary">01</p>
-            <p className="text-left text-xl text-grey-primary">
-              {result[1].attributes.text1}
-            </p>
-          </li>
-          <li>
-            <p className="text-2xl text-blue-secondary">02</p>
-            <p className="text-left text-xl text-grey-primary">
-              {result[1].attributes.text2}
-            </p>
-          </li>
-          <li>
-            <p className="text-2xl text-blue-secondary">03</p>
-            <p className="text-left text-xl text-grey-primary">
-              {result[1].attributes.text3}
-            </p>
-          </li>
-        </ul>
-      </div>
+      <section id="manifesto">
+        <div className="flex size-full flex-col items-center justify-center p-8 text-center md:p-[50px]">
+          <p className="text-[30px] font-bold text-blue-primary">Manifesto</p>
+          <span className="m-4 h-0.5 w-full bg-blue-primary" />
+          {pageData.attributes.manifesto.map((item, index) => {
+            const formattedIndex = "0" + (index + 1).toString();
+            return (
+              <div
+                key={item.id}
+                className="pb-[50px] md:flex md:flex-row md:space-x-8 md:p-6 md:items-center w-full"
+              >
+                <p className="text-[48px] text-blue-secondary font-semibold">
+                  {formattedIndex}
+                </p>
+                <p className="text-left text-[17px] leading-[21.6px] text-[#333f48] font-[500]">
+                  {item.reason}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="our story">
+        <div className="relative h-[488px] w-full overflow-hidden md:h-[368px] xl:h-[323.56px]">
+          <div className="absolute inset-0">
+            <Image
+              src={pageData.attributes.our_story_cover.data.attributes.url}
+              alt={
+                "pageData.attributes.our_story_cover.data.attributes.alternativeText"
+              }
+              layout="fill"
+              objectFit="cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-blue-primary opacity-80"></div>
+          </div>
+          <div className="relative z-10 flex size-full flex-col items-center justify-center ">
+            <div className="absolute px-[30px] text-white md:px-[60px] xl:px-[160px]">
+              <div className="mb-4 text-3xl font-bold  md:text-[35px] xl:text-[45px] text-center md:text-left">
+                {pageData.attributes.our_story_title}
+              </div>
+              <div className="space-y-8 text-left md:flex md:flex-row md:space-y-0 md:space-x-8 md:py-6">
+                <BlocksRenderer
+                  content={pageData.attributes.our_story_description}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="relative">
-        <Image
-          className="h-[533.58px] w-[320px] object-cover "
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"320"}
-          height={"534"}
-        />
-
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center p-10 text-white">
-          <p className="p-4 text-3xl font-bold">{result[2].attributes.title}</p>
-          <p>{result[2].attributes.description1}</p>
-          <p>{result[2].attributes.description2}</p>
-        </div>
-
-        <div className="flex size-full flex-col items-center justify-center space-y-2 p-8 text-left">
+        <div className="flex size-full flex-col items-center justify-center space-y-2 p-8 text-left md:flex-row md:space-x-8 md:px-[50px] xl:px-[180px]">
           <Image
-            className="m-4 h-[364px] w-[280px] rounded-3xl object-cover"
-            width={280}
-            height={364}
-            src={
-              "https://storage.googleapis.com/dwi-dotcom-assets/wrap_up_founder_62d6e45255/wrap_up_founder_62d6e45255.webp"
+            className="m-4 rounded-3xl object-cover"
+            width={311}
+            height={436}
+            src={pageData.attributes.wrap_up_image.data.attributes.url}
+            alt={
+              pageData.attributes.wrap_up_image.data.attributes.alternativeText
             }
-            alt={"guy"}
           />
-          <p>{result[3].attributes.description1}</p>
-          <p>{result[3].attributes.description2}</p>
-          <p>{result[3].attributes.description3}</p>
+
+          <div className="space-y-8 xl:w-1/3">
+            <BlocksRenderer content={pageData.attributes.wrap_up_description} />
+          </div>
         </div>
       </div>
     </main>
