@@ -21,6 +21,7 @@ import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 import { HundredKButton } from "@/components/HundredKButton";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { HeroBanner } from "@/components/HeroBanner";
+import { NHSPopupForm } from "@/components/NHSPopupForm";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -148,9 +149,29 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 };
 
 export default function Home({ pageData }: { pageData: any }) {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  // Show the popup after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPopupVisible(true);
+    }, 3000); // 3 seconds
+
+    // Cleanup the timer if the component is unmounted
+    return () => clearTimeout(timer);
+  }, []);
+
+  const closePopup = () => {
+    setIsPopupVisible(false);
+  };
+
   //replace the image url depending on breakpoint
   return (
     <main>
+      <section id="tempform">
+        <NHSPopupForm isVisible={isPopupVisible} onClose={closePopup} />
+      </section>
+
       <section>
         <div className="sm:block md:hidden">
           <HeroBanner
