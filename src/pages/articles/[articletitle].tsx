@@ -83,12 +83,12 @@ export default function ArticlePage({
         <meta name="description" content={pageData.attributes.description} />
       </Head>
       {/* <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 flex flex-col justify-center"> */}
-      <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
         <div className="col-span-1">
-          <div className="text-center text-blue-primary font-bold text-xl">
+          <div className="text-center text-xl font-bold text-blue-primary">
             {pageData.attributes.title}
           </div>
-          <div className="text-center text-blue-secondary flex space-x-2 text-sm justify-center">
+          <div className="flex justify-center space-x-2 text-center text-sm text-blue-secondary">
             <Calendar size={14} />
             {publishedDate}
             <Clock size={14} />
@@ -100,7 +100,7 @@ export default function ArticlePage({
             width={1200}
             height={400}
             layout="responsive"
-            className="w-full h-auto object-cover "
+            className="h-auto w-full object-cover "
           />{" "}
           {pageData.attributes.content_sections[0].content.map(
             (contentParagraph: any) => {
@@ -115,7 +115,7 @@ export default function ArticlePage({
             }
           )}
           <Disclaimer contentType="article" />
-          <div className="w-full my-5">
+          <div className="my-5 w-full">
             <Image
               src={
                 associatedHorizontalBanner.attributes.cover_image.data
@@ -125,12 +125,13 @@ export default function ArticlePage({
               width={1200}
               height={400}
               layout="responsive"
-              className="w-full h-auto object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
         </div>
-        <div className="md:col-start-2">
-          <div className="w-full my-5 hidden md:block">
+        <div className="md:col-start-2 ">
+          <NHSPensionChecklistForm />
+          <div className="my-5 hidden md:block">
             <Image
               src={
                 associatedVerticalBanner.attributes.cover_image.data.attributes
@@ -140,17 +141,16 @@ export default function ArticlePage({
               width={1200}
               height={400}
               layout="responsive"
-              className="w-full h-auto object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
-          <NHSPensionChecklistForm />
         </div>
       </div>
-      <div className="bg-gray-100 flex flex-col justify-center my-5">
-        <p className="text-blue-primary text-3xl font-bold m-4 mb-1 pt-4 pb-2 text-center">
+      <div id="read more" className="my-5 flex flex-col justify-center bg-gray-100">
+        <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More Articles
         </p>
-        <p className="border-blue-secondary border-solid border-t-[3px] flex self-center w-1/2"></p>
+        <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
         <div className="px-16 pt-4">
           <Carousel className="">
             <CarouselContent>
