@@ -14,7 +14,7 @@ export default function HomePageNHSPensionForm() {
       />
 
       <section className="mt-[-20px] space-y-2 px-[30px] py-[50px] md:ml-8 md:w-1/2">
-        <div className="text-center text-xl font-bold xl:text-4xl lg:text-2xl">
+        <div className="text-center text-xl font-bold lg:text-2xl xl:text-4xl">
           Type your details below to receive an email link you can use to
           download your FREE checklist
         </div>
