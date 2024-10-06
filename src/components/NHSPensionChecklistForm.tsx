@@ -1,6 +1,6 @@
 export default function NHSPensionChecklistForm() {
   return (
-    <section className="m-4 mt-[-20px]  space-y-1 bg-orange-400 p-[20px] text-white md:ml-8 md:w-1/2">
+    <section className="m-4 mt-[-20px]  space-y-1 bg-orange-400 p-[20px] text-white md:ml-8 ">
       <div className="mb-4 text-center text-2xl font-bold xl:text-4xl">
         Have you got your NHS Pension checklist yet?
       </div>

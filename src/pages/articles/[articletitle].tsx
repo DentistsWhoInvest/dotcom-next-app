@@ -129,8 +129,9 @@ export default function ArticlePage({
             />
           </div>
         </div>
-        <div className="md:col-start-2">
-          <div className="my-5 hidden w-full md:block">
+        <div className="md:col-start-2 ">
+          <NHSPensionChecklistForm />
+          <div className="my-5 hidden md:block">
             <Image
               src={
                 associatedVerticalBanner.attributes.cover_image.data.attributes
@@ -143,10 +144,9 @@ export default function ArticlePage({
               className="h-auto w-full object-cover"
             />
           </div>
-          <NHSPensionChecklistForm />
         </div>
       </div>
-      <div className="my-5 flex flex-col justify-center bg-gray-100">
+      <div id="read more" className="my-5 flex flex-col justify-center bg-gray-100">
         <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More Articles
         </p>
