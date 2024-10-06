@@ -383,7 +383,9 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <HomePageNHSPensionForm />
+      <section className="bg-gray-200 px-[30px] py-14">
+        <HomePageNHSPensionForm />
+      </section>
     </main>
   );
 }
