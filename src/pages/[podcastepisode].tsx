@@ -6,8 +6,8 @@ import Disclaimer from "@/components/Disclaimer";
 import PodcastMarketingForm from "@/components/PodcastMarketingForm";
 import { createSlug } from "./articles";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
-import fs from 'fs'
-import path from 'path'
+import fs from "fs";
+import path from "path";
 
 const fetchAllItems = async (url: string) => {
   let allItems: any[] = [];
@@ -35,8 +35,8 @@ const fetchAllItems = async (url: string) => {
 };
 
 function writeToLocal(result: any[]) {
-  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
-  
+  const filePath = path.join(process.cwd(), "public", "podcastepisodes.json");
+
   return new Promise<void>((resolve, reject) => {
     fs.writeFile(filePath, JSON.stringify(result), (err) => {
       if (err) {
@@ -51,18 +51,18 @@ function writeToLocal(result: any[]) {
 export const getStaticPaths = async () => {
   const fetchedPodcasts = await fetchAllItems("/podcasts");
 
-  await writeToLocal(fetchedPodcasts)
+  await writeToLocal(fetchedPodcasts);
 
-  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
-  const jsonData = fs.readFileSync(filePath, 'utf-8');  
+  const filePath = path.join(process.cwd(), "public", "podcastepisodes.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
   const parsedData = JSON.parse(jsonData);
 
-
-
   return {
-    paths: parsedData.map((result: { attributes: { episode_number: number } }) => ({
-      params: { podcastepisode: "e" + result.attributes.episode_number },
-    })),
+    paths: parsedData.map(
+      (result: { attributes: { episode_number: number } }) => ({
+        params: { podcastepisode: "e" + result.attributes.episode_number },
+      })
+    ),
     fallback: false,
   };
 };
@@ -70,11 +70,10 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: any) => {
   const episodeNumber = Number(params.podcastepisode.replace("e", ""));
   // const allPodcasts = await fetchAllPodcasts()
-  const filePath = path.join(process.cwd(), 'public', 'podcastepisodes.json');
+  const filePath = path.join(process.cwd(), "public", "podcastepisodes.json");
   const page = parseInt(params.page, 10) || 1;
-  const jsonData = fs.readFileSync(filePath, 'utf-8');
+  const jsonData = fs.readFileSync(filePath, "utf-8");
   const allPodcasts = JSON.parse(jsonData);
-
 
   const matchingPodcast = allPodcasts.find(
     (podcast: { attributes: { episode_number: number } }) =>
@@ -106,7 +105,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   const someArticles = await fetchEndpointData("/blog-posts", undefined, true, {
     page: 1,
-    pageSize: 3,
+    pageSize: 4,
   });
 
   return {
@@ -134,7 +133,6 @@ export default function PodcastPage({
   otherPodcasts: any;
   someArticles: any;
 }) {
-
   const TranscriptParagraph = ({ transcriptParagraph }: any) => {
     const person = transcriptParagraph[0]?.text;
     const timestamp = transcriptParagraph[1]?.text;
@@ -173,35 +171,37 @@ export default function PodcastPage({
       <Head>
         <title>{pageData.attributes.title}</title>
         <meta name="description" content={pageData.description} />
-      </Head>
-      <div className="relative ">
-        <Image
-          className="w-full object-cover"
-          src={
-            "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-          }
-          alt={"Hero banner"}
-          width={"320"}
-          height={"440"}
-        />
+      </Head>{" "}
+      <section id="image and title">
+        <div className="relative ">
+          <Image
+            className="w-full object-cover"
+            src={
+              "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+            }
+            alt={"Hero banner"}
+            width={"320"}
+            height={"440"}
+          />
 
-        <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
-          <div className="flex flex-row">
-            <p className="basis-1/3">
-            <span className="p-4 text-3xl font-bold text-blue-secondary">
-              Episodes {pageData.attributes.episode_number}
-            </span>
-            <span className="p-4 text-3xl font-bold text-white">
-              {pageData.attributes.title}
-            </span>
-            <span className="p-2 text-xl text-blue-light">
-              Hosted by: Dr. James Martin
-            </span>
-            </p>
-            <div className="">contributor images </div>
+          <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
+            <div className="flex flex-row">
+              <p className="basis-1/3">
+                <span className="p-4 text-3xl font-bold text-blue-secondary">
+                  Episodes {pageData.attributes.episode_number}
+                </span>
+                <span className="p-4 text-3xl font-bold text-white">
+                  {pageData.attributes.title}
+                </span>
+                <span className="p-2 text-xl text-blue-light">
+                  Hosted by: Dr. James Martin
+                </span>
+              </p>
+              <div className="">contributor images </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
       <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
         <div className="col-span-1">
           <iframe
@@ -278,11 +278,9 @@ export default function PodcastPage({
                 </ul>
               );
             })}
-
-            <PodcastMarketingForm />
           </div>
         </div>
-        <div className="md:col-start-2">
+        {/* <div className="md:col-start-2">
           <div className="my-5 hidden w-full md:block">
             {otherPodcasts.map((page: any) => {
               //todo: might need to tweak the title
@@ -312,23 +310,50 @@ export default function PodcastPage({
               className="h-auto w-full object-cover"
             />
           </div>
-        </div>
-        <div className="my-5 hidden w-full flex-row md:block">
-          {someArticles.map((page: any) => {
-            //todo: might need to tweak the title
-            const viewMoreSlug = createSlug(page.attributes.title);
-            return (
-              <ul key={page.id} className="p-4">
-                <ViewMoreCard
-                  page={page}
-                  contentType={"article"}
-                  slug={viewMoreSlug}
-                />
-              </ul>
-            );
-          })}
-        </div>
+        </div> */}
       </div>
+      <section id="podcasts and maybe articles">
+        <div className="m-2 xl:px-[50px]">
+          <PodcastMarketingForm />
+        </div>
+        <div className="my-5 hidden flex-col justify-center md:flex">
+          <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
+            Read More Articles
+          </p>
+          <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary lg:w-1/3 xl:w-1/4"></p>
+
+          <div className="my-5 grid w-full grid-cols-2 xl:hidden">
+            {someArticles.map((page: any) => {
+              //todo: might need to tweak the title
+              const viewMoreSlug = createSlug(page.attributes.title);
+              return (
+                <ul key={page.id} className="p-4">
+                  <ViewMoreCard
+                    page={page}
+                    contentType={"article"}
+                    slug={viewMoreSlug}
+                  />
+                </ul>
+              );
+            })}
+          </div>
+          <div className="my-5 hidden w-full grid-cols-3 xl:grid">
+            {someArticles.slice(0, 3).map((page: any) => {
+              //todo: might need to tweak the title
+              const viewMoreSlug = createSlug(page.attributes.title);
+              return (
+                <ul key={page.id} className="p-4">
+                  <ViewMoreCard
+                    page={page}
+                    contentType={"article"}
+                    slug={viewMoreSlug}
+                  />
+                </ul>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
