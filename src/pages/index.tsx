@@ -383,7 +383,7 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section className="bg-gray-200 px-[30px] py-14">
+      <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
         <HomePageNHSPensionForm />
       </section>
     </main>

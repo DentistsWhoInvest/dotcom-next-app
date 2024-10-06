@@ -3,23 +3,24 @@ import Image from "next/image";
 
 export default function HomePageNHSPensionForm() {
   return (
-    <div className="flex flex-col justify-center rounded-2xl bg-orange-400 text-white">
+    
+    <div className="flex flex-col justify-center rounded-2xl bg-orange-400 text-white  md:h-[500px] md:flex-row xl:mx-[100px] xl:h-[570px] ">
       <Image
         src="https://storage.googleapis.com/dwi-dotcom-assets/nhs_pension_checklist_clipboard_97caac76f6/nhs_pension_checklist_clipboard_97caac76f6.webp"
         alt="checklist"
-        width={240}
-        height={300}
-        className="mt-[-50px] self-center"
+        width={1024}
+        height={1340}
+        className="mt-[-50px] self-center md:h-[338px] md:w-[258px] lg:h-[492px] lg:w-[376px] xl:h-[544px] xl:w-[416px]"
       />
 
-      <section className="mt-[-20px] space-y-2 px-[30px] py-[50px]">
-        <div className="text-center text-xl font-bold">
+      <section className="mt-[-20px] space-y-2 px-[30px] py-[50px] md:ml-8 md:w-1/2">
+        <div className="text-center text-xl font-bold xl:text-4xl lg:text-2xl">
           Type your details below to receive an email link you can use to
           download your FREE checklist
         </div>
         <form action="" method="post">
 
-        <div id="form" className="space-y-4 md:w-1/2 md:p-8  md:pt-16">
+        <div id="form" className="space-y-4">
             <div className="flex flex-col justify-start space-y-2">
               <label className="text-sm font-semibold" htmlFor="name">
                 First Name{" "}
@@ -54,7 +55,7 @@ export default function HomePageNHSPensionForm() {
             />
             </div>
           </form>
-          <p className="pt-4 text-center text-xs">
+          <p className="pt-4 text-center text-xs md:text-left lg:text-base">
             BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST
             EMAIL LIST. THIS LIST CAN BE LEFT AT ANY TIME.
           </p>
