@@ -44,7 +44,7 @@ interface Course {
 
 const CourseCard = ({ course }: { course: Course }) => {
   return (
-    <li className="flex flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
+    <li className="m-5 flex h-[528px] flex-col justify-center rounded-[30px] border border-solid bg-white p-5 shadow-custom md:h-[498] ">
       <div className="bg-blue-primary p-4 text-center font-bold text-white">
         <h2 className="text-xl">{course.attributes.tagline}</h2>
       </div>
@@ -60,23 +60,23 @@ const CourseCard = ({ course }: { course: Course }) => {
           <Image
             src="/DWI-logo-circle.webp"
             alt="Course Logo"
-            width={40}
-            height={40}
-            className="rounded-full border-2 border-white"
+            width={100}
+            height={100}
+            className="translate-y-8 rounded-full border-2 border-white"
           />
         </div>
       </div>
-      <div className="flex flex-col items-center p-4 pt-8">
+      <div className="flex flex-col items-center p-4 pb-5 pt-12">
         <Image
           src={course.attributes.cover.data.attributes.url}
           alt={course.attributes.title}
-          width={180}
-          height={440}
+          width={255}
+          height={100}
         />{" "}
-        <p className="mb-4 text-sm text-blue-primary">
+        <p className="my-5 text-[20px] font-medium leading-5 text-blue-primary">
           {course.attributes.description}
         </p>
-        <Button className="rounded-md bg-orange-400 px-6 py-4 font-bold text-white hover:bg-orange-500">
+        <Button className="rounded-sm bg-orange-400 px-[36px] py-6 text-white hover:bg-orange-500">
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
       </div>
@@ -95,7 +95,7 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <HeroBanner bannerImage={pageData.hero_image.data.attributes} bannerText={pageData.title} subText={pageData.subtext}/>
-      <ul className="m-4 space-y-4">
+      <ul className="m-2 grid grid-cols-1 gap-4 space-y-4 md:grid-cols-2 md:space-y-5">
         {pageData.courses.data.map((course: any) => {
           return <CourseCard key={course.id} course={course} />;
         })}
