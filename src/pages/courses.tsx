@@ -44,9 +44,9 @@ interface Course {
 
 const CourseCard = ({ course }: { course: Course }) => {
   return (
-    <li className="m-5 flex h-[528px] flex-col justify-center rounded-[30px] border border-solid bg-white p-5 shadow-custom md:h-[498] ">
+    <li className="my-4 flex h-[528px] flex-col justify-center rounded-[30px] border border-solid bg-white p-5 shadow-custom lg:h-[594px] lg:w-[422px] xl:h-[826px] xl:w-[570px] ">
       <div className="bg-blue-primary p-4 text-center font-bold text-white">
-        <h2 className="text-xl">{course.attributes.tagline}</h2>
+        <h2 className="text-xl xl:text-3xl">{course.attributes.tagline}</h2>
       </div>
       <div className="relative">
         <Image
@@ -54,7 +54,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           alt={course.attributes.title}
           width={300}
           height={200}
-          className="h-[200px] w-full object-cover"
+          className="h-[200px] w-full object-cover lg:h-[287px] xl:h-[353px]"
         />
         <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2">
           <Image
@@ -72,8 +72,9 @@ const CourseCard = ({ course }: { course: Course }) => {
           alt={course.attributes.title}
           width={255}
           height={100}
+          className="xl:w-[455px]"
         />{" "}
-        <p className="my-5 text-[20px] font-medium leading-5 text-blue-primary">
+        <p className="my-5 text-[20px]  font-medium leading-5 text-blue-primary">
           {course.attributes.description}
         </p>
         <Button className="rounded-sm bg-orange-400 px-[36px] py-6 text-white hover:bg-orange-500">
@@ -95,11 +96,12 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <HeroBanner bannerImage={pageData.hero_image.data.attributes} bannerText={pageData.title} subText={pageData.subtext}/>
-      <ul className="m-2 grid grid-cols-1 gap-4 space-y-4 md:grid-cols-2 md:space-y-5">
+      <div className="md:mx-[50px] lg:mx-[150px]">
+      <ul className="grid grid-cols-1 place-items-center justify-center gap-8 place-self-center md:grid-cols-2 lg:gap-40">
         {pageData.courses.data.map((course: any) => {
           return <CourseCard key={course.id} course={course} />;
         })}
-      </ul>
+      </ul></div>
       <HundredKButton />
     </main>
   );
