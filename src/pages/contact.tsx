@@ -86,7 +86,7 @@ export default function Contact({ pageData }: { pageData: any }) {
           ))}
         </div>
       </div>
-      <div className="px-5 pb-[100px] pt-[70px] text-blue-primary">
+      <div className="mx-auto w-full max-w-[1140px] justify-center px-5 pb-[100px] pt-[70px] text-blue-primary">
         <p className="text-center text-[30px] font-bold leading-[36px]">
           Frequently Asked Questions
         </p>
