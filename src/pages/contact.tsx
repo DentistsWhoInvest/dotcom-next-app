@@ -46,8 +46,6 @@ const ContactOptions = ({ option }: { option: any }) => {
     />
   );
 
-  console.log(option);
-
   return (
     <Card className="m-[10px] flex h-[382px] flex-col justify-center space-y-5 rounded-[2rem] border-2 text-center shadow-2xl md:h-[463px] md:w-[226px] md:justify-between lg:h-[422px] lg:w-[328px]">
         <p className="mx-auto mt-8 size-[100px]">

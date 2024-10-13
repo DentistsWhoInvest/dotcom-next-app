@@ -262,7 +262,6 @@ export default function Articles({
   currentPage: number;
   totalPages: number;
 }) {
-  console.log("data", pageData);
   //assuming we want most recent articles first, but this can be changed
   const sortedData = pageData.sort(
     (a: any, b: any) =>
