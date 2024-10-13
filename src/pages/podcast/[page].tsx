@@ -201,21 +201,20 @@ export default function Podcasts({
       <div className="text-blue-secondary text-4xl font-bold self-center mb-5 pt-10">
         All Episodes
       </div>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center xl:mx-[40px]">
         {sortedData.map((page: Episode) => {
           return (
             <Link href={`/e${page.attributes.episode_number}`} key={page.id}>
-              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[530px]">
+              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
                 <Image
                   src={page.attributes.artwork_url}
                   alt={page.attributes.title}
                   width={311}
                   height={311}
-                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[423px]"
+                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[430px] md:h-[442px]"
                 />
                 <div className="grow"></div>
-
-                <div className="text-center text-blue-primary p-5 text-xl mb-5 ">
+                <div className="text-center text-blue-primary p-5 text-xl mb-5">
                   EP{page.attributes.episode_number}{" "}
                   {page.attributes.title.split(" DWI-")[0]}
                 </div>

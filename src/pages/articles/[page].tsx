@@ -283,26 +283,25 @@ export default function Articles({
       <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
         All Articles
       </div>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center xl:mx-[40px]">
         {sortedData.map((page: Article) => {
           const slug = createSlug(page.attributes.title);
           return (
             <li key={page.id}>
               <Link href={`/articles/${slug}`}>
-                <Card className="m-6 justify-center border-2 border-blue-secondary shadow-lg">
+              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
                   <Image
                     src={page.attributes.cover.data.attributes.url}
                     alt={page.attributes.title}
-                    width={200}
-                    height={200}
-                    className="w-full rounded-t-md object-cover"
-                  />
-                  <CardContent className="p-2 text-center">
-                    <CardTitle className="p-2 text-blue-primary">
-                      {page.attributes.title}
-                    </CardTitle>
-                  </CardContent>
-                </Card>
+                    width={311}
+                    height={311}
+                    className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[430px] md:h-[442px]"
+                    />
+                  <div className="grow"></div>
+                  <div className="text-center text-blue-primary p-5 text-xl mb-5 ">
+                    {page.attributes.title}
+                  </div>
+                </div>
               </Link>
             </li>
           );
