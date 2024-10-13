@@ -39,6 +39,16 @@ export const ViewMoreCard = ({
   }
   const hrefStarter = getHrefStarter(contentType);
 
+  const trimAfterWords = (text: string, wordLimit:number) => {
+    const words = text.split(' '); // Split the text into an array of words
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(' ') + '...'; // Join the first 'wordLimit' words and add ellipsis
+    }
+    return text; // If there are fewer words than the limit, return the full text
+  };
+
+  const trimmedExcerpt = trimAfterWords(page.attributes.excerpt, 25);
+
   return (
     <>
       <Card className="justify-start border-2">
@@ -58,7 +68,13 @@ export const ViewMoreCard = ({
             </Link>
           </CardTitle>
           <CardDescription className="p-2 text-grey-primary">
-            {page.attributes.excerpt}
+          <div
+                  key={page.attributes.excerpt}
+                  dangerouslySetInnerHTML={{
+                    __html:trimmedExcerpt
+                    ,
+                  }}
+                />
           </CardDescription>
           <Link
             className={"text-xs font-semibold text-blue-secondary"}
@@ -69,9 +85,9 @@ export const ViewMoreCard = ({
             </span>
           </Link>
         </CardContent>
-        <CardFooter className=" justify-start border-t-2 p-4 text-xs">
+        {/* <CardFooter className=" justify-start border-t-2 p-4 text-xs">
           {publishedDate}
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </>
   );

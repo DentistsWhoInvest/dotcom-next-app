@@ -15,6 +15,7 @@ import {
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import { processDate } from "@/lib/dateUtils";
 import { createSlug } from "./articles/[page]";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/blog-posts`);
@@ -83,12 +84,12 @@ export default function ArticlePage({
         <meta name="description" content={pageData.attributes.description} />
       </Head>
       {/* <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 flex flex-col justify-center"> */}
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2 p-5">
         <div className="col-span-1">
-          <div className="text-center text-xl font-bold text-blue-primary">
+          <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5">
             {pageData.attributes.title}
           </div>
-          <div className="flex justify-center space-x-2 text-center text-sm text-blue-secondary">
+          <div className="flex justify-center space-x-2 text-center text-base text-blue-secondary p-[10px] mb-5">
             <Calendar size={14} />
             {publishedDate}
             <Clock size={14} />
@@ -102,18 +103,13 @@ export default function ArticlePage({
             layout="responsive"
             className="h-auto w-full object-cover "
           />{" "}
-          {pageData.attributes.content_sections[0].content.map(
+          <div className="text-[18px] leading-7 py-5">{pageData.attributes.content_sections.map(
             (contentParagraph: any) => {
               return (
-                <div
-                  key={contentParagraph.id}
-                  dangerouslySetInnerHTML={{
-                    __html: contentParagraph.children[0].text,
-                  }}
-                />
+               <BlocksRenderer content={contentParagraph.content}/>
               );
             }
-          )}
+          )}</div>
           <Disclaimer contentType="article" />
           <div className="my-5 w-full">
             <Image
@@ -146,12 +142,12 @@ export default function ArticlePage({
           </div>
         </div>
       </div>
-      <div id="read more" className="my-5 flex flex-col justify-center bg-gray-100">
+      <div id="read more" className="mt-5 flex flex-col justify-center bg-gray-100">
         <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More Articles
         </p>
         <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-        <div className="px-16 pt-4">
+        <div className="px-16 pt-4 h-[625px]">
           <Carousel className="">
             <CarouselContent>
               {otherArticles.map((page: any) => {
