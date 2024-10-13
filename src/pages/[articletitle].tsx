@@ -83,13 +83,12 @@ export default function ArticlePage({
         <title>{pageData.attributes.title}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      {/* <div className="w-full max-w-md sm:max-w-xl md:max-w-4xl mt-5 flex flex-col justify-center"> */}
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2 p-5">
-        <div className="col-span-1">
-          <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-2 xl:my-5">
+        <div className="col-span-2">
+          <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5 md:text-[45px] md:leading-[54px]">
             {pageData.attributes.title}
           </div>
-          <div className="flex justify-center space-x-2 text-center text-base text-blue-secondary p-[10px] mb-5">
+          <div className="flex justify-center space-x-2 text-center text-base text-blue-secondary p-[10px] mb-5 items-center">
             <Calendar size={14} />
             {publishedDate}
             <Clock size={14} />
@@ -101,9 +100,9 @@ export default function ArticlePage({
             width={1200}
             height={400}
             layout="responsive"
-            className="h-auto w-full object-cover "
+            className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
           />{" "}
-          <div className="text-[18px] leading-7 py-5">{pageData.attributes.content_sections.map(
+          <div className="text-[18px] leading-7 py-5 md:text-xl">{pageData.attributes.content_sections.map(
             (contentParagraph: any) => {
               return (
                <BlocksRenderer content={contentParagraph.content}/>
@@ -125,7 +124,7 @@ export default function ArticlePage({
             />
           </div>
         </div>
-        <div className="md:col-start-2 ">
+        <div className="md:col-span-1 w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
             <Image
@@ -134,10 +133,9 @@ export default function ArticlePage({
                   .url
               }
               alt="Want to increase your income?"
-              width={1200}
-              height={400}
-              layout="responsive"
-              className="h-auto w-full object-cover"
+              width={233}
+              height={598}
+              className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
             />
           </div>
         </div>
