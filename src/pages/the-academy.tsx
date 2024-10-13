@@ -67,14 +67,15 @@ type ImageData = {
 
 type InformedInvestorClub = {
   id: number;
-  sales_part_1: Paragraph[];
-  sales_part_2: Paragraph[];
-  sales_part_3_cost: Paragraph[];
-  description: Paragraph[];
+  sales_part_1: any;
+  sales_part_2: any;
+  sales_part_3_cost: any;
+  description: any;
   sales_cards: {
     reason: string;
     image: ImageData;
   }[];
+  video_club: ImageData;
 };
 
 type Testimonial = {
@@ -95,13 +96,13 @@ type Testimonial = {
 
 type AcademyCoursePageData = {
   hero_text: string;
-  first_description: Paragraph[];
-  collective_content_description: Paragraph[];
+  first_description: any;
+  collective_content_description: any;
   // summary: Paragraph[];
   summary: any;
   cta_text: string;
   cta_navigation_url: string;
-  sign_off: Paragraph[];
+  sign_off: any;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -126,6 +127,7 @@ export const getStaticProps = async () => {
     "informed_investor_club.description",
     "informed_investor_club.sales_cards",
     "informed_investor_club.sales_cards.image",
+    "informed_investor_club.video_club",
     "testimonial",
     "testimonial.author_thumbnail",
     "sign_off_testimonial",
@@ -146,151 +148,164 @@ export default function TheAcademyCoursePage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
+  console.log(courseData);
   return (
     <>
-      <section id="topbanner">
-        <div className="flex flex-col items-center justify-center bg-gradient-to-l from-blue-primary to-blue-secondary text-white">
+      <main className="text-lg">
+        <section id="topbanner">
+          <div className="relative h-[492px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
+            <div className="absolute inset-0 xl:hidden">
+              <Image
+                src={courseData.hero_cover.data.attributes.url}
+                alt={"mobile"}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="left 20%"
+                priority
+                className="h-[492px]"
+              />
+              <div className="relative z-10 flex size-full flex-col items-center justify-evenly text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px]">
+                <Image
+                  src={courseData.hero_logo_ribbon.data.attributes.url}
+                  alt={"ribbon"}
+                  width={315}
+                  height={61}
+                />
+                <h1 className="text-left text-4xl font-bold text-white m-4">
+                  {courseData.hero_text}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="first-description">
+          <div className="m-8 space-y-4 text-lg">
+            <BlocksRenderer content={courseData.first_description} />
+          </div>
+        </section>
+        <section id="collective-content" className="bg-gray-100">
+          <div className="flex flex-col items-center space-y-8 p-8 text-lg">
+            <Image
+              src={courseData.collective_content_image.data.attributes.url}
+              alt="Collective content image"
+              width={courseData.collective_content_image.data.attributes.width}
+              height={
+                courseData.collective_content_image.data.attributes.height
+              }
+            />
+            <BlocksRenderer
+              content={courseData.collective_content_description}
+            />
+          </div>
+        </section>
+        <section className="bg-blue-secondary p-2">
           <Image
-            src={courseData.hero_logo_ribbon.data.attributes.url}
-            alt={"Hero banner"}
-            width={courseData.hero_cover.data.attributes.width}
-            height={courseData.hero_cover.data.attributes.height}
-          />
-          <h1 className="text-4xl font-bold">{courseData.hero_text}</h1>
-        </div>
-      </section>
-      <section id="first-description">
-        <div className="flex flex-col justify-center">
-          {courseData.first_description.map((paragraph, index) => (
-            <p key={index}>{paragraph.children[0].text}</p>
-          ))}
-        </div>
-      </section>
-      <section id="collective-content">
-        <div className="flex flex-col items-center space-y-8 p-8">
-          {courseData.collective_content_description.map((paragraph, index) => (
-            <p key={index}>{paragraph.children[0].text}</p>
-          ))}
-          <Image
-            src={courseData.collective_content_image.data.attributes.url}
+            src="https://storage.googleapis.com/dwi-dotcom-assets/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
             width={courseData.collective_content_image.data.attributes.width}
             height={courseData.collective_content_image.data.attributes.height}
           />
-        </div>
-      </section>
+        </section>
 
-      <section id="informed-investor-club">
-        <div className="flex flex-col items-center space-y-8 p-8">
-          <h2 className="text-2xl font-bold">Informed Investor Club</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="flex flex-col items-center space-y-4 rounded-lg bg-white p-8 shadow-lg">
-              {courseData.informed_investor_club.sales_part_1.map(
-                (paragraph, index) => (
-                  <p key={index}>{paragraph.children[0].text}</p>
-                )
-              )}
+        <section id="informed-investor-club">
+          <div className="flex flex-col items-center space-y-8 p-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <p>todo</p>
+              <BlocksRenderer
+                content={courseData.informed_investor_club.sales_part_1}
+              />
+              <BlocksRenderer
+                content={courseData.informed_investor_club.sales_part_2}
+              />
+              <BlocksRenderer
+                content={courseData.informed_investor_club.sales_part_3_cost}
+              />
+
+              <div className="flex flex-col items-center space-y-4 bg-white ">
+                <BlocksRenderer
+                  content={courseData.informed_investor_club.description}
+                />
+              </div>
             </div>
-            <div className="flex flex-col items-center space-y-4 rounded-lg bg-white p-8 shadow-lg">
-              {courseData.informed_investor_club.sales_part_2.map(
-                (paragraph, index) => (
-                  <p key={index}>{paragraph.children[0].text}</p>
-                )
+            <div className="m-[10px] flex size-full flex-col justify-center space-y-4">
+              {courseData.informed_investor_club.sales_cards.map(
+                (card: any, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 shadow-lg"
+                    >
+                      <Image
+                        src={card.image.data.attributes.url}
+                        alt="Sales card image"
+                        width={90}
+                        height={90}
+                      />
+                      <span className="text-lg font-bold text-white size-full text-center">
+                        {card.reason}
+                      </span>
+                    </div>
+                  );
+                }
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="flex flex-col items-center space-y-4 rounded-lg bg-white p-8 shadow-lg">
-              {courseData.informed_investor_club.sales_part_3_cost.map(
-                (paragraph, index) => (
-                  <p key={index}>{paragraph.children[0].text}</p>
-                )
-              )}
-            </div>
-            <div className="flex flex-col items-center space-y-4 rounded-lg bg-white p-8 shadow-lg">
-              {courseData.informed_investor_club.description.map(
-                (paragraph, index) => (
-                  <p key={index}>{paragraph.children[0].text}</p>
-                )
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col items-center space-y-4">
-            {courseData.informed_investor_club.sales_cards.map(
-              (card: any, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center space-y-4 rounded-lg bg-white p-8 shadow-lg"
-                  >
-                    <Image
-                      src={card.image.data.attributes.url}
-                      alt="Sales card image"
-                      width={200}
-                      height={200}
-                    />
-                    <span className="text-lg font-bold text-blue-primary">
-                      {card.reason}
-                    </span>
-                  </div>
-                );
-              }
-            )}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="testimonial and sign off"></section>
-
-      <section id="sign off">
-        <div>
-          {courseData.testimonial.data.attributes.review.map(
-            (paragraph: any, index: number) => (
-              <p key={index}>{paragraph.children[0].text}</p>
-            )
-          )}
-        </div>
-        - {courseData.testimonial.data.attributes.author},{" "}
-        {courseData.testimonial.data.attributes.author_job_location
-          .split(",")[1]
-          ?.trim()}
-        <div className="space-y-2">
-          <BlocksRenderer content={courseData.summary} />
-        </div>
-        <Button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
-          <Link href={courseData.cta_navigation_url}>
-            {courseData.cta_text}
-          </Link>{" "}
-        </Button>
-        <div className="flex flex-col items-center space-y-8 p-8">
-          {courseData.sign_off.map((paragraph, index) => (
-            <p key={index}>{paragraph.children[0].text}</p>
-          ))}
-        </div>
-        {/* <div className="flex flex-col items-center space-y-8 p-8"> */}
+        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-4">
+          <div className="border-4 border-blue-primary p-4 text-center text-blue-primary">
+            <div className="text-2xl font-bold ">
+              {" "}
+              <BlocksRenderer
+                content={courseData.testimonial.data.attributes.review}
+              />
+            </div>
+            - {courseData.testimonial.data.attributes.author},{" "}
+            {courseData.testimonial.data.attributes.author_job_location
+              .split(",")[1]
+              ?.trim()}{" "}
+          </div>
+          <div className="space-y-4">
+            <BlocksRenderer content={courseData.summary} />
+          </div>
+          <Button className="rounded-md bg-orange-400 px-8 py-4 text-white text-xl hover:text-blue-primary size-full">
+            <Link href={courseData.cta_navigation_url}>
+              {courseData.cta_text}
+            </Link>{" "}
+          </Button>
+          <div className="flex flex-col items-center space-y-8">
+            <BlocksRenderer content={courseData.sign_off} />
+          </div>
+          {/* <div className="flex flex-col items-center space-y-8 p-8"> */}
+        </section>
         <div className="relative h-[440px] w-full ">
-          {" "}
-          <Image
-            src={courseData.sign_off_cover.data.attributes.url}
-            alt="Sign off image"
-            layout="fill"
-            objectPosition="center"
-            objectFit="cover"
-            priority
-          />
-          <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center space-y-2 p-12 text-center text-white">
-            <div className="text-xl font-bold">
+          <div className="absolute inset-0 xl:hidden">
+            <Image
+              src={courseData.sign_off_cover.data.attributes.url}
+              alt={"Sign off image"}
+              layout="fill"
+              objectPosition="center"
+              objectFit="cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
+          </div>
+          <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center space-y-2 p-4 text-center text-white">
+            <div className="text-2xl font-bold">
               <BlocksRenderer
                 content={courseData.sign_off_testimonial.data.attributes.review}
               />
             </div>
-            - {courseData.sign_off_testimonial.data.attributes.author},{" "}
-            {courseData.sign_off_testimonial.data.attributes.author_job_location
-              .split(",")[1]
-              ?.trim()}
+            <p className="text-blue-secondary">
+              -{courseData.sign_off_testimonial.data.attributes.author},{" "}
+              {courseData.sign_off_testimonial.data.attributes.author_job_location
+                .split(",")[1]
+                ?.trim()}
+            </p>
           </div>
         </div>
-      </section>
+      </main>
     </>
   );
 }
