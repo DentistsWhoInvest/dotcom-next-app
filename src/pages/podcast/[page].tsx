@@ -1,9 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
@@ -179,7 +173,15 @@ export const getStaticProps = async ({ params }: any) => {
 };
 
 //and make sure it's the latest episodes first
-export default function Podcasts({ pageData, currentPage, totalPages }: { pageData: EpisodesResponse, currentPage: number, totalPages: number }) {
+export default function Podcasts({
+  pageData,
+  currentPage,
+  totalPages,
+}: {
+  pageData: EpisodesResponse;
+  currentPage: number;
+  totalPages: number;
+}) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       b.attributes.episode_number - a.attributes.episode_number
@@ -203,15 +205,17 @@ export default function Podcasts({ pageData, currentPage, totalPages }: { pageDa
         {sortedData.map((page: Episode) => {
           return (
             <Link href={`/e${page.attributes.episode_number}`} key={page.id}>
-              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[530px]">
                 <Image
                   src={page.attributes.artwork_url}
                   alt={page.attributes.title}
                   width={311}
                   height={311}
-                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[423px]"
                 />
-                <div className="text-center text-blue-primary p-5 text-xl">
+                <div className="grow"></div>
+
+                <div className="text-center text-blue-primary p-5 text-xl mb-5 ">
                   EP{page.attributes.episode_number}{" "}
                   {page.attributes.title.split(" DWI-")[0]}
                 </div>
@@ -222,7 +226,11 @@ export default function Podcasts({ pageData, currentPage, totalPages }: { pageDa
       </ul>
       <div className="mt-6 self-center pb-10">
         <div>
-          <PaginationNav navPath="podcast" currentPage={currentPage} totalPages={totalPages} />
+          <PaginationNav
+            navPath="podcast"
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
         </div>
       </div>
     </main>
