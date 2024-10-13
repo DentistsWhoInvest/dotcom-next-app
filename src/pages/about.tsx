@@ -103,7 +103,6 @@ export const getStaticProps = async () => {
 };
 
 export default function About({ pageData }: { pageData: AboutData }) {
-  console.log("pageData", pageData);
   return (
     <main className={`flex flex-col `}>
       <HeroBanner
@@ -117,6 +116,7 @@ export default function About({ pageData }: { pageData: AboutData }) {
 
       <section id="manifesto">
         <div className="flex size-full flex-col items-center justify-center p-8 text-center md:p-[50px]">
+          <div className="xl:max-w-[1140px]">
           <p className="text-[30px] font-bold text-blue-primary">Manifesto</p>
           <span className="m-4 h-0.5 w-full bg-blue-primary" />
           {pageData.attributes.manifesto.map((item, index) => {
@@ -134,13 +134,13 @@ export default function About({ pageData }: { pageData: AboutData }) {
                 </p>
               </div>
             );
-          })}
+          })}</div>
         </div>
       </section>
 
       <section id="our story">
-        <div className="relative h-[488px] w-full overflow-hidden md:h-[368px] xl:h-[323.56px]">
-          <div className="absolute inset-0">
+        <div className="relative h-[488px] w-full overflow-hidden md:h-[368px] xl:h-[323.56px] ">
+          <div className="absolute inset-0 ">
             <Image
               src={pageData.attributes.our_story_cover.data.attributes.url}
               alt={
@@ -152,12 +152,12 @@ export default function About({ pageData }: { pageData: AboutData }) {
             />
             <div className="absolute inset-0 bg-blue-primary opacity-80"></div>
           </div>
-          <div className="relative z-10 flex size-full flex-col items-center justify-center ">
-            <div className="absolute px-[30px] text-white md:px-[60px] xl:px-[160px]">
-              <div className="mb-4 text-3xl font-bold  md:text-[35px] xl:text-[45px] text-center md:text-left">
+          <div className="relative z-10 flex size-full flex-col items-center justify-center  ">
+            <div className="absolute px-[30px] text-white md:px-[60px] xl:max-w-[1140px] xl:px-[160px]">
+              <div className="mb-4 text-center text-3xl  font-bold md:text-left md:text-[35px] xl:text-[45px]">
                 {pageData.attributes.our_story_title}
               </div>
-              <div className="space-y-8 text-left md:flex md:flex-row md:space-y-0 md:space-x-8 md:py-6">
+              <div className="space-y-8 text-left md:flex md:flex-row md:space-x-8 md:space-y-0 md:py-6">
                 <BlocksRenderer
                   content={pageData.attributes.our_story_description}
                 />
