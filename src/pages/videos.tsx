@@ -49,7 +49,7 @@ type VideoAttributes = {
   horizontal_banner: HorizontalBanner;
 };
 
-type Video = {
+export type Video = {
   id: number;
   attributes: VideoAttributes;
 };

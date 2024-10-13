@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { createSlug } from "../articles";
-import { Video } from "lucide-react";
 import { VideoCard } from "../videos";
 import Image from "next/image";
 import {
@@ -12,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import type { Video } from "../videos";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -50,7 +50,7 @@ export default function VideoPage({
   associatedBanner,
   otherVideos,
 }: {
-  pageData: any;
+  pageData: Video;
   associatedBanner: any;
   otherVideos: any[];
 }) {
@@ -63,7 +63,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-auto mt-5 w-full max-w-md sm:max-w-xl md:max-w-4xl">
+      <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-4xl">
         <div className="flex flex-col justify-center bg-gray-100">
           <div className="m-6 aspect-video">
             <iframe
