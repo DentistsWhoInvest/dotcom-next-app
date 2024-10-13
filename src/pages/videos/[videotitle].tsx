@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { createSlug } from "../articles";
-import { Video } from "lucide-react";
 import { VideoCard } from "../videos";
 import Image from "next/image";
 import {
@@ -12,6 +11,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import type { Video } from "../videos";
+import Disclaimer from "@/components/Disclaimer";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -50,7 +51,7 @@ export default function VideoPage({
   associatedBanner,
   otherVideos,
 }: {
-  pageData: any;
+  pageData: Video;
   associatedBanner: any;
   otherVideos: any[];
 }) {
@@ -63,7 +64,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-auto mt-5 w-full max-w-md sm:max-w-xl md:max-w-4xl">
+      <div className="mx-auto w-full ">
         <div className="flex flex-col justify-center bg-gray-100">
           <div className="m-6 aspect-video">
             <iframe
@@ -87,7 +88,7 @@ export default function VideoPage({
           </div>
         </div>
 
-        <div className="my-5 w-full">
+        <div className="my-5 w-ful mx-4">
           <Image
             src={
               associatedBanner.data.attributes.cover_image.data.attributes.url
@@ -100,42 +101,33 @@ export default function VideoPage({
           />
         </div>
 
-        <div className="text-sm italic">
-          <span className="font-bold">Disclaimer: </span>
-          All content on this channel is for education purposes only and does
-          not constitute an investment recommendation or individual financial
-          advice. For that, you should speak to a regulated, independent
-          professional. The value of investments and the income from them can go
-          down as well as up, so you may get back less than you invest. The
-          views expressed on this channel may no longer be current. The
-          information provided is not a personal recommendation for any
-          particular investment. Tax treatment depends on individual
-          circumstances and all tax rules may change in the future. If you are
-          unsure about the suitability of an investment, you should speak to a
-          regulated, independent professional.
+        <div className="m-4">
+          <Disclaimer />
         </div>
 
-        <div className="my-5 flex flex-col justify-center bg-gray-100">
+        <div className="mt-5 flex flex-col justify-center bg-gray-100">
           <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
             Watch More
           </p>
           <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-          <div className="px-16">
-            <Carousel className="">
-              <CarouselContent>
+          <div className="relative">
+            <Carousel >
+              <CarouselContent className="mb-12">
                 {otherVideos.map((page: any) => {
                   return (
                     <CarouselItem
                       key={page.id}
-                      className="sm:basis-full md:basis-1/2 lg:basis-1/3"
+                      className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
                     >
                       <VideoCard page={page} />
                     </CarouselItem>
                   );
                 })}
               </CarouselContent>
-              <CarouselPrevious/>
-              <CarouselNext/>
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
+              <CarouselPrevious className="relative !-left-0" />
+                <CarouselNext className="relative !-right-0" />
+              </div>
             </Carousel>
           </div>
         </div>
