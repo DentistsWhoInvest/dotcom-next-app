@@ -60,7 +60,7 @@ export default function Footer() {
   const ExploreLinks = [
     { href: "/about", text: "About" },
     { href: "/podcast/1", text: "Podcast" },
-    { href: "/articles", text: "Articles" },
+    { href: "/articles/1", text: "Articles" },
     { href: "/videos", text: "Videos" },
   ];
   const CoursesLinks = [
