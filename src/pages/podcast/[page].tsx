@@ -147,6 +147,10 @@ export const getStaticProps = async ({ params }: any) => {
   try {
     const jsonData = fs.readFileSync(filePath, "utf-8");
     const allPodcasts = JSON.parse(jsonData);
+    const sortedData = allPodcasts.sort(
+      (a: any, b: any) =>
+        b.attributes.episode_number - a.attributes.episode_number
+    );
 
     // Calculate the start and end indices for pagination
     const startIndex = (page - 1) * podcastsPerPage;
