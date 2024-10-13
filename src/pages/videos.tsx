@@ -68,14 +68,14 @@ export const VideoCard = ({ page }: { page: Video }) => {
   const videoId = page.attributes.uri.replace("/videos/", "");
   return (
     <>
-      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center">
-        <Link href={`/videos/${videoId}`}>
+      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+        <Link href={`/videos/${slug}`}>
           <Image
             src={`https://vumbnail.com/${videoId}.jpg`}
             alt={page.attributes.name}
             width={387}
             height={218}
-            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border"
+            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
           />
         </Link>
         <div className="text-center flex flex-col mx-8 my-4 grow space-y-4">
@@ -85,12 +85,13 @@ export const VideoCard = ({ page }: { page: Video }) => {
           <p className="text-grey-primary text-sm">
             {page.attributes.description}
           </p>
-          <Link
-            className={"text-xs font-semibold text-blue-secondary"}
-            href={`/videos/${slug}`}
-          >
-            WATCH HERE
-          </Link>
+          <div className="grow"></div>
+            <Link
+              className={"text-xs font-semibold text-blue-secondary mb-5 "}
+              href={`/videos/${slug}`}
+            >
+              WATCH HERE
+            </Link>
         </div>
       </div>
     </>
@@ -98,8 +99,6 @@ export const VideoCard = ({ page }: { page: Video }) => {
 };
 
 export default function Videos({ pageData }: { pageData: VideosResponse }) {
-  console.log("pageData", pageData);
-  console.log("pageData length", pageData.length);
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       new Date(b.attributes.updatedAt).getTime() -
