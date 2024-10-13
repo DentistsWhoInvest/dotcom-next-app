@@ -10,6 +10,65 @@ import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import { HeroBanner } from "@/components/HeroBanner";
+import { PaginationNav } from "@/components/PaginationNav";
+
+type ContributorAttributes = {
+  firstName: string;
+  lastName: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+};
+
+type ContributorData = {
+  id: number;
+  attributes: ContributorAttributes;
+};
+
+type Contributors = {
+  data: ContributorData[];
+};
+
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type Banner = {
+  data: BannerData;
+};
+
+type EpisodeAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  buzzsprout_id: number;
+  duration: number;
+  description: string;
+  artwork_url: string;
+  buzzsprout_hash: string;
+  episode_number: number;
+  contributors: Contributors;
+  vertical_banner: Banner;
+  horizontal_banner: Banner;
+  transcript: any;
+};
+
+type Episode = {
+  id: number;
+  attributes: EpisodeAttributes;
+};
+
+type EpisodesResponse = Episode[];
 
 //probably will need to be moved to a utility file
 const fetchAllItems = async (url: string) => {
@@ -116,7 +175,7 @@ export const getStaticProps = async ({ params }: any) => {
 };
 
 //and make sure it's the latest episodes first
-export default function Podcasts({ pageData }: { pageData: any }) {
+export default function Podcasts({ pageData, currentPage, totalPages }: { pageData: EpisodesResponse, currentPage: number, totalPages: number }) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       b.attributes.episode_number - a.attributes.episode_number
@@ -130,43 +189,38 @@ export default function Podcasts({ pageData }: { pageData: any }) {
           alt: "James podcasting",
         }}
         bannerText={"The Dentists Who Invest Podcast "}
-        subText={
-          "Can't miss financial insights for UK dental professionals"
-        }
+        subText={"Can't miss financial insights for UK dental professionals"}
         podcastSubText={true}
       />
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {sortedData.map((page: any) => {
-          const trimmedTitle = page.attributes.title.replace(
-            /\sDWI-EP\d+$/,
-            ""
-          );
+      <div className="text-blue-secondary text-4xl font-bold self-center mb-5 pt-10">
+        All Episodes
+      </div>
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center">
+        {sortedData.map((page: Episode) => {
           return (
-            <>
-              <Link href={`/e${page.attributes.episode_number}`}>
-                <Card className="m-6 justify-center border-2 border-blue-secondary">
-                  <Image
-                    src={page.attributes.artwork_url}
-                    alt={page.attributes.name}
-                    width={200}
-                    height={200}
-                    className="w-full rounded-t-md object-cover"
-                  />
-                  <CardContent className="p-2 text-center">
-                    <CardTitle className="p-2 text-blue-primary">
-                      {page.attributes.name}
-                    </CardTitle>
-                    <CardDescription className="p-2 text-grey-primary">
-                      EP{page.attributes.episode_number} {trimmedTitle}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </Link>
-            </>
+            <Link href={`/e${page.attributes.episode_number}`}>
+              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+                <Image
+                  src={page.attributes.artwork_url}
+                  alt={page.attributes.title}
+                  width={311}
+                  height={311}
+                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+                />
+                <div className="text-center text-blue-primary p-5 text-xl">
+                  EP{page.attributes.episode_number}{" "}
+                  {page.attributes.title.split(" DWI-")[0]}
+                </div>
+              </div>
+            </Link>
           );
         })}
       </ul>
-      <div>todo: change page options</div>
+      <div className="mt-6 self-center pb-10">
+        <div>
+          <PaginationNav navPath="podcast" currentPage={currentPage} totalPages={totalPages} />
+        </div>
+      </div>
     </main>
   );
 }
