@@ -8,6 +8,122 @@ import fs from "fs";
 import path from "path";
 import { PaginationNav } from "@/components/PaginationNav";
 
+type TextNode = {
+  text: string;
+  type: string;
+};
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextNode[];
+};
+
+type ContentSection = {
+  id: number;
+  content: Paragraph[];
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  id: number;
+  attributes: ImageAttributes;
+};
+
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type ContributorAttributes = {
+  firstName: string;
+  lastName: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+};
+
+type ContributorData = {
+  id: number;
+  attributes: ContributorAttributes;
+};
+
+type ArticleAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  excerpt: string;
+  category: string;
+  publish_date: string;
+  cover: {
+    data: ImageData;
+  };
+  thumbnail: {
+    data: ImageData | null;
+  };
+  vertical_banners: {
+    data: BannerData[];
+  };
+  horizontal_banners: {
+    data: BannerData[];
+  };
+  content_sections: ContentSection[];
+  contributors: {
+    data: ContributorData[];
+  };
+};
+
+type Article = {
+  id: number;
+  attributes: ArticleAttributes;
+};
+
+type ArticleResponse = Article[];
+
   //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
   export function createSlug(title: string) {
     return he
@@ -139,7 +255,7 @@ export const getStaticProps = async ({ params }: any) => {
 
 
 //todo: figure out pagination
-export default function Articles({ pageData, currentPage, totalPages }: { pageData: any, currentPage: number, totalPages: number }) {
+export default function Articles({ pageData, currentPage, totalPages }: { pageData: ArticleResponse, currentPage: number, totalPages: number }) {
   console.log('data', pageData);
   //assuming we want most recent articles first, but this can be changed
   const sortedData = pageData.sort(
@@ -158,7 +274,7 @@ export default function Articles({ pageData, currentPage, totalPages }: { pageDa
         All Articles
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {sortedData.map((page: any) => {
+        {sortedData.map((page: Article) => {
           const slug = createSlug(page.attributes.title);
           return (
             <li key={page.id}>
@@ -166,7 +282,7 @@ export default function Articles({ pageData, currentPage, totalPages }: { pageDa
                 <Card className="m-6 justify-center border-2 border-blue-secondary shadow-lg">
                   <Image
                     src={page.attributes.cover.data.attributes.url}
-                    alt={page.attributes.name}
+                    alt={page.attributes.title}
                     width={200}
                     height={200}
                     className="w-full rounded-t-md object-cover"
