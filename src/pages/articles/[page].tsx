@@ -6,6 +6,7 @@ import he from "he";
 import { HeroBanner } from "@/components/HeroBanner";
 import fs from "fs";
 import path from "path";
+import { PaginationNav } from "@/components/PaginationNav";
 
   //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
   export function createSlug(title: string) {
@@ -138,7 +139,8 @@ export const getStaticProps = async ({ params }: any) => {
 
 
 //todo: figure out pagination
-export default function Articles({ pageData }: { pageData: any }) {
+export default function Articles({ pageData, currentPage, totalPages }: { pageData: any, currentPage: number, totalPages: number }) {
+  console.log('data', pageData);
   //assuming we want most recent articles first, but this can be changed
   const sortedData = pageData.sort(
     (a: any, b: any) =>
@@ -180,6 +182,11 @@ export default function Articles({ pageData }: { pageData: any }) {
           );
         })}
       </ul>
+      <div className="mt-6 self-center pb-10">
+        <div>
+          <PaginationNav navPath="articles" currentPage={currentPage} totalPages={totalPages} />
+        </div>
+      </div>
     </main>
   );
 }
