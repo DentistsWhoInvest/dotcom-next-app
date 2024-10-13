@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import { createSlug } from "../articles";
+import { createSlug } from "../articles/[page]";
 import { VideoCard } from "../videos";
 import Image from "next/image";
 import {

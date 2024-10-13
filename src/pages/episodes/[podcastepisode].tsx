@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { fetchEndpointData } from "../lib/fetchUtils";
+import { fetchEndpointData } from "../../lib/fetchUtils";
 import Disclaimer from "@/components/Disclaimer";
 import PodcastMarketingForm from "@/components/PodcastMarketingForm";
-import { createSlug } from "./articles";
+import { createSlug } from "../articles/[page]";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import fs from "fs";
 import path from "path";

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import { processDate } from "@/lib/dateUtils";
-import { createSlug } from "../articles";
+import { createSlug } from "./articles/[page]";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/blog-posts`);

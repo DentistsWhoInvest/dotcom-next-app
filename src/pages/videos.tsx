@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { createSlug } from "./articles";
+import { createSlug } from "./articles/[page]";
 import { HeroBanner } from "@/components/HeroBanner";
 
 type Tag = {
