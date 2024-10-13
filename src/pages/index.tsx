@@ -112,9 +112,63 @@ const MetricCounter = ({ value }: { value: number }) => {
 
 const HomePageCourseCard = ({ course }: { course: any }) => {
   return (
-    <li className="flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 shadow-md">
-      <div className="bg-blue-primary p-4 text-center font-bold text-white">
+    <li className="shadow-custom flex max-w-[300px] flex-col justify-center rounded-sm border-2 border-solid bg-white p-4 ">
+      <div className="relative transition-all duration-300 bg-blue-primary p-4 text-center font-bold text-white">
         <h2 className="text-xl">{course.attributes.tagline}</h2>
+        <svg
+            className="xl:pb-5 lg:py-3 absolute left-1/2 top-1/2 z-[2] lg:w-[calc(50%)] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 500 150"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
+              stroke-width="10px"
+              fill="none"
+              className="path-1 stroke-blue-secondary"
+            ></path>
+            <path
+              d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
+              stroke-width="10px"
+              fill="none"
+              className="path-2 stroke-blue-secondary"
+            ></path>
+          </svg>
+          <style jsx>{`
+        @keyframes draw {
+          0%
+          {
+            stroke-dasharray: 0, 2500; /* Start with no visible stroke */
+            opacity: 0;
+          }
+          10% {
+            stroke-dasharray: 0, 2500; /* Start with no visible stroke */
+            opacity: 1;
+          }
+          20% {
+            stroke-dasharray: 2500, 0; /* Complete visible stroke */
+            opacity: 1;
+          }
+          80% {
+            stroke-dasharray: 2500, 0; /* Keep the stroke */
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+
+        .path-1 {
+          animation: draw 8s forwards; /* Animate drawing and fading */
+          animation-iteration-count: infinite;
+        }
+
+        .path-2 {
+          animation: draw 8s forwards; /* Animate drawing and fading */
+          animation-delay: 0.5s;
+          animation-iteration-count: infinite;
+        }
+      `}</style>
       </div>
       <div className="relative">
         <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2">
