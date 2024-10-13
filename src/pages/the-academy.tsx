@@ -1,8 +1,6 @@
 import React from "react";
-import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
-import { TestimonialCard } from "@/components/TestimonialCard";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -148,7 +146,6 @@ export default function TheAcademyCoursePage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
-  console.log(courseData);
   return (
     <>
       <main className="text-lg">
@@ -185,21 +182,22 @@ export default function TheAcademyCoursePage({
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
-          <div className="flex flex-col items-center space-y-8 p-8 text-lg">
+          <div className="grid grid-cols-1 items-center space-y-8 p-8 text-lg md:grid-cols-2 md:space-x-4 md:p-4 md:gap-4">
             <Image
               src={courseData.collective_content_image.data.attributes.url}
               alt="Collective content image"
-              width={courseData.collective_content_image.data.attributes.width}
-              height={
-                courseData.collective_content_image.data.attributes.height
-              }
+              width={315}
+              height={315}
+              className="md:h-364 md:w-364 lg:h-492 lg:w-492 w-full h-auto"
             />
-            <BlocksRenderer
-              content={courseData.collective_content_description}
-            />
+            <div className="space-y-8">
+              <BlocksRenderer
+                content={courseData.collective_content_description}
+              />
+            </div>
           </div>
         </section>
-        <section className="bg-blue-secondary p-2">
+        <section className="bg-blue-secondary p-2 flex justify-center">
           <Image
             src="https://storage.googleapis.com/dwi-dotcom-assets/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
@@ -210,9 +208,9 @@ export default function TheAcademyCoursePage({
 
         <section id="informed-investor-club">
           <div className="flex flex-col items-center space-y-8 p-8">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8">
               <div className="space-y-2 text-center font-bold">
-                <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary">
+                <p className="mx-8 flex flex-row justify-center text-xl lg:text-2xl text-blue-secondary">
                   {courseData.informed_investor_club.sales_part_1.map(
                     (item: any, index: number) => {
                       return (
@@ -274,12 +272,12 @@ export default function TheAcademyCoursePage({
                     }
                   )}
                 </p>
-                <p className="text-3xl text-blue-primary ">
+                <p className="text-3xl text-blue-primary lg:text-4xl ">
                   <BlocksRenderer
                     content={courseData.informed_investor_club.sales_part_2}
                   />
                 </p>
-                <p className="text-orange-400">
+                <p className="text-orange-400 lg:text-2xl">
                   <BlocksRenderer
                     content={
                       courseData.informed_investor_club.sales_part_3_cost
@@ -288,19 +286,19 @@ export default function TheAcademyCoursePage({
                 </p>
               </div>
 
-              <div className="flex flex-col items-center space-y-4 bg-white ">
+              <div className="flex flex-col items-center space-y-4 xl:max-w-[1140px]">
                 <BlocksRenderer
                   content={courseData.informed_investor_club.description}
                 />
               </div>
             </div>
-            <div className="m-[10px] flex size-full flex-col justify-center space-y-4">
+            <div className="m-[10px] grid size-full grid-cols-1 md:grid-cols-4 gap-4 justify-center space-y-4 md:space-y-0">
               {courseData.informed_investor_club.sales_cards.map(
                 (card: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 shadow-lg"
+                      className="flex h-[266] w-[295] md:w-[162] md:h-[266] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 "
                     >
                       <Image
                         src={card.image.data.attributes.url}
@@ -319,34 +317,40 @@ export default function TheAcademyCoursePage({
           </div>
         </section>
 
-        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-4">
-          <div className="border-4 border-blue-primary p-4 text-center text-blue-primary">
-            <div className="text-2xl font-bold ">
-              {" "}
-              <BlocksRenderer
-                content={courseData.testimonial.data.attributes.review}
-              />
+        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-4 ">
+          <div className="xl:max-w-[1140px] xl:justify-center xl:flex flex-col m-auto space-y-8">
+            <div className="border-4 border-blue-primary p-4 text-center text-blue-primary xl:p-12 ">
+              <div className="text-2xl font-bold xl:text-3xl xl:m-4">
+                {" "}
+                <BlocksRenderer
+                  content={courseData.testimonial.data.attributes.review}
+                />
+              </div>
+              <span className="xl:text-2xl">
+                {" "}
+                - {courseData.testimonial.data.attributes.author},{" "}
+                {courseData.testimonial.data.attributes.author_job_location
+                  .split(",")[1]
+                  ?.trim()}{" "}
+              </span>
             </div>
-            - {courseData.testimonial.data.attributes.author},{" "}
-            {courseData.testimonial.data.attributes.author_job_location
-              .split(",")[1]
-              ?.trim()}{" "}
+            <div className="space-y-4">
+              <BlocksRenderer content={courseData.summary} />
+            </div>
+            <div className="flex justify-center">
+              <Button className="rounded-md bg-orange-400 px-8 py-4 text-white text-xl hover:text-blue-primary size-full md:size-1/2">
+                <Link href={courseData.cta_navigation_url}>
+                  {courseData.cta_text}
+                </Link>{" "}
+              </Button>
+            </div>
+            <div className="flex flex-col items-center space-y-8">
+              <BlocksRenderer content={courseData.sign_off} />
+            </div>
           </div>
-          <div className="space-y-4">
-            <BlocksRenderer content={courseData.summary} />
-          </div>
-          <Button className="rounded-md bg-orange-400 px-8 py-4 text-white text-xl hover:text-blue-primary size-full">
-            <Link href={courseData.cta_navigation_url}>
-              {courseData.cta_text}
-            </Link>{" "}
-          </Button>
-          <div className="flex flex-col items-center space-y-8">
-            <BlocksRenderer content={courseData.sign_off} />
-          </div>
-          {/* <div className="flex flex-col items-center space-y-8 p-8"> */}
         </section>
         <div className="relative h-[440px] w-full ">
-          <div className="absolute inset-0 xl:hidden">
+          <div className="absolute inset-0 ">
             <Image
               src={courseData.sign_off_cover.data.attributes.url}
               alt={"Sign off image"}
@@ -357,7 +361,7 @@ export default function TheAcademyCoursePage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="absolute left-0 top-0 z-10 flex h-full flex-col justify-center space-y-2 p-4 text-center text-white">
+          <div className="absolute inset-0 z-10 flex h-full flex-col justify-center items-center space-y-2 p-4 text-center text-white">
             <div className="text-2xl font-bold">
               <BlocksRenderer
                 content={courseData.sign_off_testimonial.data.attributes.review}
