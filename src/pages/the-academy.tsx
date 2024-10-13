@@ -67,7 +67,7 @@ type ImageData = {
 
 type InformedInvestorClub = {
   id: number;
-  sales_part_1: any;
+  sales_part_1: Paragraph[];
   sales_part_2: any;
   sales_part_3_cost: any;
   description: any;
@@ -211,16 +211,82 @@ export default function TheAcademyCoursePage({
         <section id="informed-investor-club">
           <div className="flex flex-col items-center space-y-8 p-8">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <p>todo</p>
-              <BlocksRenderer
-                content={courseData.informed_investor_club.sales_part_1}
-              />
-              <BlocksRenderer
-                content={courseData.informed_investor_club.sales_part_2}
-              />
-              <BlocksRenderer
-                content={courseData.informed_investor_club.sales_part_3_cost}
-              />
+              <div className="space-y-2 text-center font-bold">
+                <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary">
+                  {courseData.informed_investor_club.sales_part_1.map(
+                    (item: any, index: number) => {
+                      return (
+                        <p key={index}>
+                          <span>{item.children[0].text}</span>
+                          <span
+                            id="wrapper"
+                            className="relative inline-block overflow-visible"
+                          >
+                            <span className="text-orange-400">
+                              {item.children[1].text}
+                            </span>
+                            <svg
+                              className="absolute left-1/2 top-1/2 z-[2] size-[calc(100%+20px)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 500 150"
+                              preserveAspectRatio="none"
+                            >
+                              <path
+                                d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7"
+                                stroke="red"
+                                stroke-width="9"
+                                fill="none"
+                                className="path-1"
+                              ></path>
+                            </svg>
+                            <style jsx>{`
+                              @keyframes draw {
+                                0% {
+                                  stroke-dasharray: 0, 1500; /* Start with no visible stroke */
+                                  opacity: 0;
+                                }
+                                10% {
+                                  stroke-dasharray: 0, 1500; /* Start with no visible stroke */
+                                  opacity: 1;
+                                }
+                                30% {
+                                  stroke-dasharray: 1500, 0; /* Complete visible stroke */
+                                  opacity: 1;
+                                }
+                                80% {
+                                  stroke-dasharray: 1500, 0; /* Keep the stroke */
+                                  opacity: 1;
+                                }
+                                100% {
+                                  opacity: 0;
+                                }
+                              }
+
+                              .path-1 {
+                                animation: draw 5s forwards; /* Animate drawing and fading */
+                                animation-iteration-count: infinite;
+                              }
+                            `}</style>
+                          </span>
+                          <span>{item.children[2].text}</span>
+                        </p>
+                      );
+                    }
+                  )}
+                </p>
+                <p className="text-3xl text-blue-primary ">
+                  <BlocksRenderer
+                    content={courseData.informed_investor_club.sales_part_2}
+                  />
+                </p>
+                <p className="text-orange-400">
+                  <BlocksRenderer
+                    content={
+                      courseData.informed_investor_club.sales_part_3_cost
+                    }
+                  />
+                </p>
+              </div>
 
               <div className="flex flex-col items-center space-y-4 bg-white ">
                 <BlocksRenderer
