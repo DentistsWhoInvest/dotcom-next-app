@@ -202,7 +202,7 @@ export default function Podcasts({ pageData, currentPage, totalPages }: { pageDa
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center">
         {sortedData.map((page: Episode) => {
           return (
-            <Link href={`/e${page.attributes.episode_number}`}>
+            <Link href={`/e${page.attributes.episode_number}`} key={page.id}>
               <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
                 <Image
                   src={page.attributes.artwork_url}
