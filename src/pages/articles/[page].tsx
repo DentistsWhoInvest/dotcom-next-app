@@ -124,18 +124,17 @@ type Article = {
 
 type ArticleResponse = Article[];
 
-  //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
-  export function createSlug(title: string) {
-    return he
-      .decode(title)
-      .toLowerCase()
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
-      .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
-      .replace(/^-+/, "") // Remove leading hyphens
-      .replace(/-+$/, ""); // Remove trailing hyphens
-  }
-  
+//would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
+export function createSlug(title: string) {
+  return he
+    .decode(title)
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/[^\w\-]+/g, "") // Remove non-word characters except hyphens
+    .replace(/\-\-+/g, "-") // Replace multiple hyphens with a single hyphen
+    .replace(/^-+/, "") // Remove leading hyphens
+    .replace(/-+$/, ""); // Remove trailing hyphens
+}
 
 // export const getStaticProps = async () => {
 //   const result = await fetchEndpointData("/blog-posts");
@@ -219,11 +218,12 @@ export const getStaticProps = async ({ params }: any) => {
 
   try {
     const jsonData = fs.readFileSync(filePath, "utf-8");
-    const allArticles = JSON.parse(jsonData);
+    const allArticles: Article[] = JSON.parse(jsonData);
     //adjust to sort by date
     const sortedData = allArticles.sort(
-      (a: any, b: any) =>
-        b.id - a.id
+      (a: Article, b: Article) =>
+        new Date(b.attributes.publishedAt).getTime() -
+        new Date(a.attributes.publishedAt).getTime()
     );
 
     // Calculate the start and end indices for pagination
@@ -252,11 +252,17 @@ export const getStaticProps = async ({ params }: any) => {
   }
 };
 
-
-
 //todo: figure out pagination
-export default function Articles({ pageData, currentPage, totalPages }: { pageData: ArticleResponse, currentPage: number, totalPages: number }) {
-  console.log('data', pageData);
+export default function Articles({
+  pageData,
+  currentPage,
+  totalPages,
+}: {
+  pageData: ArticleResponse;
+  currentPage: number;
+  totalPages: number;
+}) {
+  console.log("data", pageData);
   //assuming we want most recent articles first, but this can be changed
   const sortedData = pageData.sort(
     (a: any, b: any) =>
@@ -266,10 +272,15 @@ export default function Articles({ pageData, currentPage, totalPages }: { pageDa
 
   return (
     <main className={`flex flex-col`}>
-
-      <HeroBanner bannerText={"Articles"} subText={"Read to understand how you can accelerate your financial goals​"} bannerImage={{
-        url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp"
-      }} />
+      <HeroBanner
+        bannerText={"Articles"}
+        subText={
+          "Read to understand how you can accelerate your financial goals​"
+        }
+        bannerImage={{
+          url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
+        }}
+      />
       <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
         All Articles
       </div>
@@ -300,7 +311,11 @@ export default function Articles({ pageData, currentPage, totalPages }: { pageDa
       </ul>
       <div className="mt-6 self-center pb-10">
         <div>
-          <PaginationNav navPath="articles" currentPage={currentPage} totalPages={totalPages} />
+          <PaginationNav
+            navPath="articles"
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
         </div>
       </div>
     </main>
