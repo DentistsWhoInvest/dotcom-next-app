@@ -20,7 +20,7 @@ type Paragraph = {
 
 type ContentSection = {
   id: number;
-  content: Paragraph[];
+  content: any;
 };
 
 type ImageFormat = {
@@ -91,7 +91,7 @@ type ContributorData = {
   attributes: ContributorAttributes;
 };
 
-type ArticleAttributes = {
+export type ArticleAttributes = {
   title: string;
   createdAt: string;
   updatedAt: string;
@@ -117,7 +117,7 @@ type ArticleAttributes = {
   };
 };
 
-type Article = {
+export type Article = {
   id: number;
   attributes: ArticleAttributes;
 };

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import { processDate } from "@/lib/dateUtils";
-import { createSlug } from "./articles/[page]";
+import { Article, ArticleAttributes, createSlug } from "./articles/[page]";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export const getStaticPaths = async () => {
@@ -68,7 +68,7 @@ export default function ArticlePage({
   associatedVerticalBanner,
   otherArticles,
 }: {
-  pageData: any;
+  pageData: Article;
   associatedHorizontalBanner: any;
   associatedVerticalBanner: any;
   otherArticles: any;
@@ -81,7 +81,7 @@ export default function ArticlePage({
     <>
       <Head>
         <title>{pageData.attributes.title}</title>
-        <meta name="description" content={pageData.attributes.description} />
+        <meta name="title" content={pageData.attributes.title} />
       </Head>
       <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-2 xl:my-5">
         <div className="col-span-2">
@@ -104,8 +104,8 @@ export default function ArticlePage({
           />{" "}
           <div className="text-[18px] leading-7 py-5 md:text-xl">
             {pageData.attributes.content_sections.map(
-              (contentParagraph: any) => {
-                return <BlocksRenderer content={contentParagraph.content} />;
+              (contentParagraph) => {
+                return <BlocksRenderer content={contentParagraph.content} key={contentParagraph.id} />;
               }
             )}
           </div>
