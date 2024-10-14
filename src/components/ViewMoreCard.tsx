@@ -39,10 +39,10 @@ export const ViewMoreCard = ({
   }
   const hrefStarter = getHrefStarter(contentType);
 
-  const trimAfterWords = (text: string, wordLimit:number) => {
-    const words = text.split(' '); // Split the text into an array of words
+  const trimAfterWords = (text: string, wordLimit: number) => {
+    const words = text.split(" "); // Split the text into an array of words
     if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(' ') + '...'; // Join the first 'wordLimit' words and add ellipsis
+      return words.slice(0, wordLimit).join(" ") + "..."; // Join the first 'wordLimit' words and add ellipsis
     }
     return text; // If there are fewer words than the limit, return the full text
   };
@@ -51,31 +51,28 @@ export const ViewMoreCard = ({
 
   return (
     <>
-      <Card className="justify-start border-2">
+      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
-            src="https://picsum.photos/200/150"
+            src={page.attributes.cover.data.attributes.url}
             alt={page.attributes.name}
-            width={200}
-            height={200}
-            className="w-full rounded-t-md object-cover"
+            width={387}
+            height={218}
+            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
           />
         </Link>
-        <CardContent className="p-2 text-left">
-          <CardTitle className="p-2 text-blue-primary">
-            <Link href={`/${hrefStarter}/${slug}`}>
-              {page.attributes.title}
-            </Link>
-          </CardTitle>
-          <CardDescription className="p-2 text-grey-primary">
-          <div
+        <div className="text-center flex flex-col mx-8 my-4 grow space-y-4">
+          <p className="text-blue-primary text-[21px] font-bold">
+            <Link href={`/${hrefStarter}/${slug}`}>{page.attributes.title}</Link>
+          </p>
+          <div className="text-grey-primary text-base"
                   key={page.attributes.excerpt}
                   dangerouslySetInnerHTML={{
                     __html:trimmedExcerpt
                     ,
                   }}
                 />
-          </CardDescription>
+          <div className="grow"></div>
           <Link
             className={"text-xs font-semibold text-blue-secondary"}
             href={`/${hrefStarter}/${slug}`}
@@ -84,11 +81,8 @@ export const ViewMoreCard = ({
               READ MORE <ChevronsRight size={13} />
             </span>
           </Link>
-        </CardContent>
-        {/* <CardFooter className=" justify-start border-t-2 p-4 text-xs">
-          {publishedDate}
-        </CardFooter> */}
-      </Card>
+        </div>
+      </div>
     </>
   );
 };

@@ -102,13 +102,13 @@ export default function ArticlePage({
             layout="responsive"
             className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
           />{" "}
-          <div className="text-[18px] leading-7 py-5 md:text-xl">{pageData.attributes.content_sections.map(
-            (contentParagraph: any) => {
-              return (
-               <BlocksRenderer content={contentParagraph.content}/>
-              );
-            }
-          )}</div>
+          <div className="text-[18px] leading-7 py-5 md:text-xl">
+            {pageData.attributes.content_sections.map(
+              (contentParagraph: any) => {
+                return <BlocksRenderer content={contentParagraph.content} />;
+              }
+            )}
+          </div>
           <Disclaimer contentType="article" />
           <div className="my-5 w-full">
             <Image
@@ -140,20 +140,21 @@ export default function ArticlePage({
           </div>
         </div>
       </div>
-      <div id="read more" className="mt-5 flex flex-col justify-center bg-gray-100">
+      <div className="mt-5 flex flex-col justify-center bg-gray-100">
         <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-          Read More Articles
+          Read More
         </p>
         <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-        <div className="px-16 pt-4 h-[625px]">
-          <Carousel className="">
-            <CarouselContent>
+        <div className="relative">
+          <Carousel>
+            <CarouselContent className="mb-12">
               {otherArticles.map((page: any) => {
                 const viewMoreSlug = createSlug(page.attributes.title);
+
                 return (
                   <CarouselItem
                     key={page.id}
-                    className="sm:basis-full md:basis-1/2 lg:basis-1/3"
+                    className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
                   >
                     <ViewMoreCard
                       page={page}
@@ -164,8 +165,10 @@ export default function ArticlePage({
                 );
               })}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
+              <CarouselPrevious className="relative !-left-0" />
+              <CarouselNext className="relative !-right-0" />
+            </div>
           </Carousel>
         </div>
       </div>
