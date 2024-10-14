@@ -8,6 +8,78 @@ import { createSlug } from "../articles/[page]";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import fs from "fs";
 import path from "path";
+import Link from "next/link";
+
+type TextNode = {
+  bold?: boolean;
+  text: string;
+  type: string;
+  italic?: boolean;
+};
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextNode[];
+};
+
+type TranscriptContent = {
+  id: number;
+  content: Paragraph[];
+};
+
+type ContributorAttributes = {
+  firstName: string;
+  lastName: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string | null;
+};
+
+type ContributorData = {
+  id: number;
+  attributes: ContributorAttributes;
+};
+
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type PodcastEpisodeAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  buzzsprout_id: number;
+  duration: number;
+  description: string;
+  artwork_url: string;
+  buzzsprout_hash: string;
+  episode_number: number;
+  transcript: TranscriptContent[];
+  contributors: {
+    data: ContributorData[];
+  };
+  vertical_banner: {
+    data: BannerData;
+  };
+  horizontal_banner: {
+    data: BannerData;
+  };
+};
+
+type PodcastEpisode = {
+  id: number;
+  attributes: PodcastEpisodeAttributes;
+};
 
 const fetchAllItems = async (url: string) => {
   let allItems: any[] = [];
@@ -75,26 +147,17 @@ export const getStaticProps = async ({ params }: any) => {
   const jsonData = fs.readFileSync(filePath, "utf-8");
   const allPodcasts = JSON.parse(jsonData);
 
-  const matchingPodcast = allPodcasts.find(
+  const matchingPodcast: PodcastEpisode = allPodcasts.find(
     (podcast: { attributes: { episode_number: number } }) =>
       podcast.attributes.episode_number === episodeNumber
   );
 
-  const associatedHorizontalBannerId =
-    matchingPodcast.attributes.horizontal_banners &&
-    matchingPodcast.attributes.horizontal_banners.data.length > 0
-      ? matchingPodcast.attributes.horizontal_banners.data[0].id
-      : 1;
-  const associatedVerticalBannerId =
-    matchingPodcast.attributes.vertical_banners &&
-    matchingPodcast.attributes.vertical_banners.data.length > 0
-      ? matchingPodcast.attributes.vertical_banners.data[0].id
-      : 1;
+  //maybe wrap these in a try in case there's no associated banner
   const associatedHorizontalBanner = await fetchEndpointData(
-    `/horizontal-banners/${associatedHorizontalBannerId}`
+    `/horizontal-banners/${matchingPodcast.attributes.horizontal_banner.data.id}`
   );
   const associatedVerticalBanner = await fetchEndpointData(
-    `/vertical-banners/${associatedVerticalBannerId}`
+    `/vertical-banners/${matchingPodcast.attributes.vertical_banner.data.id}`
   );
   const otherPodcasts = allPodcasts
     .filter((article: { id: number }) => article.id !== matchingPodcast.id)
@@ -127,29 +190,30 @@ export default function PodcastPage({
   otherPodcasts,
   someArticles,
 }: {
-  pageData: any;
+  pageData: PodcastEpisode;
   associatedHorizontalBanner: any;
   associatedVerticalBanner: any;
   otherPodcasts: any;
   someArticles: any;
 }) {
+  console.log("pageData", pageData);
   const TranscriptParagraph = ({ transcriptParagraph }: any) => {
     const person = transcriptParagraph[0]?.text;
     const timestamp = transcriptParagraph[1]?.text;
     const transcriptText = transcriptParagraph[2]?.text;
     return (
       <>
-        <p className="flex p-2">
+        <p className="flex">
           {person && <span className="italic">{person}</span>}
           {timestamp && <span>{timestamp}</span>}
         </p>
-        {transcriptText && <p className="p-2">{transcriptText}</p>}
+        {transcriptText && <p className="">{transcriptText}</p>}
       </>
     );
   };
 
   const FullTranscript = ({ transcript }: any) => {
-    return transcript.map((transcriptSection: any) => {
+    return transcript.map((transcriptSection: any, index: number) => {
       return (
         <div key={transcriptSection.id}>
           {transcriptSection.content.map((transcriptParagraph: any) => {
@@ -161,6 +225,21 @@ export default function PodcastPage({
               </div>
             );
           })}
+          {index === 2 && (
+            <div className="">
+              <Image
+                src={
+                  associatedVerticalBanner.attributes.cover_image.data
+                    .attributes.url
+                }
+                alt={associatedVerticalBanner.attributes.title}
+                width={1200}
+                height={400}
+                layout="responsive"
+                className="h-auto w-full object-cover"
+              />
+            </div>
+          )}
         </div>
       );
     });
@@ -170,189 +249,190 @@ export default function PodcastPage({
     <>
       <Head>
         <title>{pageData.attributes.title}</title>
-        <meta name="description" content={pageData.description} />
+        <meta name="description" content={pageData.attributes.title} />
       </Head>{" "}
       <section id="image and title">
-        <div className="relative ">
-          <Image
-            className="w-full object-cover"
-            src={
-              "https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
-            }
-            alt={"Hero banner"}
-            width={"320"}
-            height={"440"}
-          />
-
-          <div className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center p-16">
-            <div className="flex flex-row">
-              <p className="basis-1/3">
-                <span className="p-4 text-3xl font-bold text-blue-secondary">
-                  Episodes {pageData.attributes.episode_number}
-                </span>
-                <span className="p-4 text-3xl font-bold text-white">
-                  {pageData.attributes.title}
-                </span>
-                <span className="p-2 text-xl text-blue-light">
-                  Hosted by: Dr. James Martin
-                </span>
+        <div className="relative h-[370px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
+          <div className="absolute inset-0 xl:hidden">
+            <Image
+              src="https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="right 50%"
+              priority
+            />
+            <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
+          </div>
+          <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px] ">
+            <div className="absolute px-4 top-[35%] md:top-[30%] md:px-[30px] xl:top-[40%] text-white">
+              <p className="text-[30px] leading-[30px] font-bold text-[#A4D8F1]">
+                Episode {pageData.attributes.episode_number}
               </p>
-              <div className="">contributor images </div>
+              <p className="text-3xl font-bold ">
+                {pageData.attributes.title.split(" DWI-")[0]}
+              </p>
+              <p className="text-lg ">Hosted by: Dr. James Martin</p>
             </div>
           </div>
         </div>
       </section>
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
-        <div className="col-span-1">
-          <iframe
-            src="https://www.buzzsprout.com/1471306/15694076-is-marketing-a-naughty-word-with-john-williamson-and-dr-ferhan-ahmed-dwi-ep301?client_source=small_player&amp;iframe=true
+      <section id="content" className="p-[10px]">
+        <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl md:grid-cols-2">
+          <div className="col-span-1">
+            <div className="mb-5">
+              <iframe
+                src="https://www.buzzsprout.com/1471306/15694076-is-marketing-a-naughty-word-with-john-williamson-and-dr-ferhan-ahmed-dwi-ep301?client_source=small_player&amp;iframe=true
           "
-            loading="lazy"
-            width="100%"
-            height="200"
-            title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
-          ></iframe>
-          <div className="my-5 w-full">
-            <Image
-              src={
-                associatedHorizontalBanner.attributes.cover_image.data
-                  .attributes.url
-              }
-              alt="Want to increase your income?"
-              width={1200}
-              height={400}
-              layout="responsive"
-              className="h-auto w-full object-cover"
-            />
-          </div>
-          <div className="my-5 flex flex-col justify-center">
-            <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-              Description
-            </p>
-            <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary pb-8"></p>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: pageData.attributes.description,
-              }}
-            />
-          </div>
-          <div className="my-5 flex flex-col justify-center">
-            <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-              Transcription
-            </p>
-            <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-          </div>
-          <div className="p-2">
-            {" "}
-            <FullTranscript transcript={pageData.attributes.transcript} />
-          </div>
-          <div className="p-4">
-            <Disclaimer contentType="podcast" />
-            <div className="my-5 w-full">
+                loading="lazy"
+                width="100%"
+                height="200"
+                title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
+              ></iframe>
+            </div>
+            <div className="">
               <Image
                 src={
-                  associatedHorizontalBanner.attributes.cover_image.data
+                  associatedVerticalBanner.attributes.cover_image.data
                     .attributes.url
                 }
-                alt="Want to increase your income?"
+                alt={associatedVerticalBanner.attributes.title}
                 width={1200}
                 height={400}
                 layout="responsive"
                 className="h-auto w-full object-cover"
               />
             </div>
+            <div className="my-5 flex flex-col justify-center">
+              <p className="text-center text-4xl font-bold text-blue-primary">
+                Description
+              </p>
+              <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary pb-8"></p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: pageData.attributes.description,
+                }}
+              />
+            </div>
+            <div className="my-5 flex flex-col justify-center">
+              <p className="text-center text-4xl font-bold text-blue-primary">
+                Transcription
+              </p>
+              <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
+            </div>
+            <div className="space-y-2 mb-5">
+              <FullTranscript transcript={pageData.attributes.transcript} />
+            </div>
+            <div>
+              <Disclaimer contentType="podcast" />
+              <div className="my-5 w-full">
+                <Image
+                  src={
+                    associatedHorizontalBanner.attributes.cover_image.data
+                      .attributes.url
+                  }
+                  alt="Want to increase your income?"
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto w-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col justify-center ">
+                <p className="mb-5 text-center text-4xl font-bold text-blue-primary">
+                  More Episodes
+                </p>
+                <p className="flex w-2/3 self-center border-t-[3px] border-solid border-blue-secondary"></p>
+                {otherPodcasts.map((page: any) => {
+                  //todo: might need to tweak the title
+                  const viewMoreSlug = createSlug(page.attributes.title);
+                  return (
+                    <ul
+                      key={page.id}
+                      className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center"
+                    >
+                      <div className="my-4 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+                        <Link href={`/episodes/${viewMoreSlug}`}>
+                          <Image
+                            src={page.attributes.artwork_url}
+                            alt={page.attributes.name}
+                            width={387}
+                            height={218}
+                            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+                          />
+                        </Link>
+                        <div className="text-center flex flex-col mx-8 mt-4 mb-2 grow space-y-4">
+                          <p className="text-blue-primary text-[21px] font-bold">
+                            <Link href={`/episodes/${viewMoreSlug}`}>
+                              EP{page.attributes.episode_number}{" "}
+                              {page.attributes.title.split(" DWI-")[0]}
+                            </Link>
+                          </p>
+                          <div className="grow"></div>
+                          <Link
+                            className={
+                              "text-sm font-semibold text-blue-secondary"
+                            }
+                            href={`/episodes/${viewMoreSlug}`}
+                          >
+                            LISTEN HERE
+                          </Link>
+                        </div>
+                      </div>
+                      {/* <ViewMoreCard
+                        page={page}
+                        contentType={"podcast"}
+                        slug={viewMoreSlug}
+                      /> */}
+                    </ul>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <section id="podcasts and maybe articles">
+          <div className="m-2 xl:px-[50px]">
+            <PodcastMarketingForm />
+          </div>
+          <div className="my-5 hidden flex-col justify-center md:flex">
+            <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
+              Read More Articles
+            </p>
+            <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary lg:w-1/3 xl:w-1/4"></p>
 
-            {otherPodcasts.map((page: any) => {
-              //todo: might need to tweak the title
-              const viewMoreSlug = createSlug(page.attributes.title);
-              return (
-                <ul
-                  key={page.id}
-                  className="p-4 sm:basis-full md:hidden md:basis-1/2 lg:basis-1/3"
-                >
-                  <ViewMoreCard
-                    page={page}
-                    contentType={"podcast"}
-                    slug={viewMoreSlug}
-                  />
-                </ul>
-              );
-            })}
+            <div className="my-5 grid w-full grid-cols-2 xl:hidden">
+              {someArticles.map((page: any) => {
+                //todo: might need to tweak the title
+                const viewMoreSlug = createSlug(page.attributes.title);
+                return (
+                  <ul key={page.id} className="p-4">
+                    <ViewMoreCard
+                      page={page}
+                      contentType={"article"}
+                      slug={viewMoreSlug}
+                    />
+                  </ul>
+                );
+              })}
+            </div>
+            <div className="my-5 hidden w-full grid-cols-3 xl:grid">
+              {someArticles.slice(0, 3).map((page: any) => {
+                //todo: might need to tweak the title
+                const viewMoreSlug = createSlug(page.attributes.title);
+                return (
+                  <ul key={page.id} className="p-4">
+                    <ViewMoreCard
+                      page={page}
+                      contentType={"article"}
+                      slug={viewMoreSlug}
+                    />
+                  </ul>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        {/* <div className="md:col-start-2">
-          <div className="my-5 hidden w-full md:block">
-            {otherPodcasts.map((page: any) => {
-              //todo: might need to tweak the title
-              const viewMoreSlug = createSlug(page.attributes.title);
-              return (
-                <ul
-                  key={page.id}
-                  className="p-4 sm:basis-full md:basis-1/2 lg:basis-1/3"
-                >
-                  <ViewMoreCard
-                    page={page}
-                    contentType={"podcast"}
-                    slug={viewMoreSlug}
-                  />
-                </ul>
-              );
-            })}
-            <Image
-              src={
-                associatedVerticalBanner.attributes.cover_image.data.attributes
-                  .url
-              }
-              alt="Want to increase your income?"
-              width={1200}
-              height={400}
-              layout="responsive"
-              className="h-auto w-full object-cover"
-            />
-          </div>
-        </div> */}
-      </div>
-      <section id="podcasts and maybe articles">
-        <div className="m-2 xl:px-[50px]">
-          <PodcastMarketingForm />
-        </div>
-        <div className="my-5 hidden flex-col justify-center md:flex">
-          <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-            Read More Articles
-          </p>
-          <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary lg:w-1/3 xl:w-1/4"></p>
-
-          <div className="my-5 grid w-full grid-cols-2 xl:hidden">
-            {someArticles.map((page: any) => {
-              //todo: might need to tweak the title
-              const viewMoreSlug = createSlug(page.attributes.title);
-              return (
-                <ul key={page.id} className="p-4">
-                  <ViewMoreCard
-                    page={page}
-                    contentType={"article"}
-                    slug={viewMoreSlug}
-                  />
-                </ul>
-              );
-            })}
-          </div>
-          <div className="my-5 hidden w-full grid-cols-3 xl:grid">
-            {someArticles.slice(0, 3).map((page: any) => {
-              //todo: might need to tweak the title
-              const viewMoreSlug = createSlug(page.attributes.title);
-              return (
-                <ul key={page.id} className="p-4">
-                  <ViewMoreCard
-                    page={page}
-                    contentType={"article"}
-                    slug={viewMoreSlug}
-                  />
-                </ul>
-              );
-            })}
-          </div>
-        </div>
+        </section>
       </section>
     </>
   );
