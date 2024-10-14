@@ -47,14 +47,14 @@ export const ViewMoreCard = ({
     return text; // If there are fewer words than the limit, return the full text
   };
 
-  const trimmedExcerpt = trimAfterWords(page.attributes.excerpt, 25);
+  const trimmedExcerpt = hrefStarter === 'blog-posts' && trimAfterWords(page.attributes.excerpt, 25);
 
   return (
     <>
       <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
-            src={page.attributes.cover.data.attributes.url}
+            src={hrefStarter === 'blog-posts' ? page.attributes.cover.data.attributes.url : page.attributes.artwork_url}
             alt={page.attributes.name}
             width={387}
             height={218}
@@ -65,13 +65,13 @@ export const ViewMoreCard = ({
           <p className="text-blue-primary text-[21px] font-bold">
             <Link href={`/${hrefStarter}/${slug}`}>{page.attributes.title}</Link>
           </p>
-          <div className="text-grey-primary text-base"
+          {hrefStarter === 'blog-posts' && <div className="text-grey-primary text-base"
                   key={page.attributes.excerpt}
                   dangerouslySetInnerHTML={{
                     __html:trimmedExcerpt
                     ,
                   }}
-                />
+                />}
           <div className="grow"></div>
           <Link
             className={"text-xs font-semibold text-blue-secondary"}
