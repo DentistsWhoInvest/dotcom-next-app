@@ -196,7 +196,6 @@ export default function PodcastPage({
   otherPodcasts: any;
   someArticles: any;
 }) {
-  console.log("pageData", pageData);
   const TranscriptParagraph = ({ transcriptParagraph }: any) => {
     const person = transcriptParagraph[0]?.text;
     const timestamp = transcriptParagraph[1]?.text;
