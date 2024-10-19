@@ -94,8 +94,8 @@ export const VideoCard = ({ page }: { page: Video }) => {
 export default function Videos({ pageData }: { pageData: VideosResponse }) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
-      new Date(b.attributes.updatedAt).getTime() -
-      new Date(a.attributes.updatedAt).getTime()
+      new Date(b.attributes.createdAt).getTime() -
+      new Date(a.attributes.createdAt).getTime()
   );
 
   return (
