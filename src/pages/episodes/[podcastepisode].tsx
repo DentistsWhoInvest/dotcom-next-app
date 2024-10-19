@@ -27,12 +27,57 @@ type TranscriptContent = {
   content: Paragraph[];
 };
 
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  data: {
+    id: number;
+    attributes: ImageAttributes;
+  };
+};
+
 type ContributorAttributes = {
   firstName: string;
   lastName: string;
   createdAt: string;
   updatedAt: string;
   title: string | null;
+  profilePicture: ImageData;
 };
 
 type ContributorData = {
@@ -89,7 +134,13 @@ const fetchAllItems = async (url: string) => {
 
   while (hasMore) {
     try {
-      const response = await fetchEndpointData(url, undefined, true, {
+      const populateFields = [
+        "horizontal_banner",
+        "vertical_banner",
+        "contributors.profilePicture",
+        "transcript",
+      ];
+      const response = await fetchEndpointData(url, populateFields, true, {
         page: page,
         pageSize: pageSize,
       });
@@ -246,6 +297,33 @@ export default function PodcastPage({
     });
   };
 
+  const ContributorIcon = ({
+    contributor,
+  }: {
+    contributor: ContributorAttributes;
+  }) => {
+    console.log(contributor);
+    return (
+      <div className="relative flex items-center">
+        <div className=" flex items-center h-[110px] w-[100px] overflow-hidden rounded-3xl border-white border">
+          <Image
+            src={contributor.profilePicture.data.attributes.url}
+            alt={contributor.firstName + " " + contributor.lastName}
+            width={100}
+            height={100}
+            className=" object-cover object-top translate-y-3"
+          />
+          <div className="absolute bottom-[-8px] text-nowrap overflow-visible text-center left-1/2 transform -translate-x-1/2">
+            <p className="text-white text-[12px] font-light bg-blue-primary/80 whitespace-nowrap">
+              {contributor.title}
+              {contributor.firstName} {contributor.lastName}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <Head>
@@ -266,7 +344,21 @@ export default function PodcastPage({
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
           <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px] ">
-            <div className="absolute px-4 top-[35%] md:top-[30%] md:px-[30px] xl:top-[40%] text-white">
+            <div
+              className="absolute right-[5%] top-[10%] md:top-[30%] md:px-[30px] xl:top-[40%] flex flex-row space-x-4" //might adjust md breakpoint
+            >
+              {pageData.attributes.contributors.data
+                .sort((a: ContributorData, b: ContributorData) => b.id - a.id) // Sort in descending order which should ensure James is on the right
+                .map((contributor: ContributorData) => {
+                  return (
+                    <ContributorIcon
+                      key={contributor.id}
+                      contributor={contributor.attributes}
+                    />
+                  );
+                })}
+            </div>
+            <div className="absolute px-4 top-[45%] md:top-[30%] md:px-[30px] xl:top-[40%] text-white">
               <p className="text-[30px] leading-[30px] font-bold text-[#A4D8F1]">
                 Episode {pageData.attributes.episode_number}
               </p>
