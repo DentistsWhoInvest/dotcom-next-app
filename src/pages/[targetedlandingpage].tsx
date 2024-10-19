@@ -128,7 +128,7 @@ export default function TargetedMarketingLandingPage({
       className={`w-screen h-screen bg-gradient-to-b from-blue-secondary to-blue-primary `}
     >
       <section className="pt-[100px] m-auto">
-        <div className="space-y-5 p-5 flex flex-col items-center justify-center ">
+        <div className="space-y-5 p-5 flex flex-col items-center justify-center xl:flex-row xl:max-w-[1140px] xl:m-auto">
           {landingPage.attributes.contributor.data?.attributes
             .profilePicture && (
             <Image
@@ -142,10 +142,11 @@ export default function TargetedMarketingLandingPage({
               }
               height={335}
               width={251}
-              className="rounded-3xl"
+              className="rounded-3xl md:w-[413px] md:h-[550px]
+"
             />
           )}
-          <div className="py-2 px-[20px]">
+          <div className="py-2 px-[20px] md:px-[40px] md:py-8 xl:px-[80px]">
             <div className="text-[25px] xl:text-[35px] leading-[1.2em] flex flex-col text-white font-bold items-center content-center text-center pb-5">
               <BlocksRenderer content={landingPage.attributes.description} />
             </div>
