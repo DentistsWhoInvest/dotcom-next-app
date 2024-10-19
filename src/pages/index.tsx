@@ -424,8 +424,8 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section id="testimonials" className="p-4 text-center">
-        <h2 className="text-2xl font-bold text-blue-primary">
+      <section id="testimonials" className="py-8 text-center">
+        <h2 className="text-[30px] leading-9 font-bold text-blue-primary">
           {pageData.testimonials_title}
         </h2>
 

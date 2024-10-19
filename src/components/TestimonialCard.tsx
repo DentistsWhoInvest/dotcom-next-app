@@ -59,8 +59,8 @@ export const TestimonialCard = ({ testimonial }: { testimonial: any }) => {
               testimonial.attributes.author_thumbnail.data.attributes
                 .alternativeText
             }
-            width={60}
-            height={60}
+            width={88}
+            height={88}
             id="testimonial-profile"
             className="rounded-full"
           />
