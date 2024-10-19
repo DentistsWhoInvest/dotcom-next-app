@@ -85,7 +85,6 @@ export const getStaticProps = async ({ params }: any) => {
     (article: { attributes: { title: string } }) =>
       createSlug(article.attributes.title) === params.articletitle
   );
-  console.log("matchingArticle", matchingArticle);
   const associatedHorizontalBannerId =
     matchingArticle.attributes.horizontal_banners &&
     matchingArticle.attributes.horizontal_banners.data.length > 0
@@ -129,10 +128,6 @@ export default function ArticlePage({
   const { publishedDate, publishedTime } = processDate(
     pageData.attributes.publish_date
   );
-  console.log("pageData", pageData);
-  console.log("associatedHorizontalBanner", associatedHorizontalBanner);
-  console.log("associatedVerticalBanner", associatedVerticalBanner);
-  
 
   return (
     <>

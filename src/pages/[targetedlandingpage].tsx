@@ -92,7 +92,6 @@ export const getStaticPaths = async () => {
     `/targeted-data-collection-pages`
   );
 
-  console.log("results", results);
   return {
     paths: results.data.map((result: { attributes: { title: string } }) => ({
       params: { targetedlandingpage: createSlug(result.attributes.title) },
@@ -121,7 +120,6 @@ export default function TargetedMarketingLandingPage({
 }: {
   landingPage: LandingPage;
 }) {
-  console.log("landingPage", landingPage);
 
   return (
     <main
