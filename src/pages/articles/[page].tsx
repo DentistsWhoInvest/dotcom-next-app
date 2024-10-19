@@ -288,7 +288,7 @@ export default function Articles({
           const slug = createSlug(page.attributes.title);
           return (
             <li key={page.id}>
-              <Link href={`/${slug}`}>
+              <Link href={`/article/${slug}`}>
               <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
                   <Image
                     src={page.attributes.cover.data.attributes.url}

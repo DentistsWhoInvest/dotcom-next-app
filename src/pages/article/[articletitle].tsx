@@ -16,11 +16,59 @@ import { ViewMoreCard } from "@/components/ViewMoreCard";
 import { processDate } from "@/lib/dateUtils";
 import { Article, ArticleAttributes, createSlug } from "../articles/[page]";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import fs from "fs";
+import path from "path";
+
+const fetchAllItems = async (url: string) => {
+  let allItems: any[] = [];
+  let page = 1;
+  const pageSize = 100;
+  let hasMore = true;
+
+  while (hasMore) {
+    try {
+      const response = await fetchEndpointData(url, undefined, true, {
+        page: page,
+        pageSize: pageSize,
+      });
+      const meta = response.meta;
+      allItems = allItems.concat(response.data);
+      hasMore = page < meta.pagination.pageCount;
+
+      page++;
+    } catch (error) {
+      console.error("Error fetching items:", error);
+      hasMore = false;
+    }
+  }
+  return allItems;
+};
+
+function writeToLocal(result: any[]) {
+  const filePath = path.join(process.cwd(), "public", "articlepages.json");
+
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(result), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/blog-posts`);
+  const fetchedArticles: any = await fetchAllItems(`/blog-posts`);
+
+  await writeToLocal(fetchedArticles);
+
+  const filePath = path.join(process.cwd(), "public", "articlepages.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const parsedData = JSON.parse(jsonData);
+
   return {
-    paths: results.data.map((result: { attributes: { title: string } }) => ({
+    paths: parsedData.map((result: { attributes: { title: string } }) => ({
       params: { articletitle: createSlug(result.attributes.title) },
     })),
     fallback: false,
@@ -28,11 +76,16 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const allArticles = await fetchEndpointData(`/blog-posts`);
-  const matchingArticle = allArticles.data.find(
+  // const allArticles = await fetchEndpointData(`/blog-posts`);
+  const filePath = path.join(process.cwd(), "public", "articlepages.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const allArticles = JSON.parse(jsonData);
+
+  const matchingArticle = allArticles.find(
     (article: { attributes: { title: string } }) =>
       createSlug(article.attributes.title) === params.articletitle
   );
+  console.log("matchingArticle", matchingArticle);
   const associatedHorizontalBannerId =
     matchingArticle.attributes.horizontal_banners &&
     matchingArticle.attributes.horizontal_banners.data.length > 0
@@ -49,7 +102,7 @@ export const getStaticProps = async ({ params }: any) => {
   const associatedVerticalBanner = await fetchEndpointData(
     `/vertical-banners/${associatedVerticalBannerId}`
   );
-  const otherArticles = allArticles.data.filter(
+  const otherArticles = allArticles.filter(
     (article: { id: number }) => article.id !== matchingArticle.id
   );
   return {
@@ -107,11 +160,11 @@ export default function ArticlePage({
             className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
           />{" "}
           <div className="text-[18px] leading-7 py-5 md:text-xl">
-            {/* {pageData.attributes.content_sections.map(
+            {pageData.attributes.content_sections.map(
               (contentParagraph) => {
                 return <BlocksRenderer content={contentParagraph.content} key={contentParagraph.id} />;
               }
-            )} */}
+            )}
           </div>
           <Disclaimer contentType="article" />
           <div className="my-5 w-full">
