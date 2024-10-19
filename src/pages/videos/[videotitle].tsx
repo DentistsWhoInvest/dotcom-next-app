@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import type { Video } from "../videos";
 import Disclaimer from "@/components/Disclaimer";
+import Link from "next/link";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -85,17 +86,24 @@ export default function VideoPage({
 
         {pageData.attributes.horizontal_banner.data && (
           <div className="my-5 w-ful mx-4">
-            <Image
-              src={
+            <Link
+              href={
                 pageData.attributes.horizontal_banner.data.attributes
-                  .cover_image.data.attributes.url
+                  .navigation_url
               }
-              alt="Want to increase your income?"
-              width={1200}
-              height={400}
-              layout="responsive"
-              className="h-auto w-full object-cover"
-            />
+            >
+              <Image
+                src={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .cover_image.data.attributes.url
+                }
+                alt="Want to increase your income?"
+                width={1200}
+                height={400}
+                layout="responsive"
+                className="h-auto w-full object-cover"
+              />
+            </Link>
           </div>
         )}
 
