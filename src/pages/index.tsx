@@ -105,7 +105,8 @@ const MetricCounter = ({ value }: { value: number }) => {
 
   return (
     <span id="community-members" ref={ref}>
-      {count}+
+      {/* does some math to display 1000 as 1K, which looks nicer */}
+      {count > 1000 ?  <span>{ Math.ceil(count / 1000) * 1000/1000}K+</span> : <span>{count}+</span>}
     </span>
   );
 };
@@ -408,17 +409,15 @@ export default function Home({ pageData }: { pageData: any }) {
       <section id="stats">
         <div
           id="stats-container"
-          className="space-y-2 bg-blue-secondary/50 p-4 text-center text-xl font-bold text-white"
+          className="space-y-2 bg-blue-secondary py-8 text-center text-white"
         >
           {pageData.metrics.map((metric: any) => {
             return (
               <div id="stat" key={metric.id}>
-                <h2>
-                  <span id="community-members">
-                    <MetricCounter value={metric.value} />
-                  </span>
+                <h2 className="text-[45px] leading-[1.2em] font-bold">
+                  <MetricCounter value={metric.value} />
                 </h2>
-                <p>{metric.title}</p>
+                <p className="text-xl">{metric.title}</p>
               </div>
             );
           })}
