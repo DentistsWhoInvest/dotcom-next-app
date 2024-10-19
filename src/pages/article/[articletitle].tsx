@@ -135,7 +135,7 @@ export default function ArticlePage({
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
       </Head>
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-2 xl:my-5">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-8 xl:gap-16 xl:my-5">
         <div className="col-span-2">
           <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5 md:text-[45px] md:leading-[54px]">
             {pageData.attributes.title}

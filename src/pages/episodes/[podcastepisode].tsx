@@ -371,7 +371,7 @@ export default function PodcastPage({
         </div>
       </section>
       <section id="content" className="p-[10px]">
-        <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:max-w-xl md:max-w-4xl lg:max-w-[1140px] mx-auto md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-12">
+        <div className="grid w-full max-w-md grid-cols-1 md:gap-8 xl:gap-16 sm:max-w-xl md:max-w-4xl lg:max-w-[1140px] mx-auto md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-12">
           <div className="md:col-span-2 lg:col-span-4 xl:col-span-8">
             <div className="mb-5">
               <iframe
