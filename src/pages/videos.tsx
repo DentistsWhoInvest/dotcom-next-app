@@ -1,13 +1,6 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card";
 import { createSlug } from "./articles/[page]";
 import { HeroBanner } from "@/components/HeroBanner";
 

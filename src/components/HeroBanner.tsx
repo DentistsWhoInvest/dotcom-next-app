@@ -31,7 +31,7 @@ export const HeroBanner = ({
   podcastSubText?: boolean;
 }) => {
   return (
-    <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
+    <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px] z-10">
       <div className="absolute inset-0 xl:hidden">
         <Image
           src={bannerImage.url}
