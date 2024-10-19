@@ -1,5 +1,7 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { createSlug } from "./articles/[page]";
+import Image from "next/image";
 
 type TextNode = {
   text: string;
@@ -13,6 +15,50 @@ type Paragraph = {
 
 type Description = Paragraph[];
 
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  data: {
+    id: number;
+    attributes: ImageAttributes;
+  };
+};
+
 type Contributor = {
   data: null | {
     id: number;
@@ -22,13 +68,14 @@ type Contributor = {
       createdAt: string;
       updatedAt: string;
       title: string | null;
+      profilePicture: ImageData;
     };
   };
 };
 
 type LandingPageAttributes = {
   title: string;
-  description: Description;
+  description: any;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -44,17 +91,23 @@ export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(
     `/targeted-data-collection-pages`
   );
+
   console.log("results", results);
   return {
-    paths: results.data.map((result: { id: number }) => ({
-      params: { targetedlandingpage: result.id.toString() },
+    paths: results.data.map((result: { attributes: { title: string } }) => ({
+      params: { targetedlandingpage: createSlug(result.attributes.title) },
     })),
     fallback: false,
   };
 };
 
 export const getStaticProps = async () => {
-  const pageData = await fetchEndpointData("/targeted-data-collection-pages/5");
+  const populateFields = ["contributor", "contributor.profilePicture"];
+
+  const pageData = await fetchEndpointData(
+    "/targeted-data-collection-pages/5",
+    populateFields
+  );
 
   return {
     props: {
@@ -72,18 +125,36 @@ export default function TargetedMarketingLandingPage({
 
   return (
     <main
-      className={`flex flex-col shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px] `}
+      className={`w-screen h-screen bg-gradient-to-b from-blue-secondary to-blue-primary `}
     >
-      <div
-        id="banner"
-        className="flex h-[200px] items-center justify-center bg-[#dbe2e9] text-center text-[45px] font-bold text-blue-primary "
-      >
-        marketing page
-      </div>
-      <div className="privacy-policy my-8 space-y-8 px-6 pt-8 lg:m-6 xl:mx-36">
-        {/* <BlocksRenderer content={policyPage.policy} /> */}
-        <span>test</span>
-      </div>
+      <section className="pt-[100px] m-auto">
+        <div className="space-y-5 p-5 flex flex-col items-center justify-center ">
+          {landingPage.attributes.contributor.data?.attributes
+            .profilePicture && (
+            <Image
+              src={
+                landingPage.attributes.contributor.data.attributes
+                  .profilePicture.data.attributes.url
+              }
+              alt={
+                landingPage.attributes.contributor.data.attributes
+                  .profilePicture.data.attributes.name
+              }
+              height={335}
+              width={251}
+              className="rounded-3xl"
+            />
+          )}
+          <div className="py-2 px-[20px]">
+            <div className="text-[25px] xl:text-[35px] leading-[1.2em] flex flex-col text-white font-bold items-center content-center text-center pb-5">
+              <BlocksRenderer content={landingPage.attributes.description} />
+            </div>
+            <div id="form" className=" bg-white text-black">
+              todo: embed form
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
