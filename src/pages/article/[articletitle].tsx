@@ -76,6 +76,10 @@ export default function ArticlePage({
   const { publishedDate, publishedTime } = processDate(
     pageData.attributes.publish_date
   );
+  console.log("pageData", pageData);
+  console.log("associatedHorizontalBanner", associatedHorizontalBanner);
+  console.log("associatedVerticalBanner", associatedVerticalBanner);
+  
 
   return (
     <>
@@ -103,11 +107,11 @@ export default function ArticlePage({
             className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
           />{" "}
           <div className="text-[18px] leading-7 py-5 md:text-xl">
-            {pageData.attributes.content_sections.map(
+            {/* {pageData.attributes.content_sections.map(
               (contentParagraph) => {
                 return <BlocksRenderer content={contentParagraph.content} key={contentParagraph.id} />;
               }
-            )}
+            )} */}
           </div>
           <Disclaimer contentType="article" />
           <div className="my-5 w-full">
