@@ -302,7 +302,6 @@ export default function PodcastPage({
   }: {
     contributor: ContributorAttributes;
   }) => {
-    console.log(contributor);
     return (
       <div className="relative flex items-center">
         <div className=" flex items-center h-[110px] w-[100px] overflow-hidden rounded-3xl border-white border">
