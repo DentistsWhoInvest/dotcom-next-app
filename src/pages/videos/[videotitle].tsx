@@ -25,13 +25,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const allVideos = await fetchEndpointData(`/videos`);
+  const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
+  const allVideos = await fetchEndpointData(`/videos`, populateFields);
   const matchingVideo = allVideos.data.find(
     (video: { attributes: { name: string } }) =>
       createSlug(video.attributes.name) === params.videotitle
-  );
-  const associatedBanner = await fetchEndpointData(
-    `/horizontal-banners/${matchingVideo.attributes.horizontal_banner.data.id}`
   );
   const otherVideos = allVideos.data.filter(
     (video: { id: number }) => video.id !== matchingVideo.id
@@ -40,7 +38,6 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       pageData: matchingVideo,
-      associatedBanner: associatedBanner,
       otherVideos: otherVideos,
     },
   };
@@ -48,11 +45,9 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function VideoPage({
   pageData,
-  associatedBanner,
   otherVideos,
 }: {
   pageData: Video;
-  associatedBanner: any;
   otherVideos: any[];
 }) {
   //the uri has the pattern of /videos/1, /videos/2, etc and we want to remove the /videos/ part
@@ -88,18 +83,21 @@ export default function VideoPage({
           </div>
         </div>
 
-        <div className="my-5 w-ful mx-4">
-          <Image
-            src={
-              associatedBanner.data.attributes.cover_image.data.attributes.url
-            }
-            alt="Want to increase your income?"
-            width={1200}
-            height={400}
-            layout="responsive"
-            className="h-auto w-full object-cover"
-          />
-        </div>
+        {pageData.attributes.horizontal_banner.data && (
+          <div className="my-5 w-ful mx-4">
+            <Image
+              src={
+                pageData.attributes.horizontal_banner.data.attributes
+                  .cover_image.data.attributes.url
+              }
+              alt="Want to increase your income?"
+              width={1200}
+              height={400}
+              layout="responsive"
+              className="h-auto w-full object-cover"
+            />
+          </div>
+        )}
 
         <div className="m-4">
           <Disclaimer />
@@ -111,7 +109,7 @@ export default function VideoPage({
           </p>
           <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
           <div className="relative">
-            <Carousel >
+            <Carousel>
               <CarouselContent className="mb-12">
                 {otherVideos.map((page: any) => {
                   return (
@@ -125,7 +123,7 @@ export default function VideoPage({
                 })}
               </CarouselContent>
               <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
-              <CarouselPrevious className="relative !-left-0" />
+                <CarouselPrevious className="relative !-left-0" />
                 <CarouselNext className="relative !-right-0" />
               </div>
             </Carousel>

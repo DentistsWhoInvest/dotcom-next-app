@@ -8,13 +8,56 @@ type Tag = {
   id: number;
   tag_name: string;
 };
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
 
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  data: {
+    id: number;
+    attributes: ImageAttributes;
+  };
+};
 type HorizontalBannerAttributes = {
   createdAt: string;
   updatedAt: string;
   title: string;
   navigation_url: string;
   is_internal: boolean;
+  cover_image: ImageData;
 };
 
 type HorizontalBannerData = {
