@@ -324,6 +324,7 @@ export default function PodcastPage({
     );
   };
 
+  const buzzsproutLink = `https://www.buzzsprout.com/1471306/${pageData.attributes.buzzsprout_id}?client_source=small_player&amp;iframe=true`
   return (
     <>
       <Head>
@@ -375,12 +376,11 @@ export default function PodcastPage({
           <div className="md:col-span-2 lg:col-span-4 xl:col-span-8">
             <div className="mb-5">
               <iframe
-                src="https://www.buzzsprout.com/1471306/15694076-is-marketing-a-naughty-word-with-john-williamson-and-dr-ferhan-ahmed-dwi-ep301?client_source=small_player&amp;iframe=true
-          "
+                src={buzzsproutLink}
                 loading="lazy"
                 width="100%"
                 height="200"
-                title="Dentists Who Invest Podcast, Is Marketing A Naughty Word? with John Williamson and Dr. Ferhan Ahmed DWI-EP301"
+                title={pageData.attributes.title}
               ></iframe>
             </div>
             <div className="">
