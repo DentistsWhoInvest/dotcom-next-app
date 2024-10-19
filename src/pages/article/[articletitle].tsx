@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import { processDate } from "@/lib/dateUtils";
-import { Article, ArticleAttributes, createSlug } from "./articles/[page]";
+import { Article, ArticleAttributes, createSlug } from "../articles/[page]";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export const getStaticPaths = async () => {
