@@ -60,7 +60,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-auto w-full ">
+      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px]">
         <div className="flex flex-col justify-center bg-gray-100">
           <div className="m-6 aspect-video">
             <iframe
@@ -72,10 +72,10 @@ export default function VideoPage({
               className="left-0 top-0 h-full w-full"
             ></iframe>
           </div>
-          <h2 className="mx-6 text-xl font-bold text-blue-primary">
+          <h2 className="mx-6 text-xl font-bold text-blue-primary md:text-3xl">
             {pageData.attributes.name}
           </h2>
-          <div className="m-5">
+          <div className="m-5 md:text-lg mb-7 xl:text-xl">
             <div
               dangerouslySetInnerHTML={{
                 __html: pageData.attributes.description,
@@ -85,7 +85,7 @@ export default function VideoPage({
         </div>
 
         {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5 w-ful mx-4">
+          <div className="my-5">
             <Link
               href={
                 pageData.attributes.horizontal_banner.data.attributes
@@ -101,17 +101,17 @@ export default function VideoPage({
                 width={1200}
                 height={400}
                 layout="responsive"
-                className="h-auto w-full object-cover"
+                className="h-auto max-w-screen"
               />
             </Link>
           </div>
         )}
 
-        <div className="m-4">
+        <div className="my-4">
           <Disclaimer />
         </div>
 
-        <div className="mt-5 flex flex-col justify-center bg-gray-100">
+        <div className="mt-5 md:mx-[-50px] xl:mx-[-150px] flex flex-col justify-center bg-gray-100">
           <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
             Watch More
           </p>
