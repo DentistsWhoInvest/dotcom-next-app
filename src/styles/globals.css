@@ -31,6 +31,14 @@ body {
 }
 
 @layer components {
+
+  .articleContent ul, .articleContent ol {
+    list-style: revert;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+
   .privacy-policy h5,
   .t-and-c h5
    {

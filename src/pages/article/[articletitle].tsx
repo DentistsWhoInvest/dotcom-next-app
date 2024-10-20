@@ -163,7 +163,7 @@ export default function ArticlePage({
             layout="responsive"
             className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
           />
-          <div className="text-[18px] leading-7 py-5 md:text-xl">
+          <div className="articleContent text-[18px] leading-7 py-5 md:text-xl">
             {pageData.attributes.content_sections.map((contentParagraph) => {
               return (
                 <BlocksRenderer
