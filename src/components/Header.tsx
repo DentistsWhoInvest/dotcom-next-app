@@ -32,13 +32,13 @@ export default function Header() {
         onClick={() => setShowOverlay(false)}
       >
         <div
-          className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2"
+          className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2 md:w-2/6"
           onClick={(e) => e.stopPropagation()}
         >
           <button className="m-0.5 w-4" onClick={() => setShowOverlay(false)}>
             <SquareX className="stroke-blue-primary " />
           </button>
-          <ul className="text-right">
+          <ul>
             <MenuLinks menuLinksList={menuLinksList} />
           </ul>
         </div>
@@ -57,7 +57,7 @@ export default function Header() {
       return (
         <li
           key={link.href}
-          className={`lg:text-lg p-2 text-sm ${
+          className={`lg:text-lg p-2 text-sm  md:text-lg text-right ${
             isActive
               ? "text-blue-secondary"
               : "text-blue-primary hover:text-blue-secondary"
@@ -77,49 +77,51 @@ export default function Header() {
   };
 
   return (
-    <div className="z-20 relative flex h-[60px] flex-row items-center justify-between bg-[#f0f3f6] px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg">
-      <div>
-        <Image
-          src={
-            "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
-          }
-          alt={"Logo"}
-          width={"94"}
-          height={"31"}
-          className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
-        />
-      </div>
-
-      <button
-        className="md:hidden pr-2 text-gray-700 hover:text-blue-primary"
-        onClick={() => setShowOverlay(true)}
-      >
-        <svg
-          className="size-6 text-blue-primary"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect y="4" width="20" height="2" fill="currentColor" />
-          <rect y="10" width="20" height="2" fill="currentColor" />
-          <rect y="16" width="20" height="2" fill="currentColor" />
-          <rect y="22" width="20" height="2" fill="currentColor" />
-        </svg>
-      </button>
-
-      {showOverlay && <MenuOverlay />}
-
-      <ul className="md:flex lg:mr-32 hidden flex-row items-center">
-        <MenuLinks menuLinksList={menuLinksList} />
-        <div className="sm:ml-6 sm:flex sm:items-center hidden">
-          <Link href={"https://courses.dentistswhoinvest.com/login"}>
-            <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
-              Members
-            </button>
-          </Link>
+    <div className="bg-[#f0f3f6]">
+      <div className="z-20 relative flex h-[60px] flex-row items-center justify-between px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg xl:max-w-[1200px] xl:m-auto">
+        <div>
+          <Image
+            src={
+              "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
+            }
+            alt={"Logo"}
+            width={"94"}
+            height={"31"}
+            className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
+          />
         </div>
-      </ul>
+
+        <button
+          className="md:hidden pr-2 text-gray-700 hover:text-blue-primary"
+          onClick={() => setShowOverlay(true)}
+        >
+          <svg
+            className="size-6 text-blue-primary"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect y="4" width="20" height="2" fill="currentColor" />
+            <rect y="10" width="20" height="2" fill="currentColor" />
+            <rect y="16" width="20" height="2" fill="currentColor" />
+            <rect y="22" width="20" height="2" fill="currentColor" />
+          </svg>
+        </button>
+
+        {showOverlay && <MenuOverlay />}
+
+        <ul className="md:flex lg:mr-32 hidden flex-row items-center">
+          <MenuLinks menuLinksList={menuLinksList} />
+          <div className="sm:ml-6 sm:flex sm:items-center hidden">
+            <Link href={"https://courses.dentistswhoinvest.com/login"}>
+              <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
+                Members
+              </button>
+            </Link>
+          </div>
+        </ul>
+      </div>
     </div>
   );
 }

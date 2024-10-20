@@ -71,8 +71,8 @@ export default function Footer() {
     { href: "/the-academy/", text: "Dentists Who invest Academy" },
   ];
   return (
-    <>
-      <div className="flex flex-row bg-[#f0f3f6] p-2 text-blue-primary shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px] md:flex-col lg:flex-row lg:px-32 lg:py-8">
+    <div className="bg-[#f0f3f6] shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px]">
+      <div className="flex flex-row p-2 text-blue-primary md:flex-col lg:flex-row lg:px-32 lg:py-8 max-w-[1140px] xl:mx-auto">
         <div
           className="justify-evenly md:m-8 md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4"
           id="logo and text"
@@ -129,7 +129,7 @@ export default function Footer() {
               return (
                 <li
                   key={link.href}
-                  className={`flex justify-center p-2 ${
+                  className={`flex justify-center p-2 text-nowrap ${
                     isActive
                       ? "text-blue-secondary"
                       : "text-blue-primary hover:text-blue-secondary"
@@ -161,6 +161,6 @@ export default function Footer() {
         </div>
       </div>
       <BottomBar />
-    </>
+    </div>
   );
 }
