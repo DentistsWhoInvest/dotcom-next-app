@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -6,17 +7,18 @@ import { SquareX } from "lucide-react";
 type MenuLink = {
   href: string;
   text: string;
+  category?: string;
 };
 
 //todo get these from the header data
 const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
-  { href: "/about", text: "About" },
-  { href: "/podcast/1", text: "Podcast" },
-  { href: "/articles/1", text: "Articles" },
-  { href: "/courses", text: "Courses" },
-  { href: "/videos", text: "Videos" },
-  { href: "/contact", text: "Contact" },
+  { href: "/about/", text: "About" },
+  { href: "/podcast/1/", text: "Podcast", category: "podcast" },
+  { href: "/articles/1/", text: "Articles", category: "articles" },
+  { href: "/courses/", text: "Courses" },
+  { href: "/videos/", text: "Videos" },
+  { href: "/contact/", text: "Contact" },
 ];
 
 export default function Header() {
@@ -45,30 +47,33 @@ export default function Header() {
   };
 
   const MenuLinks = ({ menuLinksList }: { menuLinksList: MenuLink[] }) => {
-    //current pages needs to be highlighted in blue secondary - for some reason not quite working locally?
     const currentPath =
       typeof window !== "undefined" ? window.location.pathname : "";
 
-    return menuLinksList.map((link) => (
-      <li
-        key={link.href}
-        // className={`p-2 text-lg ${
-        //   currentPath === link.href
-        //     ? "text-blue-secondary"
-        //     : "text-blue-primary hover:text-blue-secondary"
-        // }`}
-        className="lg:text-lg p-2 text-sm"
-      >
-        <Link
-          href={link.href}
-          onClick={() => {
-            setShowOverlay(false);
-          }}
+    return menuLinksList.map((link) => {
+      const isActive =
+        currentPath === link.href ||
+        (link.category && currentPath.includes(link.category));
+      return (
+        <li
+          key={link.href}
+          className={`lg:text-lg p-2 text-sm ${
+            isActive
+              ? "text-blue-secondary"
+              : "text-blue-primary hover:text-blue-secondary"
+          }`}
         >
-          {link.text}
-        </Link>
-      </li>
-    ));
+          <Link
+            href={link.href}
+            onClick={() => {
+              setShowOverlay(false);
+            }}
+          >
+            {link.text}
+          </Link>
+        </li>
+      );
+    });
   };
 
   return (
