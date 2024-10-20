@@ -19,6 +19,7 @@
     "@strapi/blocks-react-renderer": "^1.0.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
     "eslint-plugin-tailwindcss": "^3.17.4",

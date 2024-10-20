@@ -100,6 +100,7 @@ export const getStaticPaths = async () => {
   };
 };
 
+//todo: update this
 export const getStaticProps = async () => {
   const populateFields = ["contributor", "contributor.profilePicture"];
 
