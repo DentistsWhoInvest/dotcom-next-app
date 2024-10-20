@@ -71,6 +71,7 @@ type BannerAttributes = {
   title: string;
   navigation_url: string;
   is_internal: boolean;
+  cover_image: {data: ImageData};
 };
 
 type BannerData = {

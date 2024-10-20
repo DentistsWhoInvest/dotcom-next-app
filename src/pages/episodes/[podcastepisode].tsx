@@ -91,6 +91,7 @@ type BannerAttributes = {
   title: string;
   navigation_url: string;
   is_internal: boolean;
+  cover_image: ImageData;
 };
 
 type BannerData = {
@@ -137,6 +138,8 @@ const fetchAllItems = async (url: string) => {
       const populateFields = [
         "horizontal_banner",
         "vertical_banner",
+        "horizontal_banner.cover_image",
+        "vertical_banner.cover_image",
         "contributors.profilePicture",
         "transcript",
       ];
@@ -203,13 +206,6 @@ export const getStaticProps = async ({ params }: any) => {
       podcast.attributes.episode_number === episodeNumber
   );
 
-  //maybe wrap these in a try in case there's no associated banner
-  const associatedHorizontalBanner = await fetchEndpointData(
-    `/horizontal-banners/${matchingPodcast.attributes.horizontal_banner.data.id}`
-  );
-  const associatedVerticalBanner = await fetchEndpointData(
-    `/vertical-banners/${matchingPodcast.attributes.vertical_banner.data.id}`
-  );
   const otherPodcasts = allPodcasts
     .filter((article: { id: number }) => article.id !== matchingPodcast.id)
     .slice(0, 3);
@@ -224,10 +220,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-      // pageData: pageData.data,
       pageData: matchingPodcast,
-      associatedHorizontalBanner: associatedHorizontalBanner.data,
-      associatedVerticalBanner: associatedVerticalBanner.data,
       otherPodcasts: otherPodcasts,
       someArticles: someArticles.data,
     },
@@ -236,14 +229,10 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function PodcastPage({
   pageData,
-  associatedHorizontalBanner,
-  associatedVerticalBanner,
   otherPodcasts,
   someArticles,
 }: {
   pageData: PodcastEpisode;
-  associatedHorizontalBanner: any;
-  associatedVerticalBanner: any;
   otherPodcasts: any;
   someArticles: any;
 }) {
@@ -281,10 +270,12 @@ export default function PodcastPage({
             <div className="">
               <Image
                 src={
-                  associatedHorizontalBanner.attributes.cover_image.data
-                    .attributes.url
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .cover_image.data.attributes.url
                 }
-                alt={associatedHorizontalBanner.attributes.title}
+                alt={
+                  pageData.attributes.horizontal_banner.data.attributes.title
+                }
                 width={1200}
                 height={400}
                 layout="responsive"
@@ -384,17 +375,26 @@ export default function PodcastPage({
               ></iframe>
             </div>
             <div className="">
-              <Image
-                src={
-                  associatedHorizontalBanner.attributes.cover_image.data
-                    .attributes.url
+              <Link
+                href={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .navigation_url
                 }
-                alt={associatedHorizontalBanner.attributes.title}
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto w-full object-cover"
-              />
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.horizontal_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto w-full object-cover"
+                />
+              </Link>
             </div>
             <div className="my-5 flex flex-col justify-center">
               <p className="text-center text-4xl font-bold text-blue-primary">
@@ -419,17 +419,26 @@ export default function PodcastPage({
 
             <Disclaimer contentType="podcast" />
             <div className="my-5 w-full">
-              <Image
-                src={
-                  associatedHorizontalBanner.attributes.cover_image.data
-                    .attributes.url
+              <Link
+                href={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .navigation_url
                 }
-                alt={associatedHorizontalBanner.attributes.title}
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto w-full object-cover"
-              />
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.horizontal_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto w-full object-cover"
+                />
+              </Link>
             </div>
           </div>
           <div className="flex flex-col justify-start md:col-span-1 lg:col-span-2 xl:col-span-4 md:w-[233px] lg:w-[318px] xl:w-[330px]">
@@ -475,17 +484,26 @@ export default function PodcastPage({
               );
             })}
             <div className="hidden md:block">
-              <Image
-                src={
-                  associatedVerticalBanner.attributes.cover_image.data
-                    .attributes.url
+              <Link
+                href={
+                  pageData.attributes.vertical_banner.data.attributes
+                    .navigation_url
                 }
-                alt={associatedVerticalBanner.attributes.title}
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto w-full object-cover"
-              />
+              >
+                <Image
+                  src={
+                    pageData.attributes.vertical_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.vertical_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto w-full object-cover"
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -535,20 +553,3 @@ export default function PodcastPage({
     </>
   );
 }
-/** mob:
- * transcript
- * banner
- * more episodes - 3
- * form
- *  */
-
-/** desk left col
- * transcript - banner partway through, to do
- * banner
- * form
- * more blogs - 3
- */
-
-/** desk right col
- * more episodes - same as mob
- * vertical banner */

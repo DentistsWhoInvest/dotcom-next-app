@@ -18,6 +18,7 @@ import { Article, ArticleAttributes, createSlug } from "../articles/[page]";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import fs from "fs";
 import path from "path";
+import Link from "next/link";
 
 const fetchAllItems = async (url: string) => {
   let allItems: any[] = [];
@@ -27,7 +28,15 @@ const fetchAllItems = async (url: string) => {
 
   while (hasMore) {
     try {
-      const response = await fetchEndpointData(url, undefined, true, {
+      const populateFields = [
+        "horizontal_banners",
+        "vertical_banners",
+        "horizontal_banners.cover_image",
+        "vertical_banners.cover_image",
+        "cover",
+        "content_sections"
+      ];
+      const response = await fetchEndpointData(url, populateFields, true, {
         page: page,
         pageSize: pageSize,
       });
@@ -85,30 +94,30 @@ export const getStaticProps = async ({ params }: any) => {
     (article: { attributes: { title: string } }) =>
       createSlug(article.attributes.title) === params.articletitle
   );
-  const associatedHorizontalBannerId =
-    matchingArticle.attributes.horizontal_banners &&
-    matchingArticle.attributes.horizontal_banners.data.length > 0
-      ? matchingArticle.attributes.horizontal_banners.data[0].id
-      : 1;
-  const associatedVerticalBannerId =
-    matchingArticle.attributes.vertical_banners &&
-    matchingArticle.attributes.vertical_banners.data.length > 0
-      ? matchingArticle.attributes.vertical_banners.data[0].id
-      : 1;
-  const associatedHorizontalBanner = await fetchEndpointData(
-    `/horizontal-banners/${associatedHorizontalBannerId}`
-  );
-  const associatedVerticalBanner = await fetchEndpointData(
-    `/vertical-banners/${associatedVerticalBannerId}`
-  );
+  // const associatedHorizontalBannerId =
+  //   matchingArticle.attributes.horizontal_banners &&
+  //   matchingArticle.attributes.horizontal_banners.data.length > 0
+  //     ? matchingArticle.attributes.horizontal_banners.data[0].id
+  //     : 1;
+  // const associatedVerticalBannerId =
+  //   matchingArticle.attributes.vertical_banners &&
+  //   matchingArticle.attributes.vertical_banners.data.length > 0
+  //     ? matchingArticle.attributes.vertical_banners.data[0].id
+  //     : 1;
+  // const associatedHorizontalBanner = await fetchEndpointData(
+  //   `/horizontal-banners/${associatedHorizontalBannerId}`
+  // );
+  // const associatedVerticalBanner = await fetchEndpointData(
+  //   `/vertical-banners/${associatedVerticalBannerId}`
+  // );
   const otherArticles = allArticles.filter(
     (article: { id: number }) => article.id !== matchingArticle.id
   );
   return {
     props: {
       pageData: matchingArticle,
-      associatedHorizontalBanner: associatedHorizontalBanner.data,
-      associatedVerticalBanner: associatedVerticalBanner.data,
+      // associatedHorizontalBanner: associatedHorizontalBanner.data,
+      // associatedVerticalBanner: associatedVerticalBanner.data,
       otherArticles: otherArticles,
     },
   };
@@ -116,13 +125,13 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function ArticlePage({
   pageData,
-  associatedHorizontalBanner,
-  associatedVerticalBanner,
+  // associatedHorizontalBanner,
+  // associatedVerticalBanner,
   otherArticles,
 }: {
   pageData: Article;
-  associatedHorizontalBanner: any;
-  associatedVerticalBanner: any;
+  // associatedHorizontalBanner: any;
+  // associatedVerticalBanner: any;
   otherArticles: any;
 }) {
   const { publishedDate, publishedTime } = processDate(
@@ -153,42 +162,57 @@ export default function ArticlePage({
             height={400}
             layout="responsive"
             className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
-          />{" "}
+          />
           <div className="text-[18px] leading-7 py-5 md:text-xl">
-            {pageData.attributes.content_sections.map(
-              (contentParagraph) => {
-                return <BlocksRenderer content={contentParagraph.content} key={contentParagraph.id} />;
-              }
-            )}
+            {pageData.attributes.content_sections.map((contentParagraph) => {
+              return (
+                <BlocksRenderer
+                  content={contentParagraph.content}
+                  key={contentParagraph.id}
+                />
+              );
+            })}
           </div>
           <Disclaimer contentType="article" />
           <div className="my-5 w-full">
-            <Image
-              src={
-                associatedHorizontalBanner.attributes.cover_image.data
-                  .attributes.url
+            <Link
+              href={
+                pageData.attributes.horizontal_banners.data[0].attributes.navigation_url
               }
-              alt="Want to increase your income?"
-              width={1200}
-              height={400}
-              layout="responsive"
-              className="h-auto w-full object-cover"
-            />
+            >
+              <Image
+                src={
+                  pageData.attributes.horizontal_banners.data[0].attributes
+                    .cover_image.data.attributes.url
+                }
+                alt="Want to increase your income?"
+                width={1200}
+                height={400}
+                layout="responsive"
+                className="h-auto w-full object-cover"
+              />
+            </Link>
           </div>
         </div>
         <div className="md:col-span-1 w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
-            <Image
-              src={
-                associatedVerticalBanner.attributes.cover_image.data.attributes
-                  .url
+            <Link
+              href={
+                pageData.attributes.vertical_banners.data[0].attributes.navigation_url
               }
-              alt="Want to increase your income?"
-              width={233}
-              height={598}
-              className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
-            />
+            >
+              <Image
+                src={
+                  pageData.attributes.vertical_banners.data[0].attributes
+                    .cover_image.data.attributes.url
+                }
+                alt="Want to increase your income?"
+                width={233}
+                height={598}
+                className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
+              />
+            </Link>
           </div>
         </div>
       </div>
