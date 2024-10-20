@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { exec } = require('child_process');
+
 const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
@@ -15,7 +17,17 @@ const nextConfig = {
     unoptimized: true,
   },
   output: "export",
-  compress: true
+  compress: true,
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      exec('node generate-sitemap.js', (err, stdout, stderr) => {
+        if (err) {
+          console.error(`Error generating sitemap: ${stderr}`);
+        } else {
+          console.log(`Sitemap generated: ${stdout}`);
+        }
+      });
+    }}
 };
 
 module.exports = nextConfig;

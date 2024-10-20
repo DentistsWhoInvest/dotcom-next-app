@@ -9,7 +9,8 @@
     "build": "next build",
     "debug-build": "next build --debug",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
     "@google-cloud/iam-credentials": "^3.3.0",
@@ -30,6 +31,7 @@
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
+    "sitemap": "^8.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   },
