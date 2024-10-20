@@ -185,8 +185,9 @@ export const getStaticPaths = async () => {
 
   return {
     paths: parsedData.map(
-      (result: { attributes: { episode_number: number } }) => ({
-        params: { podcastepisode: "e" + result.attributes.episode_number },
+      (result: { attributes: { episode_number: number, title: string } }) => ({
+        // params: { podcastepisode: "e" + result.attributes.episode_number },
+        params: { podcastepisode: "e" + result.attributes.episode_number + "-" + createSlug(result.attributes.title).replace(/-dwi-ep\d+$/, '') },
       })
     ),
     fallback: false,
@@ -194,8 +195,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const episodeNumber = Number(params.podcastepisode.replace("e", ""));
-  // const allPodcasts = await fetchAllPodcasts()
+  const episodeNumber = Number(params.podcastepisode.replace(/^e/, '').split('-')[0]);
   const filePath = path.join(process.cwd(), "public", "podcastepisodes.json");
   const page = parseInt(params.page, 10) || 1;
   const jsonData = fs.readFileSync(filePath, "utf-8");
@@ -207,7 +207,7 @@ export const getStaticProps = async ({ params }: any) => {
   );
 
   const otherPodcasts = allPodcasts
-    .filter((article: { id: number }) => article.id !== matchingPodcast.id)
+    .filter((podcast: { id: number }) => podcast.id !== matchingPodcast.id)
     .slice(0, 3);
   // commenting out this api call, think it can be taken directly from the allPodcasts data if it matches with the episodeNumber
   // keeping it here for reference

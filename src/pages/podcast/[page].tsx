@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { HeroBanner } from "@/components/HeroBanner";
 import { PaginationNav } from "@/components/PaginationNav";
+import { createSlug } from "../articles/[page]";
 
 type ContributorAttributes = {
   firstName: string;
@@ -203,8 +204,10 @@ export default function Podcasts({
       </div>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center xl:mx-[40px]">
         {sortedData.map((page: Episode) => {
+        const podcastSlug = createSlug(page.attributes.title).replace(/-dwi-ep\d+$/, '')
+        const podcastLink = `/episodes/e${page.attributes.episode_number}-${podcastSlug}`;
           return (
-            <Link href={`/episodes/e${page.attributes.episode_number}`} key={page.id}>
+            <Link href={podcastLink} key={page.id}>
               <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
                 <Image
                   src={page.attributes.artwork_url}
