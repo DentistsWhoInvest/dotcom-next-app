@@ -290,6 +290,7 @@ export default function CashflowCoursePage({
                   <TestimonialCard
                     key={testimonial.id}
                     testimonial={testimonial}
+                    index={index}
                   />
                 </div>
               );

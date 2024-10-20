@@ -80,15 +80,17 @@ export default function Header() {
     <div className="bg-[#f0f3f6]">
       <div className="z-20 relative flex h-[60px] flex-row items-center justify-between px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg xl:max-w-[1200px] xl:m-auto">
         <div>
-          <Image
-            src={
-              "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
-            }
-            alt={"Logo"}
-            width={"94"}
-            height={"31"}
-            className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
-          />
+          <Link href={"/"}>
+            <Image
+              src={
+                "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
+              }
+              alt={"Logo"}
+              width={"94"}
+              height={"31"}
+              className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
+            />{" "}
+          </Link>
         </div>
 
         <button

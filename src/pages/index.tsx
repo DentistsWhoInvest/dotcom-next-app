@@ -106,14 +106,18 @@ const MetricCounter = ({ value }: { value: number }) => {
   return (
     <span id="community-members" ref={ref}>
       {/* does some math to display 1000 as 1K, which looks nicer */}
-      {count > 1000 ?  <span>{ Math.ceil(count / 1000) * 1000/1000}K+</span> : <span>{count}+</span>}
+      {count > 1000 ? (
+        <span>{(Math.ceil(count / 1000) * 1000) / 1000}K+</span>
+      ) : (
+        <span>{count}+</span>
+      )}
     </span>
   );
 };
 
 const HomePageCourseCard = ({ course }: { course: any }) => {
   return (
-    <li className="shadow-custom flex flex-col justify-center rounded-3xl border-solid bg-white py-[20px] px-[50px] items-center mt-16">
+    <li className="shadow-custom flex flex-col justify-center rounded-3xl border-solid bg-white py-[20px] px-[50px] items-center md:px-[10px] md:pt-[50px] md:pb-[25px] lg:px-[50px] lg:mx-4">
       <div className="">
         <Image
           src="/DWI-logo-circle.webp"
@@ -181,20 +185,18 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
         `}</style>
       </div>
 
-      <div className="flex flex-col items-center p-4 ">
+      <div className="flex flex-col items-center p-4 md:grow pt-8">
         <Image
           src={course.attributes.cover.data.attributes.url}
           alt={course.attributes.title}
           width={180}
           height={440}
+          className="md:w-[234px] lg:w-[362px]"
         />{" "}
-        <p className="mb-4 text-sm text-blue-primary">
+        <p className="mb-4 text-sm text-blue-primary md:text-xl md:mt-8 font-semibold">
           {course.attributes.description}
         </p>
-        <Button
-          asChild
-          className="w-full rounded-md bg-orange-400 py-2 font-bold text-white hover:bg-orange-500"
-        >
+        <Button className="w-2/3 rounded-md bg-orange-400 py-4 px-3 text-white hover:bg-orange-500 ">
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
       </div>
@@ -205,11 +207,11 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 export default function Home({ pageData }: { pageData: any }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-  // Show the popup after 3 seconds
+  // Show the popup after 10 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsPopupVisible(true);
-    }, 3000); // 3 seconds
+    }, 10000); // 10 seconds
 
     // Cleanup the timer if the component is unmounted
     return () => clearTimeout(timer);
@@ -242,7 +244,6 @@ export default function Home({ pageData }: { pageData: any }) {
           />
         </div>
         <div className="sm:hidden md:block">
-          {" "}
           <HeroBanner
             bannerText={pageData.hero_text}
             bannerImage={{
@@ -258,38 +259,49 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section className="m-4 space-y-4 p-4">
-        <h3 className="text-center text-2xl font-bold text-blue-primary">
-          {pageData.founder_text}
-        </h3>
-        <h6 className="text-center text-blue-secondary">
-          {pageData.founder_subtext}
-        </h6>
-        {/* <BlocksRenderer content={pageData.founder_description} /> */}
-        {pageData.founder_description.map((block: any) => {
-          return (
-            <div key={block.id}>
-              <p>{block.children[0].text}</p>
-            </div>
-          );
-        })}
-
-        <Image
-          src={replaceImageDomain(
-            pageData.founder_image.data.attributes.formats.large.url
-          )}
-          alt={pageData.founder_image.data.attributes.alternativeText}
-          width={pageData.founder_image.data.attributes.width}
-          height={pageData.founder_image.data.attributes.height}
-          className="rounded-lg"
-        />
+      <section
+        id="founder"
+        className="m-4 space-y-4 p-4 md:space-y-8 md:p-[50px] flex flex-col xl:flex-row-reverse items-center"
+      >
+        <div className="xl:space-y-8 xl:w-1/2 xl:ml-[100px] xl:pr-[150px] xl:pl-[80px] ">
+          <h3 className="text-center text-2xl font-bold text-blue-primary md:text-[35px] md:leading-[42px]">
+            {pageData.founder_text}
+          </h3>
+          <h6 className="text-center md:text-xl text-blue-secondary xl:text-wrap xl:mr-12 xl:text-left">
+            {pageData.founder_subtext}
+          </h6>
+          {/* <BlocksRenderer content={pageData.founder_description} /> */}
+          {pageData.founder_description.map((block: any) => {
+            return (
+              <div key={block.id}>
+                <p>{block.children[0].text}</p>
+              </div>
+            );
+          })}
+          <div className="hidden xl:block">
+            <Button className="rounded-md bg-orange-400 py-8 px-[55px] text-white hover:bg-orange-500 text-lg">
+              <Link href={"/about"}>Learn More</Link>
+            </Button>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <Image
+            src={replaceImageDomain(
+              pageData.founder_image.data.attributes.formats.large.url
+            )}
+            alt={pageData.founder_image.data.attributes.alternativeText}
+            width={pageData.founder_image.data.attributes.width}
+            height={pageData.founder_image.data.attributes.height}
+            className="rounded-r-[30px] rounded-l-[30px] md:max-w-[356px] md:max-h-[499px] xl:max-w-[468px] xl:max-h-[654px]"
+          />
+        </div>
       </section>
 
       <section className="bg-gray-100 py-4 text-center">
-        <h2 className="text-2xl font-bold text-blue-primary">
+        <h2 className="text-2xl font-bold text-blue-primary xl:text-[50px] xl:p-8">
           {pageData.what_we_do_title}
         </h2>
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:mx-[150px] place-items-center">
           {pageData.what_we_do_reasons.map((reason: any) => {
             let lottieVar;
             if (reason.lottie_name === "treasure") {
@@ -300,24 +312,23 @@ export default function Home({ pageData }: { pageData: any }) {
               lottieVar = lottieRocket;
             }
             return (
-              <Card
+              <div
                 key={reason.id}
-                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-2xl"
+                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-custom-br md:w-[223px] md:h-[493px] md:p-0 bg-white lg:w-[308px] lg:h-[436px] xl:h-[493px]"
               >
-                <CardContent className=" text-center">
-                  <div className="mx-auto my-4 size-20">
+                <div className="text-center flex flex-col p-6 pt-0 grow">
+                  <div className="mx-auto my-4 size-20 xl:size-40">
                     <Lottie
                       animationData={lottieVar}
                       loop={true}
                       width="200"
                       height="200"
-                    />{" "}
+                    />
                   </div>
-                  <CardTitle className="p-2 text-lg font-bold text-blue-primary">
+                  <CardTitle className="p-2 text-lg font-bold text-blue-primary md:text-xl lg:mx-8 xl:mx-0">
                     <p>{reason.title}</p>
                   </CardTitle>
-                  <CardDescription className="p-2 text-grey-primary">
-                    {/* <BlocksRenderer content={reason.description} />{" "} */}
+                  <CardDescription className="p-2 md:p-0 text-grey-primary mt-auto">
                     {reason.description.map((block: any) => {
                       return (
                         <div key={block.id}>
@@ -329,51 +340,62 @@ export default function Home({ pageData }: { pageData: any }) {
                   <Link
                     href={reason.cta_navigation_url}
                     aria-label={reason.cta_navigation_description}
+                    className="mx-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary mt-auto mb-2 "
                   >
-                    <button className="m-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary">
-                      {reason.cta_text}
-                    </button>
+                    <button>{reason.cta_text}</button>
                   </Link>{" "}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             );
           })}
         </div>
       </section>
 
       <section>
-        <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl ">
-          <CardTitle className="p-8 text-center text-2xl font-bold ">
+        <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:p-12 xl:mx-[120px]">
+          <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:text-[50px] xl:leading-[56px] xl:mx-[200px]">
             {pageData.why_you_title}
           </CardTitle>
-          {pageData.why_you_reasons.map((reason: any, index: number) => {
-            return (
-              <div key={reason.id}>
-                <CardContent className=" flex flex-row space-x-2 text-left">
-                  <Image
-                    src={"/tick-in-circle-orange.svg"}
-                    alt="Checkmark"
-                    width="40"
-                    height="40"
-                  />
-                  <p key={reason.id}>{reason.reason}</p>
-                </CardContent>
-                {index < pageData.why_you_reasons.length - 1 && (
-                  <div className="mx-6 my-2 border border-orange-400" />
-                )}
-              </div>
-            );
-          })}{" "}
+          <div className="md:mx-14 xl:mx-[240px]">
+            {pageData.why_you_reasons.map((reason: any, index: number) => {
+              return (
+                <div key={reason.id}>
+                  <CardContent className="flex flex-row space-x-2 text-left">
+                    <Image
+                      src={"/tick-in-circle-orange.svg"}
+                      alt="Checkmark"
+                      width="40"
+                      height="40"
+                    />
+                    <div>
+                      <p
+                        className="text-xl font-semibold md:max-w-[90%] xl:font-normal"
+                        key={reason.id}
+                      >
+                        {reason.reason}
+                      </p>
+                      <div className="md:hidden">
+                        {index < pageData.why_you_reasons.length - 1 && (
+                          <div className="mx-6 my-2 border border-orange-400" />
+                        )}
+                      </div>
+                      <div className="my-2 border border-orange-400 hidden md:block" />
+                    </div>
+                  </CardContent>
+                </div>
+              );
+            })}
+          </div>
         </Card>
       </section>
 
       <section id="familiar-section" className="p-4">
-        <div id="container">
-          <div id="text-content" className="text-center">
-            <h2 className="text-2xl font-bold text-blue-primary">
+        <div id="container" className="flex flex-col xl:flex-row items-center xl:mx-[120px]">
+          <div id="text-content" className="text-center xl:flex xl:flex-col xl:w-1/2 xl:mr-[50px] xl:space-y-12 xl:text-left">
+            <h2 className="text-2xl font-bold text-blue-primary xl:text-[45px] xl:leading-[54px]">
               {pageData.why_you_familiar_title}
             </h2>
-            <h6 className="text-center text-blue-secondary">
+            <h6 className="text-blue-secondary xl:text-xl ">
               {pageData.why_you_familiar_subtitle}
             </h6>
           </div>
@@ -388,14 +410,19 @@ export default function Home({ pageData }: { pageData: any }) {
 
       <section
         id="enrolment"
-        className="space-y-4 bg-gray-100 p-4 text-center flex flex-col items-center"
+        className="bg-gray-100 p-4 text-center flex flex-col items-center"
       >
-        <h3 className="text-blue-secondary">{pageData.courses_subtitle}</h3>
-        <h2 className="text-2xl font-bold text-blue-primary">
+        <h3 className="text-blue-secondary my-4 md:text-xl">
+          {pageData.courses_subtitle}
+        </h3>
+        <h2 className="text-2xl font-bold text-blue-primary my-4 md:text-[35px]">
           {pageData.courses_title}
         </h2>
-        <p>{pageData.courses_description}</p>
-        <div id="courses" className="space-y-20">
+        <p className="my-4">{pageData.courses_description}</p>
+        <div
+          id="courses"
+          className="space-y-20 grid grid-cols-1 md:grid-cols-2 md:space-y-0 md:gap-8 mt-16"
+        >
           {pageData.courses.data.map((course: any) => {
             return <HomePageCourseCard key={course.id} course={course} />;
           })}
@@ -409,7 +436,7 @@ export default function Home({ pageData }: { pageData: any }) {
       <section id="stats">
         <div
           id="stats-container"
-          className="space-y-2 bg-blue-secondary py-8 text-center text-white"
+          className="space-y-2 bg-blue-secondary py-8 text-center text-white grid grid-cols-1 md:grid-cols-3 md:space-y-0 "
         >
           {pageData.metrics.map((metric: any) => {
             return (
@@ -425,14 +452,21 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section id="testimonials" className="py-8 text-center">
-        <h2 className="text-[30px] leading-9 font-bold text-blue-primary">
+        <h2 className="text-[30px] leading-9 font-bold text-blue-primary md:text-[35px] md:mx-[120px] text-wrap md:my-12">
           {pageData.testimonials_title}
         </h2>
 
-        <div id="testimonial-cards">
-          {pageData.testimonials.data.map((testimonial: any) => {
+        <div
+          id="testimonial-cards"
+          className="md:grid-cols-2 md:auto-rows-auto grid grid-cols-1 md:m-8 xl:grid-cols-3"
+        >
+          {pageData.testimonials.data.map((testimonial: any, index: number) => {
             return (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              <TestimonialCard
+                key={testimonial.id}
+                testimonial={testimonial}
+                index={index}
+              />
             );
           })}
         </div>
