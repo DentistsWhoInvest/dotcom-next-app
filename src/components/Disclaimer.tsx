@@ -1,6 +1,6 @@
 export default function Disclaimer({ contentType }: { contentType?: string }) {
   return (
-    <div className="">
+    <div className="space-y-5">
       {contentType === "article" && (
         <div className="font-bold">*Not Financial Advice⁣⁣⁣</div>
       )}

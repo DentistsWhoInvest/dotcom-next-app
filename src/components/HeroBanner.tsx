@@ -31,7 +31,7 @@ export const HeroBanner = ({
   podcastSubText?: boolean;
 }) => {
   return (
-    <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
+    <div className="relative h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px] z-10">
       <div className="absolute inset-0 xl:hidden">
         <Image
           src={bannerImage.url}
@@ -54,8 +54,8 @@ export const HeroBanner = ({
         />
       </div>
       <div className="relative z-10 flex size-full flex-col items-center justify-center text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px] ">
-        <div className="absolute px-4 md:top-[30%] md:px-[30px] xl:top-[40%] ">
-          <h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px]">
+        <div className="absolute px-4 md:top-[25%] md:px-[30px] xl:top-[30%] xl:w-2/3">
+          <h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px] xl:leading-[54px]">
             {bannerText}
           </h1>
           {subText && (

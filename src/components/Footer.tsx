@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -57,19 +58,21 @@ const ShareButtons = () => {
 };
 
 export default function Footer() {
+  const currentPath =
+    typeof window !== "undefined" ? window.location.pathname : "";
   const ExploreLinks = [
-    { href: "/about", text: "About" },
-    { href: "/podcast/1", text: "Podcast" },
-    { href: "/articles", text: "Articles" },
+    { href: "/about/", text: "About" },
+    { href: "/podcast/1/", text: "Podcast", category: "podcast" },
+    { href: "/articles/1/", text: "Articles", category: "articles" },
     { href: "/videos", text: "Videos" },
   ];
   const CoursesLinks = [
-    { href: "/cash-flow", text: "Cash Flow For Dentists" },
-    { href: "/academy", text: "Dentists Who invest Academy" },
+    { href: "/cash-flow-for-dentists/", text: "Cash Flow For Dentists" },
+    { href: "/the-academy/", text: "Dentists Who invest Academy" },
   ];
   return (
-    <>
-      <div className="flex flex-row bg-[#f0f3f6] p-2 text-blue-primary shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px] md:flex-col lg:flex-row lg:px-32 lg:py-8">
+    <div className="bg-[#f0f3f6] shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px]">
+      <div className="flex flex-row p-2 text-blue-primary md:flex-col lg:flex-row lg:px-32 lg:py-8 max-w-[1140px] xl:mx-auto">
         <div
           className="justify-evenly md:m-8 md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4"
           id="logo and text"
@@ -100,10 +103,15 @@ export default function Footer() {
             </span>
             <p className="flex justify-center border-t-2 border-solid border-orange-400"></p>
             {ExploreLinks.map((link) => {
+              const isActive =
+                currentPath === link.href ||
+                (link.category && currentPath.includes(link.category));
               return (
                 <li
                   key={link.href}
-                  className="flex justify-center p-2 hover:text-blue-secondary"
+                  className={
+                    "flex justify-center p-2 text-blue-primary hover:text-blue-secondary"
+                  }
                 >
                   <Link href={link.href}>{link.text}</Link>
                 </li>
@@ -117,10 +125,15 @@ export default function Footer() {
             </span>
             <p className="mx-16 flex justify-center border-t-2 border-solid border-orange-400"></p>
             {CoursesLinks.map((link) => {
+              const isActive = currentPath === link.href;
               return (
                 <li
                   key={link.href}
-                  className="p-2 text-center hover:text-blue-secondary"
+                  className={`flex justify-center p-2 text-nowrap ${
+                    isActive
+                      ? "text-blue-secondary"
+                      : "text-blue-primary hover:text-blue-secondary"
+                  }`}
                 >
                   <Link href={link.href}>{link.text}</Link>
                 </li>
@@ -132,7 +145,13 @@ export default function Footer() {
               GET IN TOUCH
             </p>
             <p className="flex justify-center border-t-2 border-solid border-orange-400"></p>
-            <li className="flex justify-center p-2 hover:text-blue-secondary">
+            <li
+              className={`flex justify-center p-2 ${
+                currentPath === "/contact/"
+                  ? "text-blue-secondary"
+                  : "text-blue-primary hover:text-blue-secondary"
+              }`}
+            >
               <Link href={"/contact"}>Contact</Link>
             </li>
             <li className="flex justify-center p-2">
@@ -142,6 +161,6 @@ export default function Footer() {
         </div>
       </div>
       <BottomBar />
-    </>
+    </div>
   );
 }

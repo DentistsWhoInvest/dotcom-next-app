@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -6,17 +7,18 @@ import { SquareX } from "lucide-react";
 type MenuLink = {
   href: string;
   text: string;
+  category?: string;
 };
 
 //todo get these from the header data
 const menuLinksList: MenuLink[] = [
   { href: "/", text: "Home" },
-  { href: "/about", text: "About" },
-  { href: "/podcast/1", text: "Podcast" },
-  { href: "/articles", text: "Articles" },
-  { href: "/courses", text: "Courses" },
-  { href: "/videos", text: "Videos" },
-  { href: "/contact", text: "Contact" },
+  { href: "/about/", text: "About" },
+  { href: "/podcast/1/", text: "Podcast", category: "podcast" },
+  { href: "/articles/1/", text: "Articles", category: "articles" },
+  { href: "/courses/", text: "Courses" },
+  { href: "/videos/", text: "Videos" },
+  { href: "/contact/", text: "Contact" },
 ];
 
 export default function Header() {
@@ -26,17 +28,17 @@ export default function Header() {
   const MenuOverlay = () => {
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 h-screen"
         onClick={() => setShowOverlay(false)}
       >
         <div
-          className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2"
+          className="absolute right-0 top-0 flex h-full w-2/5 flex-col items-end bg-[#f0f3f6] p-2 md:w-2/6"
           onClick={(e) => e.stopPropagation()}
         >
           <button className="m-0.5 w-4" onClick={() => setShowOverlay(false)}>
             <SquareX className="stroke-blue-primary " />
           </button>
-          <ul className="text-right">
+          <ul>
             <MenuLinks menuLinksList={menuLinksList} />
           </ul>
         </div>
@@ -45,38 +47,50 @@ export default function Header() {
   };
 
   const MenuLinks = ({ menuLinksList }: { menuLinksList: MenuLink[] }) => {
-    //current pages needs to be highlighted in blue secondary - for some reason not quite working locally?
     const currentPath =
       typeof window !== "undefined" ? window.location.pathname : "";
 
-    return menuLinksList.map((link) => (
-      <li
-        key={link.href}
-        // className={`p-2 text-lg ${
-        //   currentPath === link.href
-        //     ? "text-blue-secondary"
-        //     : "text-blue-primary hover:text-blue-secondary"
-        // }`}
-        className="lg:text-lg p-2 text-sm"
-      >
-        <Link href={link.href}>{link.text}</Link>
-      </li>
-    ));
+    return menuLinksList.map((link) => {
+      const isActive =
+        currentPath === link.href ||
+        (link.category && currentPath.includes(link.category));
+      return (
+        <li
+          key={link.href}
+          className={`lg:text-lg p-2 text-sm  md:text-lg text-right ${
+            isActive
+              ? "text-blue-secondary"
+              : "text-blue-primary hover:text-blue-secondary"
+          }`}
+        >
+          <Link
+            href={link.href}
+            onClick={() => {
+              setShowOverlay(false);
+            }}
+          >
+            {link.text}
+          </Link>
+        </li>
+      );
+    });
   };
 
   return (
-    <>
-      <div className="flex h-[60px] flex-row items-center justify-between bg-[#f0f3f6] px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg">
-      <div>
-          <Image
-            src={
-              "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
-            }
-            alt={"Logo"}
-            width={"94"}
-            height={"31"}
-            className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
-          />
+    <div className="bg-[#f0f3f6]">
+      <div className="z-20 relative flex h-[60px] flex-row items-center justify-between px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg xl:max-w-[1200px] xl:m-auto">
+        <div>
+          <Link href={"/"}>
+            <Image
+              src={
+                "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
+              }
+              alt={"Logo"}
+              width={"94"}
+              height={"31"}
+              className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"
+            />{" "}
+          </Link>
         </div>
 
         <button
@@ -110,6 +124,6 @@ export default function Header() {
           </div>
         </ul>
       </div>
-    </>
+    </div>
   );
 }

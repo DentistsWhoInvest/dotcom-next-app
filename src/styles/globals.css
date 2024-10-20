@@ -8,14 +8,6 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -39,6 +31,14 @@ body {
 }
 
 @layer components {
+
+  .articleContent ul, .articleContent ol {
+    list-style: revert;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+
   .privacy-policy h5,
   .t-and-c h5
    {

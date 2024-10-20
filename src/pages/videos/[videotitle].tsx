@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
-import { createSlug } from "../articles";
+import { createSlug } from "../articles/[page]";
 import { VideoCard } from "../videos";
 import Image from "next/image";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import type { Video } from "../videos";
 import Disclaimer from "@/components/Disclaimer";
+import Link from "next/link";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -25,13 +26,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const allVideos = await fetchEndpointData(`/videos`);
+  const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
+  const allVideos = await fetchEndpointData(`/videos`, populateFields);
   const matchingVideo = allVideos.data.find(
     (video: { attributes: { name: string } }) =>
       createSlug(video.attributes.name) === params.videotitle
-  );
-  const associatedBanner = await fetchEndpointData(
-    `/horizontal-banners/${matchingVideo.attributes.horizontal_banner.data.id}`
   );
   const otherVideos = allVideos.data.filter(
     (video: { id: number }) => video.id !== matchingVideo.id
@@ -40,7 +39,6 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       pageData: matchingVideo,
-      associatedBanner: associatedBanner,
       otherVideos: otherVideos,
     },
   };
@@ -48,11 +46,9 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function VideoPage({
   pageData,
-  associatedBanner,
   otherVideos,
 }: {
   pageData: Video;
-  associatedBanner: any;
   otherVideos: any[];
 }) {
   //the uri has the pattern of /videos/1, /videos/2, etc and we want to remove the /videos/ part
@@ -64,7 +60,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-auto w-full ">
+      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px]">
         <div className="flex flex-col justify-center bg-gray-100">
           <div className="m-6 aspect-video">
             <iframe
@@ -76,10 +72,10 @@ export default function VideoPage({
               className="left-0 top-0 h-full w-full"
             ></iframe>
           </div>
-          <h2 className="mx-6 text-xl font-bold text-blue-primary">
+          <h2 className="mx-6 text-xl font-bold text-blue-primary md:text-3xl">
             {pageData.attributes.name}
           </h2>
-          <div className="m-5">
+          <div className="m-5 md:text-lg mb-7 xl:text-xl">
             <div
               dangerouslySetInnerHTML={{
                 __html: pageData.attributes.description,
@@ -88,30 +84,40 @@ export default function VideoPage({
           </div>
         </div>
 
-        <div className="my-5 w-ful mx-4">
-          <Image
-            src={
-              associatedBanner.data.attributes.cover_image.data.attributes.url
-            }
-            alt="Want to increase your income?"
-            width={1200}
-            height={400}
-            layout="responsive"
-            className="h-auto w-full object-cover"
-          />
-        </div>
+        {pageData.attributes.horizontal_banner.data && (
+          <div className="my-5">
+            <Link
+              href={
+                pageData.attributes.horizontal_banner.data.attributes
+                  .navigation_url
+              }
+            >
+              <Image
+                src={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .cover_image.data.attributes.url
+                }
+                alt="Want to increase your income?"
+                width={1200}
+                height={400}
+                layout="responsive"
+                className="h-auto max-w-screen"
+              />
+            </Link>
+          </div>
+        )}
 
-        <div className="m-4">
+        <div className="my-4">
           <Disclaimer />
         </div>
 
-        <div className="mt-5 flex flex-col justify-center bg-gray-100">
+        <div className="mt-5 md:mx-[-50px] xl:mx-[-150px] flex flex-col justify-center bg-gray-100">
           <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
             Watch More
           </p>
           <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
           <div className="relative">
-            <Carousel >
+            <Carousel>
               <CarouselContent className="mb-12">
                 {otherVideos.map((page: any) => {
                   return (
@@ -125,7 +131,7 @@ export default function VideoPage({
                 })}
               </CarouselContent>
               <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
-              <CarouselPrevious className="relative !-left-0" />
+                <CarouselPrevious className="relative !-left-0" />
                 <CarouselNext className="relative !-right-0" />
               </div>
             </Carousel>

@@ -1,16 +1,12 @@
-// "use client";
-
 import * as React from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -35,26 +31,7 @@ type Thought = {
 
 //todo make sure the dots are updating correctly
 export const CustomHomePageCarousel = ({ thoughts }: any) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setCurrent(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    setCount(emblaApi.scrollSnapList().length);
-    onSelect();
-    emblaApi.on("select", onSelect);
-
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi, onSelect]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true});
 
   let assetDomain = "https://assets.drjamesmartin.co.uk";
   function replaceImageDomain(url: string): string {
@@ -64,42 +41,36 @@ export const CustomHomePageCarousel = ({ thoughts }: any) => {
     );
   }
   return (
-    <div className="mx-auto w-full max-w-xs">
+    <div className="mx-auto w-full max-w-xs md:max-w-[648px] py-8 lg:max-w-[904px] xl:max-w-[688px]">
       <Carousel
         plugins={[Autoplay({ delay: 3000 })]}
         ref={emblaRef}
-        className="w-full"
+        className="w-full "
       >
-        <CarouselContent>
-          {thoughts.map((thought: Thought, index: number) => (
-            <CarouselItem key={index}>
-              <Card className="overflow-hidden rounded-3xl">
-                <CardContent className="p-0">
-                  <Image
-                    src={replaceImageDomain(
-                      thought.cover.data.attributes.formats.large.url
-                    )}
-                    alt={thought.cover.data.attributes.alternativeText}
-                    width={400}
-                    height={300}
-                    className="h-48 w-full object-cover"
-                  />
-                </CardContent>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+        <div className="flex flex-col items-center">
+          <CarouselContent>
+            {thoughts.map((thought: Thought, index: number) => (
+              <CarouselItem key={index}>
+                <Card className="overflow-hidden rounded-3xl">
+                  <CardContent className="p-0">
+                    <Image
+                      src={replaceImageDomain(
+                        thought.cover.data.attributes.formats.large.url
+                      )}
+                      alt={thought.cover.data.attributes.alternativeText}
+                      width={400}
+                      height={300}
+                      className="h-48 w-full object-cover md:w-[648px] md:h-[388px] lg:w-[904px] lg:h-[572px] xl:w-[688px] xl:h-[442px]"
+                    />
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-4">
+          <CarouselDots /></div>
+        </div>
       </Carousel>
-      <div className="mt-2 flex justify-center">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className={`mx-1 size-2 rounded-full ${
-              index === current ? "bg-blue-primary" : "bg-blue-secondary"
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };
