@@ -447,8 +447,7 @@ export default function PodcastPage({
             </p>
             <p className="flex w-2/3 self-center border-t-[3px] border-solid border-blue-secondary"></p>
             {otherPodcasts.map((page: any) => {
-              //todo: might need to tweak the title
-              const viewMoreSlug = createSlug(page.attributes.title);
+              const viewMoreSlug = "e" + page.attributes.episode_number + "-" + createSlug(page.attributes.title).replace(/-dwi-ep\d+$/, '');
               return (
                 <ul
                   key={page.id}
