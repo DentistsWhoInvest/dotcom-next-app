@@ -304,16 +304,15 @@ export default function PodcastPage({
   }) => {
     return (
       <div className="relative flex items-center">
-        <div className=" flex items-center h-[110px] w-[100px] overflow-hidden rounded-3xl border-white border">
+        <div className=" flex items-center h-[110px] w-[100px] overflow-hidden rounded-r-[30px] rounded-l-[30px] lg:w-[150px] lg:h-[180px] xl:w-[180px] xl:h-[200px]">
           <Image
             src={contributor.profilePicture.data.attributes.url}
             alt={contributor.firstName + " " + contributor.lastName}
-            width={100}
-            height={100}
-            className=" object-cover object-top translate-y-3"
+            layout="fill"
+            className=" object-cover object-top rounded-r-[40px] rounded-l-[40px] border-white border"
           />
           <div className="absolute bottom-[-8px] text-nowrap overflow-visible text-center left-1/2 transform -translate-x-1/2">
-            <p className="text-white text-[12px] font-light bg-blue-primary/80 whitespace-nowrap">
+            <p className="text-white text-[12px] font-light bg-blue-primary/80 whitespace-nowrap lg:text-[18px]">
               {contributor.title}
               {contributor.firstName} {contributor.lastName}
             </p>
@@ -323,7 +322,7 @@ export default function PodcastPage({
     );
   };
 
-  const buzzsproutLink = `https://www.buzzsprout.com/1471306/${pageData.attributes.buzzsprout_id}?client_source=small_player&amp;iframe=true`
+  const buzzsproutLink = `https://www.buzzsprout.com/1471306/${pageData.attributes.buzzsprout_id}?client_source=small_player&amp;iframe=true`;
   return (
     <>
       <Head>
@@ -331,7 +330,7 @@ export default function PodcastPage({
         <meta name="description" content={pageData.attributes.title} />
       </Head>{" "}
       <section id="image and title">
-        <div className="relative h-[370px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
+        <div className="relative h-[370px] w-full overflow-hidden md:h-[409px]">
           <div className="absolute inset-0 ">
             <Image
               src="https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
@@ -343,9 +342,9 @@ export default function PodcastPage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px] ">
+          <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:items-start md:justify-center md:text-left xl:mx-[130px] xl:max-w-[1140px] ">
             <div
-              className="absolute right-[5%] top-[10%] md:top-[30%] md:px-[30px] xl:top-[40%] flex flex-row space-x-4" //might adjust md breakpoint
+              className="absolute right-[5%] top-[10%] lg:top-[33%] xl:top-[20%] lg:right-[2%] xl:right-[-2%] flex flex-row space-x-4" //might adjust md breakpoint
             >
               {pageData.attributes.contributors.data
                 .sort((a: ContributorData, b: ContributorData) => b.id - a.id) // Sort in descending order which should ensure James is on the right
@@ -358,14 +357,16 @@ export default function PodcastPage({
                   );
                 })}
             </div>
-            <div className="absolute px-4 top-[45%] md:top-[30%] md:px-[30px] xl:top-[40%] text-white">
-              <p className="text-[30px] leading-[30px] font-bold text-[#A4D8F1]">
+            <div className="absolute px-4 top-[45%] md:top-[30%] md:px-[30px] xl:top-[20%] text-white lg:max-w-[66%]">
+              <p className="text-[30px] leading-[30px] font-bold text-[#A4D8F1] md:text-[35px] md:leading-[42px]">
                 Episode {pageData.attributes.episode_number}
               </p>
-              <p className="text-3xl font-bold ">
+              <p className="text-3xl font-bold md:text-[50px] md:leading-[60px] ">
                 {pageData.attributes.title.split(" DWI-")[0]}
               </p>
-              <p className="text-lg ">Hosted by: Dr. James Martin</p>
+              <p className="text-lg md:text-[25px] md:leading-[37.5px]">
+                Hosted by: Dr. James Martin
+              </p>
             </div>
           </div>
         </div>
