@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import Head from "next/head";
+
 
 type TextNode = {
   text: string;
@@ -104,84 +106,92 @@ export default function InformedInvestorsLandingPage({
   pageData: InformedInvestorsClubData;
 }) {
   return (
-    <main className={`flex flex-col`}>
-      <section id="hero banner">
-        <div className="relative h-[490px] w-full overflow-hidden md:h-[449px] xl:h-[660.75px]">
-          <div className="absolute inset-0 xl:hidden">
-            <Image
-              src={pageData.hero_cover.data.attributes.url}
-              alt={"mobile"}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="right 50%"
-              priority
-            />
-            <div className="absolute inset-0 bg-blue-primary opacity-60"></div>
-          </div>
-          <div className="absolute inset-0 hidden xl:block">
-            <Image
-              src={pageData.hero_cover.data.attributes.url}
-              alt={"desktop"}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="top"
-              priority
-            />
-          </div>
-          <div className="relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white md:justify-center md:px-8 lg:px-16 xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
-            <h1 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
-              {pageData.hero_title}
-            </h1>
+    <>
+      <Head>
+        <title>"Join the Informed Investors Club"</title>
+        <link rel="preconnect" href="https://assets.drjamesmartin.co.uk" crossorigin></link>
+        <link rel="preload" href={pageData.hero_cover.data.attributes.url} as="image" />
+        <meta name="description" content="Join the Informed Investors Club to take control of your financial future!" />
+      </Head>
+      <main className={`flex flex-col`}>
+        <section id="hero banner">
+          <div className="relative h-[490px] w-full overflow-hidden md:h-[449px] xl:h-[660.75px]">
+            <div className="absolute inset-0 xl:hidden">
+              <Image
+                src={pageData.hero_cover.data.attributes.url}
+                alt={"mobile"}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="right 50%"
+                priority
+              />
+              <div className="absolute inset-0 bg-blue-primary opacity-60"></div>
+            </div>
+            <div className="absolute inset-0 hidden xl:block">
+              <Image
+                src={pageData.hero_cover.data.attributes.url}
+                alt={"desktop"}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="top"
+                priority
+              />
+            </div>
+            <div className="relative z-10 mt-8 flex size-full flex-col items-center justify-center px-4 text-center text-white md:justify-center md:px-8 lg:px-16 xl:mx-24 xl:max-w-[33%] xl:items-start xl:text-left">
+              <h1 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
+                {pageData.hero_title}
+              </h1>
 
-            <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
-              <Link href={pageData.cta_navigation_url}>
-                {pageData.cta_text}
-              </Link>
-            </Button>
+              <Button className="mt-8 rounded-md bg-orange-400 text-white hover:text-blue-primary ">
+                <Link href={pageData.cta_navigation_url}>
+                  {pageData.cta_text}
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
-      <section id="content">
-        <div id="laptop and title">
-          <div className="flex flex-col items-center space-y-4">
-            <div
-              id="blue background"
-              className="relative h-[135px] w-screen bg-blue-secondary"
-            >
-              <div className="absolute m-4 flex flex-col items-center">
-                <Image
-                  src={pageData.on_the_call_photo.data.attributes.url}
-                  alt={"Laptop and title"}
-                  width={320}
-                  height={440}
-                />
-                <h2 className="p-4 text-center text-3xl font-bold text-blue-primary">
-                  {pageData.sales_title}
-                </h2>
-                <p className="pb-4 text-center font-semibold text-orange-400">
-                  {pageData.sales_subtext}
-                </p>
-                {
-                  // the custom-bullet classname is what enables the custom tick bullet points
-                }
-                <div
-                  id="maintext"
-                  className="show-bullet custom-bullet space-y-4 text-lg text-grey-primary"
-                >
-                  <BlocksRenderer content={pageData.sales_description} />
-                </div>
-                <div className="flex flex-col items-center space-y-8 p-8">
-                  <Button className="rounded-md bg-orange-400 text-white hover:bg-orange-500">
-                    <Link href={pageData.cta_navigation_url}>
-                      {pageData.cta_text}
-                    </Link>
-                  </Button>
+        </section>
+        <section id="content">
+          <div id="laptop and title">
+            <div className="flex flex-col items-center space-y-4">
+              <div
+                id="blue background"
+                className="relative h-[135px] w-screen bg-blue-secondary"
+              >
+                <div className="absolute p-4 flex flex-col items-center w-full">
+                  <Image
+                    src={pageData.on_the_call_photo.data.attributes.url}
+                    alt={"Laptop and title"}
+                    width={320}
+                    height={440}
+                  />
+                  <h2 className="p-4 text-center text-3xl font-bold text-blue-primary">
+                    {pageData.sales_title}
+                  </h2>
+                  <p className="pb-4 text-center font-semibold text-orange-400">
+                    {pageData.sales_subtext}
+                  </p>
+                  {
+                    // the custom-bullet classname is what enables the custom tick bullet points
+                  }
+                  <div
+                    id="maintext"
+                    className="show-bullet custom-bullet space-y-4 text-lg text-grey-primary"
+                  >
+                    <BlocksRenderer content={pageData.sales_description} />
+                  </div>
+                  <div className="flex flex-col items-center space-y-8 p-8">
+                    <Button className="rounded-md bg-orange-400 text-white hover:bg-orange-500">
+                      <Link href={pageData.cta_navigation_url}>
+                        {pageData.cta_text}
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   );
 }
