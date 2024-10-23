@@ -133,19 +133,22 @@ const generateSitemap = async () => {
   // Static pages
   const staticPages = [
     { url: '/', changefreq: 'daily', priority: 1.0 },
-    { url: '/about', changefreq: 'monthly', priority: 0.7 },
-    { url: '/100k', changefreq: 'monthly', priority: 0.7 },
     { url: '/404', changefreq: 'monthly', priority: 0.7 },
-    { url: '/cash-flow-for-dentists', changefreq: 'monthly', priority: 0.7 },
+    { url: '/about', changefreq: 'monthly', priority: 0.7 },
     { url: '/contact', changefreq: 'monthly', priority: 0.7 },
-    { url: '/courses', changefreq: 'monthly', priority: 0.7 },
+    
     { url: '/privacy-policy', changefreq: 'monthly', priority: 0.7 },
     { url: '/terms-and-conditions', changefreq: 'monthly', priority: 0.7 },
+    
+    { url: '/courses', changefreq: 'monthly', priority: 0.7 },
     { url: '/the-academy', changefreq: 'monthly', priority: 0.7 },
+    { url: '/cash-flow-for-dentists', changefreq: 'monthly', priority: 0.7 },
+    { url: '/100k', changefreq: 'monthly', priority: 0.7 },
     { url: '/the-informed-investors-club', changefreq: 'monthly', priority: 0.7 },
-    { url: '/videos', changefreq: 'monthly', priority: 0.7 },
-    { url: '/articles', changefreq: 'monthly', priority: 0.7 },
-    { url: '/podcast', changefreq: 'monthly', priority: 0.7 },
+    
+    { url: '/videos', changefreq: 'daily', priority: 0.7 },
+    { url: '/articles', changefreq: 'daily', priority: 0.7 },
+    { url: '/podcast', changefreq: 'daily', priority: 0.7 },
     // Putting articles and podcasts for simplicity
   ];
 
