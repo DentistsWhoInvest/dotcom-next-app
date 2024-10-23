@@ -84,8 +84,8 @@ body {
   }
 
   /* Probably used in conjunction with the show-bullet class */
-  .custom-bullet ul li::before,
-  .custom-bullet ol li::before {
+  .custom-bullet-checkmark ul li::before,
+  .custom-bullet-checkmark ol li::before {
     content: "✔"; /* Checkmark symbol, could try to replace with another icon */
     display: inline-block;
     width: 1rem;
@@ -96,6 +96,23 @@ body {
     text-align: center;
     font-size: 0.65rem;
     line-height: 1rem;
+    margin-right: 0.5rem;
+    margin-left: -1.5rem; /* To make up for the default padding-left */
+  }
+  .custom-bullet-question ul li::before,
+  .custom-bullet-question ol li::before {
+    content: "?"; /* Checkmark symbol, could try to replace with another icon */
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: #ffa500;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
     margin-right: 0.5rem;
     margin-left: -1.5rem; /* To make up for the default padding-left */
   }
