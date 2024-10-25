@@ -64,8 +64,8 @@ export const TestimonialCard = ({
         <CardFooter className="flex flex-col md:flex-row mt-auto mb-4">
           <Image
             src={replaceImageDomain(
-              testimonial.attributes.author_thumbnail.data.attributes.formats
-                .small.url
+              testimonial.attributes.author_thumbnail.data.attributes.formats.
+                thumbnail.url
             )}
             alt={
               testimonial.attributes.author_thumbnail.data.attributes

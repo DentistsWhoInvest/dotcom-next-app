@@ -162,11 +162,11 @@ export default function InformedInvestorsLandingPage({
                   {pageData.sales_subtext}
                 </p>
                 {
-                  // the custom-bullet classname is what enables the custom tick bullet points
+                  // the custom-bullet-checkmark classname is what enables the custom tick bullet points
                 }
                 <div
                   id="maintext"
-                  className="show-bullet custom-bullet space-y-4 text-lg text-grey-primary"
+                  className="show-bullet custom-bullet-checkmark space-y-4 text-lg text-grey-primary"
                 >
                   <BlocksRenderer content={pageData.sales_description} />
                 </div>
