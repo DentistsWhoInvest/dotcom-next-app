@@ -404,12 +404,12 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           </div>
         </section>
         <div className="flex flex-col items-center space-y-8 p-8">
-          <div className="text-left">
+          <div className="text-left text-lg space-y-4">
             <BlocksRenderer content={pageData.attributes.final_sales_pitch} />
           </div>
           <Link
             href={pageData.attributes.cta_navigation_url}
-            className="rounded-md bg-orange-400 bold text-white hover:bg-orange-500 px-8 py-4 text-3xl"
+            className="rounded-md bg-orange-400 bold text-white hover:bg-orange-500 px-8 py-4 text-xl"
           >
             {pageData.attributes.hero_cta_text}
           </Link>
