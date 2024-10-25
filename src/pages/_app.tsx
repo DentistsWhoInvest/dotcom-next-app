@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
   // For the moment it's the courses pages and landing pages.
   // Landing pages include the informed investors club and targeted landing pages.
   // The 404 page has these components added in its own file, since it also has a bigger banner on top of the header.
-  const noHeaderOrFooterRoute = ["/cash-flow-for-dentists", "/the-academy", "/100k", "/the-informed-investors-club", "/404", "/[targetedlandingpage]"];
+  const noHeaderOrFooterRoute = ["/cash-flow-for-dentists", "/the-academy", "/100k", "/the-informed-investors-club", "/404", "/[targetedlandingpage]", "/special-invite"];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
 
