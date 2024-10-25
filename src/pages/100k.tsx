@@ -250,7 +250,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                                 />
                                 <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
                               </div>
-                              <div className="relative z-10 text-white space-y-4 p-6">
+                              <div className="relative z-10 space-y-4 p-6 text-white">
                                 <BlocksRenderer content={sales_pitch.message} />
                               </div>
                             </div>
@@ -263,7 +263,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                             "--dynamic-bg-color": sales_pitch.background_colour,
                           } as React.CSSProperties
                         }
-                        className="bg-dynamicBg p-6 space-y-4" key={sales_pitch.id}
+                        className="space-y-4 bg-dynamicBg p-6" key={sales_pitch.id}
                       >
                         {sales_pitch.image_placement !== "background" && (
                           <>
@@ -290,7 +290,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="investment-return" className="pt-[30px]">
-          <div className="text-center text-[35px] leading-[42px] font-bold">
+          <div className="text-center text-[35px] font-bold leading-[42px]">
             <span className=" text-orange-400">
               {splitInvestmentTitle?.investmentTitlePreAmount}
             </span>
@@ -312,6 +312,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                   stroke="red"
                   stroke-width="9"
                   fill="none"
+                  // eslint-disable-next-line tailwindcss/no-custom-classname
                   className="path-1"
                 ></path>
               </svg>
@@ -373,7 +374,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="what-would-extra-100k-mean-to-you">
-          <div className="p-6 space-y-4 text-lg">
+          <div className="space-y-4 p-6 text-lg">
             <BlocksRenderer
               content={pageData.attributes.what_would_extra_100k_mean_to_you}
             />
@@ -403,12 +404,12 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           </div>
         </section>
         <div className="flex flex-col items-center space-y-8 p-8">
-          <div className="text-left text-lg space-y-4">
+          <div className="space-y-4 text-left text-lg">
             <BlocksRenderer content={pageData.attributes.final_sales_pitch} />
           </div>
           <Link
             href={pageData.attributes.cta_navigation_url}
-            className="rounded-md bg-orange-400 bold text-white hover:bg-orange-500 px-8 py-4 text-xl"
+            className="rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:bg-orange-500"
           >
             {pageData.attributes.hero_cta_text}
           </Link>
