@@ -293,22 +293,38 @@ export default function SpecialInvite() {
       </div>
       <p>
         Looking back, it didn&apos;t really need to take me as long as it did to
-        get caught up on the investing landscape…{" "}</p>
-        <p>
+        get caught up on the investing landscape…{" "}
+      </p>
+      <p>
         <span className="italic underline">IF ONLY</span> someone had compiled
         the information in an easy to follow and understandable format designed
-        specifically for those who are busy.</p>
-        <p> But sadly, no one had done it to my
-        standards at that point which is why my business partner Luke Hurley and
-        I decided to take it upon ourselves to help those on the same journey.</p>
-        <p>
-        See, <span className="font-semibold">it breaks my heart seeing dentists being taken advantage of</span>…</p>
-        <p>… when
-        they feel intimidated to ask questions they desperately need answers to…</p>
-        <p>… being sold products that are not in their best interest (but which
-        pays out high commissions to the seller)…</p> <p>… seeing dentists work many
-        more years than is necessary…</p> <p>… and knowing the only reason for this is
-        that they lack the understanding and confidence that{" "}
+        specifically for those who are busy.
+      </p>
+      <p>
+        {" "}
+        But sadly, no one had done it to my standards at that point which is why
+        my business partner Luke Hurley and I decided to take it upon ourselves
+        to help those on the same journey.
+      </p>
+      <p>
+        See,{" "}
+        <span className="font-semibold">
+          it breaks my heart seeing dentists being taken advantage of
+        </span>
+        …
+      </p>
+      <p>
+        … when they feel intimidated to ask questions they desperately need
+        answers to…
+      </p>
+      <p>
+        … being sold products that are not in their best interest (but which
+        pays out high commissions to the seller)…
+      </p>{" "}
+      <p>… seeing dentists work many more years than is necessary…</p>{" "}
+      <p>
+        … and knowing the only reason for this is that they lack the
+        understanding and confidence that{" "}
         <span className="underline">we&apos;re able to help with.</span>{" "}
       </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
@@ -319,61 +335,102 @@ export default function SpecialInvite() {
           - Dr. Michael Anaman, Bristol{" "}
         </p>
       </div>
-      <div>
+      <p>
         Over the past 3 years, Luke (who is a qualified Financial Advisor) and I
         have been creating, testing, and refining an online educational platform
         designed{" "}
         <span className="underline">
           specifically for busy dental professionals.
         </span>{" "}
-        We walk you through everything you need to know to become an informed
-        investor so you&apos;ll have the know-how AND confidence to take your
-        financial future in your hands. This also means (unlike my 27 year-old
-        self) that you&apos;ll know when confident sounding hucksters are full
-        of hot air. We know you&apos;re busy and don&apos;t have months and
-        years to gain this knowledge on your own… so we&apos;ve shortcutted the
-        process. It doesn&apos;t matter if you&apos;re a complete beginner, or
-        if you&apos;re a more experienced investor looking for new
-        opportunities… You can rest assured we&apos;ve got you covered. And in
-        fact, in a matter of weeks or months, you could easily know more than
-        99.9% of investors out there.
-      </div>
+      </p>
+      <p>
+        We walk you through everything you need to know to become an{" "}
+        <span className="italic">informed investor</span> so you&apos;ll have
+        the know-how AND confidence to take your financial future in your hands.
+      </p>
+      <p>
+        This also means (unlike my 27 year-old self) that you&apos;ll know when
+        confident sounding hucksters are full of hot air.
+      </p>
+      <p>
+        We know you&apos;re busy and don&apos;t have months and years to gain
+        this knowledge on your own… so we&apos;ve shortcutted the process.
+      </p>{" "}
+      <p>
+        It doesn&apos;t matter if you&apos;re a complete beginner, or if
+        you&apos;re a more experienced investor looking for new opportunities…
+      </p>
+      <p>
+        You can rest assured{" "}
+        <span className="font-semibold">we&apos;ve got you covered. </span>
+      </p>{" "}
+      <p>
+        And in fact, in a matter of weeks or months, you could easily know more
+        than 99.9% of investors out there.
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         <p className="text-blue-secondary">Introducing… </p>
         <p className="mx-[-15px] text-blue-primary">
           The Dentists Who Invest Academy{" "}
         </p>
       </div>
-      <div>
-        Inside of The Dentists Who Invest Academy, you&apos;ll discover: How to
-        create a laser-focused plan and strategy you&apos;ll feel safe and
-        confident in… Everything you ever wanted or needed to know about
-        pensions, SIPPs, and ISAs … funds, accounts, … GIAs, Limited Companies,
-        tax efficiency, and so much more… allowing you to pick the exact
-        products that speed up your journey, protect your wealth, and give
-        lasting peace of mind… The secret of avoiding excessive fees that
-        cripple your compounding returns in your portfolio (Fact: If you&apos;re
-        making expensive, unnecessary monthly recurring payments, that&apos;s
-        money that could have been reinvested back into your portfolio)… A
-        simple way to get your balance sheet sorted and quickly rustle up extra
-        money to invest without{" "}
-        <span className="underline">
-          downgrading your current level of lifestyle
-        </span>
-        ...{" "}
-        <span className="font-semibold">
+      <p>Inside of The Dentists Who Invest Academy, you&apos;ll discover:</p>
+      <ul className="m-6 list-disc space-y-4">
+        <li className="font-semibold">
+          How to create a laser-focused plan and strategy you&apos;ll feel safe
+          and confident in…
+        </li>
+        <li>
+          Everything you ever wanted or needed to know about pensions, SIPPs,
+          and ISAs … funds, accounts, … GIAs, Limited Companies, tax efficiency,
+          and so much more… allowing you to{" "}
+          <span className="font-semibold underline">
+            pick the exact products that speed up your journey
+          </span>
+          , protect your wealth, and give lasting peace of mind…
+        </li>
+        <li>
+          <span className="font-semibold">
+            The secret of avoiding excessive fees
+          </span>{" "}
+          that cripple your compounding returns in your portfolio (Fact: If
+          you&apos;re making expensive, unnecessary monthly recurring payments,
+          that&apos;s money that could have been reinvested back into your
+          portfolio)…
+        </li>{" "}
+        <li>
+          A simple way to get your balance sheet sorted and quickly rustle up
+          extra money to invest without{" "}
+          <span className="underline">
+            downgrading your current level of lifestyle
+          </span>
+          ...{" "}
+        </li>
+        <li className="font-semibold">
           If you&apos;ve already started… How to simplify your investments to
           remove confusion while massively cutting unnecessary costs…
-        </span>{" "}
-        How to legally and ethically limit your tax exposure through strict
-        adherence to UK tax laws… Proven (and easy) techniques used by elite
-        investors like Warren Buffet to create potentially head-spinning
-        returns… How to avoid losing your money in a market crash (the same
-        process financial expert Luke and I followed{" "}
-        <span className="underline">when many lost</span> a chunk of their
-        portfolio during the pandemic) Why beating the market is INCREDIBLY
-        difficult for most and what to do instead…{" "}
-      </div>
+        </li>{" "}
+        <li>
+          How to legally and ethically limit your tax exposure through strict
+          adherence to UK tax laws…
+        </li>
+        <li>
+          Proven (and easy) techniques used by elite investors like Warren
+          Buffet to create potentially head-spinning returns…
+        </li>
+        <li>
+          <span className="font-semibold">
+            How to avoid losing your money in a market crash
+          </span>{" "}
+          (the same process financial expert Luke and I followed{" "}
+          <span className="underline">when many lost</span> a chunk of their
+          portfolio during the pandemic)
+        </li>
+        <li>
+          Why beating the market is INCREDIBLY difficult for most and what to do
+          instead…{" "}
+        </li>
+      </ul>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         &lsquo;The Content In The Academy Is{" "}
         <span className="text-[#ff6600]">Highly Refined</span>, Easy To Follow
@@ -384,28 +441,59 @@ export default function SpecialInvite() {
           -Max Al-Nakib, United Kingdom
         </p>
       </div>
-      <div>
-        {" "}
-        How to drain bad debt from your life… The 4 financial levers you can
-        pull to potentially release an outpouring of new money into your life…
-        How to safely and ethically use other people&apos;s money to grow your
-        wealth… The 5 types of risk and how you can easily avoid them… How to
-        get ALMOST passive income from investing so you can generate income over
-        time with minimal time on your part… Get the TL;DR on the best proven
-        ways to reliably generate income outside of dentistry and give yourself
-        a bigger investment pot… Little-known ways to allocate your assets to
-        maximize potential windfalls… Including HOW to invest in a volatile
-        market AND when to triple-down on equities… The mystery of market timing
-        SOLVED And so much more! Inside The Academy, we&apos;ve documented the
-        process a financial advisor would normally take you through. Including
-        sharing the secrets financial advisors don&apos;t want you to know 🤫 No
-        fat, no fluff, no theory. Just a simple, step by step process proven to
-        work for financial elites and newbie investors just getting started.
-        Instead of having to just accept what you&apos;re being told is true… Or
-        pay for shoddy products that could actually be harming your plans…
+      <ul className="m-6 list-disc space-y-4">
+        <li className="font-semibold">How to drain bad debt from your life…</li>
+        <li className="font-semibold">
+          The 4 financial levers you can pull to potentially release an
+          outpouring of new money into your life…
+        </li>
+        <li>
+          How to safely and ethically use other people&apos;s money to grow your
+          wealth…{" "}
+        </li>
+        <li className="font-semibold">
+          The 5 types of risk and how you can easily avoid them…
+        </li>{" "}
+        <li>
+          How to get ALMOST passive income from investing so you can generate
+          income over time with minimal time on your part…
+        </li>{" "}
+        <li className="font-semibold">
+          Get the TL;DR on the best proven ways to reliably generate income
+          outside of dentistry and give yourself a bigger investment pot…
+        </li>{" "}
+        <li>
+          Little-known ways to allocate your assets to maximize potential
+          windfalls… Including HOW to invest in a volatile market AND when to
+          triple-down on equities…
+        </li>{" "}
+        <li className="font-semibold">The mystery of market timing SOLVED</li>{" "}
+        <li>And so much more!</li>{" "}
+      </ul>
+      <p>
+        Inside <span className="italic">The Academy</span>, we&apos;ve
+        documented the process a financial advisor would normally take you
+        through.
+      </p>{" "}
+      <p className="font-semibold">
+        Including sharing the secrets financial advisors don&apos;t want you to
+        know 🤫
+      </p>
+      <p>No fat, no fluff, no theory.</p>{" "}
+      <p>
+        Just a simple, step by step process proven to work for financial elites
+        and newbie investors just getting started.
+      </p>{" "}
+      <p>
+        Instead of having to just accept what you&apos;re being told is true…
+      </p>{" "}
+      <p>
+        Or pay for shoddy products that could actually be harming your plans…
+      </p>{" "}
+      <p>
         You&apos;ll have a high level view of the investing landscape and be
         equipped to make better decisions regarding your financial future.
-      </div>
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         {" "}
         “Before I started The Academy program{" "}
@@ -417,35 +505,55 @@ export default function SpecialInvite() {
           -Dr. Arti Shah, London{" "}
         </p>
       </div>
-      <div>
+      <p>
         As a reminder, The Academy is an online learning platform that has been
         specifically designed to help you get up to speed on investing in the
-        shortest amount of time possible. There is no set time commitment, in
-        fact, some members choose to learn in 15 minute chunks a few times per
-        week… While others prefer to spend an hour or two over the weekend.
-        It&apos;s all up to your preference how you decide to learn. And the
-        best part is, you only pay a one-time fee and you have all of this
-        collected wisdom FOR LIFE. There are NO recurring fees NOR subscription
-        charges as with most online courses.
-      </div>
+        shortest amount of time possible.
+      </p>{" "}
+      <p>
+        There is no set time commitment, in fact, some members choose to learn
+        in 15 minute chunks a few times per week…
+      </p>{" "}
+      <p>While others prefer to spend an hour or two over the weekend.</p>
+      <p>It&apos;s all up to your preference how you decide to learn.</p>{" "}
+      <p>
+        And the best part is, you only pay a one-time fee and you have all of
+        this collected wisdom FOR LIFE. There are NO recurring fees NOR
+        subscription charges as with most online courses.
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px] text-[#008000]">
         This sounds great James… What&apos;s the Investment?
       </div>
-      <div>
-        {" "}
-        I was hoping you&apos;d ask. The investment to join The Academy is only
-        £1,497 + VAT. Why only £1,497 + VAT? Great question. Especially
-        considering some courses for dentists go as high as 20k and beyond. I
-        wanted to make this course accessible to as many dental professionals as
-        possible… And to do it{" "}
+      <p> I was hoping you&apos;d ask.</p>{" "}
+      <p>The investment to join The Academy is only £1,497 + VAT.</p>{" "}
+      <p className="font-semibold">Why only £1,497 + VAT?</p>{" "}
+      <p>Great question.</p>{" "}
+      <p>
+        Especially considering some courses for dentists go as high as 20k and
+        beyond.
+      </p>{" "}
+      <p>
+        I wanted to make this course accessible to as many dental professionals
+        as possible…
+      </p>{" "}
+      <p>
+        And to do it{" "}
         <span className="underline">without cutting any corners</span> and{" "}
         <span className="underline">without holding back</span> anything
-        necessary to help you understand your options as an investor. We&apos;ve
-        invested a significant amount of time, effort and money in ensuring that
-        The Academy contains everything you need to know… and… to make ourselves
-        available to answer any questions you may have. You&apos;re getting a
-        skill that can set you up for life, with or without dentistry.
-      </div>
+        necessary to help you understand your options as an investor.
+      </p>{" "}
+      <p>
+        {" "}
+        We&apos;ve invested a significant amount of time, effort and money in
+        ensuring that
+        <span className="italic">The Academy</span> contains everything you need
+        to know… and… to make ourselves available to answer any questions you
+        may have.{" "}
+      </p>{" "}
+      <p>
+        You&apos;re getting a skill that can set you up for life, with or
+        without dentistry.
+      </p>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
         className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
@@ -455,40 +563,66 @@ export default function SpecialInvite() {
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px] text-[#333399]">
         Oh, and I almost forgot…{" "}
       </div>
-      <div>
-        As a BONUS for taking action, we&apos;re also including an entire 12
-        months of fortnightly &lsquo;done with you&apos; group coaching calls
+      <p>
+        As a BONUS for taking action, we&apos;re also including{" "}
+        <span className="font-semibold">
+          an entire 12 months of fortnightly &lsquo;done with you&apos; group
+          coaching calls
+        </span>
         (completely optional to attend, but we&apos;re here for you when you
-        want to join). The new time we open doors to let new members join, new
-        recruits will only get a maximum of 6 months calls. Probably less. So
-        this really is your best time to join if you value “done with you”
-        support. Your days of analysis-paralysis are done and over. No more
-        sitting on your hands wondering what to do… or when to do it… We&apos;re
-        giving you everything you need to know inside of The Academy… But there
-        will be times when you may want a second opinion or even reassurance
-        that you&apos;ve made the right selection. We&apos;ve got your back 🙂
+        want to join).
+      </p>{" "}
+      <p>
+        The new time we open doors to let new members join, new recruits will
+        only get a maximum of 6 months calls. Probably less. So this really is
+        your best time to join if you value “done with you” support.
+      </p>{" "}
+      <p className="font-semibold">
+        Your days of analysis-paralysis are done and over.
+      </p>{" "}
+      <p>
+        No more sitting on your hands wondering what to do… or when to do it…
+      </p>{" "}
+      <p>
+        We&apos;re giving you everything you need to know inside of{" "}
+        <span className="italic">The Academy</span>…
+      </p>{" "}
+      <p>
+        But there will be times when you may want a second opinion or even
+        reassurance that you&apos;ve made the right selection. We&apos;ve got
+        your back 🙂
+      </p>
+      <p>
         Plus… what could be better than getting the chance to hang out and meet
-        other Dentists Who Invest in an easy going and supportive environment?
+        other <span className="italic">Dentists Who Invest</span> in an easy
+        going and supportive environment?
+      </p>
+      <p>
         We have these live group calls every two weeks and if you can&apos;t
         make it, no worries because they are recorded and shared in the members
-        area of The Academy.
-      </div>
+        area of <span className="italic">The Academy</span>.
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px] text-[#800000]">
         Haven&apos;t you waited long enough?{" "}
       </div>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-[22px] font-[500] text-white"
+        className="text-wrap bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
       >
         I sure have, but now is my time!
       </a>
-      <div>
+      <p>
         When you join us in The Academy before doors close at 11pm GMT on
-        October 27 … You&apos;ll receive a complimentary 60-minute Financial
-        Planning Session with our resident Chartered MSCI and Certified
-        Financial Planner™ Anick. Our goal is for you to with Anick hit the
-        ground running with confidence.
-      </div>
+        October 27…
+      </p>{" "}
+      <p>
+        You&apos;ll receive a complimentary 60-minute Financial Planning Session
+        with our resident Chartered MSCI and Certified Financial Planner™ Anick.
+      </p>{" "}
+      <p>
+        Our goal is for you to with Anick hit the ground running with
+        confidence.
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         &lsquo;Every <span className="text-[#008000]">action</span> you take is
         a <span className="text-[#008000]">vote</span> for the type of person
