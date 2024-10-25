@@ -1,6 +1,6 @@
 export default function SpecialInvite() {
   return (
-    <section className="mx-[50px] mt-8 flex flex-col space-y-4 text-lg">
+    <section className="mx-[50px] mt-8 flex flex-col space-y-4 pb-[150px] text-lg md:mx-[112px] xl:mx-auto xl:max-w-screen-lg">
       <div className="m-2 text-center text-[40px] font-bold italic leading-[43.2px]">
         &lsquo; <span className="underline">Until</span> you learn the language
         and rules of investing,{" "}
@@ -375,7 +375,7 @@ export default function SpecialInvite() {
         </p>
       </div>
       <p>Inside of The Dentists Who Invest Academy, you&apos;ll discover:</p>
-      <ul className="m-6 list-disc space-y-4">
+      <ul className="m-10 list-disc space-y-4">
         <li className="font-semibold">
           How to create a laser-focused plan and strategy you&apos;ll feel safe
           and confident in…
@@ -441,7 +441,7 @@ export default function SpecialInvite() {
           -Max Al-Nakib, United Kingdom
         </p>
       </div>
-      <ul className="m-6 list-disc space-y-4">
+      <ul className="m-10 list-disc space-y-4">
         <li className="font-semibold">How to drain bad debt from your life…</li>
         <li className="font-semibold">
           The 4 financial levers you can pull to potentially release an
@@ -556,7 +556,7 @@ export default function SpecialInvite() {
       </p>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[60px] xl:m-[280px]"
       >
         That&apos;s awesome, I want to join{" "}
       </a>
@@ -607,7 +607,7 @@ export default function SpecialInvite() {
       </div>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[50px] xl:m-[280px]"
       >
         I sure have, but now is my time!
       </a>
@@ -633,7 +633,7 @@ export default function SpecialInvite() {
       </div>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[10px] xl:m-[250px]"
       >
         {" "}
         Yes, I want to be an informed investor!{" "}
@@ -665,7 +665,7 @@ export default function SpecialInvite() {
       </p>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[40px] xl:m-[250px]"
       >
         {" "}
         Yes, I&apos;d love to join The Academy!
@@ -705,7 +705,7 @@ export default function SpecialInvite() {
       <p> Thanks so much for reading!</p>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[40px] xl:m-[280px]"
       >
         I&apos;m ready James - sign me up!
       </a>
@@ -727,7 +727,7 @@ export default function SpecialInvite() {
       </div>
       <a
         href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
-        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white md:m-[10px] xl:m-[250px]"
       >
         Absolutely - I can&apos;t wait to get started!
       </a>
