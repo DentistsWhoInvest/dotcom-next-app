@@ -80,7 +80,6 @@ body {
   .show-bullet ol {
     list-style: none; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
     padding-left: 1.5rem;
-    font-size: 1rem;
   }
 
   /* Probably used in conjunction with the show-bullet class */
@@ -91,7 +90,7 @@ body {
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    background-color: orange;
+    background-color: #F58F1D;
     color: white;
     text-align: center;
     font-size: 0.65rem;
@@ -106,7 +105,7 @@ body {
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    background-color: #ffa500;
+    background-color: #F58F1D;
     color: white;
     text-align: center;
     font-size: 1rem;
