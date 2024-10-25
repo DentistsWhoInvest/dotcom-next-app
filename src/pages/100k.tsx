@@ -207,7 +207,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                 priority
               />
             </div>
-            <div className="relative z-10 flex size-full flex-col items-center justify-center text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px]">
+            <div className="relative z-10 flex size-full flex-col items-center justify-center text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[38%]">
               <div className="absolute px-4 md:px-[30px]">
                 <h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] md:leading-[42px] xl:mb-5 xl:text-[45px]">
                   {pageData.attributes.hero_title}
@@ -248,7 +248,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                                 />
                                 <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
                               </div>
-                              <div className="relative z-10 space-y-4 p-6 text-white md:p-[50px]">
+                              <div className="relative z-10 space-y-4 p-6 text-white md:p-[50px] xl:mx-auto xl:max-w-[1140px] xl:px-0">
                                 <BlocksRenderer content={sales_pitch.message} />
                               </div>
                             </div>
@@ -261,42 +261,44 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                             "--dynamic-bg-color": sales_pitch.background_colour,
                           } as React.CSSProperties
                         }
-                        className="space-y-4 bg-dynamicBg p-6 md:p-[25px]"
+                        className="space-y-4 bg-dynamicBg xl:w-screen"
                         key={sales_pitch.id}
                       >
-                        {sales_pitch.image_placement !== "background" && (
-                          <div
-                            className={`grid ${
-                              sales_pitch.cover.data
-                                ? "grid-cols-1 md:grid-cols-2 md:gap-8"
-                                : "grid-cols-1"
-                            }`}
-                          >
-                            {sales_pitch.cover.data && (
-                              <Image
-                                src={sales_pitch.cover.data.attributes.url}
-                                alt={sales_pitch.cover.data.attributes.name}
-                                width={1200}
-                                height={400}
-                                objectFit="cover"
-                                className={`rounded-3xl ${
-                                  sales_pitch.image_placement === "right"
-                                    ? "md:order-2"
-                                    : "md:order-1"
-                                }`}
-                              />
-                            )}
+                        <div className=" p-6 md:p-[25px] lg:px-[50px] lg:py-[25px] xl:mx-auto xl:max-w-[1140px] xl:px-0">
+                          {sales_pitch.image_placement !== "background" && (
                             <div
-                              className={`md:flex md:flex-col md:space-y-4  ${
-                                sales_pitch.image_placement === "right"
-                                  ? "md:order-1"
-                                  : "md:order-2"
+                              className={` grid space-y-4 md:space-y-0 ${
+                                sales_pitch.cover.data
+                                  ? "grid-cols-1 md:grid-cols-2 md:gap-8"
+                                  : "grid-cols-1"
                               }`}
                             >
-                              <BlocksRenderer content={sales_pitch.message} />
+                              {sales_pitch.cover.data && (
+                                <Image
+                                  src={sales_pitch.cover.data.attributes.url}
+                                  alt={sales_pitch.cover.data.attributes.name}
+                                  width={1200}
+                                  height={400}
+                                  objectFit="cover"
+                                  className={`rounded-3xl ${
+                                    sales_pitch.image_placement === "right"
+                                      ? "md:order-2"
+                                      : "md:order-1"
+                                  }`}
+                                />
+                              )}
+                              <div
+                                className={`space-y-4 md:flex md:flex-col xl:mx-auto xl:max-w-[1140px] ${
+                                  sales_pitch.image_placement === "right"
+                                    ? "md:order-1"
+                                    : "md:order-2"
+                                }`}
+                              >
+                                <BlocksRenderer content={sales_pitch.message} />
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </>
                   );
@@ -306,7 +308,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           </div>
         </section>
 
-        <section id="investment-return" className="pt-[30px]">
+        <section id="investment-return" className="pt-[30px] lg:pb-[30px]">
           <div className="text-center text-[35px] font-bold leading-[42px]">
             <span className=" text-orange-400">
               {splitInvestmentTitle?.investmentTitlePreAmount}
@@ -369,24 +371,24 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="sales-cards">
-          <div className="grid grid-cols-1 space-y-4 px-[50px] md:grid-cols-2 md:space-y-0">
+          <div className="grid grid-cols-1 gap-4 space-y-4 px-[50px] md:grid-cols-2 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:grid-cols-5 xl:px-0 ">
             {pageData.attributes.sales_cards.map(
               (salesCard: SalesCard, index: number) => {
                 return (
                   <div
                     className={`flex flex-col items-center space-y-4 ${
-                      index === 4 ? "md:col-span-2" : "md:col-span-1"
+                      index === 4 ? "md:col-span-2 xl:col-span-1" : "md:col-span-1"
                     }`}
                     key={salesCard.id}
                   >
-                    <div className="m-4 flex flex-col items-center rounded-3xl bg-blue-secondary px-[5px] pb-5 pt-[50px]">
+                    <div className="flex grow flex-col items-center rounded-3xl bg-blue-secondary px-[5px] pb-5 pt-[50px]">
                       <Image
                         src={salesCard.image.data.attributes.url}
                         alt={salesCard.image.data.attributes.name}
                         width={90}
                         height={90}
                       />
-                      <h2 className="mt-5 text-center text-sm font-[500] text-white md:px-4 md:py-2">
+                      <h2 className="mt-5 text-center text-sm font-[500] text-white md:px-4 md:py-2 xl:px-1 ">
                         {salesCard.reason}
                       </h2>
                     </div>
@@ -398,7 +400,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="what-would-extra-100k-mean-to-you">
-          <div className="space-y-4 p-6 text-lg md:px-[50px] md:pb-[50px]">
+          <div className="space-y-4 p-6 text-lg md:px-[50px] md:pb-[50px] xl:mx-auto xl:max-w-[1140px] xl:px-0">
             <BlocksRenderer
               content={pageData.attributes.what_would_extra_100k_mean_to_you}
             />
@@ -406,14 +408,14 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="reviews">
-          <div className="flex flex-col space-y-8 md:grid md:grid-cols-2 md:gap-0 md:space-y-0 md:px-[50px]">
+          <div className="flex flex-col space-y-8 md:grid md:grid-cols-2 md:gap-0 md:space-y-0 md:px-[50px] xl:max-w-[1200xp] xl:px-0 xl:mx-[120px] xl:grid-cols-3">
             {pageData.attributes.testimonials.data.map(
               (testimonial: TestimonialData, index: number) => {
                 return (
                   <div
                     key={testimonial.id}
                     className={`${
-                      index === 2 ? "md:col-span-2 md:w-full" : "md:w-full "
+                      index === 2 ? "md:col-span-2 md:w-full xl:col-span-1" : "md:w-full "
                     }`}
                   >
                     <TestimonialCard
@@ -427,8 +429,8 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
             )}
           </div>
         </section>
-        <div className="flex flex-col items-center space-y-8 p-8">
-          <div className="space-y-4 text-left text-lg">
+        <div className="flex flex-col items-center space-y-8 p-8 lg:p-[50px]">
+          <div className="space-y-4 text-left text-lg lg:text-xl">
             <BlocksRenderer content={pageData.attributes.final_sales_pitch} />
           </div>
           <Link
