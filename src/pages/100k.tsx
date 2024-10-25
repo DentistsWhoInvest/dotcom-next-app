@@ -232,7 +232,6 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
             >
               {pageData.attributes.sales_pitches.map(
                 (sales_pitch: SalesPitch) => {
-                  console.log("sales_pitch", sales_pitch);
                   return (
                     <>
                       {/* adjust image position, including background */}
@@ -240,7 +239,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                       {sales_pitch.image_placement === "background" &&
                         sales_pitch.cover.data && (
                           <>
-                            <div className="relative">
+                            <div className="relative" key={sales_pitch.id}>
                               <div className="absolute inset-0">
                                 <Image
                                   src={sales_pitch.cover.data.attributes.url}
@@ -264,7 +263,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                             "--dynamic-bg-color": sales_pitch.background_colour,
                           } as React.CSSProperties
                         }
-                        className="bg-dynamicBg p-6 space-y-4"
+                        className="bg-dynamicBg p-6 space-y-4" key={sales_pitch.id}
                       >
                         {sales_pitch.image_placement !== "background" && (
                           <>
@@ -355,15 +354,15 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           <div className="flex flex-col space-y-4">
             {pageData.attributes.sales_cards.map((salesCard: SalesCard) => {
               return (
-                <div className="flex flex-col items-center space-y-4 px-[50px]">
-                  <div className="pt-[50px] pb-5 px-[5px] m-4 flex flex-col items-center bg-blue-secondary rounded-3xl">
+                <div className="flex flex-col items-center space-y-4 px-[50px]" key={salesCard.id}>
+                  <div className="m-4 flex flex-col items-center rounded-3xl bg-blue-secondary px-[5px] pb-5 pt-[50px]">
                     <Image
                       src={salesCard.image.data.attributes.url}
                       alt={salesCard.image.data.attributes.name}
                       width={90}
                       height={90}
                     />
-                    <h2 className="text-center text-sm text-white mt-5">
+                    <h2 className="mt-5 text-center text-sm text-white">
                       {salesCard.reason}
                     </h2>
                   </div>
