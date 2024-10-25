@@ -25,8 +25,9 @@ const config: Config = {
   		white: colors.white,
   		gray: colors.gray,
   		emerald: colors.emerald,
-  		indigo: colors.indigo,
-  		orange: colors.orange
+		indigo: colors.indigo,
+		orange: colors.orange,
+		dynamicBg: 'var(--dynamic-bg-color)',
   	},
   	extend: {
 		boxShadow: {

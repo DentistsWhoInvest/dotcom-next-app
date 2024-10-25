@@ -100,6 +100,12 @@ type SalesPitch = {
   cover: { data: ImageData | null };
 };
 
+type SalesCard = {
+  id: number;
+  reason: string;
+  image: { data: ImageData };
+};
+
 type HundredKPageAttributes = {
   hero_title: string;
   hero_cta_text: string;
@@ -112,6 +118,7 @@ type HundredKPageAttributes = {
   testimonials: Testimonials;
   hero_cover: HeroCover;
   sales_pitches: SalesPitch[];
+  sales_cards: SalesCard[];
 };
 
 type HundredKPage = {
@@ -128,6 +135,8 @@ export const getStaticProps = async () => {
     "what_would_extra_100k_mean_to_you",
     "sales_pitches",
     "sales_pitches.cover",
+    "sales_cards",
+    "sales_cards.image",
   ];
 
   const pageData = await fetchEndpointData(
@@ -143,9 +152,29 @@ export const getStaticProps = async () => {
 };
 
 export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
-  console.log("pageData", pageData);
-  console.log("pageData.hero_cover", pageData.attributes.hero_cover);
-  console.log("pageData.hero_cover.data", pageData.attributes.hero_cover.data);
+  function splitInvestmentAndReturnTitle(investmentTitle: string) {
+    const maybeAmountInTitle = investmentTitle.match(/£[\d,]+/);
+    if (maybeAmountInTitle) {
+      const investmentTitleAmount = maybeAmountInTitle[0];
+      const investmentTitlePreAmount = investmentTitle.split(
+        investmentTitleAmount
+      )[0];
+      const investmentTitlePostAmount = investmentTitle.split(
+        investmentTitleAmount
+      )[1];
+
+      return {
+        investmentTitleAmount,
+        investmentTitlePreAmount,
+        investmentTitlePostAmount,
+      };
+    }
+  }
+
+  const splitInvestmentTitle = splitInvestmentAndReturnTitle(
+    pageData.attributes.investment_and_return_title
+  );
+
   return (
     <>
       <Head>
@@ -195,11 +224,11 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           </div>
         </section>
 
-        <section id="worseoff" className="">
-          <div className="flex flex-col items-center space-y-8 p-8 text-left">
+        <section id="sales_pitches" className="">
+          <div className="flex flex-col items-center text-left">
             <div
               id="maintext"
-              className="show-bullet custom-bullet-question space-y-4 text-lg text-grey-primary"
+              className="show-bullet custom-bullet-question text-lg text-grey-primary"
             >
               {pageData.attributes.sales_pitches.map(
                 (sales_pitch: SalesPitch) => {
@@ -207,17 +236,52 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                   return (
                     <>
                       {/* adjust image position, including background */}
-                      {sales_pitch.cover.data && (
-                        <Image
-                          src={sales_pitch.cover.data.attributes.url}
-                          alt={"todo: add alt text for sales pitch cover image"}
-                          width={1200}
-                          height={400}
-                          objectFit="cover"
-                          className="rounded-3xl"
-                        />
-                      )}
-                      <BlocksRenderer content={sales_pitch.message} />
+
+                      {sales_pitch.image_placement === "background" &&
+                        sales_pitch.cover.data && (
+                          <>
+                            <div className="relative">
+                              <div className="absolute inset-0">
+                                <Image
+                                  src={sales_pitch.cover.data.attributes.url}
+                                  alt={sales_pitch.cover.data.attributes.name}
+                                  layout="fill"
+                                  objectFit="cover"
+                                  objectPosition=""
+                                />
+                                <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
+                              </div>
+                              <div className="relative z-10 text-white space-y-4 p-6">
+                                <BlocksRenderer content={sales_pitch.message} />
+                              </div>
+                            </div>
+                          </>
+                        )}
+
+                      <div
+                        style={
+                          {
+                            "--dynamic-bg-color": sales_pitch.background_colour,
+                          } as React.CSSProperties
+                        }
+                        className="bg-dynamicBg p-6 space-y-4"
+                      >
+                        {sales_pitch.image_placement !== "background" && (
+                          <>
+                            {sales_pitch.cover.data && (
+                              <Image
+                                src={sales_pitch.cover.data.attributes.url}
+                                alt={sales_pitch.cover.data.attributes.name}
+                                width={1200}
+                                height={400}
+                                objectFit="cover"
+                                className="rounded-3xl"
+                              />
+                            )}
+                            <BlocksRenderer content={sales_pitch.message} />
+                          </>
+                        )}
+                      </div>
                     </>
                   );
                 }
@@ -226,10 +290,94 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           </div>
         </section>
 
-        <section id="freedom">
-          <div className="flex flex-col text-center space-y-8 p-8">
-            <span className="text-3xl font-bold text-blue-primary">todo: for the investment of...</span>
-            {/* <BlocksRenderer content={pageData.freedom.description} /> */}
+        <section id="investment-return" className="pt-[30px]">
+          <div className="text-center text-[35px] leading-[42px] font-bold">
+            <span className=" text-orange-400">
+              {splitInvestmentTitle?.investmentTitlePreAmount}
+            </span>
+            <span
+              id="wrapper"
+              className="relative inline-block overflow-visible"
+            >
+              <span className=" text-blue-primary">
+                {splitInvestmentTitle?.investmentTitleAmount}
+              </span>
+              <svg
+                className="absolute left-1/2 top-1/2 z-[2] size-[calc(100%+20px)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 500 150"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7"
+                  stroke="red"
+                  stroke-width="9"
+                  fill="none"
+                  className="path-1"
+                ></path>
+              </svg>
+              <style jsx>{`
+                @keyframes draw {
+                  0% {
+                    stroke-dasharray: 0, 1500; /* Start with no visible stroke */
+                    opacity: 0;
+                  }
+                  10% {
+                    stroke-dasharray: 0, 1500; /* Start with no visible stroke */
+                    opacity: 1;
+                  }
+                  30% {
+                    stroke-dasharray: 1500, 0; /* Complete visible stroke */
+                    opacity: 1;
+                  }
+                  80% {
+                    stroke-dasharray: 1500, 0; /* Keep the stroke */
+                    opacity: 1;
+                  }
+                  100% {
+                    opacity: 0;
+                  }
+                }
+
+                .path-1 {
+                  animation: draw 5s forwards; /* Animate drawing and fading */
+                  animation-iteration-count: infinite;
+                }
+              `}</style>
+            </span>
+            <span className=" text-orange-400">
+              {splitInvestmentTitle?.investmentTitlePostAmount}
+            </span>
+          </div>
+        </section>
+
+        <section id="sales-cards">
+          <div className="flex flex-col space-y-4">
+            {pageData.attributes.sales_cards.map((salesCard: SalesCard) => {
+              return (
+                <div className="flex flex-col items-center space-y-4 px-[50px]">
+                  <div className="pt-[50px] pb-5 px-[5px] m-4 flex flex-col items-center bg-blue-secondary rounded-3xl">
+                    <Image
+                      src={salesCard.image.data.attributes.url}
+                      alt={salesCard.image.data.attributes.name}
+                      width={90}
+                      height={90}
+                    />
+                    <h2 className="text-center text-sm text-white mt-5">
+                      {salesCard.reason}
+                    </h2>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="what-would-extra-100k-mean-to-you">
+          <div className="p-6 space-y-4 text-lg">
+            <BlocksRenderer
+              content={pageData.attributes.what_would_extra_100k_mean_to_you}
+            />
           </div>
         </section>
 
@@ -237,7 +385,6 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
           <div className="flex flex-col space-y-8 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
             {pageData.attributes.testimonials.data.map(
               (testimonial: TestimonialData, index: number) => {
-                console.log("testimonial", testimonial);
                 return (
                   <div
                     key={testimonial.id}
