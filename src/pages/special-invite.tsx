@@ -42,7 +42,10 @@ export default function SpecialInvite() {
         … and they were also ill-equipped to question their authority or suspect
         they were going under the knife in the name of excessive profits.
       </p>
-      <p>And the scary thing for Dentists Who Invest is…</p>
+      <p>
+        And the scary thing for{" "}
+        <span className="italic">Dentists Who Invest</span> is…
+      </p>
       <p>
         This same situation routinely occurs in the investment world… although
         the case can be made that it&apos;s MUCH more common in investing.
@@ -72,12 +75,13 @@ export default function SpecialInvite() {
         doing&apos; -Warren Buffett
       </div>{" "}
       <p>
-        Although I&apos;m no longer a practicing dentist – I retired from the
-        profession after injuring myself in a football game – I help dentists
+        Although I&apos;m no longer a practicing dentist - I retired from the
+        profession after injuring myself in a football game - I help dentists
         like yourself on a daily basis…
       </p>{" "}
       <p>
-        Whether sharing insights on my podcast, in the Dentists Who Invest
+        Whether sharing insights on my podcast, in the{" "}
+        <span className="italic">Dentists Who Invest </span>
         Facebook group (currently 11,600 members strong), and even at exclusive
         events around the world…
       </p>
@@ -133,13 +137,13 @@ export default function SpecialInvite() {
         Advisor and avoid recurring high fees…
       </p>
       <p> Then you&apos;d never think to ask:</p>
-      <p>
+      <p className="font-semibold italic">
         &lsquo;How can I avoid paying a Financial Advisor high and recurring
         fees?&apos;{" "}
       </p>
       <p>Or… if you didn&apos;t know that you can insure your investments…</p>
       <p>You wouldn&apos;t think to ask: &lsquo;</p>
-      <p>
+      <p className="font-semibold italic">
         How can I ensure my nest egg is protected no matter what happens in the
         world?&apos;{" "}
       </p>
@@ -151,8 +155,9 @@ export default function SpecialInvite() {
       </p>
       <p>
         {" "}
-        As you may know, there is no one-size-fits-all investment strategy that
-        works for every person in every situation.
+        As you may know, there is no{" "}
+        <span className="italic">one-size-fits-all</span> investment strategy
+        that works for every person in every situation.
       </p>
       <p>
         {" "}
@@ -161,8 +166,9 @@ export default function SpecialInvite() {
       </p>
       <p>
         {" "}
-        For example, a fresh-out-of-school dentist with no spouse, no children,
-        and no mortgage would not - nor should they - follow the same strategy
+        For example, a <span className="italic">fresh-out-of-school</span>{" "}
+        dentist with no spouse, no children, and no mortgage would not - nor{" "}
+        <span className="italic">should</span> they - follow the same strategy
         as a 40-year old married practice owner with 3 children and a mortgage.
       </p>
       <p>Makes sense right? </p>
@@ -170,23 +176,43 @@ export default function SpecialInvite() {
         Unfortunately,{" "}
         <span className="text-[#ff0000]">I didn&apos;t get the memo.</span>
       </div>
-      <div>
+      <p>
         See, back in 2018 after putting myself through schooling and in my 2nd
         year as a General Dental Practitioner, I decided I wanted to begin
-        investing. I can&apos;t recall where the idea first entered my mind,
-        BUT… You can bet I still remember where I went to get
-        &lsquo;educated&apos; … Being the confident 27 year old that I was… I
-        opened up my computer browser and typed youtube.com in the address bar.
-        I know, I know… I can see my mistake clear as day now… but back then, I
-        was absolutely certain this advice was legit and I&apos;d soon be a
-        millionaire as promised. I thought I knew where to put my money for the
-        best return… and… I thought I knew how much to invest and over what time
-        frame. I thought I knew how to quickly create a new revenue stream that
-        would help me pay for that beautiful house I&apos;ve been eyeing. And
-        because my confidence was blazing (as is the case when you watch
-        &lsquo;for entertainment only&apos; videos by charismatic creators)… I
-        ignored the voice in my head whispering…
-      </div>
+        investing.
+      </p>{" "}
+      <p> I can&apos;t recall where the idea first entered my mind, BUT… </p>
+      <p>
+        You can bet I still remember where I went to get &lsquo;educated&apos;…
+      </p>
+      <p>
+        Being the confident 27 year old that I was… I opened up my computer
+        browser and typed youtube.com in the address bar.
+      </p>
+      <p>I know, I know…</p>
+      <p>
+        I can see my mistake clear as day now… but back then, I was absolutely
+        certain this advice was legit and I&apos;d soon be a millionaire as
+        promised.
+      </p>
+      <p>
+        I <span className="italic">thought</span> I knew where to put my money
+        for the best return… and… I <span className="italic">thought</span> I
+        knew how much to invest and over what time frame.
+      </p>{" "}
+      <p>
+        I thought I knew how to quickly create a new revenue stream that would
+        help me pay for that beautiful house I&apos;ve been eyeing.
+      </p>{" "}
+      <p>
+        And because my confidence was blazing (as is the case when you watch
+        <span className="italic">
+          {" "}
+          &lsquo;for entertainment only&apos;
+        </span>{" "}
+        videos by charismatic creators)…
+      </p>{" "}
+      <p>I ignored the voice in my head whispering…</p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         {" "}
         “Slow down, James.{" "}
@@ -197,7 +223,8 @@ export default function SpecialInvite() {
       </div>
       <p>
         And then, with a single click of a mouse button… I dropped the majority
-        of my savings on the ONE approach I &lsquo;knew&apos; would make bank.
+        of my savings on the ONE approach I{" "}
+        <span className="italic">&lsquo;knew&apos;</span> would make bank.
       </p>
       <p>
         But of course… As you can probably guess,{" "}
@@ -232,40 +259,58 @@ export default function SpecialInvite() {
         &lsquo;Ask better questions,{" "}
         <span className="text-[#008000]">get better results</span>&apos;{" "}
       </div>
-      <div>
+      <p>
         Instead of asking, &lsquo;How much of my hard-earned money can I invest
-        in this crazy scheme?&apos;… I began asking &lsquo;Is this
-        &lsquo;free&apos; advice even applicable to my situation?&apos; And
-        &lsquo;what do I really need to know before making a decision?&apos; I
-        FORCED myself to be the master of my investments. I became a learning
-        machine, reading book upon book, taking online courses, and even
-        investing in very expensive conversations with experts. The entire
-        process was long and exhausting. But it was WORTH it! Within a few short
-        years I&apos;d done what had previously felt impossible… all the money
-        I&apos;d lost was back in my account, and then some.{" "}
-      </div>
+        in this crazy scheme?&apos;…
+      </p>{" "}
+      <p>
+        I began asking &lsquo;Is this
+        <span className="italic">&lsquo;free&apos;</span> advice even applicable
+        to my situation?&apos;
+      </p>{" "}
+      <p>
+        And &lsquo;what do I <span className="italic">really</span> need to know
+        before making a decision?&lsquo;
+      </p>{" "}
+      <p>I FORCED myself to be the master of my investments.</p>{" "}
+      <p>
+        I became a learning machine, reading book upon book, taking online
+        courses, and even investing in very expensive conversations with
+        experts.
+      </p>{" "}
+      <p>The entire process was long and exhausting.</p>{" "}
+      <p>But it was WORTH it!</p>{" "}
+      <p>
+        Within a few short years I&apos;d done what had previously felt
+        impossible… all the money I&apos;d lost was back in my account, and then
+        some.{" "}
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         <p className="text-[#008080]">
           &lsquo;Wisdom is knowing what to ignore&apos;
         </p>{" "}
         <p className="text-lg font-normal not-italic">-Shane Parrish </p>
       </div>
-      <div>
+      <p>
         Looking back, it didn&apos;t really need to take me as long as it did to
-        get caught up on the investing landscape…{" "}
+        get caught up on the investing landscape…{" "}</p>
+        <p>
         <span className="italic underline">IF ONLY</span> someone had compiled
         the information in an easy to follow and understandable format designed
-        specifically for those who are busy. But sadly, no one had done it to my
+        specifically for those who are busy.</p>
+        <p> But sadly, no one had done it to my
         standards at that point which is why my business partner Luke Hurley and
-        I decided to take it upon ourselves to help those on the same journey.
-        See, it breaks my heart seeing dentists being taken advantage of… … when
-        they feel intimidated to ask questions they desperately need answers to…
-        … being sold products that are not in their best interest (but which
-        pays out high commissions to the seller)… … seeing dentists work many
-        more years than is necessary… … and knowing the only reason for this is
+        I decided to take it upon ourselves to help those on the same journey.</p>
+        <p>
+        See, <span className="font-semibold">it breaks my heart seeing dentists being taken advantage of</span>…</p>
+        <p>… when
+        they feel intimidated to ask questions they desperately need answers to…</p>
+        <p>… being sold products that are not in their best interest (but which
+        pays out high commissions to the seller)…</p> <p>… seeing dentists work many
+        more years than is necessary…</p> <p>… and knowing the only reason for this is
         that they lack the understanding and confidence that{" "}
         <span className="underline">we&apos;re able to help with.</span>{" "}
-      </div>
+      </p>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px]">
         “I Feel Like The Academy Has{" "}
         <span className="text-[#008000]">Fast Tracked</span> Me And Brought My
@@ -401,7 +446,12 @@ export default function SpecialInvite() {
         available to answer any questions you may have. You&apos;re getting a
         skill that can set you up for life, with or without dentistry.
       </div>
-      <div>That&apos;s awesome, I want to join </div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+      >
+        That&apos;s awesome, I want to join{" "}
+      </a>
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px] text-[#333399]">
         Oh, and I almost forgot…{" "}
       </div>
@@ -426,7 +476,12 @@ export default function SpecialInvite() {
       <div className="m-2 text-center text-[32px] font-bold italic leading-[38.4px] text-[#800000]">
         Haven&apos;t you waited long enough?{" "}
       </div>
-      <div>I sure have, but now is my time!</div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-[22px] font-[500] text-white"
+      >
+        I sure have, but now is my time!
+      </a>
       <div>
         When you join us in The Academy before doors close at 11pm GMT on
         October 27 … You&apos;ll receive a complimentary 60-minute Financial
@@ -442,7 +497,13 @@ export default function SpecialInvite() {
           -James Clear (author of Atomic Habits)
         </p>
       </div>
-      <div> Yes, I want to be an informed investor! </div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+      >
+        {" "}
+        Yes, I want to be an informed investor!{" "}
+      </a>
       <p>
         But please note: This session will not take the form of personalized
         financial advice or specific product recommendations.
@@ -459,13 +520,22 @@ export default function SpecialInvite() {
         investor.{" "}
       </p>
       <p>
-        To join us, all you need to do is click the button below titled {" "}
-        <a href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8/checkout" className="text-[#1155cc] underline">
+        To join us, all you need to do is click the button below titled{" "}
+        <a
+          href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8/checkout"
+          className="text-[#1155cc] underline"
+        >
           &lsquo;Yes, I&apos;d love to join The Academy&apos;
         </a>
         , enter your payment details and complete your order.
       </p>
-      <div> Yes, I&apos;d love to join The Academy!</div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+      >
+        {" "}
+        Yes, I&apos;d love to join The Academy!
+      </a>
       <p>
         {" "}
         Once your payment is approved, our system will then send you an email
@@ -499,7 +569,12 @@ export default function SpecialInvite() {
         and I&apos;ll get back to you as soon as possible.
       </p>{" "}
       <p> Thanks so much for reading!</p>
-      <div>I&apos;m ready James - sign me up!</div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+      >
+        I&apos;m ready James - sign me up!
+      </a>
       <div className="m-2 text-center text-[28px] font-bold italic leading-[36.4px]">
         <p>
           &lsquo;Since I qualified from dental school back in 2008, I have
@@ -516,7 +591,12 @@ export default function SpecialInvite() {
           <p className="text-lg font-normal not-italic">-Max Al-Nakib </p>
         </p>
       </div>
-      <div>Absolutely - I can&apos;t wait to get started!</div>
+      <a
+        href="https://courses.dentistswhoinvest.com/offers/vBiSbHr8"
+        className="text-wrap border-[3px] bg-[#5cb85c] px-10 py-5 text-center text-[22px] font-[500] text-white"
+      >
+        Absolutely - I can&apos;t wait to get started!
+      </a>
     </section>
   );
 }
