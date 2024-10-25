@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { exec } = require("child_process");
+
 const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
@@ -6,16 +8,28 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'assets.drjamesmartin.co.uk',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "assets.drjamesmartin.co.uk",
+        port: "",
+        pathname: "/**",
       },
     ],
     unoptimized: true,
   },
   output: "export",
-  compress: true
+  compress: true,
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      exec("node generate-sitemap.js", (err, stdout, stderr) => {
+        if (err) {
+          console.error(`Error generating sitemap: ${stderr}`);
+        } else {
+          console.log(`Sitemap generated: ${stdout}`);
+        }
+      });
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
