@@ -93,25 +93,28 @@ export const getStaticPaths = async () => {
   );
 
   return {
-    paths: results.data.map((result: { attributes: { title: string } }) => ({
-      params: { targetedlandingpage: createSlug(result.attributes.title) },
+    paths: results.data.map((result: { attributes: { slug: string }, id: number }) => ({
+      params: { targetedlandingpage: result.attributes.slug.replace(/^\//, "")},
     })),
     fallback: false,
   };
 };
 
-//todo: update this
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ params }: { params: { targetedlandingpage: string } }) => {
   const populateFields = ["contributor", "contributor.profilePicture"];
-
-  const pageData = await fetchEndpointData(
-    "/targeted-data-collection-pages/5",
+  const allPages = await fetchEndpointData(
+    `/targeted-data-collection-pages/`,
     populateFields
+  );
+
+  const matchingPage = allPages.data.find(
+    (page: { attributes: { slug: string } }) =>
+      page.attributes.slug.replace(/^\//, "") === params.targetedlandingpage
   );
 
   return {
     props: {
-      landingPage: pageData.data,
+      landingPage: matchingPage,
     },
   };
 };
