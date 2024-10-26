@@ -57,6 +57,19 @@ export const ViewMoreCard = ({
     }
   }
 
+  function getCardTitle (contentType: string) {
+    switch (contentType) {
+      case "video":
+        return page.attributes.name;
+      case "article":
+        return page.attributes.title;
+      case "podcast":
+        return page.attributes.title;
+      default:
+        return "";
+    }
+  }
+
   return (
     <>
       <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] flex flex-col lg:w-[430px] h-[92%]">
@@ -75,7 +88,7 @@ export const ViewMoreCard = ({
           <p className="text-blue-primary text-[21px] font-bold">
             <Link
               href={`/${hrefStarter}/${slug}`}
-              dangerouslySetInnerHTML={{ __html: page.attributes.title }}
+              dangerouslySetInnerHTML={{ __html: getCardTitle(contentType) }}
             ></Link>
           </p>
           {hrefStarter === "blog-posts" && (
