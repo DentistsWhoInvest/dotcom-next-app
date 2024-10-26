@@ -292,7 +292,7 @@ export default function Home({ pageData }: { pageData: any }) {
             alt={pageData.founder_image.data.attributes.alternativeText}
             width={pageData.founder_image.data.attributes.width}
             height={pageData.founder_image.data.attributes.height}
-            className="rounded-r-[30px] rounded-l-[30px] md:max-w-[356px] md:max-h-[499px] xl:max-w-[468px] xl:max-h-[654px]"
+            className="h-[441px] w-[315px] rounded-[30px] md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
           />
         </div>
       </section>

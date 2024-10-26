@@ -10,7 +10,7 @@ export default function HomePageNHSPensionForm() {
         alt="checklist"
         width={1024}
         height={1340}
-        className="mt-[-50px] self-center md:h-[338px] md:w-[258px] lg:h-[492px] lg:w-[376px] xl:h-[544px] xl:w-[416px]"
+        className="mt-[-50px] h-[361px] w-[276px] self-center md:h-[338px] md:w-[258px] lg:h-[492px] lg:w-[376px] xl:h-[544px] xl:w-[416px]"
       />
 
       <section className="mt-[-20px] space-y-2 px-[30px] py-[50px] md:ml-8 md:w-1/2">
