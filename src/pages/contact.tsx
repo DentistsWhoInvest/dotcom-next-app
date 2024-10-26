@@ -78,7 +78,7 @@ export default function Contact({ pageData }: { pageData: any }) {
         <p className="px-16 py-8 text-center text-[30px] font-bold leading-[36px] text-blue-primary md:py-[50px] md:text-[35px] xl:text-[45px]">
           Get in touch with us
         </p>
-        <div className="flex flex-col justify-center p-5 md:flex-row">
+        <div className="flex flex-col justify-center px-5 pb-5 md:flex-row">
           {pageData.attributes.contact_options.map((option: any) => (
             <ContactOptions key={option} option={option} />
           ))}
