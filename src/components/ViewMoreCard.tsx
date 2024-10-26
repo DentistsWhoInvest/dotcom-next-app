@@ -72,7 +72,7 @@ export const ViewMoreCard = ({
 
   return (
     <>
-      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] flex flex-col lg:w-[430px] h-[92%]">
+      <div className="m-6 flex h-[92%] w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white shadow-custom lg:w-[430px]">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
             src={
@@ -81,11 +81,11 @@ export const ViewMoreCard = ({
             alt={page.attributes.name}
             width={387}
             height={218}
-            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+            className="h-[218px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover lg:h-[300px] lg:w-[430px]"
           />
         </Link>
-        <div className="text-left flex flex-col mx-8 my-4 space-y-4 h-full">
-          <p className="text-blue-primary text-[21px] font-bold">
+        <div className="mx-8 my-4 flex h-full flex-col space-y-4 text-left">
+          <p className="text-[21px] font-bold text-blue-primary">
             <Link
               href={`/${hrefStarter}/${slug}`}
               dangerouslySetInnerHTML={{ __html: getCardTitle(contentType) }}
@@ -93,7 +93,7 @@ export const ViewMoreCard = ({
           </p>
           {hrefStarter === "blog-posts" && (
             <div
-              className="text-grey-primary text-base grow"
+              className="grow text-base text-grey-primary"
               key={page.attributes.excerpt}
               dangerouslySetInnerHTML={{
                 __html: trimmedExcerpt,
@@ -101,7 +101,7 @@ export const ViewMoreCard = ({
             />
           )}
           {hrefStarter === "videos" && (
-            <div className="text-grey-primary text-base grow">
+            <div className="grow text-base text-grey-primary">
               {" "}
               {page.attributes.description}
             </div>
