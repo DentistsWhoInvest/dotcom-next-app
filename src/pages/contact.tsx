@@ -85,14 +85,14 @@ export default function Contact({ pageData }: { pageData: any }) {
         </div>
       </div>
       <div className="mx-auto w-full max-w-[1140px] justify-center px-5 pb-[100px] pt-[70px] text-blue-primary">
-        <p className="text-center text-[30px] font-bold leading-[36px]">
+        <p className="text-center text-[30px] font-bold leading-[36px] md:mb-5">
           Frequently Asked Questions
         </p>
         {pageData.attributes.FAQs.map((FAQ: any) => {
           return (
             <Accordion key={FAQ} type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left text-[15px] md:text-[20px]">
+                <AccordionTrigger className="text-left text-[15px] md:text-[20px] my-1">
                   {FAQ.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-[16px] text-black">
