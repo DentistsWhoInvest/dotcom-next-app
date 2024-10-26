@@ -159,7 +159,7 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
         bannerText={pageData.title}
         subText={pageData.subtext}
       />
-      <div className="md:mx-[50px] lg:mx-[150px]">
+      <div className="pb-4 pt-[40px] md:mx-[50px] md:pb-[40px] md:pt-[70px] lg:mx-[150px]">
         <ul className="grid grid-cols-1 place-items-center justify-center gap-8 place-self-center md:grid-cols-2 lg:gap-40">
           {pageData.courses.data.map((course: any) => {
             return <CourseCard key={course.id} course={course} />;
