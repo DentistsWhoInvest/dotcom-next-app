@@ -295,15 +295,15 @@ export default function PodcastPage({
   }) => {
     return (
       <div className="relative flex items-center">
-        <div className=" flex items-center h-[110px] w-[100px] overflow-hidden rounded-r-[30px] rounded-l-[30px] lg:w-[150px] lg:h-[180px] xl:w-[180px] xl:h-[200px]">
+        <div className=" flex h-[110px] w-[100px] items-center overflow-hidden rounded-[30px] lg:h-[180px] lg:w-[150px] xl:h-[200px] xl:w-[180px]">
           <Image
             src={contributor.profilePicture.data.attributes.url}
             alt={contributor.firstName + " " + contributor.lastName}
             layout="fill"
-            className=" object-cover object-top rounded-r-[40px] rounded-l-[40px] border-white border"
+            className=" rounded-[40px] border border-white object-cover object-top"
           />
-          <div className="absolute bottom-[-8px] text-nowrap overflow-visible text-center left-1/2 transform -translate-x-1/2">
-            <p className="text-white text-[12px] font-light bg-blue-primary/80 whitespace-nowrap lg:text-[18px]">
+          <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 overflow-visible text-nowrap text-center">
+            <p className="whitespace-nowrap bg-blue-primary/80 text-[12px] font-light text-white lg:text-[18px]">
               {contributor.title}
               {contributor.firstName} {contributor.lastName}
             </p>
@@ -335,7 +335,7 @@ export default function PodcastPage({
           </div>
           <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:items-start md:justify-center md:text-left xl:mx-[130px] xl:max-w-[1140px] ">
             <div
-              className="absolute right-[5%] top-[10%] lg:top-[33%] xl:top-[20%] lg:right-[2%] xl:right-[-2%] flex flex-row space-x-4" //might adjust md breakpoint
+              className="absolute right-[5%] top-[10%] flex flex-row space-x-4 lg:right-[2%] lg:top-[33%] xl:right-[-2%] xl:top-[20%]" //might adjust md breakpoint
             >
               {pageData.attributes.contributors.data
                 .sort((a: ContributorData, b: ContributorData) => b.id - a.id) // Sort in descending order which should ensure James is on the right
@@ -348,8 +348,8 @@ export default function PodcastPage({
                   );
                 })}
             </div>
-            <div className="absolute px-4 top-[45%] md:top-[30%] md:px-[30px] xl:top-[20%] text-white lg:max-w-[66%]">
-              <p className="text-[30px] leading-[30px] font-bold text-[#A4D8F1] md:text-[35px] md:leading-[42px]">
+            <div className="absolute top-[45%] px-4 text-white md:top-[30%] md:px-[30px] lg:max-w-[66%] xl:top-[20%]">
+              <p className="text-[30px] font-bold leading-[30px] text-[#A4D8F1] md:text-[35px] md:leading-[42px]">
                 Episode {pageData.attributes.episode_number}
               </p>
               <p className="text-3xl font-bold md:text-[50px] md:leading-[60px] ">
@@ -363,7 +363,7 @@ export default function PodcastPage({
         </div>
       </section>
       <section id="content" className="p-[10px]">
-        <div className="grid w-full max-w-md grid-cols-1 md:gap-8 xl:gap-16 sm:max-w-xl md:max-w-4xl lg:max-w-[1140px] mx-auto md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-12">
+        <div className="mx-auto grid w-full max-w-md grid-cols-1 sm:max-w-xl md:max-w-4xl md:grid-cols-3 md:gap-8 lg:max-w-[1140px] lg:grid-cols-6 xl:grid-cols-12 xl:gap-16">
           <div className="md:col-span-2 lg:col-span-4 xl:col-span-8">
             <div className="mb-5">
               <iframe
@@ -413,7 +413,7 @@ export default function PodcastPage({
               </p>
               <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
             </div>
-            <div className="space-y-2 mb-5">
+            <div className="mb-5 space-y-2">
               <FullTranscript transcript={pageData.attributes.transcript} />
             </div>
 
@@ -441,7 +441,7 @@ export default function PodcastPage({
               </Link>
             </div>
           </div>
-          <div className="flex flex-col justify-start md:col-span-1 lg:col-span-2 xl:col-span-4 md:w-[233px] lg:w-[318px] xl:w-[330px]">
+          <div className="flex flex-col justify-start md:col-span-1 md:w-[233px] lg:col-span-2 lg:w-[318px] xl:col-span-4 xl:w-[330px]">
             <p className="mb-5 text-center text-4xl font-bold text-blue-primary">
               More Episodes
             </p>
@@ -453,18 +453,18 @@ export default function PodcastPage({
                   key={page.id}
                   className="grid grid-cols-1 gap-4 self-center"
                 >
-                  <div className="my-4 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col md:w-[233px] lg:w-[318px] xl:w-[330px]">
+                  <div className="my-4 flex w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom md:w-[233px] lg:w-[318px] xl:w-[330px]">
                     <Link href={`/episodes/${viewMoreSlug}`}>
                       <Image
                         src={page.attributes.artwork_url}
                         alt={page.attributes.name}
                         width={387}
                         height={218}
-                        className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+                        className="h-[218px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover lg:h-[300px] lg:w-[430px]"
                       />
                     </Link>
-                    <div className="text-center flex flex-col mx-8 mt-4 mb-2 grow space-y-4 md:text-left">
-                      <p className="text-blue-primary text-[21px] font-bold">
+                    <div className="mx-8 mb-2 mt-4 flex grow flex-col space-y-4 text-center md:text-left">
+                      <p className="text-[21px] font-bold text-blue-primary">
                         <Link href={`/episodes/${viewMoreSlug}`}>
                           EP{page.attributes.episode_number}{" "}
                           {page.attributes.title.split(" DWI-")[0]}
