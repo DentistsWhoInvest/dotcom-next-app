@@ -57,7 +57,7 @@ export default function Header() {
       return (
         <li
           key={link.href}
-          className={`p-2 text-right text-sm  md:text-lg lg:text-lg ${
+          className={`p-1 text-right text-sm  md:text-base lg:text-lg ${
             isActive
               ? "text-blue-secondary"
               : "text-blue-primary hover:text-blue-secondary"
