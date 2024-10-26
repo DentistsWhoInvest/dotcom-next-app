@@ -16,7 +16,7 @@ type CoursePageData = {
       };
     };
   };
-  courses: {data: Course[]};
+  courses: { data: Course[] };
 };
 
 interface Course {
@@ -49,60 +49,58 @@ const CourseCard = ({ course }: { course: Course }) => {
         <h2 className="text-xl xl:text-3xl">{course.attributes.tagline}</h2>
 
         <svg
-            className="xl:pb-5 lg:py-3 absolute left-1/2 top-1/2 z-[2] lg:w-[calc(50%)] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 500 150"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
-              stroke-width="10px"
-              fill="none"
-              className="path-1 stroke-blue-secondary"
-            ></path>
-            <path
-              d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
-              stroke-width="10px"
-              fill="none"
-              className="path-2 stroke-blue-secondary"
-            ></path>
-          </svg>
-          <style jsx>{`
-        @keyframes draw {
-          0%
-          {
-            stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-            opacity: 0;
+          className="xl:pb-5 lg:py-3 absolute left-1/2 top-1/2 z-[2] lg:w-[calc(50%)] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 500 150"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
+            stroke-width="10px"
+            fill="none"
+            className="path-1 stroke-blue-secondary"
+          ></path>
+          <path
+            d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
+            stroke-width="10px"
+            fill="none"
+            className="path-2 stroke-blue-secondary"
+          ></path>
+        </svg>
+        <style jsx>{`
+          @keyframes draw {
+            0% {
+              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
+              opacity: 0;
+            }
+            10% {
+              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
+              opacity: 1;
+            }
+            20% {
+              stroke-dasharray: 2500, 0; /* Complete visible stroke */
+              opacity: 1;
+            }
+            80% {
+              stroke-dasharray: 2500, 0; /* Keep the stroke */
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
           }
-          10% {
-            stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-            opacity: 1;
-          }
-          20% {
-            stroke-dasharray: 2500, 0; /* Complete visible stroke */
-            opacity: 1;
-          }
-          80% {
-            stroke-dasharray: 2500, 0; /* Keep the stroke */
-            opacity: 1;
-          }
-          100% {
-            opacity: 0;
-          }
-        }
 
-        .path-1 {
-          animation: draw 8s forwards; /* Animate drawing and fading */
-          animation-iteration-count: infinite;
-        }
+          .path-1 {
+            animation: draw 8s forwards; /* Animate drawing and fading */
+            animation-iteration-count: infinite;
+          }
 
-        .path-2 {
-          animation: draw 8s forwards; /* Animate drawing and fading */
-          animation-delay: 0.5s;
-          animation-iteration-count: infinite;
-        }
-      `}</style>
-
+          .path-2 {
+            animation: draw 8s forwards; /* Animate drawing and fading */
+            animation-delay: 0.5s;
+            animation-iteration-count: infinite;
+          }
+        `}</style>
       </div>
       <div className="relative">
         <Image
@@ -133,16 +131,21 @@ const CourseCard = ({ course }: { course: Course }) => {
         <p className="my-5 text-[20px]  font-medium leading-5 text-blue-primary">
           {course.attributes.description}
         </p>
-        <Button className="rounded-sm bg-orange-400 px-[36px] py-6 text-white hover:bg-orange-500">
-          <Link href={course.attributes.navigation_url}>Learn More</Link>
-        </Button>
+        <Link href={course.attributes.navigation_url}>
+          <Button className="rounded-sm bg-orange-400 px-[36px] py-6 text-white hover:bg-orange-500">
+            Learn More
+          </Button>
+        </Link>
       </div>
     </li>
   );
 };
 
 export const getStaticProps = async () => {
-  const result = await fetchEndpointData("/courses-page", ['courses, hero_image', 'courses.cover, courses.on_the_day_photo']);
+  const result = await fetchEndpointData("/courses-page", [
+    "courses, hero_image",
+    "courses.cover, courses.on_the_day_photo",
+  ]);
   return {
     props: { pageData: result.data.attributes },
   };
@@ -151,13 +154,18 @@ export const getStaticProps = async () => {
 export default function Courses({ pageData }: { pageData: CoursePageData }) {
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
-      <HeroBanner bannerImage={pageData.hero_image.data.attributes} bannerText={pageData.title} subText={pageData.subtext}/>
+      <HeroBanner
+        bannerImage={pageData.hero_image.data.attributes}
+        bannerText={pageData.title}
+        subText={pageData.subtext}
+      />
       <div className="md:mx-[50px] lg:mx-[150px]">
-      <ul className="grid grid-cols-1 place-items-center justify-center gap-8 place-self-center md:grid-cols-2 lg:gap-40">
-        {pageData.courses.data.map((course: any) => {
-          return <CourseCard key={course.id} course={course} />;
-        })}
-      </ul></div>
+        <ul className="grid grid-cols-1 place-items-center justify-center gap-8 place-self-center md:grid-cols-2 lg:gap-40">
+          {pageData.courses.data.map((course: any) => {
+            return <CourseCard key={course.id} course={course} />;
+          })}
+        </ul>
+      </div>
       <HundredKButton />
     </main>
   );

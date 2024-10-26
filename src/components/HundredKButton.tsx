@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export const HundredKButton = () => {
   return (
-    <div className="p-4 mx-4 mb-12 mt-8 self-center rounded-lg border-solid bg-white  shadow-custom transition-all duration-300 hover:bg-orange-400 xl:max-w-[1140px]">
+    <div className="mx-4 mb-12 mt-8 self-center rounded-lg border-solid bg-white  shadow-custom transition-all duration-300 hover:bg-orange-400 xl:max-w-[1140px]">
       <Link
         href={"/100k"}
-        className="block justify-center text-wrap p-4 text-center text-xl font-semibold text-blue-primary"
+        className="block justify-center text-wrap p-8 text-center text-xl font-semibold text-blue-primary"
       >
         <span className="relative z-[1]">
           Psssssst – Principal dentists: want to add{" "}
