@@ -112,20 +112,21 @@ export default function VideoPage({
           <Disclaimer />
         </div>
 
-        <div className="mt-5 md:mx-[-50px] xl:mx-[-150px] flex flex-col justify-center bg-gray-100">
+        <div className="mt-5 md:mx-[-50px] mx-[-20px] xl:mx-[-150px] flex flex-col justify-center items-center bg-gray-100">
           <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
             Watch More
           </p>
           <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
           <div className="relative">
-            <Carousel>
-              <CarouselContent className="mb-12">
+            <Carousel id="carousel" className="xl:max-w-[1340px] items-center lg:max-w-[1024px] md:max-w-[768px] max-w-[375px]">
+              <CarouselContent className="mb-12 -ml-4" id="carouselcontent">
                 {otherVideos.map((page: any) => {
                   const viewMoreSlug = createSlug(page.attributes.name);
                   return (
                     <CarouselItem
                       key={page.id}
-                      className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                      className="xl:basis-1/3 md:basis-1/2 justify-center flex "
+                      id="carouselitem"
                     >
                       <ViewMoreCard
                       page={page}
@@ -136,7 +137,7 @@ export default function VideoPage({
                   );
                 })}
               </CarouselContent>
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2 ">
                 <CarouselPrevious className="relative !-left-0" />
                 <CarouselNext className="relative !-right-0" />
               </div>
