@@ -92,7 +92,7 @@ export default function Contact({ pageData }: { pageData: any }) {
           return (
             <Accordion key={FAQ} type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left text-[15px] md:text-[20px] my-1">
+                <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
                   {FAQ.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-[16px] text-black">
