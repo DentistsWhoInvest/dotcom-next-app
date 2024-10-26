@@ -61,9 +61,9 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px]">
+      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px] xl:pt-8">
         <div className="flex flex-col justify-center bg-gray-100">
-          <div className="m-6 aspect-video">
+          <div className="m-4 aspect-video">
             <iframe
               src={`https://player.vimeo.com/video/${videoUri}`}
               width="640"
@@ -108,7 +108,7 @@ export default function VideoPage({
           </div>
         )}
 
-        <div className="my-4">
+        <div className="mt-8 xl:mb-16 mb-8">
           <Disclaimer />
         </div>
 
