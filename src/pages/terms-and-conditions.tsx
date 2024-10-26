@@ -47,7 +47,7 @@ export default function TermsAndConditions({ result }: { result: any[] }) {
         </span>
       </div> */}
 
-      <div className="space-y-2 mb-5">
+      <div className="my-8 space-y-8 px-6 pt-8 lg:m-6 lg:mx-auto max-w-[1140px]">
         <p>Please read all these terms and conditions.&nbsp;</p>
 
         <p>
