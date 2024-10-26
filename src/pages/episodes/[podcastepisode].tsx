@@ -185,9 +185,15 @@ export const getStaticPaths = async () => {
 
   return {
     paths: parsedData.map(
-      (result: { attributes: { episode_number: number, title: string } }) => ({
+      (result: { attributes: { episode_number: number; title: string } }) => ({
         // params: { podcastepisode: "e" + result.attributes.episode_number },
-        params: { podcastepisode: "e" + result.attributes.episode_number + "-" + createSlug(result.attributes.title).replace(/-dwi-ep\d+$/, '') },
+        params: {
+          podcastepisode:
+            "e" +
+            result.attributes.episode_number +
+            "-" +
+            createSlug(result.attributes.title).replace(/-dwi-ep\d+$/, ""),
+        },
       })
     ),
     fallback: false,
@@ -195,7 +201,9 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const episodeNumber = Number(params.podcastepisode.replace(/^e/, '').split('-')[0]);
+  const episodeNumber = Number(
+    params.podcastepisode.replace(/^e/, "").split("-")[0]
+  );
   const filePath = path.join(process.cwd(), "public", "podcastepisodes.json");
   const page = parseInt(params.page, 10) || 1;
   const jsonData = fs.readFileSync(filePath, "utf-8");
@@ -267,7 +275,12 @@ export default function PodcastPage({
             );
           })}
           {index === 2 && (
-            <div className="">
+            <Link
+              href={
+                pageData.attributes.horizontal_banner.data.attributes
+                  .navigation_url
+              }
+            >
               <Image
                 src={
                   pageData.attributes.horizontal_banner.data.attributes
@@ -281,7 +294,7 @@ export default function PodcastPage({
                 layout="responsive"
                 className="h-auto w-full object-cover"
               />
-            </div>
+            </Link>
           )}
         </div>
       );
@@ -447,7 +460,11 @@ export default function PodcastPage({
             </p>
             <p className="flex w-2/3 self-center border-t-[3px] border-solid border-blue-secondary"></p>
             {otherPodcasts.map((page: any) => {
-              const viewMoreSlug = "e" + page.attributes.episode_number + "-" + createSlug(page.attributes.title).replace(/-dwi-ep\d+$/, '');
+              const viewMoreSlug =
+                "e" +
+                page.attributes.episode_number +
+                "-" +
+                createSlug(page.attributes.title).replace(/-dwi-ep\d+$/, "");
               return (
                 <ul
                   key={page.id}
