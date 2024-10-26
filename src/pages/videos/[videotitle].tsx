@@ -14,6 +14,7 @@ import {
 import type { Video } from "../videos";
 import Disclaimer from "@/components/Disclaimer";
 import Link from "next/link";
+import { ViewMoreCard } from "@/components/ViewMoreCard";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -120,12 +121,17 @@ export default function VideoPage({
             <Carousel>
               <CarouselContent className="mb-12">
                 {otherVideos.map((page: any) => {
+                  const viewMoreSlug = createSlug(page.attributes.name);
                   return (
                     <CarouselItem
                       key={page.id}
                       className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
                     >
-                      <VideoCard page={page} />
+                      <ViewMoreCard
+                      page={page}
+                      contentType={"video"}
+                      slug={viewMoreSlug}
+                    />
                     </CarouselItem>
                   );
                 })}
