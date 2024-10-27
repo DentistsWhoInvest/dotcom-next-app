@@ -279,6 +279,9 @@ export default function Articles({
         }
         bannerImage={{
           url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
+          name: "blog_hero_cover_95c157286b",
+          width: 1920,
+          height: 1080,
         }}
       />
       <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
