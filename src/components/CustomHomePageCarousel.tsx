@@ -41,7 +41,7 @@ export const CustomHomePageCarousel = ({ thoughts }: any) => {
     );
   }
   return (
-    <div className="mx-auto w-full max-w-xs md:max-w-[648px] py-8 lg:max-w-[904px] xl:max-w-[688px]">
+    <div className="mx-auto w-full max-w-[700px] py-8 md:max-w-[800px] lg:max-w-[904px] xl:max-w-[688px]">
       <Carousel
         plugins={[Autoplay({ delay: 3000 })]}
         ref={emblaRef}
@@ -60,7 +60,7 @@ export const CustomHomePageCarousel = ({ thoughts }: any) => {
                       alt={thought.cover.data.attributes.alternativeText}
                       width={400}
                       height={300}
-                      className="h-48 w-full object-cover md:w-[648px] md:h-[388px] lg:w-[904px] lg:h-[572px] xl:w-[688px] xl:h-[442px]"
+                      className="size-full object-cover md:max-h-[528px] md:max-w-[800px] lg:h-[572px] lg:w-[904px] xl:h-[442px] xl:w-[688px]"
                     />
                   </CardContent>
                 </Card>

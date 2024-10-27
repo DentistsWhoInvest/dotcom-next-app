@@ -277,7 +277,7 @@ export default function Home({ pageData }: { pageData: any }) {
           {pageData.founder_description.map((block: any) => {
             return (
               <div key={block.id}>
-                <p className="my-4">{block.children[0].text}</p>
+                <p className="my-2">{block.children[0].text}</p>
               </div>
             );
           })}
@@ -287,7 +287,7 @@ export default function Home({ pageData }: { pageData: any }) {
             </Button>
           </div>
         </div>
-        <div className="flex justify-center pb-[20px]">
+        <div className="flex justify-center pb-[10px]">
           <Image
             src={replaceImageDomain(
               pageData.founder_image.data.attributes.formats.large.url
@@ -295,12 +295,13 @@ export default function Home({ pageData }: { pageData: any }) {
             alt={pageData.founder_image.data.attributes.alternativeText}
             width={pageData.founder_image.data.attributes.width}
             height={pageData.founder_image.data.attributes.height}
-            className="h-[441px] w-[315px] rounded-2xl md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+            // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+            className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] xl:max-h-[654px] xl:max-w-[468px]"
           />
         </div>
       </section>
 
-      <section className="bg-gray-100 py-4 text-center">
+      <section className="bg-gray-100 py-2 text-center">
         <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
           {pageData.what_we_do_title}
         </h2>
@@ -317,7 +318,7 @@ export default function Home({ pageData }: { pageData: any }) {
             return (
               <div
                 key={reason.id}
-                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[493px] md:w-[223px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
+                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[415px] md:w-[245px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
               >
                 <div className="flex grow flex-col p-6 pt-0 text-center">
                   <div className="mx-auto my-4 size-20 xl:size-40">
@@ -343,7 +344,7 @@ export default function Home({ pageData }: { pageData: any }) {
                   <Link
                     href={reason.cta_navigation_url}
                     aria-label={reason.cta_navigation_description}
-                    className="mx-2 mb-2 mt-auto rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary "
+                    className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary"
                   >
                     <button>{reason.cta_text}</button>
                   </Link>{" "}
@@ -355,7 +356,7 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section>
-        <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:p-12 xl:mx-[120px]">
+        <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 xl:mx-[120px]">
           <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
             {pageData.why_you_title}
           </CardTitle>
@@ -458,14 +459,15 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section id="testimonials" className="py-8 text-center">
+      <section id="testimonials" className="bg-white py-8 text-center">
         <h2 className="text-wrap text-[30px] font-bold leading-9 text-blue-primary md:mx-[120px] md:my-12 md:text-[35px]">
           {pageData.testimonials_title}
         </h2>
 
         <div
           id="testimonial-cards"
-          className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
+          // className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
+          className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
         >
           {pageData.testimonials.data.map((testimonial: any, index: number) => {
             return (
