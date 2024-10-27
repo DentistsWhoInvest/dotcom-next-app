@@ -24,12 +24,12 @@ export const TestimonialCard = ({
 }) => {
   return (
     <Card
-      className={`m-6 md:m-2 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl xl:col-span-1 ${
+      className={`m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:m-2 xl:col-span-1 ${
         index === 2 ? "md:col-span-2" : "col-span-1"
       }`}
     >
-      <CardContent className="space-y-4 text-left md:flex md:flex-col md:flex-grow">
-        <CardTitle className="p-2 text-lg font-semibold md:text-xl md:p-0">
+      <CardContent className="space-y-4 text-left md:flex md:grow md:flex-col">
+        <CardTitle className="p-2 text-lg font-semibold md:p-0 md:text-xl">
           <Image
             id="quote"
             src="/white-quote.png"
@@ -50,7 +50,7 @@ export const TestimonialCard = ({
                 viewBox="0 0 24 24"
                 fill="#ffd700"
                 xmlns="http://www.w3.org/2000/svg"
-                className="md:w-12 md:h-12"
+                className="md:size-12"
               >
                 <path
                   d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
@@ -61,7 +61,7 @@ export const TestimonialCard = ({
           </p>
         </CardDescription>
         <div className="grow"></div>
-        <CardFooter className="flex flex-col md:flex-row mt-auto mb-4">
+        <CardFooter className="mb-4 mt-auto flex flex-col md:flex-row">
           <Image
             src={replaceImageDomain(
               testimonial.attributes.author_thumbnail.data.attributes.formats.
