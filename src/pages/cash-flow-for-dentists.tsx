@@ -264,7 +264,7 @@ export default function CashflowCoursePage({
         <p className="space-y-2 px-[30px] pt-[45px] text-center text-3xl font-bold  text-blue-primary md:py-[50px] lg:text-[45px]">
           {courseData.testimonials_title}
         </p>
-        <div className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-[120px] xl:max-w-[1200xp] xl:px-0">
+        <div className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]">
           {courseData.testimonials.data.map(
             (testimonial: any, index: number) => {
               return (
