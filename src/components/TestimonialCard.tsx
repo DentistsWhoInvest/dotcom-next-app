@@ -24,7 +24,7 @@ export const TestimonialCard = ({
 }) => {
   return (
     <Card
-      className={`m-7 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:m-2 xl:col-span-1 ${
+      className={`m-7 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:m-2 lg:col-span-1 ${
         index === 2 ? "md:col-span-2" : "col-span-1"
       }`}
     >
@@ -48,7 +48,7 @@ export const TestimonialCard = ({
             alt="stars"
             height={20}
             width={102}
-            className="mb-4"
+            className="mb-4 lg:h-[26px] lg:w-[135px]"
           ></Image>
         </CardDescription>
         <div className="grow"></div>

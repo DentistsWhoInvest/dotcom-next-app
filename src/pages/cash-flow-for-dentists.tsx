@@ -200,7 +200,7 @@ export default function CashflowCoursePage({
             return (
               <div
                 key={index}
-                className={`mx-[30px] mb-2 mt-8 flex flex-col gap-8 md:flex-row ${
+                className={`mx-[30px] mb-2 mt-8 flex flex-col gap-2 md:flex-row md:items-center md:justify-center lg:mx-auto lg:max-w-[1140px] ${
                   isEven ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
               >
@@ -209,10 +209,10 @@ export default function CashflowCoursePage({
                   alt={paragraph.cover.data.attributes.name}
                   width={315}
                   height={209}
-                  className="size-full rounded-2xl object-cover"
+                  className="size-full rounded-[30px] object-cover md:w-1/2 md:p-[10px]"
                 />
 
-                <div className="flex flex-col space-y-4 text-justify">
+                <div className="flex flex-col space-y-4 text-justify md:w-1/2 md:p-[10px]">
                   <BlocksRenderer content={paragraph.description} />
                 </div>
               </div>
@@ -221,8 +221,8 @@ export default function CashflowCoursePage({
         </div>
       </section>
       <section id="freedom">
-        <div className="flex flex-col space-y-8 p-8 text-center">
-          <span className="text-3xl font-bold text-blue-primary">
+        <div className="flex flex-col space-y-8 p-8 text-center lg:mx-auto lg:max-w-[1140px] lg:py-[70px] lg:text-xl">
+          <span className="text-3xl font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
             {courseData.freedom.title}
           </span>
           <BlocksRenderer content={courseData.freedom.description} />
@@ -230,8 +230,8 @@ export default function CashflowCoursePage({
       </section>
 
       <section id="helpforyou" className="bg-[#dbe2e9]">
-        <div className="flex flex-col space-y-8 p-[30px] text-center">
-          <span className="text-3xl font-bold text-blue-primary">
+        <div className="flex flex-col space-y-8 p-[30px] text-center lg:mx-auto lg:max-w-[1140px]">
+          <span className="text-3xl font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
             {courseData.help_for_you.title}
           </span>
           <span className="text-xl">{courseData.help_for_you.subtext}</span>
@@ -241,7 +241,7 @@ export default function CashflowCoursePage({
                 return (
                   <div
                     key={index}
-                    className="m-2 flex flex-col items-center space-y-4 rounded-3xl bg-white p-[30px] shadow-custom-br"
+                    className="m-2 flex flex-col items-center space-y-4 rounded-3xl bg-white p-[30px] shadow-custom-br lg:px-[10px]"
                   >
                     <Image
                       src={card.image.data.attributes.url}
@@ -249,7 +249,7 @@ export default function CashflowCoursePage({
                       width={200}
                       height={200}
                     />
-                    <span className="mx-4 text-[25px] font-bold text-blue-primary">
+                    <span className="mx-4 text-[25px] font-bold text-blue-primary ">
                       {card.reason}
                     </span>
                   </div>
@@ -261,10 +261,10 @@ export default function CashflowCoursePage({
       </section>
 
       <section id="reviews">
-        <p className="space-y-2 px-[30px] pt-[45px] text-center text-3xl font-bold  text-blue-primary">
+        <p className="space-y-2 px-[30px] pt-[45px] text-center text-3xl font-bold  text-blue-primary md:py-[50px] lg:text-[45px]">
           {courseData.testimonials_title}
         </p>
-        <div className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] xl:mx-[120px] xl:max-w-[1200xp] xl:grid-cols-3 xl:px-0">
+        <div className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-[120px] xl:max-w-[1200xp] xl:px-0">
           {courseData.testimonials.data.map(
             (testimonial: any, index: number) => {
               return (
@@ -281,7 +281,7 @@ export default function CashflowCoursePage({
       <div className="flex flex-col items-center space-y-8 p-8 pb-[60px]">
         <Link
           href={courseData.cta_navigation_url}
-          className="rounded-md bg-orange-400 px-8 py-4 text-3xl font-semibold text-white hover:bg-orange-500"
+          className="rounded-md bg-orange-400 px-8 py-4 text-3xl font-semibold text-white hover:bg-orange-500 lg:px-12 lg:py-6 lg:text-[45px]"
         >
           {courseData.cta_text}
         </Link>
