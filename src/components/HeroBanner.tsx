@@ -2,9 +2,41 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-type BannerImage = {
+type ImageFormat = {
+  ext: string;
   url: string;
-  alt?: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type ButtonData = {
@@ -24,35 +56,23 @@ export const HeroBanner = ({
   subText,
   podcastSubText = false,
 }: {
-  bannerImage: BannerImage;
+  bannerImage: ImageAttributes | { url: string; width: number; height: number, name: string };
   bannerText: string;
   subText?: string;
   ctaButton?: ButtonData;
   podcastSubText?: boolean;
 }) => {
   return (
-    <div className="relative z-10 h-[430px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
-      <div className="absolute inset-0 xl:hidden">
+    <div className="relative z-10 h-[430px] w-screen overflow-hidden md:h-[409px] xl:h-[570.75px]">
         <Image
           src={bannerImage.url}
-          alt={"mobile"}
+          alt={bannerImage.name}
           layout="fill"
           objectFit="cover"
-          objectPosition="right 50%"
-          priority
+          className="inset-0 object-[right_70%] lg:object-[right_40%] xl:object-[right_30%] xxl:object-[right_25%]"
         />
-        <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
-      </div>
-      <div className="absolute inset-0 hidden xl:block">
-        <Image
-          src={bannerImage.url}
-          alt={"desktop"}
-          layout="fill"
-          objectFit="cover"
-          objectPosition=""
-          priority
-        />
-      </div>
+        <div className="absolute inset-0 bg-blue-primary opacity-80 md:opacity-[0.69] xl:hidden"></div>
+
       <div className="relative z-10 flex size-full flex-col items-center justify-center text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px] ">
         <div className="absolute px-4 md:top-1/4 md:px-[30px] xl:top-[30%] xl:w-2/3">
           <h1 className="mb-4 text-3xl font-bold text-white md:text-[35px] xl:mb-5 xl:text-[45px] xl:leading-[54px]">
