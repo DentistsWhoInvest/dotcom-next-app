@@ -110,8 +110,6 @@ export default function About({ pageData }: { pageData: AboutData }) {
         bannerImage={{
           url: pageData.attributes.hero_cover.data.attributes.url,
           name: pageData.attributes.hero_cover.data.attributes.name,
-          width: pageData.attributes.hero_cover.data.attributes.width,
-          height: pageData.attributes.hero_cover.data.attributes.height,
         }}
         subText={pageData.attributes.hero_subtext}
       />

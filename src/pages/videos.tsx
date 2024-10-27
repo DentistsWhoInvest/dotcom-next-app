@@ -147,8 +147,6 @@ export default function Videos({ pageData }: { pageData: VideosResponse }) {
         bannerImage={{
           url: "https://storage.googleapis.com/dwi-dotcom-assets/james_recording_green_screen_3de155024b/james_recording_green_screen_3de155024b.webp",
           name: "james_recording_green_screen_3de155024b",
-          width: 1920,
-          height: 1080, //todo these were arbitrary
         }}
         bannerText={"Videos"}
         subText="Reflective insights on finance and wealth"

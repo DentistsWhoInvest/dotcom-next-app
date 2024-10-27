@@ -155,7 +155,7 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
   return (
     <main className="flex flex-col bg-[#f0f3f6] ">
       <HeroBanner
-        bannerImage={pageData.hero_image.data.attributes}
+        bannerImage={{url:pageData.hero_image.data.attributes.url, name:pageData.hero_image.data.attributes.alt}}
         bannerText={pageData.title}
         subText={pageData.subtext}
       />

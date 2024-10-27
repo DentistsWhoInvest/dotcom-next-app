@@ -234,7 +234,7 @@ export default function Home({ pageData }: { pageData: any }) {
             bannerText={pageData.hero_text}
             bannerImage={{
               url: pageData.hero_cover.data.attributes.url,
-              alt: pageData.hero_cover.data.attributes.alternativeText,
+              name: pageData.hero_cover.data.attributes.alternativeText,
             }}
             subText={pageData.hero_subtext}
             ctaButton={{
@@ -248,7 +248,7 @@ export default function Home({ pageData }: { pageData: any }) {
             bannerText={pageData.hero_text}
             bannerImage={{
               url: pageData.hero_cover.data.attributes.url,
-              alt: pageData.hero_cover.data.attributes.alternativeText,
+              name: pageData.hero_cover.data.attributes.alternativeText,
             }}
             subText={pageData.hero_subtext}
             ctaButton={{

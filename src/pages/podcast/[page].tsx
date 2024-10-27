@@ -193,7 +193,7 @@ export default function Podcasts({
       <HeroBanner
         bannerImage={{
           url: "https://storage.googleapis.com/dwi-dotcom-assets/james_podcasting_c38220ce04/james_podcasting_c38220ce04.webp",
-          alt: "James podcasting",
+          name: "James podcasting",
         }}
         bannerText={"The Dentists Who Invest Podcast "}
         subText={"Can't miss financial insights for UK dental professionals"}

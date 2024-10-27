@@ -70,7 +70,7 @@ export default function Contact({ pageData }: { pageData: any }) {
   return (
     <main className={`flex flex-col`}>
       <HeroBanner
-        bannerImage={pageData.attributes.hero_cover.data.attributes}
+        bannerImage={{url: pageData.attributes.hero_cover.data.attributes.url, name: pageData.attributes.hero_cover.data.attributes.alt}}
         bannerText={pageData.attributes.hero_title}
         subText={pageData.attributes.hero_subtext}
       />

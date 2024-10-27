@@ -56,7 +56,7 @@ export const HeroBanner = ({
   subText,
   podcastSubText = false,
 }: {
-  bannerImage: ImageAttributes | { url: string; width: number; height: number, name: string };
+  bannerImage: ImageAttributes | { url: string, name: string };
   bannerText: string;
   subText?: string;
   ctaButton?: ButtonData;
