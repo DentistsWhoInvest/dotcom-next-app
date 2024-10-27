@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const HundredKButton = () => {
   return (
-    <div className="mb-12 mt-8 w-[90%] max-w-[1140px] self-center rounded-lg border-solid bg-white shadow-custom transition-all duration-300 hover:bg-orange-400">
+    <div className="mb-12 mt-8 w-[90%] max-w-[1140px] self-center rounded-lg border-solid bg-white shadow-custom transition-all duration-300 hover:bg-orange-400 lg:w-[85%]">
       <Link
         href={"/100k"}
         className="block justify-center text-wrap p-8 text-center text-xl font-semibold text-blue-primary"

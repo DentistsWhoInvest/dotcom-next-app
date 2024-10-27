@@ -1,3 +1,5 @@
+//to accomodate the svg swoosh effect, we need a custom classname here
+/* eslint-disable tailwindcss/no-custom-classname */
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
@@ -44,12 +46,12 @@ interface Course {
 
 const CourseCard = ({ course }: { course: Course }) => {
   return (
-    <li className="my-4 flex h-[528px] flex-col justify-center rounded-[30px] border border-solid bg-white p-5 shadow-custom lg:h-[594px] lg:w-[422px] xl:h-[826px] xl:w-[570px] ">
+    <li className="my-4 flex h-[528px] flex-col justify-center rounded-[30px] bg-white p-5 shadow-custom lg:h-[594px] lg:w-[422px] xl:h-[826px] xl:w-[540px] ">
       <div className="relative bg-blue-primary p-4 text-center font-bold text-white transition-all duration-300">
         <h2 className="text-xl xl:text-3xl">{course.attributes.tagline}</h2>
 
         <svg
-          className="xl:pb-5 lg:py-3 absolute left-1/2 top-1/2 z-[2] lg:w-[calc(50%)] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+          className="absolute left-1/2 top-1/2 z-[2] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible lg:w-[calc(50%)] lg:py-3 xl:pb-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 500 150"
           preserveAspectRatio="none"
@@ -132,7 +134,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           {course.attributes.description}
         </p>
         <Link href={course.attributes.navigation_url}>
-          <Button className="rounded-sm bg-orange-400 px-[36px] py-6 text-white hover:bg-orange-500">
+          <Button className="rounded-sm border-2 border-orange-400 bg-orange-400 px-[36px] py-6 text-white hover:bg-white hover:text-blue-primary">
             Learn More
           </Button>
         </Link>
@@ -159,13 +161,14 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
         bannerText={pageData.title}
         subText={pageData.subtext}
       />
-      <div className="pb-4 pt-[40px] md:mx-[50px] md:pb-[40px] md:pt-[70px] lg:mx-[150px]">
-        <ul className="grid grid-cols-1 place-items-center justify-center gap-8 place-self-center md:grid-cols-2 lg:gap-40">
+      <div className="w-[90%] max-w-[1140px] place-self-center pb-4 pt-[40px] md:mx-auto md:w-full md:pb-[40px] md:pt-[70px]">
+        <ul className="grid grid-cols-1 place-items-center gap-8 md:grid-cols-2">
           {pageData.courses.data.map((course: any) => {
             return <CourseCard key={course.id} course={course} />;
           })}
         </ul>
       </div>
+
       <HundredKButton />
     </main>
   );
