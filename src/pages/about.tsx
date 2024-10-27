@@ -116,8 +116,8 @@ export default function About({ pageData }: { pageData: AboutData }) {
 
       <section id="manifesto">
         <div className="flex size-full flex-col items-center justify-center p-8 text-center md:p-[50px]">
-          <div className="xl:max-w-[1140px]">
-            <p className="text-[30px] font-bold text-blue-primary">Manifesto</p>
+          <div className="xl:max-w-[1140px] xl:px-[135px]">
+            <p className="text-[30px] font-bold text-blue-primary xl:text-[45px]">Manifesto</p>
             <span className="m-4 h-0.5 w-full bg-blue-primary" />
             {pageData.attributes.manifesto.map((item, index) => {
               const formattedIndex = "0" + (index + 1).toString();
@@ -154,7 +154,7 @@ export default function About({ pageData }: { pageData: AboutData }) {
             <div className="absolute inset-0 bg-blue-primary opacity-80"></div>
           </div>
           <div className="relative z-10 flex size-full flex-col items-center justify-center  ">
-            <div className="absolute px-[30px] text-white md:px-[60px] xl:max-w-[1140px] xl:px-[160px]">
+            <div className="absolute px-[30px] text-white md:px-[60px] xl:max-w-[1140px] xl:px-[150px]">
               <div className="mb-4 text-center text-3xl  font-bold md:text-left md:text-[35px] xl:text-[45px]">
                 {pageData.attributes.our_story_title}
               </div>
@@ -169,7 +169,7 @@ export default function About({ pageData }: { pageData: AboutData }) {
       </section>
 
       <div className="relative">
-        <div className="flex size-full flex-col items-center justify-center space-y-2 p-8 text-left md:flex-row md:space-x-8 md:px-[50px] xl:px-[180px]">
+        <div className="flex size-full flex-col items-center justify-center space-y-2 p-8 text-left md:flex-row md:space-x-8 md:px-[50px]">
           <Image
             className="m-4 rounded-3xl object-cover"
             width={311}
