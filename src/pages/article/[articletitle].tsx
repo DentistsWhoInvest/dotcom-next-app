@@ -144,12 +144,12 @@ export default function ArticlePage({
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
       </Head>
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-8 xl:gap-16 xl:my-5">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 p-5 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 md:gap-8 xl:my-5 xl:gap-16">
         <div className="md:col-span-2">
-          <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5 md:text-[45px] md:leading-[54px]">
+          <div className="mb-5 text-center text-[30px] font-bold leading-9 text-blue-primary md:text-[45px] md:leading-[54px]">
             {pageData.attributes.title}
           </div>
-          <div className="flex justify-center space-x-2 text-center text-base text-blue-secondary p-[10px] mb-5 items-center">
+          <div className="mb-5 flex items-center justify-center space-x-2 p-[10px] text-center text-base text-blue-secondary">
             <Calendar size={14} />
             {publishedDate}
             <Clock size={14} />
@@ -161,9 +161,9 @@ export default function ArticlePage({
             width={1200}
             height={400}
             layout="responsive"
-            className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
+            className="h-auto w-full object-cover md:h-[273px] md:w-[485px]"
           />
-          <div className="articleContent text-[18px] leading-7 py-5 md:text-xl">
+          <div className="articleContent py-5 text-[18px] leading-7 md:text-xl">
             {pageData.attributes.content_sections.map((contentParagraph) => {
               return (
                 <BlocksRenderer
@@ -194,7 +194,7 @@ export default function ArticlePage({
             </Link>
           </div>
         </div>
-        <div className="md:col-span-1 w-[233px] lg:w-[318px] xl:w-[330px]">
+        <div className="md:col-span-1 md:w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
             <Link
