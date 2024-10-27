@@ -151,7 +151,7 @@ export default function Videos({ pageData }: { pageData: VideosResponse }) {
         bannerText={"Videos"}
         subText="Reflective insights on finance and wealth"
       />
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center">
+      <ul className="grid grid-cols-1 gap-4 self-center py-[30px] md:grid-cols-2 md:pt-[40px] lg:pt-[50px] xl:grid-cols-3 xl:pt-[70px]">
         {sortedData.map((page: any) => {
           return <VideoCard key={page.id} page={page} />;
         })}
