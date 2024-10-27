@@ -216,13 +216,13 @@ export default function ArticlePage({
           </div>
         </div>
       </div>
-      <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 md:mx-[-50px] xl:mx-[-150px]">
+      <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 ">
       <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More
         </p>
         <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
         <div className="relative">
-        <Carousel id="carousel" className="max-w-[375px] items-center md:max-w-screen-md lg:max-w-screen-lg xl:max-w-[1340px]">
+        <Carousel id="carousel" className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]">
         <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
         {otherArticles.map((page: any) => {
                 const viewMoreSlug = createSlug(page.attributes.title);
