@@ -117,24 +117,25 @@ export default function About({ pageData }: { pageData: AboutData }) {
       <section id="manifesto">
         <div className="flex size-full flex-col items-center justify-center p-8 text-center md:p-[50px]">
           <div className="xl:max-w-[1140px]">
-          <p className="text-[30px] font-bold text-blue-primary">Manifesto</p>
-          <span className="m-4 h-0.5 w-full bg-blue-primary" />
-          {pageData.attributes.manifesto.map((item, index) => {
-            const formattedIndex = "0" + (index + 1).toString();
-            return (
-              <div
-                key={item.id}
-                className="pb-[50px] md:flex md:flex-row md:space-x-8 md:p-6 md:items-center w-full"
-              >
-                <p className="text-[48px] text-blue-secondary font-semibold">
-                  {formattedIndex}
-                </p>
-                <p className="text-left text-[17px] leading-[21.6px] text-[#333f48] font-[500]">
-                  {item.reason}
-                </p>
-              </div>
-            );
-          })}</div>
+            <p className="text-[30px] font-bold text-blue-primary">Manifesto</p>
+            <span className="m-4 h-0.5 w-full bg-blue-primary" />
+            {pageData.attributes.manifesto.map((item, index) => {
+              const formattedIndex = "0" + (index + 1).toString();
+              return (
+                <div
+                  key={item.id}
+                  className="w-full pb-[50px] md:flex md:flex-row md:items-center md:space-x-8 md:p-6"
+                >
+                  <p className="text-[48px] font-semibold text-blue-secondary">
+                    {formattedIndex}
+                  </p>
+                  <p className="text-left text-[17px] font-[500] leading-[21.6px] text-grey-primary">
+                    {item.reason}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
