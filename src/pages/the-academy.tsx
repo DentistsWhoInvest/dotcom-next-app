@@ -180,20 +180,20 @@ export default function TheAcademyCoursePage({
         </section>
 
         <section id="first-description">
-          <div className="m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px]">
+          <div className="m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.first_description} />
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
-          <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0">
+          <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
             <Image
               src={courseData.collective_content_image.data.attributes.url}
               alt="Collective content image"
               width={315}
               height={315}
-              className="h-auto w-full md:size-[364px] lg:size-[492px]"
+              className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
             />
-            <div className="space-y-8 lg:pl-[20px] lg:pr-[120px]">
+            <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
               <BlocksRenderer
                 content={courseData.collective_content_description}
               />
@@ -290,19 +290,19 @@ export default function TheAcademyCoursePage({
                 </p>
               </div>
 
-              <div className="flex flex-col items-center space-y-4 lg:mx-[120px] lg:space-y-8 lg:py-5 xl:max-w-[1140px]">
+              <div className="flex flex-col items-center space-y-4 lg:mx-[120px] lg:space-y-8 lg:py-5 xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
                 <BlocksRenderer
                   content={courseData.informed_investor_club.description}
                 />
               </div>
             </div>
-            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0 lg:gap-8 lg:px-[50px]">
+            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0 lg:gap-8 lg:px-[50px] xl:px-[200px]">
               {courseData.informed_investor_club.sales_cards.map(
                 (card: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] md:px-2 md:py-8 "
+                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] md:px-2 md:py-8 xl:px-4"
                     >
                       <Image
                         src={card.image.data.attributes.url}
@@ -366,7 +366,7 @@ export default function TheAcademyCoursePage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center space-y-2 p-4 text-center text-white md:p-[50px] lg:px-[150px]">
+          <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center space-y-2 p-4 text-center text-white md:p-[50px] lg:px-[150px] xl:max-w-[1140px] xl:place-self-center">
             <div className="text-2xl font-bold md:text-[30px] md:leading-[35px]">
               <BlocksRenderer
                 content={courseData.sign_off_testimonial.data.attributes.review}
