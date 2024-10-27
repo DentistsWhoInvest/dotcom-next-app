@@ -420,12 +420,14 @@ export default function PodcastPage({
                 }}
               />
             </div>
-            <div className="my-5 flex flex-col justify-center py-5">
-              <p className="pb-5 text-center text-4xl font-bold text-blue-primary">
-                Transcription
-              </p>
-              <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-            </div>
+            {pageData.attributes.transcript && (
+              <div className="my-5 flex flex-col justify-center py-5">
+                <p className="pb-5 text-center text-4xl font-bold text-blue-primary">
+                  Transcription
+                </p>
+                <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
+              </div>
+            )}
             <div className="mb-5 space-y-2">
               <FullTranscript transcript={pageData.attributes.transcript} />
             </div>
@@ -553,7 +555,10 @@ export default function PodcastPage({
                 //todo: might need to tweak the title
                 const viewMoreSlug = createSlug(page.attributes.title);
                 return (
-                  <li key={page.id} className="flex items-center justify-center p-4">
+                  <li
+                    key={page.id}
+                    className="flex items-center justify-center p-4"
+                  >
                     <ViewMoreCard
                       page={page}
                       contentType={"article"}
