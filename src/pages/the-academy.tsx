@@ -180,12 +180,12 @@ export default function TheAcademyCoursePage({
         </section>
 
         <section id="first-description">
-          <div className="m-8 space-y-4 text-lg">
+          <div className="m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px]">
             <BlocksRenderer content={courseData.first_description} />
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
-          <div className="grid grid-cols-1 items-center space-y-8 p-8 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:p-4">
+          <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0">
             <Image
               src={courseData.collective_content_image.data.attributes.url}
               alt="Collective content image"
@@ -193,7 +193,7 @@ export default function TheAcademyCoursePage({
               height={315}
               className="h-auto w-full md:size-[364px] lg:size-[492px]"
             />
-            <div className="space-y-8">
+            <div className="space-y-8 lg:pl-[20px] lg:pr-[120px]">
               <BlocksRenderer
                 content={courseData.collective_content_description}
               />
@@ -213,7 +213,7 @@ export default function TheAcademyCoursePage({
           <div className="flex flex-col items-center space-y-8 p-8">
             <div className="grid grid-cols-1 gap-8">
               <div className="space-y-2 text-center font-bold">
-                <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary lg:text-2xl">
+                <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary md:text-[30px] md:leading-9">
                   {courseData.informed_investor_club.sales_part_1.map(
                     (item: any, index: number) => {
                       return (
@@ -276,12 +276,12 @@ export default function TheAcademyCoursePage({
                     }
                   )}
                 </p>
-                <p className="text-3xl text-blue-primary lg:text-4xl ">
+                <p className="text-3xl text-blue-primary md:m-[-20px] md:text-[45px]">
                   <BlocksRenderer
                     content={courseData.informed_investor_club.sales_part_2}
                   />
                 </p>
-                <p className="text-orange-400 lg:text-2xl">
+                <p className="font-semibold text-orange-400 md:text-2xl">
                   <BlocksRenderer
                     content={
                       courseData.informed_investor_club.sales_part_3_cost
@@ -290,19 +290,19 @@ export default function TheAcademyCoursePage({
                 </p>
               </div>
 
-              <div className="flex flex-col items-center space-y-4 xl:max-w-[1140px]">
+              <div className="flex flex-col items-center space-y-4 lg:mx-[120px] lg:space-y-8 lg:py-5 xl:max-w-[1140px]">
                 <BlocksRenderer
                   content={courseData.informed_investor_club.description}
                 />
               </div>
             </div>
-            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0">
+            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0 lg:gap-8 lg:px-[50px]">
               {courseData.informed_investor_club.sales_cards.map(
                 (card: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] "
+                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] md:px-2 md:py-8 "
                     >
                       <Image
                         src={card.image.data.attributes.url}
@@ -321,8 +321,8 @@ export default function TheAcademyCoursePage({
           </div>
         </section>
 
-        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-4 ">
-          <div className="m-auto flex-col space-y-8 xl:flex xl:max-w-[1140px] xl:justify-center">
+        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
+          <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
             <div className="border-4 border-blue-primary p-4 text-center text-blue-primary xl:p-12 ">
               <div className="text-2xl font-bold xl:m-4 xl:text-3xl">
                 {" "}
@@ -338,17 +338,18 @@ export default function TheAcademyCoursePage({
                   ?.trim()}{" "}
               </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 lg:px-[150px]">
               <BlocksRenderer content={courseData.summary} />
             </div>
-            <div className="flex justify-center">
-              <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2">
-                <Link href={courseData.cta_navigation_url}>
-                  {courseData.cta_text}
-                </Link>{" "}
+            <Link
+              href={courseData.cta_navigation_url}
+              className="flex justify-center"
+            >
+              <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-2/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
+                {courseData.cta_text}
               </Button>
-            </div>
-            <div className="flex flex-col items-center space-y-8">
+            </Link>
+            <div className="flex flex-col items-center space-y-8 lg:py-6">
               <BlocksRenderer content={courseData.sign_off} />
             </div>
           </div>
@@ -365,13 +366,13 @@ export default function TheAcademyCoursePage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center space-y-2 p-4 text-center text-white">
-            <div className="text-2xl font-bold">
+          <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center space-y-2 p-4 text-center text-white md:p-[50px] lg:px-[150px]">
+            <div className="text-2xl font-bold md:text-[30px] md:leading-[35px]">
               <BlocksRenderer
                 content={courseData.sign_off_testimonial.data.attributes.review}
               />
             </div>
-            <p className="text-blue-secondary">
+            <p className="text-blue-secondary md:text-xl">
               -{courseData.sign_off_testimonial.data.attributes.author},{" "}
               {courseData.sign_off_testimonial.data.attributes.author_job_location
                 .split(",")[1]
