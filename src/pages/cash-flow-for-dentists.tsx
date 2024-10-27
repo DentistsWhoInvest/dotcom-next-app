@@ -206,10 +206,10 @@ export default function CashflowCoursePage({
               >
                 <Image
                   src={paragraph.cover.data.attributes.url}
-                  alt="Sales card image"
+                  alt={paragraph.cover.data.attributes.name}
                   width={315}
                   height={209}
-                  className="rounded-2xl object-cover"
+                  className="size-full rounded-2xl object-cover"
                 />
 
                 <div className="flex flex-col space-y-4 text-justify">
