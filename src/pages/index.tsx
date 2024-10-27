@@ -264,20 +264,20 @@ export default function Home({ pageData }: { pageData: any }) {
 
       <section
         id="founder"
-        className="m-4 flex flex-col items-center space-y-4 p-4 md:space-y-8 md:p-[50px] xl:flex-row-reverse"
+        className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] xl:flex-row-reverse"
       >
         <div className="xl:ml-[100px] xl:w-1/2 xl:space-y-8 xl:pl-[80px] xl:pr-[150px] ">
-          <h3 className="text-center text-2xl font-bold text-blue-primary md:text-[35px] md:leading-[42px]">
+          <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px]">
             {pageData.founder_text}
           </h3>
-          <h6 className="text-center text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left">
+          <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left">
             {pageData.founder_subtext}
           </h6>
           {/* <BlocksRenderer content={pageData.founder_description} /> */}
           {pageData.founder_description.map((block: any) => {
             return (
               <div key={block.id}>
-                <p>{block.children[0].text}</p>
+                <p className="my-4">{block.children[0].text}</p>
               </div>
             );
           })}
@@ -287,7 +287,7 @@ export default function Home({ pageData }: { pageData: any }) {
             </Button>
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-[20px]">
           <Image
             src={replaceImageDomain(
               pageData.founder_image.data.attributes.formats.large.url
@@ -295,13 +295,13 @@ export default function Home({ pageData }: { pageData: any }) {
             alt={pageData.founder_image.data.attributes.alternativeText}
             width={pageData.founder_image.data.attributes.width}
             height={pageData.founder_image.data.attributes.height}
-            className="h-[441px] w-[315px] rounded-[30px] md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+            className="h-[441px] w-[315px] rounded-2xl md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
           />
         </div>
       </section>
 
       <section className="bg-gray-100 py-4 text-center">
-        <h2 className="text-2xl font-bold text-blue-primary xl:p-8 xl:text-[50px]">
+        <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
           {pageData.what_we_do_title}
         </h2>
         <div className="grid grid-cols-1 place-items-center md:grid-cols-3 xl:mx-[150px]">
@@ -393,12 +393,18 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section id="familiar-section" className="p-4">
-        <div id="container" className="flex flex-col items-center xl:mx-[120px] xl:flex-row">
-          <div id="text-content" className="text-center xl:mr-[50px] xl:flex xl:w-1/2 xl:flex-col xl:space-y-12 xl:text-left">
-            <h2 className="text-2xl font-bold text-blue-primary xl:text-[45px] xl:leading-[54px]">
+        <div
+          id="container"
+          className="flex flex-col items-center xl:mx-[120px] xl:flex-row"
+        >
+          <div
+            id="text-content"
+            className="text-center xl:mr-[50px] xl:flex xl:w-1/2 xl:flex-col xl:space-y-12 xl:text-left"
+          >
+            <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary xl:text-[45px] xl:leading-[54px]">
               {pageData.why_you_familiar_title}
             </h2>
-            <h6 className="text-blue-secondary xl:text-xl ">
+            <h6 className="font-semibold text-blue-secondary xl:text-xl">
               {pageData.why_you_familiar_subtitle}
             </h6>
           </div>
@@ -415,10 +421,10 @@ export default function Home({ pageData }: { pageData: any }) {
         id="enrolment"
         className="flex flex-col items-center bg-gray-100 p-4 text-center"
       >
-        <h3 className="my-4 text-blue-secondary md:text-xl">
+        <h3 className="my-4 text-lg font-semibold text-blue-secondary md:text-xl">
           {pageData.courses_subtitle}
         </h3>
-        <h2 className="my-4 text-2xl font-bold text-blue-primary md:text-[35px]">
+        <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
           {pageData.courses_title}
         </h2>
         <p className="my-4">{pageData.courses_description}</p>
@@ -431,9 +437,7 @@ export default function Home({ pageData }: { pageData: any }) {
           })}
         </div>
 
-        <div id="extraCourse">
-          <HundredKButton />
-        </div>
+        <HundredKButton />
       </section>
 
       <section id="stats">
