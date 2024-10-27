@@ -346,7 +346,7 @@ export default function PodcastPage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:items-start md:justify-center md:text-left xl:mx-[130px] xl:max-w-[1140px] ">
+          <div className="relative z-10 flex size-full flex-col items-center justify-center text-left md:items-start md:justify-center md:text-left xl:mx-auto xl:max-w-[1140px] ">
             <div
               className="absolute right-[5%] top-[10%] flex flex-row space-x-4 lg:right-[2%] lg:top-[33%] xl:right-[-2%] xl:top-[20%]" //might adjust md breakpoint
             >
