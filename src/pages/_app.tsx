@@ -19,7 +19,17 @@ export default function App({ Component, pageProps }: AppProps) {
   // For the moment it's the courses pages and landing pages.
   // Landing pages include the informed investors club and targeted landing pages.
   // The 404 page has these components added in its own file, since it also has a bigger banner on top of the header.
-  const noHeaderOrFooterRoute = ["/cash-flow-for-dentists", "/the-academy", "/100k", "/the-informed-investors-club", "/404", "/[targetedlandingpage]", "/special-invite"];
+  const noHeaderOrFooterRoute = [
+    "/cash-flow-for-dentists",
+    "/the-academy",
+    "/100k",
+    "/the-informed-investors-club",
+    "/404",
+    "/[targetedlandingpage]",
+    "/special-invite",
+    "/facebook-group",
+    "/podcastreport",
+  ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
 
@@ -35,7 +45,12 @@ export default function App({ Component, pageProps }: AppProps) {
         `}
       </Script>
       <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMBJ6G57" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-KMBJ6G57"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        ></iframe>
       </noscript>
 
       <main className={poppins.className}>
