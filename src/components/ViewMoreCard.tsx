@@ -22,7 +22,7 @@ export const ViewMoreCard = ({
       case "video":
         return "videos";
       case "article":
-        return "blog-posts";
+        return "article";
       case "podcast":
         return "podcasts";
       default:
@@ -40,7 +40,7 @@ export const ViewMoreCard = ({
   };
 
   const trimmedExcerpt =
-    hrefStarter === "blog-posts" && trimAfterWords(page.attributes.excerpt, 25);
+    hrefStarter === "article" && trimAfterWords(page.attributes.excerpt, 25);
 
   function getImageLink(contentType: string) {
     switch (contentType) {
@@ -91,7 +91,7 @@ export const ViewMoreCard = ({
               dangerouslySetInnerHTML={{ __html: getCardTitle(contentType) }}
             ></Link>
           </p>
-          {hrefStarter === "blog-posts" && (
+          {hrefStarter === "article" && (
             <div
               className="grow text-base text-grey-primary"
               key={page.attributes.excerpt}

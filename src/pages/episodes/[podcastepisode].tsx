@@ -375,7 +375,7 @@ export default function PodcastPage({
           </div>
         </div>
       </section>
-      <section id="content" className="p-[10px]">
+      <section id="content" className="p-[20px]">
         <div className="mx-auto grid w-full max-w-md grid-cols-1 sm:max-w-xl md:max-w-4xl md:grid-cols-3 md:gap-8 lg:max-w-[1140px] lg:grid-cols-6 xl:grid-cols-12 xl:gap-16">
           <div className="md:col-span-2 lg:col-span-4 xl:col-span-8">
             <div className="mb-5">
@@ -410,18 +410,18 @@ export default function PodcastPage({
               </Link>
             </div>
             <div className="my-5 flex flex-col justify-center">
-              <p className="text-center text-4xl font-bold text-blue-primary">
+              <p className="py-5 text-center text-4xl font-bold text-blue-primary">
                 Description
               </p>
-              <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary pb-8"></p>
+              <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary pb-12"></p>
               <div
                 dangerouslySetInnerHTML={{
                   __html: pageData.attributes.description,
                 }}
               />
             </div>
-            <div className="my-5 flex flex-col justify-center">
-              <p className="text-center text-4xl font-bold text-blue-primary">
+            <div className="my-5 flex flex-col justify-center py-5">
+              <p className="pb-5 text-center text-4xl font-bold text-blue-primary">
                 Transcription
               </p>
               <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
@@ -538,28 +538,28 @@ export default function PodcastPage({
                 //todo: might need to tweak the title
                 const viewMoreSlug = createSlug(page.attributes.title);
                 return (
-                  <ul key={page.id} className="p-4">
+                  <li key={page.id} className="flex justify-center p-4">
                     <ViewMoreCard
                       page={page}
                       contentType={"article"}
                       slug={viewMoreSlug}
                     />
-                  </ul>
+                  </li>
                 );
               })}
             </div>
-            <div className="my-5 hidden w-full grid-cols-3 xl:grid">
+            <div className="my-5 hidden max-w-[1260px] grid-cols-3 place-self-center xl:grid">
               {someArticles.slice(0, 3).map((page: any) => {
                 //todo: might need to tweak the title
                 const viewMoreSlug = createSlug(page.attributes.title);
                 return (
-                  <ul key={page.id} className="p-4">
+                  <li key={page.id} className="flex items-center justify-center p-4">
                     <ViewMoreCard
                       page={page}
                       contentType={"article"}
                       slug={viewMoreSlug}
                     />
-                  </ul>
+                  </li>
                 );
               })}
             </div>

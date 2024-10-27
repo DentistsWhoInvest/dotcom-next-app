@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function PodcastMarketingForm() {
   return (
-    <div className="flex flex-col justify-center rounded-2xl bg-gradient-to-b from-blue-primary to-black text-white  md:h-[500px] md:flex-row xl:mx-[100px] xl:h-[570px] ">
+    <div className="flex flex-col justify-center rounded-2xl bg-gradient-to-b from-blue-primary to-black text-white  md:h-[500px] md:flex-row xl:mx-[100px] xl:h-[570px] xxl:mx-[292px] ">
       <Image
         src="https://www.dentistswhoinvest.com/wp-content/uploads/2022/10/7-Costly-and-Potentially-Disastrous-Mistakes-eBook-Mockup.png"
         alt="checklist"
