@@ -264,41 +264,38 @@ export default function Home({ pageData }: { pageData: any }) {
 
       <section
         id="founder"
-        className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] xl:flex-row-reverse"
+        className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] lg:px-2 lg:flex-row-reverse lg:justify-center lg:max-w-[1140px] lg:mx-auto "
       >
-        <div className="xl:ml-[100px] xl:w-1/2 xl:space-y-8 xl:pl-[80px] xl:pr-[150px] ">
-          <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px]">
+        <div className="lg:w-1/2 lg:mx-8">
+          <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px] ">
             {pageData.founder_text}
           </h3>
-          <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left">
+          <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left lg:my-[25px]">
             {pageData.founder_subtext}
           </h6>
-          {/* <BlocksRenderer content={pageData.founder_description} /> */}
           {pageData.founder_description.map((block: any) => {
             return (
               <div key={block.id}>
-                <p className="my-2">{block.children[0].text}</p>
+                <p className="my-2 md:my-4 lg:my-12">{block.children[0].text}</p>
               </div>
             );
           })}
-          <div className="hidden xl:block">
+          <div className="hidden lg:block">
             <Button className="rounded-md bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
               <Link href={"/about"}>Learn More</Link>
             </Button>
           </div>
         </div>
-        <div className="flex justify-center pb-[10px]">
-          <Image
-            src={replaceImageDomain(
-              pageData.founder_image.data.attributes.formats.large.url
-            )}
-            alt={pageData.founder_image.data.attributes.alternativeText}
-            width={pageData.founder_image.data.attributes.width}
-            height={pageData.founder_image.data.attributes.height}
-            // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
-            className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] xl:max-h-[654px] xl:max-w-[468px]"
-          />
-        </div>
+        <Image
+          src={replaceImageDomain(
+            pageData.founder_image.data.attributes.formats.large.url
+          )}
+          alt={pageData.founder_image.data.attributes.alternativeText}
+          width={pageData.founder_image.data.attributes.width}
+          height={pageData.founder_image.data.attributes.height}
+          // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+          className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] lg:max-h-[654px] lg:max-w-1/2 lg:w-1/2 lg:mr-[50px]"
+        />
       </section>
 
       <section className="bg-gray-100 py-2 text-center">
@@ -356,7 +353,7 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section>
-        <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 xl:mx-[120px]">
+        <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 lg:mx-auto lg:max-w-[1140px]">
           <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
             {pageData.why_you_title}
           </CardTitle>
@@ -396,16 +393,16 @@ export default function Home({ pageData }: { pageData: any }) {
       <section id="familiar-section" className="p-4">
         <div
           id="container"
-          className="flex flex-col items-center xl:mx-[120px] xl:flex-row"
+          className="flex flex-col items-center lg:mx-auto lg:max-w-[1140px] lg:flex-row"
         >
           <div
             id="text-content"
-            className="text-center xl:mr-[50px] xl:flex xl:w-1/2 xl:flex-col xl:space-y-12 xl:text-left"
+            className="text-center lg:mr-[50px] lg:flex lg:w-1/2 lg:flex-col lg:space-y-12 lg:text-left"
           >
-            <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary xl:text-[45px] xl:leading-[54px]">
+            <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
               {pageData.why_you_familiar_title}
             </h2>
-            <h6 className="font-semibold text-blue-secondary xl:text-xl">
+            <h6 className="font-semibold text-blue-secondary lg:text-xl">
               {pageData.why_you_familiar_subtitle}
             </h6>
           </div>
