@@ -155,20 +155,19 @@ export default function TheAcademyCoursePage({
               alt={"mobile"}
               layout="fill"
               objectFit="cover"
-              className="inset-0 object-[center_70%] md:bg-blue-secondary md:object-[right_0%] md:pr-[36px] lg:object-[center_0%] lg:pr-0"
+              className="inset-0 object-[left_70%] md:bg-blue-secondary md:object-[right_0%] md:pr-[36px] lg:object-[center_0%] lg:pr-0"
             />
-            {/* <div className="relative z-10 flex size-full flex-col items-center justify-evenly text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px]"> */}
-            <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:mx-auto md:max-w-[800px]  md:items-start md:text-left lg:w-[1140px] lg:max-w-[1140px] md:px-0">
-              <div className="-mt-4 mb-5 text-3xl font-bold text-white md:pl-[40px] md:text-[35px] md:my-0 lg:pl-[130px] lg:text-[45px] lg:leading-[54px]">
+            <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:mx-auto md:max-w-[800px] md:items-start md:px-0 md:text-left lg:w-[1140px] lg:max-w-[1140px]">
+              <div className="-mt-4 mb-5 text-3xl font-bold text-white md:my-0 md:pl-[40px] md:text-[35px] lg:pl-[130px] lg:text-[45px] lg:leading-[54px]">
                 <div className=" md:w-[71.833%]">
                   <div className="p-[10px]">
                     <Image
                       src={courseData.hero_logo_ribbon.data.attributes.url}
                       alt={"ribbon"}
-                      height={71}
-                      width={365}
+                      height={125}
+                      width={640}
                       objectFit="cover"
-                      className="max-h-[71px] max-w-[365px] md:h-[53px] md:w-[272px] lg:h-[71px] lg:w-[365px]"
+                      className="sm:aspect-auto md:h-[53px] md:w-[272px] lg:h-[71px] lg:w-[365px]"
                     />
                     <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[74.2%] md:leading-[50px] lg:text-[40px]">
                       {courseData.hero_text}
