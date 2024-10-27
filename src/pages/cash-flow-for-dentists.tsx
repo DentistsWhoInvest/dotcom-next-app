@@ -234,7 +234,7 @@ export default function CashflowCoursePage({
         </div>
       </section>
       <section id="freedom">
-        <div className="flex flex-col text-center space-y-8 p-8">
+        <div className="flex flex-col space-y-8 p-8 text-center">
           <span className="text-3xl font-bold text-blue-primary">
             {courseData.freedom.title}
           </span>
@@ -277,22 +277,15 @@ export default function CashflowCoursePage({
         <p className="p-8 text-center text-3xl font-bold text-blue-primary">
           {courseData.testimonials_title}
         </p>
-        <div className="flex flex-col space-y-8 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
-          {courseData.testimonials.data.map(
+        <div className="grid grid-cols-1 md:auto-rows-auto md:grid-cols-2 md:px-[50px] xl:mx-[120px] xl:max-w-[1200xp] xl:grid-cols-3 xl:px-0">
+        {courseData.testimonials.data.map(
             (testimonial: any, index: number) => {
               return (
-                <div
-                  key={testimonial.id}
-                  className={`${
-                    index === 2 ? "md:col-span-2 md:w-full" : "md:w-full "
-                  }`}
-                >
                   <TestimonialCard
                     key={testimonial.id}
                     testimonial={testimonial}
                     index={index}
                   />
-                </div>
               );
             }
           )}
@@ -301,7 +294,7 @@ export default function CashflowCoursePage({
       <div className="flex flex-col items-center space-y-8 p-8">
         <Link
           href={courseData.cta_navigation_url}
-          className="rounded-md bg-orange-400 bold text-white hover:bg-orange-500 px-8 py-4 text-3xl"
+          className="rounded-md bg-orange-400 px-8 py-4 text-3xl font-semibold text-white hover:bg-orange-500"
         >
           {courseData.cta_text}
         </Link>
