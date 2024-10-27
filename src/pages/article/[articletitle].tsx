@@ -34,7 +34,7 @@ const fetchAllItems = async (url: string) => {
         "horizontal_banners.cover_image",
         "vertical_banners.cover_image",
         "cover",
-        "content_sections"
+        "content_sections",
       ];
       const response = await fetchEndpointData(url, populateFields, true, {
         page: page,
@@ -110,9 +110,9 @@ export const getStaticProps = async ({ params }: any) => {
   // const associatedVerticalBanner = await fetchEndpointData(
   //   `/vertical-banners/${associatedVerticalBannerId}`
   // );
-  const otherArticles = allArticles.filter(
-    (article: { id: number }) => article.id !== matchingArticle.id
-  );
+  const otherArticles = allArticles
+    .filter((article: { id: number }) => article.id !== matchingArticle.id)
+    .slice(0, 6);
   return {
     props: {
       pageData: matchingArticle,
@@ -177,7 +177,8 @@ export default function ArticlePage({
           <div className="my-5 w-full">
             <Link
               href={
-                pageData.attributes.horizontal_banners.data[0].attributes.navigation_url
+                pageData.attributes.horizontal_banners.data[0].attributes
+                  .navigation_url
               }
             >
               <Image
@@ -199,7 +200,8 @@ export default function ArticlePage({
           <div className="my-5 hidden md:block">
             <Link
               href={
-                pageData.attributes.vertical_banners.data[0].attributes.navigation_url
+                pageData.attributes.vertical_banners.data[0].attributes
+                  .navigation_url
               }
             >
               <Image
@@ -217,21 +219,24 @@ export default function ArticlePage({
         </div>
       </div>
       <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 ">
-      <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
+        <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More
         </p>
         <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
         <div className="relative">
-        <Carousel id="carousel" className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]">
-        <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
-        {otherArticles.map((page: any) => {
+          <Carousel
+            id="carousel"
+            className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]"
+          >
+            <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
+              {otherArticles.map((page: any) => {
                 const viewMoreSlug = createSlug(page.attributes.title);
 
                 return (
                   <CarouselItem
                     key={page.id}
                     className="flex justify-center md:basis-1/2 xl:basis-1/3 "
-                    >
+                  >
                     <ViewMoreCard
                       page={page}
                       contentType={"article"}
@@ -242,7 +247,7 @@ export default function ArticlePage({
               })}
             </CarouselContent>
             <div className="absolute inset-x-0 bottom-2 flex justify-center space-x-2 ">
-            <CarouselPrevious className="relative !-left-0" />
+              <CarouselPrevious className="relative !-left-0" />
               <CarouselNext className="relative !-right-0" />
             </div>
           </Carousel>
