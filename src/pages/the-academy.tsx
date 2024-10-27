@@ -5,7 +5,6 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-//create type based on sample data
 type TextNode = {
   text: string;
   type: string;
@@ -150,27 +149,32 @@ export default function TheAcademyCoursePage({
     <>
       <main className="text-lg">
         <section id="topbanner">
-          <div className="relative h-[492px] w-full overflow-hidden md:h-[409px] xl:h-[570.75px]">
-            <div className="absolute inset-0 xl:hidden">
-              <Image
-                src={courseData.hero_cover.data.attributes.url}
-                alt={"mobile"}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="left 20%"
-                priority
-                className="h-[492px]"
-              />
-              <div className="relative z-10 flex size-full flex-col items-center justify-evenly text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px]">
-                <Image
-                  src={courseData.hero_logo_ribbon.data.attributes.url}
-                  alt={"ribbon"}
-                  width={315}
-                  height={61}
-                />
-                <h1 className="text-left text-4xl font-bold text-white m-4">
-                  {courseData.hero_text}
-                </h1>
+          <div className="relative z-10 h-[492px] w-screen overflow-hidden md:h-[402px] lg:h-[542px]">
+            <Image
+              src={courseData.hero_cover.data.attributes.url}
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              className="inset-0 object-[center_70%] md:bg-blue-secondary md:object-[right_0%] md:pr-[36px] lg:object-[center_0%] lg:pr-0"
+            />
+            {/* <div className="relative z-10 flex size-full flex-col items-center justify-evenly text-center md:max-w-[62%] md:items-start md:justify-center md:text-left lg:max-w-[50%] xl:mx-[130px] xl:max-w-[1140px]"> */}
+            <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:mx-auto md:max-w-[800px]  md:items-start md:text-left lg:w-[1140px] lg:max-w-[1140px] md:px-0">
+              <div className="-mt-4 mb-5 text-3xl font-bold text-white md:pl-[40px] md:text-[35px] md:my-0 lg:pl-[130px] lg:text-[45px] lg:leading-[54px]">
+                <div className=" md:w-[71.833%]">
+                  <div className="p-[10px]">
+                    <Image
+                      src={courseData.hero_logo_ribbon.data.attributes.url}
+                      alt={"ribbon"}
+                      height={71}
+                      width={365}
+                      objectFit="cover"
+                      className="max-h-[71px] max-w-[365px] md:h-[53px] md:w-[272px] lg:h-[71px] lg:w-[365px]"
+                    />
+                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[74.2%] md:leading-[50px] lg:text-[40px]">
+                      {courseData.hero_text}
+                    </h1>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -182,13 +186,13 @@ export default function TheAcademyCoursePage({
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
-          <div className="grid grid-cols-1 items-center space-y-8 p-8 text-lg md:grid-cols-2 md:space-x-4 md:p-4 md:gap-4">
+          <div className="grid grid-cols-1 items-center space-y-8 p-8 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:p-4">
             <Image
               src={courseData.collective_content_image.data.attributes.url}
               alt="Collective content image"
               width={315}
               height={315}
-              className="md:h-364 md:w-364 lg:h-492 lg:w-492 w-full h-auto"
+              className="h-auto w-full md:size-[364px] lg:size-[492px]"
             />
             <div className="space-y-8">
               <BlocksRenderer
@@ -197,7 +201,7 @@ export default function TheAcademyCoursePage({
             </div>
           </div>
         </section>
-        <section className="bg-blue-secondary p-2 flex justify-center">
+        <section className="flex justify-center bg-blue-secondary p-2">
           <Image
             src="https://storage.googleapis.com/dwi-dotcom-assets/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
@@ -210,7 +214,7 @@ export default function TheAcademyCoursePage({
           <div className="flex flex-col items-center space-y-8 p-8">
             <div className="grid grid-cols-1 gap-8">
               <div className="space-y-2 text-center font-bold">
-                <p className="mx-8 flex flex-row justify-center text-xl lg:text-2xl text-blue-secondary">
+                <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary lg:text-2xl">
                   {courseData.informed_investor_club.sales_part_1.map(
                     (item: any, index: number) => {
                       return (
@@ -234,6 +238,7 @@ export default function TheAcademyCoursePage({
                                 stroke="red"
                                 stroke-width="9"
                                 fill="none"
+                                // eslint-disable-next-line tailwindcss/no-custom-classname
                                 className="path-1"
                               ></path>
                             </svg>
@@ -292,13 +297,13 @@ export default function TheAcademyCoursePage({
                 />
               </div>
             </div>
-            <div className="m-[10px] grid size-full grid-cols-1 md:grid-cols-4 gap-4 justify-center space-y-4 md:space-y-0">
+            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0">
               {courseData.informed_investor_club.sales_cards.map(
                 (card: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="flex h-[266] w-[295] md:w-[162] md:h-[266] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 "
+                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] "
                     >
                       <Image
                         src={card.image.data.attributes.url}
@@ -306,7 +311,7 @@ export default function TheAcademyCoursePage({
                         width={90}
                         height={90}
                       />
-                      <span className="text-lg font-bold text-white size-full text-center">
+                      <span className="size-full text-center text-lg font-bold text-white">
                         {card.reason}
                       </span>
                     </div>
@@ -318,9 +323,9 @@ export default function TheAcademyCoursePage({
         </section>
 
         <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-4 ">
-          <div className="xl:max-w-[1140px] xl:justify-center xl:flex flex-col m-auto space-y-8">
+          <div className="m-auto flex-col space-y-8 xl:flex xl:max-w-[1140px] xl:justify-center">
             <div className="border-4 border-blue-primary p-4 text-center text-blue-primary xl:p-12 ">
-              <div className="text-2xl font-bold xl:text-3xl xl:m-4">
+              <div className="text-2xl font-bold xl:m-4 xl:text-3xl">
                 {" "}
                 <BlocksRenderer
                   content={courseData.testimonial.data.attributes.review}
@@ -338,7 +343,7 @@ export default function TheAcademyCoursePage({
               <BlocksRenderer content={courseData.summary} />
             </div>
             <div className="flex justify-center">
-              <Button className="rounded-md bg-orange-400 px-8 py-4 text-white text-xl hover:text-blue-primary size-full md:size-1/2">
+              <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2">
                 <Link href={courseData.cta_navigation_url}>
                   {courseData.cta_text}
                 </Link>{" "}
@@ -361,7 +366,7 @@ export default function TheAcademyCoursePage({
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
           </div>
-          <div className="absolute inset-0 z-10 flex h-full flex-col justify-center items-center space-y-2 p-4 text-center text-white">
+          <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center space-y-2 p-4 text-center text-white">
             <div className="text-2xl font-bold">
               <BlocksRenderer
                 content={courseData.sign_off_testimonial.data.attributes.review}
