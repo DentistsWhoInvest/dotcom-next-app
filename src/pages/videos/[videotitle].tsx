@@ -35,7 +35,7 @@ export const getStaticProps = async ({ params }: any) => {
   );
   const otherVideos = allVideos.data.filter(
     (video: { id: number }) => video.id !== matchingVideo.id
-  );
+  ).slice(0, 6);
 
   return {
     props: {
@@ -61,7 +61,7 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px] xl:pt-8">
+      <div className="mx-4 my-2 max-w-[1140px] items-center md:mx-[50px] lg:mx-auto xl:pt-8">
         <div className="flex flex-col justify-center bg-gray-100">
           <div className="m-4 aspect-video">
             <iframe
@@ -73,7 +73,7 @@ export default function VideoPage({
               className="left-0 top-0 size-full"
             ></iframe>
           </div>
-          <h2 className="mx-6 text-xl font-bold text-blue-primary md:text-3xl">
+          <h2 className="mx-6 mt-6 text-xl font-bold text-blue-primary md:text-3xl">
             {pageData.attributes.name}
           </h2>
           <div className="m-5 mb-7 md:text-lg xl:text-xl">
@@ -98,7 +98,9 @@ export default function VideoPage({
                   pageData.attributes.horizontal_banner.data.attributes
                     .cover_image.data.attributes.url
                 }
-                alt={pageData.attributes.horizontal_banner.data.attributes.title}
+                alt={
+                  pageData.attributes.horizontal_banner.data.attributes.title
+                }
                 width={1200}
                 height={400}
                 layout="responsive"
@@ -111,38 +113,41 @@ export default function VideoPage({
         <div className="my-8 xl:mb-16">
           <Disclaimer />
         </div>
+      </div>
 
-        <div className="mx-[-20px] mt-5 flex flex-col items-center justify-center bg-gray-100 md:mx-[-50px] xl:mx-[-150px]">
-          <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-            Watch More
-          </p>
-          <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-          <div className="relative">
-            <Carousel id="carousel" className="max-w-[375px] items-center md:max-w-screen-md lg:max-w-screen-lg xl:max-w-[1340px]">
-              <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
-                {otherVideos.map((page: any) => {
-                  const viewMoreSlug = createSlug(page.attributes.name);
-                  return (
-                    <CarouselItem
-                      key={page.id}
-                      className="flex justify-center md:basis-1/2 xl:basis-1/3 "
-                      id="carouselitem"
-                    >
-                      <ViewMoreCard
+      <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 ">
+        <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
+          Watch More
+        </p>
+        <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
+        <div className="relative">
+          <Carousel
+            id="carousel"
+            className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]"
+          >
+            <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
+              {otherVideos.map((page: any) => {
+                const viewMoreSlug = createSlug(page.attributes.name);
+                return (
+                  <CarouselItem
+                    key={page.id}
+                    className="flex justify-center md:basis-1/2 xl:basis-1/3 "
+                    id="carouselitem"
+                  >
+                    <ViewMoreCard
                       page={page}
                       contentType={"video"}
                       slug={viewMoreSlug}
                     />
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
-              <div className="absolute inset-x-0 bottom-2 flex justify-center space-x-2 ">
-                <CarouselPrevious className="relative !-left-0" />
-                <CarouselNext className="relative !-right-0" />
-              </div>
-            </Carousel>
-          </div>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <div className="absolute inset-x-0 bottom-2 flex justify-center space-x-2 ">
+              <CarouselPrevious className="relative !-left-0" />
+              <CarouselNext className="relative !-right-0" />
+            </div>
+          </Carousel>
         </div>
       </div>
     </>
