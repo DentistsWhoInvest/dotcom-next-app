@@ -410,7 +410,7 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="reviews">
-          <div className="grid grid-cols-1 md:grid-cols-2 md:auto-rows-auto md:px-[50px] xl:max-w-[1200xp] xl:px-0 xl:mx-[120px] xl:grid-cols-3">
+          <div className="grid grid-cols-1 md:auto-rows-auto md:grid-cols-2 md:px-[50px] xl:mx-[120px] xl:max-w-[1200xp] xl:grid-cols-3 xl:px-0">
             {pageData.attributes.testimonials.data.map(
               (testimonial: TestimonialData, index: number) => {
                 return (
