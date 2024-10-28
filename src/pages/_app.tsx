@@ -29,6 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
     "/special-invite",
     "/facebook-group",
     "/podcastreport",
+    "/boost-your-income-with-james-martin",
   ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
