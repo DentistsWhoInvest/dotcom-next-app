@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { SquareX } from "lucide-react";
+import Script from "next/script";
 
 interface NHSPopupFormProps {
   isVisible: boolean;
@@ -18,7 +19,7 @@ export const NHSPopupForm = ({ isVisible, onClose }: NHSPopupFormProps) => {
     >
       <div
         id="overall-container"
-        className="relative flex size-full flex-col bg-white md:h-[446px] md:w-[700px] md:flex-row"
+        className="relative flex size-full flex-col bg-white md:h-[495px] md:w-[800px] md:flex-row"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -34,54 +35,19 @@ export const NHSPopupForm = ({ isVisible, onClose }: NHSPopupFormProps) => {
             </h2>
             <Image
               src="https://storage.googleapis.com/dwi-dotcom-assets/nhs_pension_checklist_clipboard_97caac76f6/nhs_pension_checklist_clipboard_97caac76f6.webp"
-              alt="checklist"
+              alt="nhs pension checklist"
               width={240}
               height={300}
             />
           </div>
         </div>
-        <div id="form" className="m-4 bg-white md:w-1/2 md:p-8 md:pt-16">
-          <form action="" method="post">
-            <div className="my-4 flex flex-col justify-start space-y-1">
-              <label
-                className="text-sm font-semibold text-blue-primary"
-                htmlFor="name"
-              >
-                First Name{" "}
-              </label>
-              <input
-                className="w-full rounded-sm border border-gray-400 p-2 text-black"
-                type="text"
-                name="name"
-                id="name"
-                required
-                placeholder="Type your first name"
-              />
-            </div>
-            <div className="mb-4 flex flex-col space-y-1">
-              <label
-                className="text-sm font-semibold text-blue-primary"
-                htmlFor="email"
-              >
-                Email*
-              </label>
-              <input
-                className="w-full rounded-sm border border-gray-400 p-2 text-black"
-                type="email"
-                name="email"
-                id="email"
-                required
-                placeholder="Type your email"
-              />
-            </div>
-
-            <input
-              type="submit"
-              value="SUBMIT & DOWNLOAD"
-              className="mt-2 rounded-sm bg-orange-400 px-4 py-2 text-center text-blue-primary"
-            />
-          </form>
-          <p className="mt-4 text-base text-blue-primary">
+        <div id="form" className="mx-4 bg-white md:w-1/2">
+          <div
+            // eslint-disable-next-line tailwindcss/no-custom-classname
+            className="_form_26"
+          ></div>
+          <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=26" />
+          <p className="mx-6 mb-4 mt-2 text-base text-blue-primary">
             Enter your details above to receive a link you can use to download
             your FREE checklist
           </p>
