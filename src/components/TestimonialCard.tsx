@@ -24,48 +24,39 @@ export const TestimonialCard = ({
 }) => {
   return (
     <Card
-      className={`m-6 md:m-2 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl xl:col-span-1 ${
+      className={`m-7 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:m-2 lg:col-span-1 ${
         index === 2 ? "md:col-span-2" : "col-span-1"
       }`}
     >
-      <CardContent className="space-y-4 text-left md:flex md:flex-col md:flex-grow">
-        <CardTitle className="p-2 text-lg font-semibold md:text-xl md:p-0">
+      <CardContent className="space-y-4 text-left md:flex md:grow md:flex-col">
+        <CardTitle className="pt-[50px] text-xl font-semibold md:p-0 md:text-xl">
           <Image
             id="quote"
             src="/white-quote.png"
             alt="quote-mark"
-            width={100}
-            height={100}
+            width={70}
+            height={70}
           />
-          <p>{testimonial.attributes.title}</p>
+          <p className="my-4">{testimonial.attributes.title}</p>
         </CardTitle>
         <CardDescription>
-          <p className="md:text-base">{testimonial.attributes.review[0].children[0].text}</p>
-          <p id="stars" className="flex space-x-1">
-            {Array.from({ length: 5 }, (_, index) => (
-              <svg
-                key={index}
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="#ffd700"
-                xmlns="http://www.w3.org/2000/svg"
-                className="md:w-12 md:h-12"
-              >
-                <path
-                  d="M12 2L14.8536 8.71091L22 9.52786L17 14.4721L18.7071 21.4721L12 17.9442L5.29289 21.4721L7 14.4721L2 9.52786L9.14645 8.71091L12 2Z"
-                  fill="#ffd700"
-                />
-              </svg>
-            ))}
+          <p className="mb-4 text-justify text-base">
+            {testimonial.attributes.review[0].children[0].text}
           </p>
+          <Image
+            src="https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/Icon-1-e1717784590844.png"
+            alt="stars"
+            height={20}
+            width={102}
+            className="mb-4 lg:h-[26px] lg:w-[135px]"
+          ></Image>
         </CardDescription>
         <div className="grow"></div>
-        <CardFooter className="flex flex-col md:flex-row mt-auto mb-4">
+        <CardFooter className="mb-4 mt-auto flex flex-col md:flex-row">
           <Image
             src={replaceImageDomain(
-              testimonial.attributes.author_thumbnail.data.attributes.formats.
-                thumbnail.url
+              testimonial.attributes.author_thumbnail.data.attributes.formats
+                .thumbnail.url
             )}
             alt={
               testimonial.attributes.author_thumbnail.data.attributes

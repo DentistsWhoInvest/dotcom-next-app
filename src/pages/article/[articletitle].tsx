@@ -34,7 +34,7 @@ const fetchAllItems = async (url: string) => {
         "horizontal_banners.cover_image",
         "vertical_banners.cover_image",
         "cover",
-        "content_sections"
+        "content_sections",
       ];
       const response = await fetchEndpointData(url, populateFields, true, {
         page: page,
@@ -110,9 +110,9 @@ export const getStaticProps = async ({ params }: any) => {
   // const associatedVerticalBanner = await fetchEndpointData(
   //   `/vertical-banners/${associatedVerticalBannerId}`
   // );
-  const otherArticles = allArticles.filter(
-    (article: { id: number }) => article.id !== matchingArticle.id
-  );
+  const otherArticles = allArticles
+    .filter((article: { id: number }) => article.id !== matchingArticle.id)
+    .slice(0, 6);
   return {
     props: {
       pageData: matchingArticle,
@@ -144,12 +144,12 @@ export default function ArticlePage({
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
       </Head>
-      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 p-5 md:gap-8 xl:gap-16 xl:my-5">
-        <div className="col-span-2">
-          <div className="text-center text-[30px] leading-9 font-bold text-blue-primary mb-5 md:text-[45px] md:leading-[54px]">
+      <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 p-5 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 md:gap-8 xl:my-5 xl:gap-16">
+        <div className="md:col-span-2">
+          <div className="mb-5 text-center text-[30px] font-bold leading-9 text-blue-primary md:text-[45px] md:leading-[54px]">
             {pageData.attributes.title}
           </div>
-          <div className="flex justify-center space-x-2 text-center text-base text-blue-secondary p-[10px] mb-5 items-center">
+          <div className="mb-5 flex items-center justify-center space-x-2 p-[10px] text-center text-base text-blue-secondary">
             <Calendar size={14} />
             {publishedDate}
             <Clock size={14} />
@@ -161,9 +161,9 @@ export default function ArticlePage({
             width={1200}
             height={400}
             layout="responsive"
-            className="h-auto w-full object-cover md:w-[485px] md:h-[273px]"
+            className="h-auto w-full object-cover md:h-[273px] md:w-[485px]"
           />
-          <div className="articleContent text-[18px] leading-7 py-5 md:text-xl">
+          <div className="articleContent py-5 text-[18px] leading-7 md:text-xl">
             {pageData.attributes.content_sections.map((contentParagraph) => {
               return (
                 <BlocksRenderer
@@ -177,7 +177,8 @@ export default function ArticlePage({
           <div className="my-5 w-full">
             <Link
               href={
-                pageData.attributes.horizontal_banners.data[0].attributes.navigation_url
+                pageData.attributes.horizontal_banners.data[0].attributes
+                  .navigation_url
               }
             >
               <Image
@@ -194,12 +195,13 @@ export default function ArticlePage({
             </Link>
           </div>
         </div>
-        <div className="md:col-span-1 w-[233px] lg:w-[318px] xl:w-[330px]">
+        <div className="md:col-span-1 md:w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
             <Link
               href={
-                pageData.attributes.vertical_banners.data[0].attributes.navigation_url
+                pageData.attributes.vertical_banners.data[0].attributes
+                  .navigation_url
               }
             >
               <Image
@@ -216,21 +218,24 @@ export default function ArticlePage({
           </div>
         </div>
       </div>
-      <div className="mt-5 flex flex-col justify-center bg-gray-100">
+      <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 ">
         <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
           Read More
         </p>
         <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
         <div className="relative">
-          <Carousel>
-            <CarouselContent className="mb-12">
+          <Carousel
+            id="carousel"
+            className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]"
+          >
+            <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
               {otherArticles.map((page: any) => {
                 const viewMoreSlug = createSlug(page.attributes.title);
 
                 return (
                   <CarouselItem
                     key={page.id}
-                    className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                    className="flex justify-center md:basis-1/2 xl:basis-1/3 "
                   >
                     <ViewMoreCard
                       page={page}
@@ -241,7 +246,7 @@ export default function ArticlePage({
                 );
               })}
             </CarouselContent>
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
+            <div className="absolute inset-x-0 bottom-2 flex justify-center space-x-2 ">
               <CarouselPrevious className="relative !-left-0" />
               <CarouselNext className="relative !-right-0" />
             </div>

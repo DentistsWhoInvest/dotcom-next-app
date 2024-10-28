@@ -71,7 +71,7 @@ type BannerAttributes = {
   title: string;
   navigation_url: string;
   is_internal: boolean;
-  cover_image: {data: ImageData};
+  cover_image: { data: ImageData };
 };
 
 type BannerData = {
@@ -279,29 +279,30 @@ export default function Articles({
         }
         bannerImage={{
           url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
+          name: "blog_hero_cover_95c157286b",
         }}
       />
-      <div className="p-4 text-center text-3xl font-bold text-blue-secondary">
+      <div className="py-[40px] text-center text-3xl font-bold text-blue-secondary lg:py-[70px] lg:text-[45px]">
         All Articles
       </div>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center xl:mx-[40px]">
+      <ul className="grid grid-cols-1 gap-4 self-center md:grid-cols-2 xl:mx-[40px] xl:grid-cols-3">
         {sortedData.map((page: Article) => {
           const slug = createSlug(page.attributes.title);
           return (
             <li key={page.id}>
               <Link href={`/article/${slug}`}>
-              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
+                <div className="m-6 flex w-[315px] grow flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom md:h-[500px] lg:h-[567px] lg:w-[430px]">
                   <Image
                     src={page.attributes.cover.data.attributes.url}
                     alt={page.attributes.title}
                     width={311}
                     height={311}
-                    className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[430px] md:h-[442px]"
-                    />
-                  <div className="grow"></div>
-                  <div className="text-center text-blue-primary p-5 text-xl mb-5 ">
-                    {page.attributes.title}
-                  </div>
+                    className="h-[311px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover md:h-[442px] lg:size-[430px]"
+                  />
+                  <div
+                    className="grow px-5 pt-5 text-center text-xl text-blue-primary"
+                    dangerouslySetInnerHTML={{ __html: page.attributes.title }}
+                  />
                 </div>
               </Link>
             </li>

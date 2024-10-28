@@ -43,7 +43,7 @@ export default function PrivacyPolicy({
       >
         Privacy Policy
       </div>
-      <div className="privacy-policy my-8 space-y-8 px-6 pt-8 lg:m-6 xl:mx-36">
+      <div className="privacy-policy my-8 space-y-8 px-6 pt-8 lg:m-6 lg:mx-auto max-w-[1140px]">
         <BlocksRenderer content={policyPage.policy} />
         <h4>Attribution</h4>
         <BlocksRenderer content={policyPage.attribution} />

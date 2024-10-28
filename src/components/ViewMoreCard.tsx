@@ -1,14 +1,6 @@
-import { Button } from "./ui/button";
 import { ChevronsRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "./ui/card";
 import { processDate } from "@/lib/dateUtils";
 
 export const ViewMoreCard = ({
@@ -30,7 +22,7 @@ export const ViewMoreCard = ({
       case "video":
         return "videos";
       case "article":
-        return "blog-posts";
+        return "article";
       case "podcast":
         return "podcasts";
       default:
@@ -47,34 +39,75 @@ export const ViewMoreCard = ({
     return text; // If there are fewer words than the limit, return the full text
   };
 
-  const trimmedExcerpt = hrefStarter === 'blog-posts' && trimAfterWords(page.attributes.excerpt, 25);
+  const trimmedExcerpt =
+    hrefStarter === "article" && trimAfterWords(page.attributes.excerpt, 25);
+
+  function getImageLink(contentType: string) {
+    switch (contentType) {
+      case "video":
+        const videoId = page.attributes.uri.replace("/videos/", "");
+
+        return `https://vumbnail.com/${videoId}.jpg`;
+      case "article":
+        return page.attributes.cover.data.attributes.url;
+      case "podcast":
+        return page.attributes.artwork_url;
+      default:
+        return "";
+    }
+  }
+
+  function getCardTitle (contentType: string) {
+    switch (contentType) {
+      case "video":
+        return page.attributes.name;
+      case "article":
+        return page.attributes.title;
+      case "podcast":
+        return page.attributes.title;
+      default:
+        return "";
+    }
+  }
 
   return (
     <>
-      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+      <div className="m-6 flex h-[92%] w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white shadow-custom lg:w-[430px]">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
-            src={hrefStarter === 'blog-posts' ? page.attributes.cover.data.attributes.url : page.attributes.artwork_url}
+            src={
+              getImageLink(contentType)
+            }
             alt={page.attributes.name}
             width={387}
             height={218}
-            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+            className="h-[218px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover lg:h-[300px] lg:w-[430px]"
           />
         </Link>
-        <div className="text-center flex flex-col mx-8 my-4 grow space-y-4">
-          <p className="text-blue-primary text-[21px] font-bold">
-            <Link href={`/${hrefStarter}/${slug}`}>{page.attributes.title}</Link>
+        <div className="mx-8 my-4 flex h-full flex-col space-y-4 text-left">
+          <p className="text-[21px] font-bold text-blue-primary">
+            <Link
+              href={`/${hrefStarter}/${slug}`}
+              dangerouslySetInnerHTML={{ __html: getCardTitle(contentType) }}
+            ></Link>
           </p>
-          {hrefStarter === 'blog-posts' && <div className="text-grey-primary text-base"
-                  key={page.attributes.excerpt}
-                  dangerouslySetInnerHTML={{
-                    __html:trimmedExcerpt
-                    ,
-                  }}
-                />}
-          <div className="grow"></div>
+          {hrefStarter === "article" && (
+            <div
+              className="grow text-base text-grey-primary"
+              key={page.attributes.excerpt}
+              dangerouslySetInnerHTML={{
+                __html: trimmedExcerpt,
+              }}
+            />
+          )}
+          {hrefStarter === "videos" && (
+            <div className="grow text-base text-grey-primary">
+              {" "}
+              {page.attributes.description}
+            </div>
+          )}
           <Link
-            className={"text-xs font-semibold text-blue-secondary"}
+            className="text-xs font-semibold text-blue-secondary "
             href={`/${hrefStarter}/${slug}`}
           >
             <span className="flex p-2">

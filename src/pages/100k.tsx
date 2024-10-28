@@ -377,7 +377,9 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
                 return (
                   <div
                     className={`flex flex-col items-center space-y-4 ${
-                      index === 4 ? "md:col-span-2 xl:col-span-1" : "md:col-span-1"
+                      index === 4
+                        ? "md:col-span-2 xl:col-span-1"
+                        : "md:col-span-1"
                     }`}
                     key={salesCard.id}
                   >
@@ -408,22 +410,15 @@ export default function HundredKPage({ pageData }: { pageData: HundredKPage }) {
         </section>
 
         <section id="reviews">
-          <div className="flex flex-col space-y-8 md:grid md:grid-cols-2 md:gap-0 md:space-y-0 md:px-[50px] xl:max-w-[1200xp] xl:px-0 xl:mx-[120px] xl:grid-cols-3">
+          <div className="grid grid-cols-1 md:auto-rows-auto md:grid-cols-2 md:px-[50px] xl:mx-[120px] xl:max-w-[1200xp] xl:grid-cols-3 xl:px-0">
             {pageData.attributes.testimonials.data.map(
               (testimonial: TestimonialData, index: number) => {
                 return (
-                  <div
+                  <TestimonialCard
                     key={testimonial.id}
-                    className={`${
-                      index === 2 ? "md:col-span-2 md:w-full xl:col-span-1" : "md:w-full "
-                    }`}
-                  >
-                    <TestimonialCard
-                      key={testimonial.id}
-                      testimonial={testimonial}
-                      index={index}
-                    />
-                  </div>
+                    testimonial={testimonial}
+                    index={index}
+                  />
                 );
               }
             )}

@@ -11,8 +11,9 @@ const config: Config = {
 	screens: {
 		'sm': '320px',
 		'md': '768px',
-		'lg': '1024px',
+		'lg': '1025px',
 		'xl': '1440px',
+		'xxl': '2560px',
 	},
   	colors: {
   		'blue-primary': '#151f6d',

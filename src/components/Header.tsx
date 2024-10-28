@@ -28,7 +28,7 @@ export default function Header() {
   const MenuOverlay = () => {
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 h-screen"
+        className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-black/50"
         onClick={() => setShowOverlay(false)}
       >
         <div
@@ -57,7 +57,7 @@ export default function Header() {
       return (
         <li
           key={link.href}
-          className={`lg:text-lg p-2 text-sm  md:text-lg text-right ${
+          className={`p-1 text-right text-sm  md:text-base lg:text-lg ${
             isActive
               ? "text-blue-secondary"
               : "text-blue-primary hover:text-blue-secondary"
@@ -78,7 +78,7 @@ export default function Header() {
 
   return (
     <div className="bg-[#f0f3f6]">
-      <div className="z-20 relative flex h-[60px] flex-row items-center justify-between px-5 py-3.5  md:h-[90px] md:px-8 md:py-4 lg:justify-evenly drop-shadow-lg xl:max-w-[1200px] xl:m-auto">
+      <div className="relative z-20 flex h-[60px] flex-row items-center justify-between px-5 py-3.5  drop-shadow-lg md:h-[90px] md:px-8 md:py-4 lg:justify-evenly xl:m-auto xl:max-w-[1200px]">
         <div>
           <Link href={"/"}>
             <Image
@@ -94,7 +94,7 @@ export default function Header() {
         </div>
 
         <button
-          className="md:hidden pr-2 text-gray-700 hover:text-blue-primary"
+          className="pr-2 text-gray-700 hover:text-blue-primary md:hidden"
           onClick={() => setShowOverlay(true)}
         >
           <svg
@@ -113,9 +113,9 @@ export default function Header() {
 
         {showOverlay && <MenuOverlay />}
 
-        <ul className="md:flex lg:mr-32 hidden flex-row items-center">
+        <ul className="hidden flex-row items-center md:flex lg:mr-32">
           <MenuLinks menuLinksList={menuLinksList} />
-          <div className="sm:ml-6 sm:flex sm:items-center hidden">
+          <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <Link href={"https://courses.dentistswhoinvest.com/login"}>
               <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
                 Members

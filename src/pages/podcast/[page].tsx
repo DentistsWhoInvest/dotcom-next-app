@@ -193,31 +193,31 @@ export default function Podcasts({
       <HeroBanner
         bannerImage={{
           url: "https://storage.googleapis.com/dwi-dotcom-assets/james_podcasting_c38220ce04/james_podcasting_c38220ce04.webp",
-          alt: "James podcasting",
+          name: "James podcasting",
         }}
         bannerText={"The Dentists Who Invest Podcast "}
         subText={"Can't miss financial insights for UK dental professionals"}
         podcastSubText={true}
       />
-      <div className="text-blue-secondary text-4xl font-bold self-center mb-5 pt-10">
-        All Episodes
+      <div className="py-[20px] text-center text-3xl font-bold text-blue-secondary md:py-[40px] lg:py-[70px] lg:text-[45px]">
+      All Episodes
       </div>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 self-center xl:mx-[40px]">
+      <ul className="grid grid-cols-1 gap-4 self-center md:grid-cols-2 xl:mx-[40px] xl:grid-cols-3">
         {sortedData.map((page: Episode) => {
         const podcastSlug = createSlug(page.attributes.title).replace(/-dwi-ep\d+$/, '')
         const podcastLink = `/episodes/e${page.attributes.episode_number}-${podcastSlug}`;
           return (
             <Link href={podcastLink} key={page.id}>
-              <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px] lg:h-[567px] flex-grow md:h-[500px]">
+              <div className="m-6 flex w-[315px] grow flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom md:h-[500px] lg:h-[567px] lg:w-[430px]">
                 <Image
                   src={page.attributes.artwork_url}
                   alt={page.attributes.title}
                   width={311}
                   height={311}
-                  className="rounded-t-xl h-[311px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[430px] md:h-[442px]"
+                  className="h-[311px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover md:h-[442px] lg:size-[430px]"
                 />
                 <div className="grow"></div>
-                <div className="text-center text-blue-primary p-5 text-xl mb-5">
+                <div className="mb-5 p-5 text-center text-xl text-blue-primary">
                   EP{page.attributes.episode_number}{" "}
                   {page.attributes.title.split(" DWI-")[0]}
                 </div>

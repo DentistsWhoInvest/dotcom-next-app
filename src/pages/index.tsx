@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { fetchEndpointData } from "@/lib/fetchUtils";
 // import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
@@ -73,6 +74,8 @@ const MetricCounter = ({ value }: { value: number }) => {
 
     return () => {
       if (ref.current) {
+        // think it's working as intended
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(ref.current);
       }
     };
@@ -117,21 +120,21 @@ const MetricCounter = ({ value }: { value: number }) => {
 
 const HomePageCourseCard = ({ course }: { course: any }) => {
   return (
-    <li className="shadow-custom flex flex-col justify-center rounded-3xl border-solid bg-white py-[20px] px-[50px] items-center md:px-[10px] md:pt-[50px] md:pb-[25px] lg:px-[50px] lg:mx-4">
+    <li className="flex flex-col items-center justify-center rounded-3xl border-solid bg-white px-[50px] py-[20px] shadow-custom md:px-[10px] md:pb-[25px] md:pt-[50px] lg:mx-4 lg:px-[50px]">
       <div className="">
         <Image
           src="/DWI-logo-circle.webp"
           alt="Course Logo"
           width={120}
           height={120}
-          className="rounded-3xl mt-[-80px]"
+          className="mt-[-80px] rounded-3xl"
         />
       </div>
 
-      <div className="relative transition-all duration-300 bg-blue-primary pt-2 pb-4 w-full text-center font-bold text-white">
+      <div className="relative w-full bg-blue-primary pb-4 pt-2 text-center font-bold text-white transition-all duration-300">
         <h2 className="text-xl">{course.attributes.tagline}</h2>
         <svg
-          className="xl:pb-5 lg:py-3 absolute left-1/2 top-1/2 z-[2] lg:w-[calc(50%)] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
+          className="absolute left-1/2 top-1/2 z-[2] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible lg:w-[calc(50%)] lg:py-3 xl:pb-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 500 150"
           preserveAspectRatio="none"
@@ -185,7 +188,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
         `}</style>
       </div>
 
-      <div className="flex flex-col items-center p-4 md:grow pt-8">
+      <div className="flex flex-col items-center p-4 pt-8 md:grow">
         <Image
           src={course.attributes.cover.data.attributes.url}
           alt={course.attributes.title}
@@ -193,10 +196,10 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
           height={440}
           className="md:w-[234px] lg:w-[362px]"
         />{" "}
-        <p className="mb-4 text-sm text-blue-primary md:text-xl md:mt-8 font-semibold">
+        <p className="mb-4 text-sm font-semibold text-blue-primary md:mt-8 md:text-xl">
           {course.attributes.description}
         </p>
-        <Button className="w-2/3 rounded-md bg-orange-400 py-4 px-3 text-white hover:bg-orange-500 ">
+        <Button className="w-2/3 rounded-md bg-orange-400 px-3 py-4 text-white hover:bg-orange-500 ">
           <Link href={course.attributes.navigation_url}>Learn More</Link>
         </Button>
       </div>
@@ -234,7 +237,7 @@ export default function Home({ pageData }: { pageData: any }) {
             bannerText={pageData.hero_text}
             bannerImage={{
               url: pageData.hero_cover.data.attributes.url,
-              alt: pageData.hero_cover.data.attributes.alternativeText,
+              name: pageData.hero_cover.data.attributes.alternativeText,
             }}
             subText={pageData.hero_subtext}
             ctaButton={{
@@ -248,7 +251,7 @@ export default function Home({ pageData }: { pageData: any }) {
             bannerText={pageData.hero_text}
             bannerImage={{
               url: pageData.hero_cover.data.attributes.url,
-              alt: pageData.hero_cover.data.attributes.alternativeText,
+              name: pageData.hero_cover.data.attributes.alternativeText,
             }}
             subText={pageData.hero_subtext}
             ctaButton={{
@@ -261,47 +264,45 @@ export default function Home({ pageData }: { pageData: any }) {
 
       <section
         id="founder"
-        className="m-4 space-y-4 p-4 md:space-y-8 md:p-[50px] flex flex-col xl:flex-row-reverse items-center"
+        className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] lg:px-2 lg:flex-row-reverse lg:justify-center lg:max-w-[1140px] lg:mx-auto "
       >
-        <div className="xl:space-y-8 xl:w-1/2 xl:ml-[100px] xl:pr-[150px] xl:pl-[80px] ">
-          <h3 className="text-center text-2xl font-bold text-blue-primary md:text-[35px] md:leading-[42px]">
+        <div className="lg:w-1/2 lg:mx-8">
+          <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px] ">
             {pageData.founder_text}
           </h3>
-          <h6 className="text-center md:text-xl text-blue-secondary xl:text-wrap xl:mr-12 xl:text-left">
+          <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left lg:my-[25px]">
             {pageData.founder_subtext}
           </h6>
-          {/* <BlocksRenderer content={pageData.founder_description} /> */}
           {pageData.founder_description.map((block: any) => {
             return (
               <div key={block.id}>
-                <p>{block.children[0].text}</p>
+                <p className="my-2 md:my-4 lg:my-12">{block.children[0].text}</p>
               </div>
             );
           })}
-          <div className="hidden xl:block">
-            <Button className="rounded-md bg-orange-400 py-8 px-[55px] text-white hover:bg-orange-500 text-lg">
+          <div className="hidden lg:block">
+            <Button className="rounded-md bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
               <Link href={"/about"}>Learn More</Link>
             </Button>
           </div>
         </div>
-        <div className="flex justify-center">
-          <Image
-            src={replaceImageDomain(
-              pageData.founder_image.data.attributes.formats.large.url
-            )}
-            alt={pageData.founder_image.data.attributes.alternativeText}
-            width={pageData.founder_image.data.attributes.width}
-            height={pageData.founder_image.data.attributes.height}
-            className="rounded-r-[30px] rounded-l-[30px] md:max-w-[356px] md:max-h-[499px] xl:max-w-[468px] xl:max-h-[654px]"
-          />
-        </div>
+        <Image
+          src={replaceImageDomain(
+            pageData.founder_image.data.attributes.formats.large.url
+          )}
+          alt={pageData.founder_image.data.attributes.alternativeText}
+          width={pageData.founder_image.data.attributes.width}
+          height={pageData.founder_image.data.attributes.height}
+          // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+          className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] lg:max-h-[654px] lg:max-w-1/2 lg:w-1/2 lg:mr-[50px]"
+        />
       </section>
 
-      <section className="bg-gray-100 py-4 text-center">
-        <h2 className="text-2xl font-bold text-blue-primary xl:text-[50px] xl:p-8">
+      <section className="bg-gray-100 py-2 text-center">
+        <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
           {pageData.what_we_do_title}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:mx-[150px] place-items-center">
+        <div className="grid grid-cols-1 place-items-center md:grid-cols-3 xl:mx-[150px]">
           {pageData.what_we_do_reasons.map((reason: any) => {
             let lottieVar;
             if (reason.lottie_name === "treasure") {
@@ -314,9 +315,9 @@ export default function Home({ pageData }: { pageData: any }) {
             return (
               <div
                 key={reason.id}
-                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 p-8 shadow-custom-br md:w-[223px] md:h-[493px] md:p-0 bg-white lg:w-[308px] lg:h-[436px] xl:h-[493px]"
+                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[415px] md:w-[245px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
               >
-                <div className="text-center flex flex-col p-6 pt-0 grow">
+                <div className="flex grow flex-col p-6 pt-0 text-center">
                   <div className="mx-auto my-4 size-20 xl:size-40">
                     <Lottie
                       animationData={lottieVar}
@@ -328,7 +329,7 @@ export default function Home({ pageData }: { pageData: any }) {
                   <CardTitle className="p-2 text-lg font-bold text-blue-primary md:text-xl lg:mx-8 xl:mx-0">
                     <p>{reason.title}</p>
                   </CardTitle>
-                  <CardDescription className="p-2 md:p-0 text-grey-primary mt-auto">
+                  <CardDescription className="mt-auto p-2 text-grey-primary md:p-0">
                     {reason.description.map((block: any) => {
                       return (
                         <div key={block.id}>
@@ -340,7 +341,7 @@ export default function Home({ pageData }: { pageData: any }) {
                   <Link
                     href={reason.cta_navigation_url}
                     aria-label={reason.cta_navigation_description}
-                    className="mx-2 rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary mt-auto mb-2 "
+                    className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary"
                   >
                     <button>{reason.cta_text}</button>
                   </Link>{" "}
@@ -352,8 +353,8 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section>
-        <Card className="m-6 flex flex-col rounded-[2rem] border-2 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:p-12 xl:mx-[120px]">
-          <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:text-[50px] xl:leading-[56px] xl:mx-[200px]">
+        <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 lg:mx-auto lg:max-w-[1140px]">
+          <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
             {pageData.why_you_title}
           </CardTitle>
           <div className="md:mx-14 xl:mx-[240px]">
@@ -379,7 +380,7 @@ export default function Home({ pageData }: { pageData: any }) {
                           <div className="mx-6 my-2 border border-orange-400" />
                         )}
                       </div>
-                      <div className="my-2 border border-orange-400 hidden md:block" />
+                      <div className="my-2 hidden border border-orange-400 md:block" />
                     </div>
                   </CardContent>
                 </div>
@@ -390,12 +391,18 @@ export default function Home({ pageData }: { pageData: any }) {
       </section>
 
       <section id="familiar-section" className="p-4">
-        <div id="container" className="flex flex-col xl:flex-row items-center xl:mx-[120px]">
-          <div id="text-content" className="text-center xl:flex xl:flex-col xl:w-1/2 xl:mr-[50px] xl:space-y-12 xl:text-left">
-            <h2 className="text-2xl font-bold text-blue-primary xl:text-[45px] xl:leading-[54px]">
+        <div
+          id="container"
+          className="flex flex-col items-center lg:mx-auto lg:max-w-[1140px] lg:flex-row"
+        >
+          <div
+            id="text-content"
+            className="text-center lg:mr-[50px] lg:flex lg:w-1/2 lg:flex-col lg:space-y-12 lg:text-left"
+          >
+            <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
               {pageData.why_you_familiar_title}
             </h2>
-            <h6 className="text-blue-secondary xl:text-xl ">
+            <h6 className="font-semibold text-blue-secondary lg:text-xl">
               {pageData.why_you_familiar_subtitle}
             </h6>
           </div>
@@ -410,38 +417,36 @@ export default function Home({ pageData }: { pageData: any }) {
 
       <section
         id="enrolment"
-        className="bg-gray-100 p-4 text-center flex flex-col items-center"
+        className="flex flex-col items-center bg-gray-100 p-4 text-center"
       >
-        <h3 className="text-blue-secondary my-4 md:text-xl">
+        <h3 className="my-4 text-lg font-semibold text-blue-secondary md:text-xl">
           {pageData.courses_subtitle}
         </h3>
-        <h2 className="text-2xl font-bold text-blue-primary my-4 md:text-[35px]">
+        <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
           {pageData.courses_title}
         </h2>
         <p className="my-4">{pageData.courses_description}</p>
         <div
           id="courses"
-          className="space-y-20 grid grid-cols-1 md:grid-cols-2 md:space-y-0 md:gap-8 mt-16"
+          className="mt-16 grid grid-cols-1 space-y-20 md:grid-cols-2 md:gap-8 md:space-y-0"
         >
           {pageData.courses.data.map((course: any) => {
             return <HomePageCourseCard key={course.id} course={course} />;
           })}
         </div>
 
-        <div id="extraCourse">
-          <HundredKButton />
-        </div>
+        <HundredKButton />
       </section>
 
       <section id="stats">
         <div
           id="stats-container"
-          className="space-y-2 bg-blue-secondary py-8 text-center text-white grid grid-cols-1 md:grid-cols-3 md:space-y-0 "
+          className="grid grid-cols-1 space-y-2 bg-blue-secondary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
         >
           {pageData.metrics.map((metric: any) => {
             return (
               <div id="stat" key={metric.id}>
-                <h2 className="text-[45px] leading-[1.2em] font-bold">
+                <h2 className="text-[45px] font-bold leading-[1.2em]">
                   <MetricCounter value={metric.value} />
                 </h2>
                 <p className="text-xl">{metric.title}</p>
@@ -451,14 +456,15 @@ export default function Home({ pageData }: { pageData: any }) {
         </div>
       </section>
 
-      <section id="testimonials" className="py-8 text-center">
-        <h2 className="text-[30px] leading-9 font-bold text-blue-primary md:text-[35px] md:mx-[120px] text-wrap md:my-12">
+      <section id="testimonials" className="bg-white py-8 text-center">
+        <h2 className="text-wrap text-[30px] font-bold leading-9 text-blue-primary md:mx-[120px] md:my-12 md:text-[35px]">
           {pageData.testimonials_title}
         </h2>
 
         <div
           id="testimonial-cards"
-          className="md:grid-cols-2 md:auto-rows-auto grid grid-cols-1 md:m-8 xl:grid-cols-3"
+          // className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
+          className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
         >
           {pageData.testimonials.data.map((testimonial: any, index: number) => {
             return (

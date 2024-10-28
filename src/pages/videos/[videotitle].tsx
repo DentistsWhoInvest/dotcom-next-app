@@ -14,6 +14,7 @@ import {
 import type { Video } from "../videos";
 import Disclaimer from "@/components/Disclaimer";
 import Link from "next/link";
+import { ViewMoreCard } from "@/components/ViewMoreCard";
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/videos`);
@@ -34,7 +35,7 @@ export const getStaticProps = async ({ params }: any) => {
   );
   const otherVideos = allVideos.data.filter(
     (video: { id: number }) => video.id !== matchingVideo.id
-  );
+  ).slice(0, 6);
 
   return {
     props: {
@@ -60,22 +61,22 @@ export default function VideoPage({
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="mx-4 my-2 md:mx-[50px] xl:mx-[150px]">
+      <div className="mx-4 my-2 max-w-[1140px] items-center md:mx-[50px] lg:mx-auto xl:pt-8">
         <div className="flex flex-col justify-center bg-gray-100">
-          <div className="m-6 aspect-video">
+          <div className="m-4 aspect-video">
             <iframe
               src={`https://player.vimeo.com/video/${videoUri}`}
               width="640"
               height="360"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
-              className="left-0 top-0 h-full w-full"
+              className="left-0 top-0 size-full"
             ></iframe>
           </div>
-          <h2 className="mx-6 text-xl font-bold text-blue-primary md:text-3xl">
+          <h2 className="mx-6 mt-6 text-xl font-bold text-blue-primary md:text-3xl">
             {pageData.attributes.name}
           </h2>
-          <div className="m-5 md:text-lg mb-7 xl:text-xl">
+          <div className="m-5 mb-7 md:text-lg xl:text-xl">
             <div
               dangerouslySetInnerHTML={{
                 __html: pageData.attributes.description,
@@ -97,45 +98,56 @@ export default function VideoPage({
                   pageData.attributes.horizontal_banner.data.attributes
                     .cover_image.data.attributes.url
                 }
-                alt="Want to increase your income?"
+                alt={
+                  pageData.attributes.horizontal_banner.data.attributes.title
+                }
                 width={1200}
                 height={400}
                 layout="responsive"
-                className="h-auto max-w-screen"
+                className="h-auto"
               />
             </Link>
           </div>
         )}
 
-        <div className="my-4">
+        <div className="my-8 xl:mb-16">
           <Disclaimer />
         </div>
+      </div>
 
-        <div className="mt-5 md:mx-[-50px] xl:mx-[-150px] flex flex-col justify-center bg-gray-100">
-          <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
-            Watch More
-          </p>
-          <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
-          <div className="relative">
-            <Carousel>
-              <CarouselContent className="mb-12">
-                {otherVideos.map((page: any) => {
-                  return (
-                    <CarouselItem
-                      key={page.id}
-                      className="sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
-                    >
-                      <VideoCard page={page} />
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 ">
-                <CarouselPrevious className="relative !-left-0" />
-                <CarouselNext className="relative !-right-0" />
-              </div>
-            </Carousel>
-          </div>
+      <div className="mt-5 flex flex-col items-center justify-center bg-gray-100 ">
+        <p className="m-4 mb-1 pb-2 pt-4 text-center text-3xl font-bold text-blue-primary">
+          Watch More
+        </p>
+        <p className="flex w-1/2 self-center border-t-[3px] border-solid border-blue-secondary"></p>
+        <div className="relative">
+          <Carousel
+            id="carousel"
+            className="max-w-[375px] items-center md:max-w-[740px] lg:max-w-[1000px] xl:max-w-[1340px]"
+          >
+            <CarouselContent className="-ml-4 mb-12" id="carouselcontent">
+              {otherVideos.map((page: any) => {
+                const viewMoreSlug = createSlug(page.attributes.name);
+                return (
+                  <CarouselItem
+                    key={page.id}
+                    className="flex justify-center md:basis-1/2 xl:basis-1/3 "
+                    id="carouselitem"
+                  >
+                    <ViewMoreCard
+                      page={page}
+                      contentType={"video"}
+                      slug={viewMoreSlug}
+                    />
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <div className="absolute inset-x-0 bottom-2 flex justify-center space-x-2 ">
+              <CarouselPrevious className="relative !-left-0" />
+              <CarouselNext className="relative !-right-0" />
+            </div>
+          </Carousel>
         </div>
       </div>
     </>

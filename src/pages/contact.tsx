@@ -58,7 +58,7 @@ const ContactOptions = ({ option }: { option: any }) => {
           {option.description}
         </CardDescription>
         <Link href={option.navigation_url}>
-          <button className="m-8 rounded-md bg-orange-400 px-[35px] py-3 text-white hover:text-blue-primary md:px-[20px]">
+          <button className="m-8 rounded-md border-2 border-orange-400 bg-orange-400 px-[35px] py-3 text-white hover:bg-white hover:text-blue-primary md:px-[20px]">
             {option.cta_text}
           </button>
         </Link>
@@ -70,7 +70,7 @@ export default function Contact({ pageData }: { pageData: any }) {
   return (
     <main className={`flex flex-col`}>
       <HeroBanner
-        bannerImage={pageData.attributes.hero_cover.data.attributes}
+        bannerImage={{url: pageData.attributes.hero_cover.data.attributes.url, name: pageData.attributes.hero_cover.data.attributes.alt}}
         bannerText={pageData.attributes.hero_title}
         subText={pageData.attributes.hero_subtext}
       />
@@ -78,21 +78,21 @@ export default function Contact({ pageData }: { pageData: any }) {
         <p className="px-16 py-8 text-center text-[30px] font-bold leading-[36px] text-blue-primary md:py-[50px] md:text-[35px] xl:text-[45px]">
           Get in touch with us
         </p>
-        <div className="flex flex-col justify-center p-5 md:flex-row">
+        <div className="mx-auto flex max-w-[1200px] flex-col justify-evenly pb-5 md:flex-row">
           {pageData.attributes.contact_options.map((option: any) => (
             <ContactOptions key={option} option={option} />
           ))}
         </div>
       </div>
-      <div className="mx-auto w-full max-w-[1140px] justify-center px-5 pb-[100px] pt-[70px] text-blue-primary">
-        <p className="text-center text-[30px] font-bold leading-[36px]">
+      <div className="mx-auto w-full max-w-[1140px] justify-center px-6 pb-[100px] pt-[70px] text-blue-primary">
+        <p className="text-center text-[30px] font-bold leading-[36px] md:mb-5">
           Frequently Asked Questions
         </p>
         {pageData.attributes.FAQs.map((FAQ: any) => {
           return (
             <Accordion key={FAQ} type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left text-[15px] md:text-[20px]">
+                <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
                   {FAQ.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-[16px] text-black">
