@@ -1,19 +1,7 @@
-name: 'Build and Deploy beta to GCS'
+name: 'Deploy based on '
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'public/**'
-      - 'src/**'
-      - components.json
-      - next.config.js
-      - package.json
-      - package-lock.json
-      - postcss.config.mjs
-      - tailwind.config.ts
-      - tsconfig.json
+  workflow_dispatch:
 
 env:
   PROJECT_ID: 'electric-node-426223-s2'
@@ -57,13 +45,12 @@ jobs:
           STRAPI_API_KEY: ${{ secrets.STRAPI_API_KEY }}
 
       - name: 'Set up Cloud SDK'
-        id: setup-cloud-sdk
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: ${{ env.PROJECT_ID }}
-      
+
       - name: 'Deploy to GCS bucket'
         id: deploy-to-gcs
         run: |-
-          gsutil -m rsync -r -d ./out/    gs://dwi-dotcom-beta-static-assets
-          gsutil -m rsync -r -d ./public/ gs://dwi-dotcom-beta-static-assets/public/
+          gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-static-assets
+          gsutil -m rsync -r -d ./public/ gs://dwi-dotcom-static-assets/public/
