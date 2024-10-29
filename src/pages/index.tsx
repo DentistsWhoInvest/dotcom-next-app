@@ -237,6 +237,17 @@ export default function Home({ pageData }: { pageData: any }) {
     setIsPopupVisible(false);
   };
 
+  const [popupFullyVisible, setPopupFullyVisible] = useState(isPopupVisible);
+
+  useEffect(() => {
+    if (isPopupVisible) {
+      setPopupFullyVisible(true);
+    } else {
+      const timer = setTimeout(() => setPopupFullyVisible(false), 300); // Match duration with the transition
+      return () => clearTimeout(timer);
+    }
+  }, [isPopupVisible]);
+
   //replace the image url depending on breakpoint
   return (
     <>
@@ -246,10 +257,21 @@ export default function Home({ pageData }: { pageData: any }) {
       </Head>
       <main>
         <section id="popupform">
-          <FreeTaxReliefPopupForm
-            isVisible={isPopupVisible}
-            onClose={closePopup}
-          />
+          <div
+            id="overlay"
+            // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-blue-primary bg-opacity-50 transition-opacity duration-300 ${
+              popupFullyVisible
+                ? "opacity-100"
+                : "pointer-events-none opacity-0"
+            }`}
+            onClick={closePopup}
+          >
+            <FreeTaxReliefPopupForm
+              isVisible={isPopupVisible}
+              onClose={closePopup}
+            />
+          </div>
         </section>
 
         <section>
