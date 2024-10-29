@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     "/thankyou",
     "/free-report",
     "/crypto-ebook",
+    "/free-nhs-checklist",
   ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
