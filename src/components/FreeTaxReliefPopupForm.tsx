@@ -9,7 +9,7 @@ interface NHSPopupFormProps {
   onClose: () => void;
 }
 
-export const NHSPopupForm = ({ isVisible, onClose }: NHSPopupFormProps) => {
+export const FreeTaxReliefPopupForm = ({ isVisible, onClose }: NHSPopupFormProps) => {
   if (!isVisible) return null;
 
   return (
