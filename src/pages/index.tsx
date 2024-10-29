@@ -19,7 +19,7 @@ import { useState, useRef, useEffect } from "react";
 import { HundredKButton } from "@/components/HundredKButton";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { HeroBanner } from "@/components/HeroBanner";
-import { NHSPopupForm } from "@/components/NHSPopupForm";
+import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
 import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 
@@ -232,7 +232,10 @@ export default function Home({ pageData }: { pageData: any }) {
       </Head>
       <main>
         <section id="popupform">
-          <NHSPopupForm isVisible={isPopupVisible} onClose={closePopup} />
+          <FreeTaxReliefPopupForm
+            isVisible={isPopupVisible}
+            onClose={closePopup}
+          />
         </section>
 
         <section>
