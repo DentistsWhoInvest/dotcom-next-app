@@ -2,14 +2,16 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import { SquareX } from "lucide-react";
 import Script from "next/script";
-import { useEffect } from "react";
 
 interface NHSPopupFormProps {
   isVisible: boolean;
   onClose: () => void;
 }
 
-export const FreeTaxReliefPopupForm = ({ isVisible, onClose }: NHSPopupFormProps) => {
+export const FreeTaxReliefPopupForm = ({
+  isVisible,
+  onClose,
+}: NHSPopupFormProps) => {
   if (!isVisible) return null;
 
   return (
@@ -44,7 +46,10 @@ export const FreeTaxReliefPopupForm = ({ isVisible, onClose }: NHSPopupFormProps
             />
           </div>
         </div>
-        <div id="form" className="mx-4 bg-white md:mt-[-40px] md:w-1/2 md:place-self-center">
+        <div
+          id="form"
+          className="mx-4 bg-white md:mt-[-40px] md:w-1/2 md:place-self-center"
+        >
           <div
             // eslint-disable-next-line tailwindcss/no-custom-classname
             className="_form_23"
