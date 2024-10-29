@@ -21,7 +21,7 @@ import { TestimonialCard } from "@/components/TestimonialCard";
 import { HeroBanner } from "@/components/HeroBanner";
 import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
-import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
+import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -504,7 +504,7 @@ export default function Home({ pageData }: { pageData: any }) {
         </section>
 
         <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
-          <HomePageNHSPensionForm />
+          <HomepageFreeTaxReliefForm />
         </section>
       </main>
     </>

@@ -2,7 +2,7 @@ import Script from "next/script";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
-export default function HomePageNHSPensionForm() {
+export default function HomepageFreeTaxReliefForm() {
   return (
     <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-400 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
       <Image
