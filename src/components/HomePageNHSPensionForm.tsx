@@ -4,25 +4,26 @@ import Image from "next/image";
 
 export default function HomePageNHSPensionForm() {
   return (
-    <div className="flex flex-col justify-center rounded-2xl bg-orange-400 text-white  md:h-[560px] md:flex-row lg:h-[580px] xl:mx-[100px] ">
+    <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-400 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
       <Image
-        src="https://storage.googleapis.com/dwi-dotcom-assets/nhs_pension_checklist_clipboard_97caac76f6/nhs_pension_checklist_clipboard_97caac76f6.webp"
+        src="https://assets.drjamesmartin.co.uk/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
         alt="checklist"
-        width={1024}
-        height={1340}
-        className="mt-[-40px] h-[361px] w-[276px] self-center md:h-[338px] md:w-[258px] lg:h-[492px] lg:w-[376px] xl:h-[544px] xl:w-[416px]"
+        layout="responsive"
+        width={808}
+        height={898}
+        className="size-auto max-h-[340px] max-w-[306px] self-center rounded-[30px] p-2 md:max-h-[480px] md:max-w-[432px] lg:max-h-[480px] lg:max-w-[432px] xl:max-h-[499px] xl:max-w-[449px]"
       />
 
-      <section className="px-[30px] pt-3 md:ml-8 md:w-1/2">
-        <div className="mb-[-30px] text-center text-xl font-bold lg:text-2xl xl:text-4xl">
+      <section className="px-[30px] pt-3 md:mt-[38px] md:w-1/2">
+        <div className="mb-[-30px] text-center text-xl font-bold lg:text-2xl xl:text-[30px] xl:leading-[36px]">
           Type your details below to receive an email link you can use to
-          download your FREE checklist
+          download your FREE pdf on tax efficiency for dentists.
         </div>
         <div
           // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="_form_26"
+          className="_form_23"
         ></div>
-        <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=26" />
+        <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" />
 
         <p className="ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
           BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST EMAIL
