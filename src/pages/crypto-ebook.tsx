@@ -13,13 +13,13 @@ export default function CryptoEbook() {
         />
       </Head>
       <main
-        className={`size-full h-screen bg-gradient-to-b from-blue-secondary to-blue-primary `}
+        className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary md:h-screen `}
       >
-        <div>
-          Welcome To The Community That Enhances The Financial Literacy Of
-          Dentists{" "}
-        </div>
         <section className="flex size-full flex-col place-content-center content-center items-center justify-items-center p-[40px] text-center text-white md:p-[20px] xl:mx-auto xl:max-w-[1140px]">
+          <div className="w-2/3 pb-[40px] text-center text-[35px] font-bold leading-[45px] text-white">
+            Welcome To The Community That Enhances The Financial Literacy Of
+            Dentists
+          </div>
           <div className="flex flex-col justify-center rounded-2xl bg-gradient-to-b from-blue-primary to-black text-white  md:h-[500px] md:flex-row xl:h-[570px] ">
             <Image
               src="https://assets.drjamesmartin.co.uk/crypto_ebook_7854028404/crypto_ebook_7854028404.png"

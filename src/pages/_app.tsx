@@ -31,7 +31,8 @@ export default function App({ Component, pageProps }: AppProps) {
     "/podcastreport",
     "/boost-your-income-with-james-martin",
     "/thankyou",
-    "/free-report"
+    "/free-report",
+    "/crypto-ebook",
   ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
