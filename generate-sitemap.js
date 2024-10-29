@@ -130,6 +130,8 @@ function createSlug(title) {
 const generateSitemap = async () => {
   const sitemap = new SitemapStream({ hostname: 'https://www.dentistswhoinvest.com' });
 
+  // todo add landing pages (static and dynamic)
+
   // Static pages
   const staticPages = [
     { url: '/', changefreq: 'daily', priority: 1.0 },
