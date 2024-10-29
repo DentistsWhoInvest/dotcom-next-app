@@ -12,17 +12,16 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
-import { Icon } from "lucide-react";
 import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
-import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 import { HundredKButton } from "@/components/HundredKButton";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { HeroBanner } from "@/components/HeroBanner";
 import { NHSPopupForm } from "@/components/NHSPopupForm";
+import Head from "next/head";
+import HomePageNHSPensionForm from "@/components/HomePageNHSPensionForm";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -226,261 +225,271 @@ export default function Home({ pageData }: { pageData: any }) {
 
   //replace the image url depending on breakpoint
   return (
-    <main>
-      <section id="popupform">
-        <NHSPopupForm isVisible={isPopupVisible} onClose={closePopup} />
-      </section>
+    <>
+      <Head>
+        <title>Dentists Who Invest</title>
+        <meta name="Dentists Who Invest" content="Dentists Who Invest" />
+      </Head>
+      <main>
+        <section id="popupform">
+          <NHSPopupForm isVisible={isPopupVisible} onClose={closePopup} />
+        </section>
 
-      <section>
-        <div className="sm:block md:hidden">
-          <HeroBanner
-            bannerText={pageData.hero_text}
-            bannerImage={{
-              url: pageData.hero_cover.data.attributes.url,
-              name: pageData.hero_cover.data.attributes.alternativeText,
-            }}
-            subText={pageData.hero_subtext}
-            ctaButton={{
-              url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
-              text: pageData.hero_button_text,
-            }}
-          />
-        </div>
-        <div className="sm:hidden md:block">
-          <HeroBanner
-            bannerText={pageData.hero_text}
-            bannerImage={{
-              url: pageData.hero_cover.data.attributes.url,
-              name: pageData.hero_cover.data.attributes.alternativeText,
-            }}
-            subText={pageData.hero_subtext}
-            ctaButton={{
-              url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
-              text: pageData.hero_button_text,
-            }}
-          />
-        </div>
-      </section>
-
-      <section
-        id="founder"
-        className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] lg:px-2 lg:flex-row-reverse lg:justify-center lg:max-w-[1140px] lg:mx-auto "
-      >
-        <div className="lg:w-1/2 lg:mx-8">
-          <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px] ">
-            {pageData.founder_text}
-          </h3>
-          <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left lg:my-[25px]">
-            {pageData.founder_subtext}
-          </h6>
-          {pageData.founder_description.map((block: any) => {
-            return (
-              <div key={block.id}>
-                <p className="my-2 md:my-4 lg:my-12">{block.children[0].text}</p>
-              </div>
-            );
-          })}
-          <div className="hidden lg:block">
-            <Button className="rounded-md bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
-              <Link href={"/about"}>Learn More</Link>
-            </Button>
+        <section>
+          <div className="sm:block md:hidden">
+            <HeroBanner
+              bannerText={pageData.hero_text}
+              bannerImage={{
+                url: pageData.hero_cover.data.attributes.url,
+                name: pageData.hero_cover.data.attributes.alternativeText,
+              }}
+              subText={pageData.hero_subtext}
+              ctaButton={{
+                url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+                text: pageData.hero_button_text,
+              }}
+            />
           </div>
-        </div>
-        <Image
-          src={replaceImageDomain(
-            pageData.founder_image.data.attributes.formats.large.url
-          )}
-          alt={pageData.founder_image.data.attributes.alternativeText}
-          width={pageData.founder_image.data.attributes.width}
-          height={pageData.founder_image.data.attributes.height}
-          // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
-          className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] lg:max-h-[654px] lg:max-w-1/2 lg:w-1/2 lg:mr-[50px]"
-        />
-      </section>
+          <div className="sm:hidden md:block">
+            <HeroBanner
+              bannerText={pageData.hero_text}
+              bannerImage={{
+                url: pageData.hero_cover.data.attributes.url,
+                name: pageData.hero_cover.data.attributes.alternativeText,
+              }}
+              subText={pageData.hero_subtext}
+              ctaButton={{
+                url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+                text: pageData.hero_button_text,
+              }}
+            />
+          </div>
+        </section>
 
-      <section className="bg-gray-100 py-2 text-center">
-        <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
-          {pageData.what_we_do_title}
-        </h2>
-        <div className="grid grid-cols-1 place-items-center md:grid-cols-3 xl:mx-[150px]">
-          {pageData.what_we_do_reasons.map((reason: any) => {
-            let lottieVar;
-            if (reason.lottie_name === "treasure") {
-              lottieVar = lottieTreasure;
-            } else if (reason.lottie_name === "project") {
-              lottieVar = lottieProject;
-            } else {
-              lottieVar = lottieRocket;
-            }
-            return (
-              <div
-                key={reason.id}
-                className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[415px] md:w-[245px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
-              >
-                <div className="flex grow flex-col p-6 pt-0 text-center">
-                  <div className="mx-auto my-4 size-20 xl:size-40">
-                    <Lottie
-                      animationData={lottieVar}
-                      loop={true}
-                      width="200"
-                      height="200"
-                    />
-                  </div>
-                  <CardTitle className="p-2 text-lg font-bold text-blue-primary md:text-xl lg:mx-8 xl:mx-0">
-                    <p>{reason.title}</p>
-                  </CardTitle>
-                  <CardDescription className="mt-auto p-2 text-grey-primary md:p-0">
-                    {reason.description.map((block: any) => {
-                      return (
-                        <div key={block.id}>
-                          <p>{block.children[0].text}</p>
-                        </div>
-                      );
-                    })}
-                  </CardDescription>
-                  <Link
-                    href={reason.cta_navigation_url}
-                    aria-label={reason.cta_navigation_description}
-                    className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary"
-                  >
-                    <button>{reason.cta_text}</button>
-                  </Link>{" "}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section>
-        <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 lg:mx-auto lg:max-w-[1140px]">
-          <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
-            {pageData.why_you_title}
-          </CardTitle>
-          <div className="md:mx-14 xl:mx-[240px]">
-            {pageData.why_you_reasons.map((reason: any, index: number) => {
+        <section
+          id="founder"
+          className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] lg:px-2 lg:flex-row-reverse lg:justify-center lg:max-w-[1140px] lg:mx-auto "
+        >
+          <div className="lg:w-1/2 lg:mx-8">
+            <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px] ">
+              {pageData.founder_text}
+            </h3>
+            <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left lg:my-[25px]">
+              {pageData.founder_subtext}
+            </h6>
+            {pageData.founder_description.map((block: any) => {
               return (
-                <div key={reason.id}>
-                  <CardContent className="flex flex-row space-x-2 text-left">
-                    <Image
-                      src={"/tick-in-circle-orange.svg"}
-                      alt="Checkmark"
-                      width="40"
-                      height="40"
-                    />
-                    <div>
-                      <p
-                        className="text-xl font-semibold md:max-w-[90%] xl:font-normal"
-                        key={reason.id}
-                      >
-                        {reason.reason}
-                      </p>
-                      <div className="md:hidden">
-                        {index < pageData.why_you_reasons.length - 1 && (
-                          <div className="mx-6 my-2 border border-orange-400" />
-                        )}
-                      </div>
-                      <div className="my-2 hidden border border-orange-400 md:block" />
+                <div key={block.id}>
+                  <p className="my-2 md:my-4 lg:my-12">
+                    {block.children[0].text}
+                  </p>
+                </div>
+              );
+            })}
+            <div className="hidden lg:block">
+              <Button className="rounded-md bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
+                <Link href={"/about"}>Learn More</Link>
+              </Button>
+            </div>
+          </div>
+          <Image
+            src={replaceImageDomain(
+              pageData.founder_image.data.attributes.formats.large.url
+            )}
+            alt={pageData.founder_image.data.attributes.alternativeText}
+            width={pageData.founder_image.data.attributes.width}
+            height={pageData.founder_image.data.attributes.height}
+            // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
+            className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] lg:max-h-[654px] lg:max-w-1/2 lg:w-1/2 lg:mr-[50px]"
+          />
+        </section>
+
+        <section className="bg-gray-100 py-2 text-center">
+          <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
+            {pageData.what_we_do_title}
+          </h2>
+          <div className="grid grid-cols-1 place-items-center md:grid-cols-3 xl:mx-[150px]">
+            {pageData.what_we_do_reasons.map((reason: any) => {
+              let lottieVar;
+              if (reason.lottie_name === "treasure") {
+                lottieVar = lottieTreasure;
+              } else if (reason.lottie_name === "project") {
+                lottieVar = lottieProject;
+              } else {
+                lottieVar = lottieRocket;
+              }
+              return (
+                <div
+                  key={reason.id}
+                  className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[415px] md:w-[245px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
+                >
+                  <div className="flex grow flex-col p-6 pt-0 text-center">
+                    <div className="mx-auto my-4 size-20 xl:size-40">
+                      <Lottie
+                        animationData={lottieVar}
+                        loop={true}
+                        width="200"
+                        height="200"
+                      />
                     </div>
-                  </CardContent>
+                    <CardTitle className="p-2 text-lg font-bold text-blue-primary md:text-xl lg:mx-8 xl:mx-0">
+                      <p>{reason.title}</p>
+                    </CardTitle>
+                    <CardDescription className="mt-auto p-2 text-grey-primary md:p-0">
+                      {reason.description.map((block: any) => {
+                        return (
+                          <div key={block.id}>
+                            <p>{block.children[0].text}</p>
+                          </div>
+                        );
+                      })}
+                    </CardDescription>
+                    <Link
+                      href={reason.cta_navigation_url}
+                      aria-label={reason.cta_navigation_description}
+                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary"
+                    >
+                      <button>{reason.cta_text}</button>
+                    </Link>{" "}
+                  </div>
                 </div>
               );
             })}
           </div>
-        </Card>
-      </section>
+        </section>
 
-      <section id="familiar-section" className="p-4">
-        <div
-          id="container"
-          className="flex flex-col items-center lg:mx-auto lg:max-w-[1140px] lg:flex-row"
-        >
+        <section>
+          <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 lg:mx-auto lg:max-w-[1140px]">
+            <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
+              {pageData.why_you_title}
+            </CardTitle>
+            <div className="md:mx-14 xl:mx-[240px]">
+              {pageData.why_you_reasons.map((reason: any, index: number) => {
+                return (
+                  <div key={reason.id}>
+                    <CardContent className="flex flex-row space-x-2 text-left">
+                      <Image
+                        src={"/tick-in-circle-orange.svg"}
+                        alt="Checkmark"
+                        width="40"
+                        height="40"
+                      />
+                      <div>
+                        <p
+                          className="text-xl font-semibold md:max-w-[90%] xl:font-normal"
+                          key={reason.id}
+                        >
+                          {reason.reason}
+                        </p>
+                        <div className="md:hidden">
+                          {index < pageData.why_you_reasons.length - 1 && (
+                            <div className="mx-6 my-2 border border-orange-400" />
+                          )}
+                        </div>
+                        <div className="my-2 hidden border border-orange-400 md:block" />
+                      </div>
+                    </CardContent>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        </section>
+
+        <section id="familiar-section" className="p-4">
           <div
-            id="text-content"
-            className="text-center lg:mr-[50px] lg:flex lg:w-1/2 lg:flex-col lg:space-y-12 lg:text-left"
+            id="container"
+            className="flex flex-col items-center lg:mx-auto lg:max-w-[1140px] lg:flex-row"
           >
-            <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
-              {pageData.why_you_familiar_title}
-            </h2>
-            <h6 className="font-semibold text-blue-secondary lg:text-xl">
-              {pageData.why_you_familiar_subtitle}
-            </h6>
-          </div>
+            <div
+              id="text-content"
+              className="text-center lg:mr-[50px] lg:flex lg:w-1/2 lg:flex-col lg:space-y-12 lg:text-left"
+            >
+              <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
+                {pageData.why_you_familiar_title}
+              </h2>
+              <h6 className="font-semibold text-blue-secondary lg:text-xl">
+                {pageData.why_you_familiar_subtitle}
+              </h6>
+            </div>
 
-          <div id="carousel-container">
-            <CustomHomePageCarousel
-              thoughts={pageData.why_you_familiar_thoughts}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="enrolment"
-        className="flex flex-col items-center bg-gray-100 p-4 text-center"
-      >
-        <h3 className="my-4 text-lg font-semibold text-blue-secondary md:text-xl">
-          {pageData.courses_subtitle}
-        </h3>
-        <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
-          {pageData.courses_title}
-        </h2>
-        <p className="my-4">{pageData.courses_description}</p>
-        <div
-          id="courses"
-          className="mt-16 grid grid-cols-1 space-y-20 md:grid-cols-2 md:gap-8 md:space-y-0"
-        >
-          {pageData.courses.data.map((course: any) => {
-            return <HomePageCourseCard key={course.id} course={course} />;
-          })}
-        </div>
-
-        <HundredKButton />
-      </section>
-
-      <section id="stats">
-        <div
-          id="stats-container"
-          className="grid grid-cols-1 space-y-2 bg-blue-secondary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
-        >
-          {pageData.metrics.map((metric: any) => {
-            return (
-              <div id="stat" key={metric.id}>
-                <h2 className="text-[45px] font-bold leading-[1.2em]">
-                  <MetricCounter value={metric.value} />
-                </h2>
-                <p className="text-xl">{metric.title}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section id="testimonials" className="bg-white py-8 text-center">
-        <h2 className="text-wrap text-[30px] font-bold leading-9 text-blue-primary md:mx-[120px] md:my-12 md:text-[35px]">
-          {pageData.testimonials_title}
-        </h2>
-
-        <div
-          id="testimonial-cards"
-          // className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
-          className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
-        >
-          {pageData.testimonials.data.map((testimonial: any, index: number) => {
-            return (
-              <TestimonialCard
-                key={testimonial.id}
-                testimonial={testimonial}
-                index={index}
+            <div id="carousel-container">
+              <CustomHomePageCarousel
+                thoughts={pageData.why_you_familiar_thoughts}
               />
-            );
-          })}
-        </div>
-      </section>
+            </div>
+          </div>
+        </section>
 
-      <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
-        <HomePageNHSPensionForm />
-      </section>
-    </main>
+        <section
+          id="enrolment"
+          className="flex flex-col items-center bg-gray-100 p-4 text-center"
+        >
+          <h3 className="my-4 text-lg font-semibold text-blue-secondary md:text-xl">
+            {pageData.courses_subtitle}
+          </h3>
+          <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
+            {pageData.courses_title}
+          </h2>
+          <p className="my-4">{pageData.courses_description}</p>
+          <div
+            id="courses"
+            className="mt-16 grid grid-cols-1 space-y-20 md:grid-cols-2 md:gap-8 md:space-y-0"
+          >
+            {pageData.courses.data.map((course: any) => {
+              return <HomePageCourseCard key={course.id} course={course} />;
+            })}
+          </div>
+
+          <HundredKButton />
+        </section>
+
+        <section id="stats">
+          <div
+            id="stats-container"
+            className="grid grid-cols-1 space-y-2 bg-blue-secondary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
+          >
+            {pageData.metrics.map((metric: any) => {
+              return (
+                <div id="stat" key={metric.id}>
+                  <h2 className="text-[45px] font-bold leading-[1.2em]">
+                    <MetricCounter value={metric.value} />
+                  </h2>
+                  <p className="text-xl">{metric.title}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section id="testimonials" className="bg-white py-8 text-center">
+          <h2 className="text-wrap text-[30px] font-bold leading-9 text-blue-primary md:mx-[120px] md:my-12 md:text-[35px]">
+            {pageData.testimonials_title}
+          </h2>
+
+          <div
+            id="testimonial-cards"
+            // className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
+            className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+          >
+            {pageData.testimonials.data.map(
+              (testimonial: any, index: number) => {
+                return (
+                  <TestimonialCard
+                    key={testimonial.id}
+                    testimonial={testimonial}
+                    index={index}
+                  />
+                );
+              }
+            )}
+          </div>
+        </section>
+
+        <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
+          <HomePageNHSPensionForm />
+        </section>
+      </main>
+    </>
   );
 }
