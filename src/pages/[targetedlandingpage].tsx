@@ -172,6 +172,20 @@ export default function TargetedMarketingLandingPage({
             <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=40" />
           </>
         );
+      case "/retirement-plan":
+        return (
+          <>
+            <div className="_form_36"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=36" />
+          </>
+        );
+      case "/clix-dental":
+        return (
+          <>
+            <div className="_form_56"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=56" />
+          </>
+        );
       default:
         undefined;
     }
