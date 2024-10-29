@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
     "/facebook-group",
     "/podcastreport",
     "/boost-your-income-with-james-martin",
+    "/thankyou",
   ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);
