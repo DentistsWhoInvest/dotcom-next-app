@@ -217,7 +217,7 @@ export default function Home({ pageData }: { pageData: any }) {
     }
     const timer = setTimeout(() => {
       setIsPopupVisible(true);
-    }, 10000); // 10 seconds
+    }, 15000); // 15 seconds
 
     const handleMouseLeave = () => {
       setIsPopupVisible(true);
