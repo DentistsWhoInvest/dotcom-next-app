@@ -208,18 +208,32 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 
 export default function Home({ pageData }: { pageData: any }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
 
   // Show the popup after 10 seconds
   useEffect(() => {
+    if (hasPopupBeenShown) {
+      return;
+    }
     const timer = setTimeout(() => {
       setIsPopupVisible(true);
     }, 10000); // 10 seconds
 
+    const handleMouseLeave = () => {
+      setIsPopupVisible(true);
+    };
+
+    document.addEventListener("mouseleave", handleMouseLeave);
+
     // Cleanup the timer if the component is unmounted
-    return () => clearTimeout(timer);
-  }, []);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [hasPopupBeenShown]);
 
   const closePopup = () => {
+    setHasPopupBeenShown(true);
     setIsPopupVisible(false);
   };
 
