@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
@@ -17,43 +18,12 @@ export default function PodcastMarketingForm() {
           Never Miss A Dentists Who Invest Podcast Episode Again And Also
           Receive A Free Report On Investing​
         </div>
-        <form action="" method="post">
-          <div id="form" className="flex flex-col space-y-4">
-            <div className="flex flex-col justify-start space-y-2">
-              <label className="text-sm font-semibold" htmlFor="name">
-                First Name{" "}
-              </label>
-              <input
-                className="w-full rounded-sm border border-gray-400 p-2 text-black"
-                type="text"
-                name="name"
-                id="name"
-                required
-                placeholder="Type your first name"
-              />
-            </div>
-            <div className="flex flex-col  space-y-2">
-              <label className="text-sm font-semibold" htmlFor="email">
-                Email*
-              </label>
-              <input
-                className="w-full rounded-sm border border-gray-400 p-2 text-black"
-                type="email"
-                name="email"
-                id="email"
-                required
-                placeholder="Type your email"
-              />
-            </div>
-
-            <input
-              type="submit"
-              value="SUBMIT & DOWNLOAD"
-              className="m-4 text-wrap rounded-sm bg-blue-primary px-6 py-4 text-center text-xl"
-            />
-          </div>
-        </form>
-        <p className="pt-4 text-center text-xs md:text-left lg:text-base">
+        <div
+          // eslint-disable-next-line tailwindcss/no-custom-classname
+          className="_form_7"
+        ></div>
+        <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=7" />
+        <p className="ml-5 pt-4 text-center text-xs md:text-left lg:text-base">
           BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST EMAIL
           LIST. THIS LIST CAN BE LEFT AT ANY TIME.
         </p>

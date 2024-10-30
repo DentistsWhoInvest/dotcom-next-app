@@ -1,7 +1,9 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { createSlug } from "./articles/[page]";
 import Image from "next/image";
+import Script from "next/script";
 
 type TextNode = {
   text: string;
@@ -80,6 +82,7 @@ type LandingPageAttributes = {
   updatedAt: string;
   publishedAt: string;
   contributor: Contributor;
+  slug: string;
 };
 
 type LandingPage = {
@@ -93,14 +96,22 @@ export const getStaticPaths = async () => {
   );
 
   return {
-    paths: results.data.map((result: { attributes: { slug: string }, id: number }) => ({
-      params: { targetedlandingpage: result.attributes.slug.replace(/^\//, "")},
-    })),
+    paths: results.data.map(
+      (result: { attributes: { slug: string }; id: number }) => ({
+        params: {
+          targetedlandingpage: result.attributes.slug.replace(/^\//, ""),
+        },
+      })
+    ),
     fallback: false,
   };
 };
 
-export const getStaticProps = async ({ params }: { params: { targetedlandingpage: string } }) => {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { targetedlandingpage: string };
+}) => {
   const populateFields = ["contributor", "contributor.profilePicture"];
   const allPages = await fetchEndpointData(
     `/targeted-data-collection-pages/`,
@@ -124,13 +135,69 @@ export default function TargetedMarketingLandingPage({
 }: {
   landingPage: LandingPage;
 }) {
+  function decideEmbed(landingPageSlug: string) {
+    switch (landingPageSlug) {
+      case "/sarah-grace-mortgages":
+        return (
+          <>
+            <div className="_form_50"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=50" />
+          </>
+        );
+      case "/income-protection":
+        return (
+          <>
+            <div className="_form_34"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=34" />
+          </>
+        );
+      case "/investing-strategy":
+        return (
+          <>
+            <div className="_form_48"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=48" />
+          </>
+        );
+      case "/reducing-tax-bill":
+        return (
+          <>
+            <div className="_form_44"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=44" />
+          </>
+        );
+      case "/david-hossein":
+        return (
+          <>
+            <div className="_form_40"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=40" />
+          </>
+        );
+      case "/retirement-plan":
+        return (
+          <>
+            <div className="_form_36"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=36" />
+          </>
+        );
+      case "/clix-dental":
+        return (
+          <>
+            <div className="_form_56"></div>
+            <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=56" />
+          </>
+        );
+      default:
+        undefined;
+    }
+  }
+  const embedForm = decideEmbed(landingPage.attributes.slug);
 
   return (
     <main
-      className={`w-screen h-screen bg-gradient-to-b from-blue-secondary to-blue-primary `}
+      className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary xl:h-screen`}
     >
-      <section className="pt-[100px] m-auto">
-        <div className="space-y-5 p-5 flex flex-col items-center justify-center xl:flex-row xl:max-w-[1140px] xl:m-auto">
+      <section className="m-auto pt-[100px]">
+        <div className="flex flex-col items-center justify-center space-y-5 p-5 xl:m-auto xl:max-w-[1140px] xl:flex-row">
           {landingPage.attributes.contributor.data?.attributes
             .profilePicture && (
             <Image
@@ -144,17 +211,15 @@ export default function TargetedMarketingLandingPage({
               }
               height={335}
               width={251}
-              className="rounded-3xl md:w-[413px] md:h-[550px]
+              className="rounded-3xl md:h-[550px] md:w-[413px]
 "
             />
           )}
-          <div className="py-2 px-[20px] md:px-[40px] md:py-8 xl:px-[80px]">
-            <div className="text-[25px] xl:text-[35px] leading-[1.2em] flex flex-col text-white font-bold items-center content-center text-center pb-5">
+          <div className="px-[20px] py-2 md:px-[40px] md:py-8 xl:px-[80px]">
+            <div className="flex flex-col content-center items-center pb-5 text-center text-[25px] font-bold leading-[1.2em] text-white xl:text-[35px]">
               <BlocksRenderer content={landingPage.attributes.description} />
             </div>
-            <div id="form" className=" bg-white text-black">
-              todo: embed form
-            </div>
+            {embedForm}
           </div>
         </div>
       </section>

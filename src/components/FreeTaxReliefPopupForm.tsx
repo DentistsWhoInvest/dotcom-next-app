@@ -1,21 +1,59 @@
+import { Button } from "./ui/button";
+import Image from "next/image";
+import { SquareX } from "lucide-react";
 import Script from "next/script";
 
-export default function NHSPensionChecklistForm() {
+interface NHSPopupFormProps {
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+export const FreeTaxReliefPopupForm = ({
+  isVisible,
+  onClose,
+}: NHSPopupFormProps) => {
+  if (!isVisible) return null;
+
   return (
-    <section className="bg-orange-400 text-white xl:w-[330px]">
-      <div className="mb-[-50px] p-[20px] text-center text-[25px] font-bold md:text-left lg:text-[33px] lg:leading-[39px]">
-      FREE pdf on tax efficiency for dentists
+    <div
+      id="overall-container"
+      className="relative flex size-full flex-col bg-white md:h-[495px] md:w-[800px] md:flex-row"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div
+        id="title-and-image"
+        className="flex h-3/5 flex-col justify-center bg-[#F58F1D] text-white md:h-full md:w-1/2 md:px-2"
+      >
+        <div className="my-12 flex flex-col items-center justify-center  text-center font-bold">
+          <button onClick={onClose} className="absolute right-6 top-2">
+            <SquareX className="stroke-blue-primary" size={32} />
+          </button>
+          <h2 className="mx-3 mb-4 text-[28px] leading-8 md:text-[27px]">
+            FREE pdf on tax efficiency for dentists
+          </h2>
+          <Image
+            src="https://assets.drjamesmartin.co.uk/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
+            alt="david hossein tax relief"
+            width={300}
+            height={400}
+            className="rounded-[30px] "
+          />
+        </div>
       </div>
-      {/* <div
-        // eslint-disable-next-line tailwindcss/no-custom-classname
-        className="_form_23"
-      ></div>
-      <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" /> */}
-          {/* We do this kinda horrible thing because - like on the homepage popup
-          The reason is that using the script tag seems to cause the script to be only executed on refresh
-          and not on first load. Hack seems to work, but would be nice if an alternative solution could be found.
-          That might require a change in the way the form is embedded (e.g. via an iframe)
-          */}
+      <div
+        id="form"
+        className="mx-4 bg-white md:mt-[-40px] md:w-1/2 md:place-self-center"
+      >
+        <div
+          // eslint-disable-next-line tailwindcss/no-custom-classname
+          className="_form_23"
+        ></div>
+        <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" />
+
+        {/* We do this kinda horrible thing because it seems to clash with the TaxReliefForm at the bottom of the homepage
+         So we just copy the embed code. 
+          Possibly necessary because of a recaptcha? On a previous iteration with a different form,
+          rendering it twice on the same page was causing issues with React*/}
         <div
           dangerouslySetInnerHTML={{
             __html: `
@@ -53,9 +91,12 @@ export default function NHSPensionChecklistForm() {
               </div>`,
           }}
         />
-      <p className="pb-4 text-[12px] leading-5 md:text-left px-[20px] mt-[-10px]">
-      Enter your details above to receive a link you can use to download your FREE pdf
-      </p>
-    </section>
+
+        <p className="mx-6 mb-4 mt-2 text-base text-blue-primary">
+          Enter your details above to receive a link you can use to download
+          your FREE pdf
+        </p>
+      </div>
+    </div>
   );
-}
+};
