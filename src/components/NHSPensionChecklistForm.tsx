@@ -11,6 +11,11 @@ export default function NHSPensionChecklistForm() {
         className="_form_23"
       ></div>
       <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" /> */}
+          {/* We do this kinda horrible thing because - like on the homepage popup
+          The reason is that using the script tag seems to cause the script to be only executed on refresh
+          and not on first load. Hack seems to work, but would be nice if an alternative solution could be found.
+          That might require a change in the way the form is embedded (e.g. via an iframe)
+          */}
         <div
           dangerouslySetInnerHTML={{
             __html: `
