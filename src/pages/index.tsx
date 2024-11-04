@@ -43,7 +43,7 @@ export const getStaticProps = async () => {
   };
 };
 
-let assetDomain = "https://assets.drjamesmartin.co.uk";
+let assetDomain = "https://assets.dentistswhoinvest.com";
 function replaceImageDomain(url: string): string {
   return url.replace(
     "https://storage.googleapis.com/dwi-dotcom-assets",

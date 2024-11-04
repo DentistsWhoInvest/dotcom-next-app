@@ -41,7 +41,7 @@ jobs:
         id: compile-site
         run: npm run build
         env:
-          NEXT_ADMIN_STRAPI_URL: 'https://admin.drjamesmartin.co.uk/api'
+          NEXT_ADMIN_STRAPI_URL: 'https://admin.dentistswhoinvest.com/api'
           STRAPI_API_KEY: ${{ secrets.STRAPI_API_KEY }}
 
       - name: 'Set up Cloud SDK'

@@ -6,7 +6,7 @@ export default function HomepageFreeTaxReliefForm() {
   return (
     <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-400 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
       <Image
-        src="https://assets.drjamesmartin.co.uk/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
+        src="https://assets.dentistswhoinvest.com/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
         alt="checklist"
         layout="responsive"
         width={808}

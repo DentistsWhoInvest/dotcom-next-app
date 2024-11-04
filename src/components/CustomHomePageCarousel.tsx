@@ -33,7 +33,7 @@ type Thought = {
 export const CustomHomePageCarousel = ({ thoughts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true});
 
-  let assetDomain = "https://assets.drjamesmartin.co.uk";
+  let assetDomain = "https://assets.dentistswhoinvest.com";
   function replaceImageDomain(url: string): string {
     return url.replace(
       "https://storage.googleapis.com/dwi-dotcom-assets",

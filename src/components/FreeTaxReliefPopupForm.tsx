@@ -32,7 +32,7 @@ export const FreeTaxReliefPopupForm = ({
             FREE pdf on tax efficiency for dentists
           </h2>
           <Image
-            src="https://assets.drjamesmartin.co.uk/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
+            src="https://assets.dentistswhoinvest.com/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
             alt="david hossein tax relief"
             width={300}
             height={400}
