@@ -82,9 +82,7 @@ export default function Header() {
         <div>
           <Link href={"/"}>
             <Image
-              src={
-                "https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/PBS-01-Twilight-Sky-RGB-e1717514900216.png"
-              }
+              src="https://assets.dentistswhoinvest.com/dwi_logo_slogans_462bc9bf2d/dwi_logo_slogans_462bc9bf2d.webp"
               alt={"Logo"}
               width={"94"}
               height={"31"}
