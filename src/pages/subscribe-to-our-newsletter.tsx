@@ -18,7 +18,7 @@ export default function SubscribeToNewsletterPage() {
         <section className="flex size-full flex-col place-content-center content-center items-center justify-items-center p-[40px] text-center text-white md:p-[20px] xl:mx-auto xl:max-w-[1140px]">
           <div className="flex flex-col justify-center rounded-2xl text-white  md:h-[550px] md:flex-row xl:h-[700px] ">
             <Image
-              src="https://assets.drjamesmartin.co.uk/Newsletter_scaled_e57b2b53b0/Newsletter_scaled_e57b2b53b0.webp"
+              src="https://assets.dentistswhoinvest.com/Newsletter_scaled_e57b2b53b0/Newsletter_scaled_e57b2b53b0.webp"
               alt="newsletter-email-example"
               width={1024}
               height={1340}

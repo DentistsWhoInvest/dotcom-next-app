@@ -9,7 +9,7 @@ export default function BoostYourIncome() {
       <section className="m-auto pt-[100px]">
         <div className="flex flex-col items-center justify-center space-y-5 p-5 xl:m-auto xl:max-w-[1140px] xl:flex-row">
           <Image
-            src="https://assets.drjamesmartin.co.uk/James_Martin_87db09f545/James_Martin_87db09f545.webp"
+            src="https://assets.dentistswhoinvest.com/James_Martin_87db09f545/James_Martin_87db09f545.webp"
             alt="James Martin"
             height={335}
             width={251}

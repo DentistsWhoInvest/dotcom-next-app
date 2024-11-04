@@ -22,7 +22,7 @@ export default function CryptoEbook() {
           </div>
           <div className="flex flex-col justify-center rounded-2xl bg-gradient-to-b from-blue-primary to-black text-white  md:h-[500px] md:flex-row xl:h-[570px] ">
             <Image
-              src="https://assets.drjamesmartin.co.uk/crypto_ebook_7854028404/crypto_ebook_7854028404.png"
+              src="https://assets.dentistswhoinvest.com/crypto_ebook_7854028404/crypto_ebook_7854028404.png"
               alt="checklist"
               width={1024}
               height={1340}
