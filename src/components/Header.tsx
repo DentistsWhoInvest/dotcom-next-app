@@ -82,7 +82,7 @@ export default function Header() {
         <div>
           <Link href={"/"}>
             <Image
-              src="https://assets.dentistswhoinvest.com/dwi_logo_slogans_462bc9bf2d/dwi_logo_slogans_462bc9bf2d.webp"
+              src="https://assets.dentistswhoinvest.com/DWI_logo_dark_blue_fe1599655f/DWI_logo_dark_blue_fe1599655f.svg"
               alt={"Logo"}
               width={"94"}
               height={"31"}
