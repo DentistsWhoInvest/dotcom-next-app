@@ -16,7 +16,6 @@ import {
 import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
-import { HundredKButton } from "@/components/HundredKButton";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { HeroBanner } from "@/components/HeroBanner";
 import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
@@ -479,8 +478,6 @@ export default function Home({ pageData }: { pageData: any }) {
               return <HomePageCourseCard key={course.id} course={course} />;
             })}
           </div>
-
-          <HundredKButton />
         </section>
 
         <section id="stats">

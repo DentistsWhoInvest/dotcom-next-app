@@ -4,7 +4,6 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { HundredKButton } from "@/components/HundredKButton";
 import { HeroBanner } from "@/components/HeroBanner";
 
 type CoursePageData = {
@@ -168,8 +167,6 @@ export default function Courses({ pageData }: { pageData: CoursePageData }) {
           })}
         </ul>
       </div>
-
-      <HundredKButton />
     </main>
   );
 }
