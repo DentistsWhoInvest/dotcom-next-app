@@ -1,4 +1,4 @@
-name: 'Deploy based on '
+name: 'CMS triggered deployment'
 
 on:
   workflow_dispatch:
