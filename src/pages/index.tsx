@@ -42,14 +42,6 @@ export const getStaticProps = async () => {
   };
 };
 
-let assetDomain = "https://assets.dentistswhoinvest.com";
-function replaceImageDomain(url: string): string {
-  return url.replace(
-    "https://storage.googleapis.com/dwi-dotcom-assets",
-    assetDomain
-  );
-}
-
 const MetricCounter = ({ value }: { value: number }) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -283,8 +275,9 @@ export default function Home({ pageData }: { pageData: any }) {
               }}
               subText={pageData.hero_subtext}
               ctaButton={{
-                url: "https://us02web.zoom.us/meeting/register/tZwuduCtrDksGN3AgWsJkYP1PMsolHoBSLmF",
+                url: pageData.hero_button_navigation_url,
                 text: pageData.hero_button_text,
+                description: pageData.hero_button_link_description,
               }}
             />
           </div>
@@ -297,8 +290,9 @@ export default function Home({ pageData }: { pageData: any }) {
               }}
               subText={pageData.hero_subtext}
               ctaButton={{
-                url: "https://us02web.zoom.us/meeting/register/tZwuduCtrDksGN3AgWsJkYP1PMsolHoBSLmF",
+                url: pageData.hero_button_navigation_url,
                 text: pageData.hero_button_text,
+                description: pageData.hero_button_link_description,
               }}
             />
           </div>
@@ -331,9 +325,7 @@ export default function Home({ pageData }: { pageData: any }) {
             </div>
           </div>
           <Image
-            src={replaceImageDomain(
-              pageData.founder_image.data.attributes.formats.large.url
-            )}
+            src={pageData.founder_image.data.attributes.formats.large.url}
             alt={pageData.founder_image.data.attributes.alternativeText}
             width={pageData.founder_image.data.attributes.width}
             height={pageData.founder_image.data.attributes.height}
