@@ -283,7 +283,7 @@ export default function Home({ pageData }: { pageData: any }) {
               }}
               subText={pageData.hero_subtext}
               ctaButton={{
-                url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+                url: "https://us02web.zoom.us/meeting/register/tZwuduCtrDksGN3AgWsJkYP1PMsolHoBSLmF",
                 text: pageData.hero_button_text,
               }}
             />
@@ -297,7 +297,7 @@ export default function Home({ pageData }: { pageData: any }) {
               }}
               subText={pageData.hero_subtext}
               ctaButton={{
-                url: "https://us02web.zoom.us/meeting/register/tZIsde2orTwvHNW7CqRlCrXcrOgn2vO3xOlG",
+                url: "https://us02web.zoom.us/meeting/register/tZwuduCtrDksGN3AgWsJkYP1PMsolHoBSLmF",
                 text: pageData.hero_button_text,
               }}
             />
