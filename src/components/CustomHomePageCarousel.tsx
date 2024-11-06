@@ -33,13 +33,6 @@ type Thought = {
 export const CustomHomePageCarousel = ({ thoughts }: any) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true});
 
-  let assetDomain = "https://assets.dentistswhoinvest.com";
-  function replaceImageDomain(url: string): string {
-    return url.replace(
-      "https://storage.googleapis.com/dwi-dotcom-assets",
-      assetDomain
-    );
-  }
   return (
     <div className="mx-auto w-full max-w-[700px] py-8 md:max-w-[800px] lg:max-w-[904px]">
       <Carousel
@@ -54,9 +47,7 @@ export const CustomHomePageCarousel = ({ thoughts }: any) => {
                 <Card className="overflow-hidden rounded-3xl">
                   <CardContent className="p-0">
                     <Image
-                      src={replaceImageDomain(
-                        thought.cover.data.attributes.formats.large.url
-                      )}
+                      src={thought.cover.data.attributes.formats.large.url}
                       alt={thought.cover.data.attributes.alternativeText}
                       width={400}
                       height={300}

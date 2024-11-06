@@ -202,7 +202,7 @@ export default function TheAcademyCoursePage({
         </section>
         <section className="flex justify-center bg-blue-secondary p-2">
           <Image
-            src="https://storage.googleapis.com/dwi-dotcom-assets/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
+            src="https://assets.dentistswhoinvest.com/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
             width={courseData.collective_content_image.data.attributes.width}
             height={courseData.collective_content_image.data.attributes.height}

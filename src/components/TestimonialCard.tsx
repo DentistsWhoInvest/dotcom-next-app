@@ -7,14 +7,6 @@ import {
 } from "./ui/card";
 import Image from "next/image";
 
-let assetDomain = "https://assets.dentistswhoinvest.com";
-function replaceImageDomain(url: string): string {
-  return url.replace(
-    "https://storage.googleapis.com/dwi-dotcom-assets",
-    assetDomain
-  );
-}
-
 export const TestimonialCard = ({
   testimonial,
   index,
@@ -43,25 +35,28 @@ export const TestimonialCard = ({
           <p className="mb-4 text-justify text-base">
             {testimonial.attributes.review[0].children[0].text}
           </p>
-          <Image
-            src="https://www.dentistswhoinvest.com/wp-content/uploads/2024/06/Icon-1-e1717784590844.png"
-            alt="stars"
-            height={20}
-            width={102}
-            className="mb-4 lg:h-[26px] lg:w-[135px]"
-          ></Image>
+          <div className="flex mb-4">
+            {Array(5)
+              .fill(0)
+              .map((_, i) => (
+                <Image
+                  key={i}
+                  src="https://assets.dentistswhoinvest.com/image_f405c7fff6/image_f405c7fff6.webp"
+                  alt="star"
+                  height={20}
+                  width={20}
+                  className="lg:h-[26px] lg:w-[27px]"
+                />
+              ))}
+          </div>
         </CardDescription>
         <div className="grow"></div>
         <CardFooter className="mb-4 mt-auto flex flex-col md:flex-row">
           <Image
-            src={replaceImageDomain(
-              testimonial.attributes.author_thumbnail.data.attributes.formats
-                .thumbnail.url
-            )}
-            alt={
-              testimonial.attributes.author_thumbnail.data.attributes
-                .alternativeText
-            }
+            src={testimonial.attributes.author_thumbnail.data.attributes.formats
+                .thumbnail.url}
+            alt={testimonial.attributes.author_thumbnail.data.attributes
+                .alternativeText}
             width={88}
             height={88}
             id="testimonial-profile"

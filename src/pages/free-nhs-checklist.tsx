@@ -18,7 +18,7 @@ export default function FreeNHSChecklist() {
         <section className="flex size-full flex-col place-content-center content-center items-center justify-items-center p-[40px] text-center text-white md:p-[20px] xl:mx-auto xl:max-w-[1140px]">
           <div className="flex flex-col justify-center rounded-2xl bg-orange-400 text-white  md:h-[550px] md:flex-row xl:h-[700px] ">
             <Image
-              src="https://storage.googleapis.com/dwi-dotcom-assets/nhs_pension_checklist_clipboard_97caac76f6/nhs_pension_checklist_clipboard_97caac76f6.webp"
+              src="https://assets.dentistswhoinvest.com/nhs_pension_checklist_clipboard_97caac76f6/nhs_pension_checklist_clipboard_97caac76f6.webp"
               alt="checklist"
               width={1024}
               height={1340}
