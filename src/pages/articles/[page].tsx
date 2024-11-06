@@ -278,7 +278,7 @@ export default function Articles({
           "Read to understand how you can accelerate your financial goals​"
         }
         bannerImage={{
-          url: "https://storage.googleapis.com/dwi-dotcom-assets/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
+          url: "https://assets.dentistswhoinvest.com/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
           name: "blog_hero_cover_95c157286b",
         }}
       />

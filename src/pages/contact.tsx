@@ -28,11 +28,11 @@ const ContactOptions = ({ option }: { option: any }) => {
   function chooseIcon(id: number) {
     switch (id) {
       case 1:
-        return "https://storage.googleapis.com/dwi-dotcom-assets/call_f47e9e0be3/call_f47e9e0be3.svg";
+        return "https://assets.dentistswhoinvest.com/call_f47e9e0be3/call_f47e9e0be3.svg";
       case 2:
-        return "https://storage.googleapis.com/dwi-dotcom-assets/email_7cbf263306/email_7cbf263306.svg";
+        return "https://assets.dentistswhoinvest.com/email_7cbf263306/email_7cbf263306.svg";
       case 3:
-        return "https://storage.googleapis.com/dwi-dotcom-assets/follow_9f5618ae12/follow_9f5618ae12.svg";
+        return "https://assets.dentistswhoinvest.com/follow_9f5618ae12/follow_9f5618ae12.svg";
       default:
         return "";
     }

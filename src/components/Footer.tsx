@@ -25,7 +25,7 @@ const ShareButtons = () => {
     <div className="flex flex-row space-x-2">
       <Link href={"https://www.facebook.com/groups/dentistswhoinvest"}>
         <Image
-          src="https://storage.googleapis.com/dwi-dotcom-assets/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
+          src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
           alt="Facebook"
           width={30}
           height={30}
@@ -34,7 +34,7 @@ const ShareButtons = () => {
       </Link>
       <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
         <Image
-          src="https://storage.googleapis.com/dwi-dotcom-assets/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
+          src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
           alt="Instagram"
           width={30}
           height={30}
@@ -46,7 +46,7 @@ const ShareButtons = () => {
         href={"https://www.linkedin.com/in/dr-james-martin/"}
       >
         <Image
-          src="https://storage.googleapis.com/dwi-dotcom-assets/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
+          src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
           alt="Linked in"
           width={30}
           height={30}
@@ -78,7 +78,7 @@ export default function Footer() {
           id="logo and text"
         >
           <Image
-            src="https://storage.googleapis.com/dwi-dotcom-assets/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
+            src="https://assets.dentistswhoinvest.com/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
             alt="logo"
             height={"61"}
             width={"125"}

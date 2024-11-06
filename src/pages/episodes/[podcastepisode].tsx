@@ -337,7 +337,7 @@ export default function PodcastPage({
         <div className="relative h-[370px] w-full overflow-hidden md:h-[409px]">
           <div className="absolute inset-0 ">
             <Image
-              src="https://storage.googleapis.com/dwi-dotcom-assets/About_Hero_Banner_4def146800/About_Hero_Banner_4def146800.webp"
+              src="https://assets.dentistswhoinvest.com/Podcast_Hero_Banner_2561d4dd6d/Podcast_Hero_Banner_2561d4dd6d.webp"
               alt={"mobile"}
               layout="fill"
               objectFit="cover"

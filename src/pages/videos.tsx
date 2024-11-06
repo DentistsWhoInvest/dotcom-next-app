@@ -145,7 +145,7 @@ export default function Videos({ pageData }: { pageData: VideosResponse }) {
     <main className={`flex flex-col bg-[#f0f3f6]`}>
       <HeroBanner
         bannerImage={{
-          url: "https://storage.googleapis.com/dwi-dotcom-assets/james_recording_green_screen_3de155024b/james_recording_green_screen_3de155024b.webp",
+          url: "https://assets.dentistswhoinvest.com/james_recording_green_screen_3de155024b/james_recording_green_screen_3de155024b.webp",
           name: "james_recording_green_screen_3de155024b",
         }}
         bannerText={"Videos"}
