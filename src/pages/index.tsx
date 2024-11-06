@@ -247,7 +247,9 @@ export default function Home({ pageData }: { pageData: any }) {
         <meta name="Dentists Who Invest" content="Dentists Who Invest" />
       </Head>
       <main>
-        <section id="popupform">
+        <section id="popupform"
+        // the popup form is hidden on mobile, but visibile from tablet.
+        className="hidden md:block">
           <div
             id="overlay"
             // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
