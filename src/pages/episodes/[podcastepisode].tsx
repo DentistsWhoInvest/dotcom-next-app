@@ -341,7 +341,7 @@ export default function PodcastPage({
               alt={"mobile"}
               layout="fill"
               objectFit="cover"
-              objectPosition="right 50%"
+              objectPosition="right 25%"
               priority
             />
             <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
