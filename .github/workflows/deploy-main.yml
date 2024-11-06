@@ -15,6 +15,10 @@ on:
       - tailwind.config.ts
       - tsconfig.json
 
+concurrency:
+  group: 'prod-site-build'
+  cancel-in-progress: true
+
 env:
   PROJECT_ID: 'electric-node-426223-s2'
 
