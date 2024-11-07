@@ -59,7 +59,7 @@ export default function Header() {
           key={link.href}
           className={`p-1 text-right text-sm  md:text-base lg:text-lg ${
             isActive
-              ? "text-blue-secondary"
+              ? "text-orange-700"
               : "text-blue-primary hover:text-blue-secondary"
           }`}
         >
@@ -113,13 +113,15 @@ export default function Header() {
 
         <ul className="hidden flex-row items-center md:flex lg:mr-32">
           <MenuLinks menuLinksList={menuLinksList} />
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <Link href={"https://courses.dentistswhoinvest.com/login"}>
-              <button className="m-2 rounded-md bg-orange-400 px-4 py-3 font-bold text-white hover:text-blue-primary">
-                Members
-              </button>
-            </Link>
-          </div>
+          <li>
+            <div className="hidden sm:ml-6 sm:flex sm:items-center">
+              <Link href={"https://courses.dentistswhoinvest.com/login"}>
+                <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transform hover:scale-105 transition duration-200 ease-in-out">
+                  Members
+                </button>
+              </Link>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

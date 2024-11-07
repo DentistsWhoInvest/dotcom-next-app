@@ -110,7 +110,7 @@ const MetricCounter = ({ value }: { value: number }) => {
 
 const HomePageCourseCard = ({ course }: { course: any }) => {
   return (
-    <li className="flex flex-col items-center justify-center rounded-3xl border-solid bg-white px-[50px] py-[20px] shadow-custom md:px-[10px] md:pb-[25px] md:pt-[50px] lg:mx-4 lg:px-[50px]">
+    <div className="flex flex-col items-center justify-center rounded-3xl border-solid bg-white px-[50px] py-[20px] shadow-custom md:px-[10px] md:pb-[25px] md:pt-[50px] lg:mx-4 lg:px-[50px]">
       <div className="">
         <Image
           src="/DWI-logo-circle.webp"
@@ -131,13 +131,13 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
         >
           <path
             d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
-            stroke-width="10px"
+            strokeWidth="10px"
             fill="none"
             className="path-1 stroke-blue-secondary"
           ></path>
           <path
             d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
-            stroke-width="10px"
+            strokeWidth="10px"
             fill="none"
             className="path-2 stroke-blue-secondary"
           ></path>
@@ -170,7 +170,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
             animation-iteration-count: infinite;
           }
 
-          .path-2 {
+        .path-2 {
             animation: draw 8s forwards; /* Animate drawing and fading */
             animation-delay: 0.5s;
             animation-iteration-count: infinite;
@@ -189,11 +189,11 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
         <p className="mb-4 text-sm font-semibold text-blue-primary md:mt-8 md:text-xl">
           {course.attributes.description}
         </p>
-        <Button className="w-2/3 rounded-md bg-orange-400 px-3 py-4 text-white hover:bg-orange-500 ">
-          <Link href={course.attributes.navigation_url}>Learn More</Link>
+        <Button className="w-2/3 rounded-md bg-orange-600 px-3 py-4 text-white hover:bg-orange-500 ">
+          <Link href={course.attributes.navigation_url}>Course Details</Link>
         </Button>
       </div>
-    </li>
+    </div>
   );
 };
 
@@ -321,7 +321,7 @@ export default function Home({ pageData }: { pageData: any }) {
               );
             })}
             <div className="hidden lg:block">
-              <Button className="rounded-md bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
+              <Button className="rounded-md bg-orange-600 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
                 <Link href={"/about"}>Learn More</Link>
               </Button>
             </div>
@@ -379,7 +379,7 @@ export default function Home({ pageData }: { pageData: any }) {
                     <Link
                       href={reason.cta_navigation_url}
                       aria-label={reason.cta_navigation_description}
-                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-400 px-4 py-3 text-white hover:text-blue-primary"
+                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-600 px-4 py-3 text-white hover:text-blue-primary"
                     >
                       <button>{reason.cta_text}</button>
                     </Link>{" "}
@@ -455,9 +455,9 @@ export default function Home({ pageData }: { pageData: any }) {
 
         <section
           id="enrolment"
-          className="flex flex-col items-center bg-gray-100 p-4 text-center"
+          className="flex flex-col items-center bg-gray-200 p-4 text-center"
         >
-          <h3 className="my-4 text-lg font-semibold text-blue-secondary md:text-xl">
+          <h3 className="my-4 text-lg font-semibold text-blue-primary md:text-xl">
             {pageData.courses_subtitle}
           </h3>
           <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
@@ -477,7 +477,7 @@ export default function Home({ pageData }: { pageData: any }) {
         <section id="stats">
           <div
             id="stats-container"
-            className="grid grid-cols-1 space-y-2 bg-blue-secondary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
+            className="grid grid-cols-1 space-y-2 bg-blue-tertiary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
           >
             {pageData.metrics.map((metric: any) => {
               return (
