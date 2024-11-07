@@ -244,7 +244,7 @@ export default function Home({ pageData }: { pageData: any }) {
     <>
       <Head>
         <title>Dentists Who Invest</title>
-        <meta name="Dentists Who Invest" content="Dentists Who Invest" />
+        <meta name="description" content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists" />"
       </Head>
       <main>
         <section id="popupform"
