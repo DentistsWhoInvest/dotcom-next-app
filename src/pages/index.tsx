@@ -198,46 +198,46 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 };
 
 export default function Home({ pageData }: { pageData: any }) {
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
+  // const [isPopupVisible, setIsPopupVisible] = useState(false);
+  // const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
 
-  // Show the popup after 10 seconds
-  useEffect(() => {
-    if (hasPopupBeenShown) {
-      return;
-    }
-    const timer = setTimeout(() => {
-      setIsPopupVisible(true);
-    }, 15000); // 15 seconds
+  // // Show the popup after 10 seconds
+  // useEffect(() => {
+  //   if (hasPopupBeenShown) {
+  //     return;
+  //   }
+  //   const timer = setTimeout(() => {
+  //     setIsPopupVisible(true);
+  //   }, 15000); // 15 seconds
 
-    const handleMouseLeave = () => {
-      setIsPopupVisible(true);
-    };
+  //   const handleMouseLeave = () => {
+  //     setIsPopupVisible(true);
+  //   };
 
-    document.addEventListener("mouseleave", handleMouseLeave);
+  //   document.addEventListener("mouseleave", handleMouseLeave);
 
-    // Cleanup the timer if the component is unmounted
-    return () => {
-      clearTimeout(timer);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, [hasPopupBeenShown]);
+  //   // Cleanup the timer if the component is unmounted
+  //   return () => {
+  //     clearTimeout(timer);
+  //     document.removeEventListener("mouseleave", handleMouseLeave);
+  //   };
+  // }, [hasPopupBeenShown]);
 
-  const closePopup = () => {
-    setHasPopupBeenShown(true);
-    setIsPopupVisible(false);
-  };
+  // const closePopup = () => {
+  //   setHasPopupBeenShown(true);
+  //   setIsPopupVisible(false);
+  // };
 
-  const [popupFullyVisible, setPopupFullyVisible] = useState(isPopupVisible);
+  // const [popupFullyVisible, setPopupFullyVisible] = useState(isPopupVisible);
 
-  useEffect(() => {
-    if (isPopupVisible) {
-      setPopupFullyVisible(true);
-    } else {
-      const timer = setTimeout(() => setPopupFullyVisible(false), 300); // Match duration with the transition
-      return () => clearTimeout(timer);
-    }
-  }, [isPopupVisible]);
+  // useEffect(() => {
+  //   if (isPopupVisible) {
+  //     setPopupFullyVisible(true);
+  //   } else {
+  //     const timer = setTimeout(() => setPopupFullyVisible(false), 300); // Match duration with the transition
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isPopupVisible]);
 
   //replace the image url depending on breakpoint
   return (
@@ -247,7 +247,8 @@ export default function Home({ pageData }: { pageData: any }) {
         <meta name="Dentists Who Invest" content="Dentists Who Invest" />
       </Head>
       <main>
-        <section id="popupform"
+        {/* <section id="popupform"
+        // Disabling the exit pop altogether - leaving some of the code here for the moment in case we want to re-enable it soon.
         // the popup form is hidden on mobile, but visibile from tablet.
         className="hidden md:block">
           <div
@@ -265,7 +266,7 @@ export default function Home({ pageData }: { pageData: any }) {
               onClose={closePopup}
             />
           </div>
-        </section>
+        </section> */}
 
         <section>
           <div className="sm:block md:hidden">
