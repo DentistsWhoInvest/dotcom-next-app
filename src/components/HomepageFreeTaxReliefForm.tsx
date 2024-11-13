@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HomepageFreeTaxReliefForm() {
   return (
-    <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-400 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
+    <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-600 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
       <Image
         src="https://assets.dentistswhoinvest.com/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
         alt="checklist"

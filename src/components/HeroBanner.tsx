@@ -71,6 +71,7 @@ export const HeroBanner = ({
         layout="fill"
         objectFit="cover"
         className="inset-0 object-[right_70%] lg:object-[right_40%] xl:object-[right_30%] xxl:object-[right_25%]"
+        priority
       />
       <div className="absolute inset-0 bg-blue-primary opacity-80 md:opacity-[0.69] lg:hidden"></div>
       <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:w-[65%] md:max-w-screen-lg md:items-start md:px-[30px] md:text-left lg:mx-auto lg:w-[1140px] lg:grow lg:px-0">
@@ -90,7 +91,7 @@ export const HeroBanner = ({
           </p>
         )}
         {ctaButton && (
-            <Button className="mt-8 rounded-md bg-orange-400 px-[55px] py-6 text-base text-white hover:bg-orange-500">
+            <Button className="mt-8 rounded-md bg-orange-600 px-[55px] py-6 text-base text-white hover:bg-orange-500">
             <Link href={ctaButton.url} aria-label={ctaButton.description}>{ctaButton.text}</Link>
           </Button>
         )}

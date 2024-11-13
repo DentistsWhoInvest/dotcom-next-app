@@ -68,15 +68,15 @@ export default function Footer() {
   ];
   const CoursesLinks = [
     { href: "/cash-flow-for-dentists/", text: "Cash Flow For Dentists" },
-    { href: "/the-academy/", text: "Dentists Who invest Academy" },
+    { href: "/the-academy/", text: "Dentists Who Invest Academy" },
   ];
+
   return (
     <div className="bg-[#f0f3f6] shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px]">
       <div className="flex flex-row p-2 text-blue-primary md:flex-col lg:flex-row lg:px-32 lg:py-8 max-w-[1140px] xl:mx-auto">
-        <div
-          className="justify-evenly md:m-8 md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4"
-          id="logo and text"
-        >
+        
+        {/* Logo and Text Section */}
+        <div className="justify-evenly md:m-8 md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4">
           <Image
             src="https://assets.dentistswhoinvest.com/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
             alt="logo"
@@ -93,71 +93,74 @@ export default function Footer() {
           </div>
         </div>
 
-        <div
-          id="links"
-          className="hidden grow flex-row content-center justify-center space-x-28 self-center justify-self-center md:flex lg:space-x-8"
-        >
-          <ul>
-            <span className="flex justify-center text-lg font-bold">
-              EXPLORE
-            </span>
-            <p className="flex justify-center border-t-2 border-solid border-orange-400"></p>
-            {ExploreLinks.map((link) => {
-              const isActive =
-                currentPath === link.href ||
-                (link.category && currentPath.includes(link.category));
-              return (
-                <li
-                  key={link.href}
-                  className={
-                    "flex justify-center p-2 text-blue-primary hover:text-blue-secondary"
-                  }
-                >
-                  <Link href={link.href}>{link.text}</Link>
-                </li>
-              );
-            })}
-          </ul>
+        {/* Links Section */}
+        <div className="hidden grow flex-row content-center justify-center space-x-28 self-center justify-self-center md:flex lg:space-x-8">
+          
+          {/* Explore Links */}
+          <div className="text-center">
+            <h3 className="text-lg font-bold">EXPLORE</h3>
+            <div className="flex justify-center border-t-2 border-solid border-orange-400 my-2"></div>
+            <ul>
+              {ExploreLinks.map((link) => {
+                const isActive =
+                  currentPath === link.href ||
+                  (link.category && currentPath.includes(link.category));
+                return (
+                  <li
+                    key={link.href}
+                    className={
+                      "flex justify-center p-2 text-blue-primary hover:text-blue-secondary"
+                    }
+                  >
+                    <Link href={link.href}>{link.text}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
 
-          <ul>
-            <span className="flex justify-center text-lg font-bold">
-              COURSES
-            </span>
-            <p className="mx-16 flex justify-center border-t-2 border-solid border-orange-400"></p>
-            {CoursesLinks.map((link) => {
-              const isActive = currentPath === link.href;
-              return (
-                <li
-                  key={link.href}
-                  className={`flex justify-center p-2 text-nowrap ${
-                    isActive
-                      ? "text-blue-secondary"
-                      : "text-blue-primary hover:text-blue-secondary"
-                  }`}
-                >
-                  <Link href={link.href}>{link.text}</Link>
-                </li>
-              );
-            })}
-          </ul>
-          <ul>
-            <p className="flex justify-center text-lg font-bold">
-              GET IN TOUCH
-            </p>
-            <p className="flex justify-center border-t-2 border-solid border-orange-400"></p>
-            <li
-              className={`flex justify-center p-2 ${
-                currentPath === "/contact/"
-                  ? "text-blue-secondary"
-                  : "text-blue-primary hover:text-blue-secondary"
-              }`}
-            >
-              <Link href={"/contact"}>Contact</Link>
-            </li>
-            <li className="flex justify-center p-2">
-              <ShareButtons />
-            </li>
-          </ul>
+          {/* Courses Links */}
+          <div className="text-center">
+            <h3 className="text-lg font-bold">COURSES</h3>
+            <div className="mx-16 flex justify-center border-t-2 border-solid border-orange-400 my-2"></div>
+            <ul>
+              {CoursesLinks.map((link) => {
+                const isActive = currentPath === link.href;
+                return (
+                  <li
+                    key={link.href}
+                    className={`flex justify-center p-2 text-nowrap ${
+                      isActive
+                        ? "text-blue-secondary"
+                        : "text-blue-primary hover:text-blue-secondary"
+                    }`}
+                  >
+                    <Link href={link.href}>{link.text}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Get in Touch Section */}
+          <div className="text-center">
+            <h3 className="text-lg font-bold">GET IN TOUCH</h3>
+            <div className="flex justify-center border-t-2 border-solid border-orange-400 my-2"></div>
+            <ul>
+              <li
+                className={`flex justify-center p-2 ${
+                  currentPath === "/contact/"
+                    ? "text-blue-secondary"
+                    : "text-blue-primary hover:text-blue-secondary"
+                }`}
+              >
+                <Link href={"/contact"}>Contact</Link>
+              </li>
+              <li className="flex justify-center p-2">
+                <ShareButtons />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <BottomBar />

@@ -263,12 +263,12 @@ const CarouselDots = React.forwardRef<
 
   React.useEffect(() => {
     if (api) {
-      api.on('select', toggleUpdateState);
-      api.on('reInit', toggleUpdateState);
+      api.on("select", toggleUpdateState);
+      api.on("reInit", toggleUpdateState);
 
       return () => {
-        api.off('select', toggleUpdateState);
-        api.off('reInit', toggleUpdateState);
+        api.off("select", toggleUpdateState);
+        api.off("reInit", toggleUpdateState);
       };
     }
   }, [api, toggleUpdateState]);
@@ -280,15 +280,13 @@ const CarouselDots = React.forwardRef<
     return (
       <div ref={ref} className={`flex justify-center ${props.className}`}>
         {Array.from({ length: numberOfSlides }, (_, i) => (
-          <Button
+          <span
             key={i}
-            className={`mx-1 h-1.5 w-1.5 rounded-full p-0 ${
+            className={`mx-1 h-1.5 w-1.5 rounded-full transition-all duration-700 ease-in-out transform ${
               i === currentSlide
-                ? 'scale-125 transform bg-blue-primary hover:blue-primary'
-                : 'bg-blue-secondary hover:bg-blue-secondary'
+                ? "bg-blue-primary w-4"
+                : "bg-blue-secondary"
             }`}
-            aria-label={`Go to slide ${i + 1}`}
-            onClick={() => api?.scrollTo(i)}
           />
         ))}
       </div>
@@ -297,7 +295,7 @@ const CarouselDots = React.forwardRef<
     return <></>;
   }
 });
-CarouselDots.displayName = 'CarouselDots';
+CarouselDots.displayName = "CarouselDots";
 
 export {
   type CarouselApi,
