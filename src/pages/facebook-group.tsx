@@ -16,9 +16,11 @@ export default function FacebookGroup() {
             (...and not like how 99% of the internet portrays it)
           </p>
         </div>
-        <button className="bg-orange-400 py-[15px] px-[30px] text-[25px] md:text-[45px] text-white">
-          <Link href={"https://www.facebook.com/groups/dentistswhoinvest"}>Join the Free Facebook Group</Link>
-        </button>
+        <Link href={"https://www.facebook.com/groups/dentistswhoinvest"}>
+          <button className="bg-orange-400 py-[15px] px-[30px] text-[25px] md:text-[45px] text-white">
+            Join the Free Facebook Group
+          </button>
+        </Link>
       </section>
     </main>
   );
