@@ -206,7 +206,7 @@ export default function Home({ pageData }: { pageData: any }) {
         <meta name="description" content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists" />
       </Head>
       <main>
-        <section>
+        {/* <section>
           <div className="sm:block md:hidden">
             <HeroBanner
               bannerText={pageData.hero_text}
@@ -453,7 +453,7 @@ export default function Home({ pageData }: { pageData: any }) {
               }
             )}
           </div>
-        </section>
+        </section> */}
 
         <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
           <HomepageFreeTaxReliefForm />
