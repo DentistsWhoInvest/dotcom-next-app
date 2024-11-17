@@ -21,6 +21,7 @@ import { HeroBanner } from "@/components/HeroBanner";
 import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
 import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
+import { FrontSectionTitle } from "@/components/FrontSectionTitle";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -170,7 +171,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
             animation-iteration-count: infinite;
           }
 
-        .path-2 {
+          .path-2 {
             animation: draw 8s forwards; /* Animate drawing and fading */
             animation-delay: 0.5s;
             animation-iteration-count: infinite;
@@ -198,14 +199,22 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 };
 
 export default function Home({ pageData }: { pageData: any }) {
- 
+  const title = "Popular content";
+
   return (
     <>
       <Head>
         <title>Dentists Who Invest</title>
-        <meta name="description" content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists" />
+        <meta
+          name="description"
+          content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
+        />
       </Head>
-      <main>
+      <main className="bg-gray-100 px-[50px]">
+        <section className="">
+          <FrontSectionTitle title={title} />
+        </section>
+
         {/* <section>
           <div className="sm:block md:hidden">
             <HeroBanner
@@ -455,7 +464,7 @@ export default function Home({ pageData }: { pageData: any }) {
           </div>
         </section> */}
 
-        <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
+        <section className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]">
           <HomepageFreeTaxReliefForm />
         </section>
       </main>
