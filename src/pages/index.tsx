@@ -211,8 +211,23 @@ export default function Home({ pageData }: { pageData: any }) {
         />
       </Head>
       <main className="bg-gray-100 px-[50px]">
-        <section className="">
-          <FrontSectionTitle title={title} />
+        <section className="" id="latest content">
+          <FrontSectionTitle title={"latest content"} />
+        </section>
+        <section className="" id="popular content">
+          <FrontSectionTitle title={"popular content"} />
+        </section>
+        <section className="" id="follow us">
+          <FrontSectionTitle title={"follow us"} />
+        </section>
+        <section className="" id="meet the founder">
+          <FrontSectionTitle title={"meet the founder"} />
+        </section>
+        <section className="" id="what we do">
+          <FrontSectionTitle title={"what we do for dentists"} />
+        </section>
+        <section className="" id="testimonials">
+          <FrontSectionTitle title={"check out what our members say..."} />
         </section>
 
         {/* <section>
@@ -464,7 +479,7 @@ export default function Home({ pageData }: { pageData: any }) {
           </div>
         </section> */}
 
-        <section className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]">
+        <section className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]" id="tax relief form">
           <HomepageFreeTaxReliefForm />
         </section>
       </main>
