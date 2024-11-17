@@ -86,7 +86,7 @@ export default function Header() {
   };
 
   return (
-    <div className="bg-[#f0f3f6]">
+    <div className="bg-[white]">
       <div className="relative z-20 flex h-[60px] flex-row items-center justify-between px-5 py-3.5  drop-shadow-lg md:h-[90px] md:px-8 md:py-4 lg:justify-evenly xl:m-auto xl:max-w-[1200px]">
         <div>
           <Link href={"/"}>
