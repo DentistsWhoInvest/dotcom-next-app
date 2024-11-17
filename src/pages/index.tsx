@@ -198,48 +198,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
 };
 
 export default function Home({ pageData }: { pageData: any }) {
-  // const [isPopupVisible, setIsPopupVisible] = useState(false);
-  // const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
-
-  // // Show the popup after 10 seconds
-  // useEffect(() => {
-  //   if (hasPopupBeenShown) {
-  //     return;
-  //   }
-  //   const timer = setTimeout(() => {
-  //     setIsPopupVisible(true);
-  //   }, 15000); // 15 seconds
-
-  //   const handleMouseLeave = () => {
-  //     setIsPopupVisible(true);
-  //   };
-
-  //   document.addEventListener("mouseleave", handleMouseLeave);
-
-  //   // Cleanup the timer if the component is unmounted
-  //   return () => {
-  //     clearTimeout(timer);
-  //     document.removeEventListener("mouseleave", handleMouseLeave);
-  //   };
-  // }, [hasPopupBeenShown]);
-
-  // const closePopup = () => {
-  //   setHasPopupBeenShown(true);
-  //   setIsPopupVisible(false);
-  // };
-
-  // const [popupFullyVisible, setPopupFullyVisible] = useState(isPopupVisible);
-
-  // useEffect(() => {
-  //   if (isPopupVisible) {
-  //     setPopupFullyVisible(true);
-  //   } else {
-  //     const timer = setTimeout(() => setPopupFullyVisible(false), 300); // Match duration with the transition
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [isPopupVisible]);
-
-  //replace the image url depending on breakpoint
+ 
   return (
     <>
       <Head>
@@ -247,27 +206,6 @@ export default function Home({ pageData }: { pageData: any }) {
         <meta name="description" content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists" />
       </Head>
       <main>
-        {/* <section id="popupform"
-        // Disabling the exit pop altogether - leaving some of the code here for the moment in case we want to re-enable it soon.
-        // the popup form is hidden on mobile, but visibile from tablet.
-        className="hidden md:block">
-          <div
-            id="overlay"
-            // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-            className={`fixed inset-0 z-50 flex items-center justify-center bg-blue-primary bg-opacity-50 transition-opacity duration-300 ${
-              popupFullyVisible
-                ? "opacity-100"
-                : "pointer-events-none opacity-0"
-            }`}
-            onClick={closePopup}
-          >
-            <FreeTaxReliefPopupForm
-              isVisible={isPopupVisible}
-              onClose={closePopup}
-            />
-          </div>
-        </section> */}
-
         <section>
           <div className="sm:block md:hidden">
             <HeroBanner
