@@ -22,6 +22,7 @@ import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
 import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
 import { FrontSectionTitle } from "@/components/FrontSectionTitle";
+import { HomePageTestimonialCard } from "@/components/HomePageTestimonialCard";
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -228,6 +229,23 @@ export default function Home({ pageData }: { pageData: any }) {
         </section>
         <section className="" id="testimonials">
           <FrontSectionTitle title={"check out what our members say..."} />
+
+          <div
+            id="testimonial-cards"
+            className="grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+          >
+            {pageData.testimonials.data.map(
+              (testimonial: any, index: number) => {
+                return (
+                  <HomePageTestimonialCard
+                    key={testimonial.id}
+                    testimonial={testimonial}
+                    index={index}
+                  />
+                );
+              }
+            )}
+          </div>
         </section>
 
         {/* <section>
