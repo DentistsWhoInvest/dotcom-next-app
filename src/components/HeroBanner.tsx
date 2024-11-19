@@ -91,7 +91,7 @@ export const HeroBanner = ({
           </p>
         )}
         {ctaButton && (
-            <Button className="mt-8 rounded-md bg-orange-600 px-[55px] py-6 text-base text-white hover:bg-orange-500">
+            <Button className="mt-8 rounded-md bg-orange-700 px-[55px] py-6 text-base text-white hover:bg-orange-500 transform hover:scale-105 transition duration-200 ease-in-out">
             <Link href={ctaButton.url} aria-label={ctaButton.description}>{ctaButton.text}</Link>
           </Button>
         )}

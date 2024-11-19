@@ -78,7 +78,7 @@ export const ViewMoreCard = ({
             src={
               getImageLink(contentType)
             }
-            alt={page.attributes.name}
+            alt={page.attributes.cover.data.attributes.alternativeText}
             width={387}
             height={218}
             className="h-[218px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover lg:h-[300px] lg:w-[430px]"
@@ -107,11 +107,11 @@ export const ViewMoreCard = ({
             </div>
           )}
           <Link
-            className="text-xs font-semibold text-blue-secondary "
+            className="text-m font-semibold text-blue-primary"
             href={`/${hrefStarter}/${slug}`}
           >
             <span className="flex p-2">
-              READ MORE <ChevronsRight size={13} />
+              Read Article <ChevronsRight size={20} />
             </span>
           </Link>
         </div>

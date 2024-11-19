@@ -2,7 +2,7 @@ import Script from "next/script";
 
 export default function NHSPensionChecklistForm() {
   return (
-    <section className="bg-orange-400 text-white xl:w-[330px]">
+    <section className="bg-orange-700 text-white xl:w-[330px]">
       <div className="mb-[-50px] p-[20px] text-center text-[25px] font-bold md:text-left lg:text-[33px] lg:leading-[39px]">
       FREE pdf on tax efficiency for dentists
       </div>

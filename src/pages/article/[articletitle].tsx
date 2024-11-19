@@ -143,6 +143,7 @@ export default function ArticlePage({
       <Head>
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
+        <meta name="description" content={pageData.attributes.excerpt} />
       </Head>
       <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 p-5 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 md:gap-8 xl:my-5 xl:gap-16">
         <div className="md:col-span-2">
@@ -162,6 +163,7 @@ export default function ArticlePage({
             height={400}
             layout="responsive"
             className="h-auto w-full object-cover md:h-[273px] md:w-[485px]"
+            priority
           />
           <div className="articleContent py-5 text-[18px] leading-7 md:text-xl">
             {pageData.attributes.content_sections.map((contentParagraph) => {
