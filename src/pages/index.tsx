@@ -189,7 +189,7 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
         <p className="mb-4 text-sm font-semibold text-blue-primary md:mt-8 md:text-xl">
           {course.attributes.description}
         </p>
-        <Button className="w-2/3 rounded-md bg-orange-600 px-3 py-4 text-white hover:bg-orange-500 ">
+        <Button className="w-2/3 rounded-md bg-orange-700 px-5 py-8 text-white text-lg hover:bg-orange-500 hover:bg-orange-500 transform hover:scale-105 transition duration-200 ease-in-out">
           <Link href={course.attributes.navigation_url}>Course Details</Link>
         </Button>
       </div>
@@ -321,8 +321,8 @@ export default function Home({ pageData }: { pageData: any }) {
               );
             })}
             <div className="hidden lg:block">
-              <Button className="rounded-md bg-orange-600 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
-                <Link href={"/about"}>Learn More</Link>
+              <Button className="rounded-md bg-orange-700 px-[55px] py-8 text-lg text-white hover:bg-orange-500 transform hover:scale-105 transition duration-200 ease-in-out">
+                <Link href={"/about"}>{pageData.founder_cta_text}</Link>
               </Button>
             </div>
           </div>
@@ -379,7 +379,7 @@ export default function Home({ pageData }: { pageData: any }) {
                     <Link
                       href={reason.cta_navigation_url}
                       aria-label={reason.cta_navigation_description}
-                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-600 px-4 py-3 text-white hover:text-blue-primary"
+                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-700 px-8 py-5 text-white text-lg hover:text-blue-primary hover:bg-orange-500 transform hover:scale-105 transition duration-200 ease-in-out"
                     >
                       <button>{reason.cta_text}</button>
                     </Link>{" "}

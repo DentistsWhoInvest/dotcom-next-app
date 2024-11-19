@@ -116,7 +116,7 @@ export default function Header() {
           <li>
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
               <Link href={"https://courses.dentistswhoinvest.com/login"}>
-                <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transform hover:scale-105 transition duration-200 ease-in-out">
+                <button className="m-2 rounded-md bg-orange-700 px-8 py-5 font-bold text-white text-lg transform hover:scale-105 transition duration-200 ease-in-out">
                   Members
                 </button>
               </Link>
