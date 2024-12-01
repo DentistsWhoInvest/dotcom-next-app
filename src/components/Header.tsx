@@ -92,7 +92,7 @@ export default function Header() {
           <Link href={"/"}>
             <Image
               src="https://assets.dentistswhoinvest.com/DWI_logo_dark_blue_fe1599655f/DWI_logo_dark_blue_fe1599655f.svg"
-              alt={"Logo"}
+              alt={"Dentists Who Invest Logo"}
               width={"94"}
               height={"31"}
               className="sm:h-[34px] sm:w-[103px] lg:h-[44px] lg:w-[134px]"

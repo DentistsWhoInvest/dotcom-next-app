@@ -4,7 +4,7 @@ import Image from "next/image";
 import { fetchEndpointData } from "../../lib/fetchUtils";
 import Disclaimer from "@/components/Disclaimer";
 import PodcastMarketingForm from "@/components/PodcastMarketingForm";
-import { createSlug } from "../articles/[page]";
+import { createSlug, PageMetadata } from "../articles/[page]";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
 import fs from "fs";
 import path from "path";
@@ -120,6 +120,7 @@ type PodcastEpisodeAttributes = {
   horizontal_banner: {
     data: BannerData;
   };
+  page_metadata: PageMetadata;
 };
 
 type PodcastEpisode = {
@@ -331,7 +332,27 @@ export default function PodcastPage({
     <>
       <Head>
         <title>{pageData.attributes.title}</title>
-        <meta name="description" content={pageData.attributes.title} />
+        <meta name="title" content={pageData.attributes.title} />
+        <meta name="description" content={pageData.attributes.page_metadata.description || pageData.attributes.description} />
+        {/* todo: add this in backend model */}
+        <meta name="keywords" content="Podcast, Dentistry, Finance, News" /> 
+        {/* add to keywords: pageData.attributes.page_metadata.keywords.join(", ") */}
+        <meta name="author" content="Dr. James Martin" />
+        {/* todo: add proper author, not always James, default to James if empty. */}
+        
+        <meta property="og:type" content="video.other"/>
+        <meta property="og:title" content={pageData.attributes.title} />
+        <meta property="og:description" content={pageData.attributes.page_metadata.description} />
+        <meta property="og:url" content={pageData.attributes.page_metadata.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
+        {/* todo: distinguish between beta and prod somehow? */}
+        <meta property="og:image" content={pageData.attributes.page_metadata.image.data.attributes.formats.large?.url || pageData.attributes.page_metadata.image.data.attributes.url || pageData.attributes.artwork_url} />
+        <meta property="og:site_name" content="Dentists Who Invest"/>
+        <meta property="og:article:author" content="Dr. James Martin"/>
+        {/* todo: include multiple authors for the episode */}
+        
+        <meta property="og:article:published_time" content={pageData.attributes.publishedAt}/>
+        {/* todo: include keywords? */}
+
       </Head>{" "}
       <section id="image and title">
         <div className="relative h-[370px] w-full overflow-hidden md:h-[409px]">
