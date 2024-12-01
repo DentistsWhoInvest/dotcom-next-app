@@ -143,7 +143,7 @@ export default function ArticlePage({
       <Head>
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
-        <meta name="description" content={pageData.attributes.page_metadata.description} />"
+        <meta name="description" content={pageData.attributes.page_metadata.description} />
         {/* todo: add this in backend model */}
         {/* <meta name="keywords" content={pageData.attributes.page_metadata.keywords.join(", "))} /> */}
         <meta name="author" content="Dr. James Martin" />
@@ -156,7 +156,7 @@ export default function ArticlePage({
         {/* todo: distinguish between beta and prod somehow? */}
         <meta property="og:image" content={pageData.attributes.thumbnail.data?.attributes.formats.large?.url || pageData.attributes.thumbnail.data?.attributes.url || pageData.attributes.cover.data?.attributes.formats.large?.url || pageData.attributes.cover.data?.attributes.url} />
         <meta property="og:site_name" content="Dentists Who Invest"/>
-        
+
         <meta property="og:article:author" content="Dr. James Martin"/>
         {/* todo: add proper author, not always James, default to James if empty. */}
         <meta property="og:article:published_time" content={pageData.attributes.publish_date}/>
