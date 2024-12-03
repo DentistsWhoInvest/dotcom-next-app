@@ -143,7 +143,7 @@ export default function ArticlePage({
       <Head>
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
-        <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <meta name="description" content={pageData.attributes.page_metadata?.description} />
         {/* todo: add this in backend model */}
         {/* <meta name="keywords" content={pageData.attributes.page_metadata.keywords.join(", "))} /> */}
         <meta name="author" content="Dr. James Martin" />
@@ -151,8 +151,8 @@ export default function ArticlePage({
         
         <meta property="og:type" content="article"/>
         <meta property="og:title" content={pageData.attributes.title} />
-        <meta property="og:description" content={pageData.attributes.page_metadata.description} />
-        <meta property="og:url" content={pageData.attributes.page_metadata.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
+        <meta property="og:description" content={pageData.attributes.page_metadata?.description} />
+        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
         {/* todo: distinguish between beta and prod somehow? */}
         <meta property="og:image" content={pageData.attributes.thumbnail.data?.attributes.formats.large?.url || pageData.attributes.thumbnail.data?.attributes.url || pageData.attributes.cover.data?.attributes.formats.large?.url || pageData.attributes.cover.data?.attributes.url} />
         <meta property="og:site_name" content="Dentists Who Invest"/>

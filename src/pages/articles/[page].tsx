@@ -117,7 +117,7 @@ export type ArticleAttributes = {
   contributors: {
     data: ContributorData[];
   };
-  page_metadata: PageMetadata;
+  page_metadata?: PageMetadata;
 };
 
 export type PageMetadata = {
