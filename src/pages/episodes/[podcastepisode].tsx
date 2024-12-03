@@ -263,10 +263,33 @@ export default function PodcastPage({
   };
 
   const FullTranscript = ({ transcript }: any) => {
+    // Check if the transcript is valid
+    if (!transcript || !Array.isArray(transcript)) {
+      console.log(`Invalid transcript:`, transcript);
+      return <></>;
+    }
+  
     return transcript.map((transcriptSection: any, index: number) => {
+      // Safeguard against invalid `transcriptSection`
+      if (!transcriptSection || !Array.isArray(transcriptSection.content)) {
+        // console.warn(`Invalid transcriptSection:`, transcriptSection);
+        return null;
+      }
+  
       return (
         <div key={transcriptSection.id} className="space-y-2">
           {transcriptSection.content.map((transcriptParagraph: any) => {
+            // Safeguard against invalid `transcriptParagraph`
+            if (
+              !transcriptParagraph ||
+              !transcriptParagraph.children ||
+              !Array.isArray(transcriptParagraph.children) ||
+              !transcriptParagraph.children[0]?.text
+            ) {
+              // console.warn(`Invalid transcriptParagraph:`, transcriptParagraph);
+              return null;
+            }
+  
             return (
               <div key={transcriptParagraph.children[0].text}>
                 <TranscriptParagraph
@@ -301,6 +324,7 @@ export default function PodcastPage({
       );
     });
   };
+  
 
   const ContributorIcon = ({
     contributor,
