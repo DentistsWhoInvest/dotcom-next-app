@@ -154,7 +154,7 @@ export default function ArticlePage({
         <meta property="og:description" content={pageData.attributes.page_metadata?.description} />
         <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
         {/* todo: distinguish between beta and prod somehow? */}
-        <meta property="og:image" content={pageData.attributes.thumbnail.data?.attributes.formats.large?.url || pageData.attributes.thumbnail.data?.attributes.url || pageData.attributes.cover.data?.attributes.formats.large?.url || pageData.attributes.cover.data?.attributes.url} />
+        <meta property="og:image" content={pageData.attributes.thumbnail?.data?.attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} />
         <meta property="og:site_name" content="Dentists Who Invest"/>
 
         <meta property="og:article:author" content="Dr. James Martin"/>
@@ -174,7 +174,7 @@ export default function ArticlePage({
             {publishedTime}
           </div>
           <Image
-            src={pageData.attributes.cover.data.attributes.url}
+            src={pageData.attributes.cover?.data.attributes.url}
             alt={pageData.attributes.title}
             width={1200}
             height={400}
@@ -195,13 +195,13 @@ export default function ArticlePage({
           <div className="my-5 w-full">
             <Link
               href={
-                pageData.attributes.horizontal_banners.data[0].attributes
+                pageData.attributes.horizontal_banners?.data[0].attributes
                   .navigation_url
               }
             >
               <Image
                 src={
-                  pageData.attributes.horizontal_banners.data[0].attributes
+                  pageData.attributes.horizontal_banners?.data[0].attributes
                     .cover_image.data.attributes.url
                 }
                 alt="Want to increase your income?"
@@ -218,13 +218,13 @@ export default function ArticlePage({
           <div className="my-5 hidden md:block">
             <Link
               href={
-                pageData.attributes.vertical_banners.data[0].attributes
+                pageData.attributes.vertical_banners?.data[0].attributes
                   .navigation_url
               }
             >
               <Image
                 src={
-                  pageData.attributes.vertical_banners.data[0].attributes
+                  pageData.attributes.vertical_banners?.data[0].attributes
                     .cover_image.data.attributes.url
                 }
                 alt="Want to increase your income?"
