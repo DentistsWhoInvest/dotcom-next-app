@@ -26,19 +26,17 @@ const ShareButtons = () => {
       <Link href={"https://www.facebook.com/groups/dentistswhoinvest"}>
         <Image
           src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
-          alt="Facebook"
-          width={30}
-          height={30}
-          className="md:size-[40px]"
+          alt="Visit Dentists Who Invest on Facebook"
+          width={40}
+          height={40}
         ></Image>
       </Link>
       <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
         <Image
           src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
-          alt="Instagram"
-          width={30}
-          height={30}
-          className="md:size-[40px]"
+          alt="Visit Dentists Who Invest on Instagram"
+          width={40}
+          height={40}
         ></Image>
       </Link>
       <Link
@@ -47,10 +45,9 @@ const ShareButtons = () => {
       >
         <Image
           src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
-          alt="Linked in"
-          width={30}
-          height={30}
-          className="md:size-[40px]"
+          alt="Visit Dentists Who Invest on LinkedIn"
+          width={40}
+          height={40}
         ></Image>
       </Link>
     </div>

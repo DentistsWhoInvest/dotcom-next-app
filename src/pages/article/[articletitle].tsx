@@ -143,6 +143,24 @@ export default function ArticlePage({
       <Head>
         <title>{pageData.attributes.title}</title>
         <meta name="title" content={pageData.attributes.title} />
+        <meta name="description" content={pageData.attributes.page_metadata?.description} />
+        {/* todo: add this in backend model */}
+        {/* <meta name="keywords" content={pageData.attributes.page_metadata.keywords.join(", "))} /> */}
+        <meta name="author" content="Dr. James Martin" />
+        {/* todo: add proper author, not always James, default to James if empty. */}
+        
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content={pageData.attributes.title} />
+        <meta property="og:description" content={pageData.attributes.page_metadata?.description} />
+        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
+        {/* todo: distinguish between beta and prod somehow? */}
+        <meta property="og:image" content={pageData.attributes.thumbnail?.data?.attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} />
+        <meta property="og:site_name" content="Dentists Who Invest"/>
+
+        <meta property="og:article:author" content="Dr. James Martin"/>
+        {/* todo: add proper author, not always James, default to James if empty. */}
+        <meta property="og:article:published_time" content={pageData.attributes.publish_date}/>
+
       </Head>
       <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 p-5 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 md:gap-8 xl:my-5 xl:gap-16">
         <div className="md:col-span-2">
@@ -156,7 +174,7 @@ export default function ArticlePage({
             {publishedTime}
           </div>
           <Image
-            src={pageData.attributes.cover.data.attributes.url}
+            src={pageData.attributes.cover?.data.attributes.url}
             alt={pageData.attributes.title}
             width={1200}
             height={400}
@@ -177,13 +195,13 @@ export default function ArticlePage({
           <div className="my-5 w-full">
             <Link
               href={
-                pageData.attributes.horizontal_banners.data[0].attributes
+                pageData.attributes.horizontal_banners?.data[0].attributes
                   .navigation_url
               }
             >
               <Image
                 src={
-                  pageData.attributes.horizontal_banners.data[0].attributes
+                  pageData.attributes.horizontal_banners?.data[0].attributes
                     .cover_image.data.attributes.url
                 }
                 alt="Want to increase your income?"
@@ -200,13 +218,13 @@ export default function ArticlePage({
           <div className="my-5 hidden md:block">
             <Link
               href={
-                pageData.attributes.vertical_banners.data[0].attributes
+                pageData.attributes.vertical_banners?.data[0].attributes
                   .navigation_url
               }
             >
               <Image
                 src={
-                  pageData.attributes.vertical_banners.data[0].attributes
+                  pageData.attributes.vertical_banners?.data[0].attributes
                     .cover_image.data.attributes.url
                 }
                 alt="Want to increase your income?"

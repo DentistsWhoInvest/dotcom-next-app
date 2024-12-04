@@ -2,6 +2,7 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Link from "next/link";
 import Image from "next/image";
+import Head from "next/head";
 import he from "he";
 import { HeroBanner } from "@/components/HeroBanner";
 import fs from "fs";
@@ -116,7 +117,18 @@ export type ArticleAttributes = {
   contributors: {
     data: ContributorData[];
   };
+  page_metadata?: PageMetadata;
 };
+
+export type PageMetadata = {
+    id: number;
+    title: string;
+    description: string;
+    url: string;
+    image: {
+      data: ImageData;
+    };
+}
 
 export type Article = {
   id: number;
@@ -127,7 +139,7 @@ type ArticleResponse = Article[];
 
 //would be nice to move to /lib, but doesn't seem to work if put in fetch utils?
 export function createSlug(title: string) {
-  return he
+return he
     .decode(title)
     .toLowerCase()
     .replace(/\s+/g, "-") // Replace spaces with hyphens
@@ -239,6 +251,7 @@ export const getStaticProps = async ({ params }: any) => {
         pageData: paginatedArticles,
         currentPage: page,
         totalPages: Math.ceil(allArticles.length / articlesPerPage),
+        pageSize: articlesPerPage
       },
     };
   } catch (error) {
@@ -248,6 +261,7 @@ export const getStaticProps = async ({ params }: any) => {
         pageData: [],
         currentPage: page,
         totalPages: 0,
+        pageSize: articlesPerPage,
       },
     };
   }
@@ -258,10 +272,12 @@ export default function Articles({
   pageData,
   currentPage,
   totalPages,
+  pageSize,
 }: {
   pageData: ArticleResponse;
   currentPage: number;
   totalPages: number;
+  pageSize: number;
 }) {
   //assuming we want most recent articles first, but this can be changed
   const sortedData = pageData.sort(
@@ -271,53 +287,71 @@ export default function Articles({
   );
 
   return (
-    <main className={`flex flex-col`}>
-      <HeroBanner
-        bannerText={"Articles"}
-        subText={
-          "Read to understand how you can accelerate your financial goals​"
-        }
-        bannerImage={{
-          url: "https://assets.dentistswhoinvest.com/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
-          name: "blog_hero_cover_95c157286b",
-        }}
-      />
-      <div className="py-[40px] text-center text-3xl font-bold text-blue-secondary lg:py-[70px] lg:text-[45px]">
-        All Articles
-      </div>
-      <ul className="grid grid-cols-1 gap-4 self-center md:grid-cols-2 xl:mx-[40px] xl:grid-cols-3">
-        {sortedData.map((page: Article) => {
-          const slug = createSlug(page.attributes.title);
-          return (
-            <li key={page.id}>
-              <Link href={`/article/${slug}`}>
-                <div className="m-6 flex w-[315px] grow flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom md:h-[500px] lg:h-[567px] lg:w-[430px]">
-                  <Image
-                    src={page.attributes.cover.data.attributes.url}
-                    alt={page.attributes.title}
-                    width={311}
-                    height={311}
-                    className="h-[311px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover md:h-[442px] lg:size-[430px]"
-                  />
-                  <div
-                    className="grow px-5 pt-5 text-center text-xl text-blue-primary"
-                    dangerouslySetInnerHTML={{ __html: page.attributes.title }}
-                  />
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <div className="mt-6 self-center pb-10">
-        <div>
-          <PaginationNav
-            navPath="articles"
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
+    <>
+      <Head>
+        <title>Dentists Who Invest Articles page {currentPage}</title>
+        <meta name="title" content={`Dentists Who Invest Articles page ${currentPage}`} />
+        <meta name="description" content={`Page of ${pageSize} dental and finance articles. Page ${currentPage}/${totalPages}`} />
+        {/* todo: add this in backend model */}
+        <meta name="keywords" content="Dentistry, Finance, Article, News" />
+        {/* todo: add proper author, not always James, default to James if empty. */}
+        
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content={`Dentists Who Invest Articles page ${currentPage}`} />
+        <meta property="og:description" content={`Page of ${pageSize} dental and finance articles. Page ${currentPage}/${totalPages}`} />
+        <meta property="og:url" content={`https://www.dentistswhoinvest.com/articles/${currentPage}`}/>
+        <meta property="og:image" content="https://assets.dentistswhoinvest.com/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp"/>
+        <meta property="og:site_name" content="Dentists Who Invest"/>
+
+      </Head>
+      <main className={`flex flex-col`}>
+        <HeroBanner
+          bannerText={"Articles"}
+          subText={
+            "Read to understand how you can accelerate your financial goals​"
+          }
+          bannerImage={{
+            url: "https://assets.dentistswhoinvest.com/blog_hero_cover_95c157286b/blog_hero_cover_95c157286b.webp",
+            name: "blog_hero_cover_95c157286b",
+          }}
+        />
+        <div className="py-[40px] text-center text-3xl font-bold text-blue-secondary lg:py-[70px] lg:text-[45px]">
+          All Articles
         </div>
-      </div>
-    </main>
+        <ul className="grid grid-cols-1 gap-4 self-center md:grid-cols-2 xl:mx-[40px] xl:grid-cols-3">
+          {sortedData.map((page: Article) => {
+            const slug = createSlug(page.attributes.title);
+            return (
+              <li key={page.id}>
+                <Link href={`/article/${slug}`}>
+                  <div className="m-6 flex w-[315px] grow flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom md:h-[500px] lg:h-[567px] lg:w-[430px]">
+                    <Image
+                      src={page.attributes.cover.data.attributes.url}
+                      alt={page.attributes.title}
+                      width={311}
+                      height={311}
+                      className="h-[311px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover md:h-[442px] lg:size-[430px]"
+                    />
+                    <div
+                      className="grow px-5 pt-5 text-center text-xl text-blue-primary"
+                      dangerouslySetInnerHTML={{ __html: page.attributes.title }}
+                    />
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-6 self-center pb-10">
+          <div>
+            <PaginationNav
+              navPath="articles"
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
