@@ -418,7 +418,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               `}
               >
                 <HomePageContentCard
-                  size={index === 0 ? "large" : "medium"}
+                  size={index === 0 ? "splash" : "large"}
                   title={content.title}
                   type={content.type}
                   url={content.url}
