@@ -394,6 +394,9 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
       "https://assets.dentistswhoinvest.com/sarah_grace_profile_be4c1f5882/sarah_grace_profile_be4c1f5882.jpg",
     imageAlt: "Test",
   };
+
+  const latestContent = Array(4).fill(sampleContent);
+  const popularContent = Array(6).fill(sampleContent);
   return (
     <>
       <Head>
@@ -406,108 +409,43 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
       <main className="space-y-12 bg-gray-100 lg:px-[50px]">
         <section className="lg:bg-blue-primary lg:px-12" id="latest content">
           <FrontSectionTitle title={"Latest Contents"} />
-          <div className="mx-3 flex-col space-y-4 pt-6">
-            <HomePageContentCard
-              size="large"
-              title={sampleContent.title}
-              type={sampleContent.type}
-              url={sampleContent.url}
-              imageUrl={sampleContent.imageUrl}
-              imageAlt={""}
-              description={sampleContent.description}
-            />{" "}
-            <div className="flex space-x-8">
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-            </div>
+          <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
+            {latestContent.map((content, index) => (
+              <div
+                key={index}
+                className={`${index === 0 ? "col-span-full" : "col-span-1"} 
+                ${index === 3 ? "hidden lg:block" : ""}
+              `}
+              >
+                <HomePageContentCard
+                  size={index === 0 ? "large" : "medium"}
+                  title={content.title}
+                  type={content.type}
+                  url={content.url}
+                  imageUrl={content.imageUrl}
+                  imageAlt={content.imageAlt}
+                  description={content.description}
+                />
+              </div>
+            ))}
           </div>
         </section>
         <section className="" id="popular content">
           <FrontSectionTitle title={"popular content"} />
-          <div className="flex-col space-y-4 mx-3">
-            <div className="flex space-x-8">
+
+          <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:grid-cols-3">
+            {popularContent.map((content, index) => (
               <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
+                key={index}
+                size="medium"
+                title={content.title}
+                type={content.type}
+                url={content.url}
+                imageUrl={content.imageUrl}
+                imageAlt={content.imageAlt}
+                description={content.description}
               />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-            </div>
-            <div className="flex space-x-8">
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-              <HomePageContentCard
-                size={sampleContent.size}
-                title={sampleContent.title}
-                type={sampleContent.type}
-                url={sampleContent.url}
-                imageUrl={sampleContent.imageUrl}
-                imageAlt={""}
-                description={sampleContent.description}
-              />
-            </div>
+            ))}
           </div>
         </section>
 
@@ -523,7 +461,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         <section className="" id="follow us">
           <FrontSectionTitle title={"follow us"} />
           <div className="mx-3 flex justify-center gap-2">
-            <div id="socials" className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full">
+            <div
+              id="socials"
+              className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+            >
               <Image
                 src={pageData.hero_cover.data.attributes.url}
                 alt={pageData.hero_cover.data.attributes.name}
@@ -568,7 +509,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 </div>
               </div>
             </div>
-            <div id="cta" className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full">
+            <div
+              id="cta"
+              className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+            >
               <Image
                 src={pageData.hero_cover.data.attributes.url}
                 alt={pageData.hero_cover.data.attributes.name}
@@ -629,7 +573,9 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
                 <div className="flex flex-col self-center pr-4">
                   <p className="pb-2 text-base lg:text-xl">{reason.title}</p>
-                  <div className="text-[10px]"><BlocksRenderer content={reason.description}/></div>
+                  <div className="text-[10px]">
+                    <BlocksRenderer content={reason.description} />
+                  </div>
                 </div>
               </div>
             );

@@ -36,7 +36,7 @@ const LargeCard = ({
     return (
       <div
         id={title}
-        className="flex overflow-hidden bg-white shadow-lg"
+        className=" overflow-hidden bg-white shadow-lg"
       >
         <Image
           src={imageUrl}
@@ -91,14 +91,14 @@ const MediumCard = ({
     return (
       <div
         id={title}
-        className="flex flex-col overflow-hidden bg-white shadow-lg"
+        className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col"
       >
         <Image
           src={imageUrl}
           alt={imageAlt || title}
           width={300}
           height={300}
-          className="h-4/5 w-full object-cover"
+          className="h-auto w-1/4 object-cover lg:w-full"
         />
         <div className="flex flex-col items-start p-4">
           <p className="mb-2 bg-blue-primary px-3 py-1 text-xs font-semibold uppercase text-white">
