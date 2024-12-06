@@ -23,6 +23,188 @@ import Head from "next/head";
 import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
 import { FrontSectionTitle } from "@/components/FrontSectionTitle";
 import { HomePageTestimonialCard } from "@/components/HomePageTestimonialCard";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { HomePageContentCard } from "@/components/HomePageContentCard";
+
+type TextNode = {
+  text: string;
+  type: string;
+};
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextNode[];
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  id: number;
+  attributes: ImageAttributes;
+};
+
+type Cover = {
+  data: ImageData;
+};
+
+type FounderDescription = Paragraph[];
+
+type Thought = {
+  id: number;
+  title: string;
+  cover: Cover;
+};
+
+type Reason = {
+  id: number;
+  reason: string;
+};
+
+type Metric = {
+  id: number;
+  value: number;
+  title: string;
+};
+
+type Review = Paragraph[];
+
+type TestimonialAttributes = {
+  title: string;
+  review: Review;
+  author: string;
+  author_job_location: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  author_thumbnail: {
+    data: ImageData;
+  };
+};
+
+type TestimonialData = {
+  id: number;
+  attributes: TestimonialAttributes;
+};
+
+type Testimonials = {
+  data: TestimonialData[];
+};
+
+type CourseAttributes = {
+  title: string;
+  description: string;
+  cta_text: string;
+  navigation_url: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  tagline: string;
+  cover: Cover;
+};
+
+type CourseData = {
+  id: number;
+  attributes: CourseAttributes;
+};
+
+type Courses = {
+  data: CourseData[];
+};
+
+type ReasonData = {
+  id: number;
+  lottie_name: string;
+  title: string;
+  description: any;
+  cta_text: string;
+  cta_navigation_url: string;
+  cta_navigation_description: string;
+  cta_navigation_is_internal: boolean;
+};
+
+// type ReasonData = {
+//   id: number;
+//   attributes: ReasonAttributes;
+// };
+
+type WhatWeDoReasons = ReasonData[];
+
+type HomePageAttributes = {
+  hero_text: string;
+  hero_subtext: string;
+  hero_button_text: string;
+  founder_text: string;
+  founder_subtext: string;
+  founder_description: FounderDescription;
+  what_we_do_title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  locale: string;
+  why_you_title: string;
+  founder_cta_text: string;
+  why_you_familiar_title: string;
+  why_you_familiar_subtitle: string;
+  courses_title: string;
+  courses_subtitle: string;
+  courses_description: string;
+  testimonials_title: string;
+  founder_cta_link_description: string;
+  hero_button_navigation_url: string;
+  hero_button_link_description: string;
+  why_you_familiar_thoughts: Thought[];
+  hero_cover: {
+    data: ImageData;
+  };
+  founder_image: {
+    data: ImageData;
+  };
+  what_we_do_reasons: WhatWeDoReasons;
+  why_you_reasons: Reason[];
+  metrics: Metric[];
+  testimonials: Testimonials;
+  courses: Courses;
+};
+
+type HomePage = {
+  id: number;
+  attributes: HomePageAttributes;
+};
 
 export const getStaticProps = async () => {
   const populateFields = [
@@ -199,9 +381,19 @@ const HomePageCourseCard = ({ course }: { course: any }) => {
   );
 };
 
-export default function Home({ pageData }: { pageData: any }) {
+export default function Home({ pageData }: { pageData: HomePageAttributes }) {
+  console.log("pageData", pageData);
   const title = "Popular content";
-
+  const sampleContent = {
+    size: "medium",
+    title: "Why business planning...",
+    type: "Article",
+    description: "Some stuff here",
+    url: "Test",
+    imageUrl:
+      "https://assets.dentistswhoinvest.com/sarah_grace_profile_be4c1f5882/sarah_grace_profile_be4c1f5882.jpg",
+    imageAlt: "Test",
+  };
   return (
     <>
       <Head>
@@ -212,21 +404,233 @@ export default function Home({ pageData }: { pageData: any }) {
         />
       </Head>
       <main className="bg-gray-100 px-[50px]">
-        <section className="" id="latest content">
-          <FrontSectionTitle title={"latest content"} />
+        <section className="bg-blue-primary p-12" id="latest content">
+          <FrontSectionTitle title={"Latest Contents"} />
+          <div className="flex-col space-y-4">
+            <HomePageContentCard
+              size="large"
+              title={sampleContent.title}
+              type={sampleContent.type}
+              url={sampleContent.url}
+              imageUrl={sampleContent.imageUrl}
+              imageAlt={""}
+              description={sampleContent.description}
+            />{" "}
+            <div className="flex space-x-8">
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+            </div>
+          </div>
         </section>
         <section className="" id="popular content">
           <FrontSectionTitle title={"popular content"} />
+          <div className="flex-col space-y-4">
+            <div className="flex space-x-8">
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+            </div>
+            <div className="flex space-x-8">
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+              <HomePageContentCard
+                size={sampleContent.size}
+                title={sampleContent.title}
+                type={sampleContent.type}
+                url={sampleContent.url}
+                imageUrl={sampleContent.imageUrl}
+                imageAlt={""}
+                description={sampleContent.description}
+              />
+            </div>
+          </div>
         </section>
+
+        <section className="" id="banner">
+          insert banner
+        </section>
+
         <section className="" id="follow us">
           <FrontSectionTitle title={"follow us"} />
+          <div className="flex space-x-14">
+            <div id="socials" className="flex-col bg-white shadow-custom-br">
+              <Image
+                src={pageData.hero_cover.data.attributes.url}
+                alt={pageData.hero_cover.data.attributes.name}
+                width={pageData.hero_cover.data.attributes.width}
+                height={pageData.hero_cover.data.attributes.height}
+                className="h-2/3 w-full"
+              />
+              <div className="mx-12 flex h-1/3 items-center justify-between">
+                <p className="self-center bg-blue-primary px-4 text-lg text-white">
+                  FOLLOW US:
+                </p>
+                <div className="flex flex-row space-x-3 ">
+                  <Link
+                    href={"https://www.facebook.com/groups/dentistswhoinvest"}
+                  >
+                    <Image
+                      src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
+                      alt="Facebook"
+                      width={30}
+                      height={30}
+                      className="md:size-[70px]"
+                    ></Image>
+                  </Link>
+                  <Link href={"https://www.linkedin.com/in/dr-james-martin/"}>
+                    <Image
+                      src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
+                      alt="Linked in"
+                      width={30}
+                      height={30}
+                      className="md:size-[70px]"
+                    ></Image>
+                  </Link>
+                  <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
+                    <Image
+                      src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
+                      alt="Instagram"
+                      width={30}
+                      height={30}
+                      className="md:size-[70px]"
+                    ></Image>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div id="cta" className="flex-col bg-white shadow-custom-br">
+              <Image
+                src={pageData.hero_cover.data.attributes.url}
+                alt={pageData.hero_cover.data.attributes.name}
+                width={pageData.hero_cover.data.attributes.width}
+                height={pageData.hero_cover.data.attributes.height}
+                className="h-2/3 w-full"
+              />
+              <div className="flex h-1/3 items-center justify-evenly">
+                <Button className="bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
+                  <Link href={pageData.hero_button_navigation_url}>
+                    {pageData.hero_button_text}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
         </section>
         <section className="" id="meet the founder">
           <FrontSectionTitle title={"meet the founder"} />
+          <section
+            id="founder"
+            className="flex flex-row-reverse items-center bg-white shadow-custom-br"
+          >
+            <div className="mx-[50px] space-y-8 text-left lg:w-3/4">
+              <h3 className="pb-2 text-lg text-blue-primary md:text-xl xl:mr-12 xl:text-wrap xl:text-left">
+                {pageData.founder_subtext}
+              </h3>
+              {pageData.founder_description.map((block: any) => {
+                return (
+                  <div key={block.id}>
+                    <p className="">{block.children[0].text}</p>
+                  </div>
+                );
+              })}
+              <div className="hidden lg:block">
+                <Link href={"/about"}>Read More</Link>
+              </div>
+            </div>
+            <Image
+              src={pageData.founder_image.data.attributes.url}
+              alt={pageData.founder_image.data.attributes.name}
+              width={pageData.founder_image.data.attributes.width}
+              height={pageData.founder_image.data.attributes.height}
+              className="lg:max-w-1/3 object-cover lg:size-1/4 "
+            />
+          </section>
         </section>
+
         <section className="" id="what we do">
           <FrontSectionTitle title={"what we do for dentists"} />
+          {pageData.what_we_do_reasons.map((reason: ReasonData) => {
+            console.log("reason", reason);
+            return (
+              <div
+                key={reason.id}
+                className="my-2 flex bg-blue-primary text-white"
+              >
+                <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
+                <div className="flex flex-col self-center">
+                  <p className="pb-2 text-xl">{reason.title}</p>
+                  <BlocksRenderer content={reason.description} />
+                </div>
+              </div>
+            );
+          })}
         </section>
+
         <section className="" id="testimonials">
           <FrontSectionTitle title={"check out what our members say..."} />
 
@@ -497,7 +901,10 @@ export default function Home({ pageData }: { pageData: any }) {
           </div>
         </section> */}
 
-        <section className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]" id="tax relief form">
+        <section
+          className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]"
+          id="tax relief form"
+        >
           <HomepageFreeTaxReliefForm />
         </section>
       </main>
