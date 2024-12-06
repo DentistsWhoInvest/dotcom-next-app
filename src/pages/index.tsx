@@ -403,10 +403,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
         />
       </Head>
-      <main className="bg-gray-100 px-[50px]">
-        <section className="bg-blue-primary p-12" id="latest content">
+      <main className="space-y-12 bg-gray-100 lg:px-[50px]">
+        <section className="lg:bg-blue-primary lg:px-12" id="latest content">
           <FrontSectionTitle title={"Latest Contents"} />
-          <div className="flex-col space-y-4">
+          <div className="mx-3 flex-col space-y-4 pt-6">
             <HomePageContentCard
               size="large"
               title={sampleContent.title}
@@ -449,7 +449,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
         <section className="" id="popular content">
           <FrontSectionTitle title={"popular content"} />
-          <div className="flex-col space-y-4">
+          <div className="flex-col space-y-4 mx-3">
             <div className="flex space-x-8">
               <HomePageContentCard
                 size={sampleContent.size}
@@ -511,26 +511,31 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
 
-        <section className="" id="banner">
-          insert banner
+        <section className="mx-3" id="banner">
+          <Image
+            src="https://assets.dentistswhoinvest.com/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2.webp"
+            alt={""}
+            width={350}
+            height={300}
+          />
         </section>
 
         <section className="" id="follow us">
           <FrontSectionTitle title={"follow us"} />
-          <div className="flex space-x-14">
-            <div id="socials" className="flex-col bg-white shadow-custom-br">
+          <div className="mx-3 flex justify-center gap-2">
+            <div id="socials" className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full">
               <Image
                 src={pageData.hero_cover.data.attributes.url}
                 alt={pageData.hero_cover.data.attributes.name}
                 width={pageData.hero_cover.data.attributes.width}
                 height={pageData.hero_cover.data.attributes.height}
-                className="h-2/3 w-full"
+                className="h-2/3 w-full "
               />
-              <div className="mx-12 flex h-1/3 items-center justify-between">
-                <p className="self-center bg-blue-primary px-4 text-lg text-white">
+              <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-12">
+                <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:px-4 lg:text-lg">
                   FOLLOW US:
                 </p>
-                <div className="flex flex-row space-x-3 ">
+                <div className="flex flex-row space-x-1 lg:space-x-3">
                   <Link
                     href={"https://www.facebook.com/groups/dentistswhoinvest"}
                   >
@@ -563,7 +568,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 </div>
               </div>
             </div>
-            <div id="cta" className="flex-col bg-white shadow-custom-br">
+            <div id="cta" className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full">
               <Image
                 src={pageData.hero_cover.data.attributes.url}
                 alt={pageData.hero_cover.data.attributes.name}
@@ -571,12 +576,12 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 height={pageData.hero_cover.data.attributes.height}
                 className="h-2/3 w-full"
               />
-              <div className="flex h-1/3 items-center justify-evenly">
-                <Button className="bg-orange-400 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
+              <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
+                <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-8 lg:text-lg">
                   <Link href={pageData.hero_button_navigation_url}>
                     {pageData.hero_button_text}
                   </Link>
-                </Button>
+                </button>
               </div>
             </div>
           </div>
@@ -585,23 +590,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           <FrontSectionTitle title={"meet the founder"} />
           <section
             id="founder"
-            className="flex flex-row-reverse items-center bg-white shadow-custom-br"
+            className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:flex-row"
           >
-            <div className="mx-[50px] space-y-8 text-left lg:w-3/4">
-              <h3 className="pb-2 text-lg text-blue-primary md:text-xl xl:mr-12 xl:text-wrap xl:text-left">
-                {pageData.founder_subtext}
-              </h3>
-              {pageData.founder_description.map((block: any) => {
-                return (
-                  <div key={block.id}>
-                    <p className="">{block.children[0].text}</p>
-                  </div>
-                );
-              })}
-              <div className="hidden lg:block">
-                <Link href={"/about"}>Read More</Link>
-              </div>
-            </div>
             <Image
               src={pageData.founder_image.data.attributes.url}
               alt={pageData.founder_image.data.attributes.name}
@@ -609,6 +599,21 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               height={pageData.founder_image.data.attributes.height}
               className="lg:max-w-1/3 object-cover lg:size-1/4 "
             />
+            <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-8">
+              <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-lg xl:mr-12 xl:text-wrap xl:text-left">
+                {pageData.founder_subtext}
+              </h3>
+              {pageData.founder_description.map((block: any) => {
+                return (
+                  <div key={block.id}>
+                    <p className="text-xs">{block.children[0].text}</p>
+                  </div>
+                );
+              })}
+              <Link href={"/about"} className="text-xs text-blue-primary">
+                Read More...
+              </Link>
+            </div>
           </section>
         </section>
 
@@ -619,12 +624,12 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             return (
               <div
                 key={reason.id}
-                className="my-2 flex bg-blue-primary text-white"
+                className="mx-3 my-2 flex bg-blue-primary text-white"
               >
                 <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
-                <div className="flex flex-col self-center">
-                  <p className="pb-2 text-xl">{reason.title}</p>
-                  <BlocksRenderer content={reason.description} />
+                <div className="flex flex-col self-center pr-4">
+                  <p className="pb-2 text-base lg:text-xl">{reason.title}</p>
+                  <div className="text-[10px]"><BlocksRenderer content={reason.description}/></div>
                 </div>
               </div>
             );
@@ -636,7 +641,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
           <div
             id="testimonial-cards"
-            className="grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+            className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
           >
             {pageData.testimonials.data.map(
               (testimonial: any, index: number) => {
@@ -902,7 +907,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section> */}
 
         <section
-          className="flex justify-center bg-gray-100 px-[30px] py-[50px] lg:px-[50px]"
+          className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:px-[50px]"
           id="tax relief form"
         >
           <HomepageFreeTaxReliefForm />
