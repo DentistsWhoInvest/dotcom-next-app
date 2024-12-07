@@ -1,24 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { fetchEndpointData } from "@/lib/fetchUtils";
-// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import Link from "next/link";
-import Lottie from "lottie-react";
-import lottieProject from "../../public/animations/project.json";
-import lottieRocket from "../../public/animations/rocket.json";
-import lottieTreasure from "../../public/animations/treasure.json";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
-import { Button } from "@/components/ui/button";
-import { useState, useRef, useEffect } from "react";
-import { TestimonialCard } from "@/components/TestimonialCard";
-import { HeroBanner } from "@/components/HeroBanner";
-import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
 import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
 import { FrontSectionTitle } from "@/components/FrontSectionTitle";
@@ -226,161 +209,6 @@ export const getStaticProps = async () => {
   };
 };
 
-const MetricCounter = ({ value }: { value: number }) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Stop observing after it becomes visible
-        }
-      },
-      { threshold: 0.1 } // Trigger when 10% of the element is visible
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        // think it's working as intended
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      let isMounted = true;
-      const duration = 1000; // Duration of the animation in milliseconds
-      const incrementTime = 10; // Time between increments in milliseconds
-      const totalSteps = duration / incrementTime; // Total number of increments
-      const incrementValue = Math.ceil(value / totalSteps); // Calculate increment value
-
-      const interval = setInterval(() => {
-        setCount((prevCount) => {
-          if (prevCount + incrementValue >= value) {
-            clearInterval(interval);
-            return value; // Ensure we don't exceed the target value
-          }
-          return prevCount + incrementValue;
-        });
-      }, incrementTime);
-
-      return () => {
-        isMounted = false; // Cleanup
-        clearInterval(interval);
-      };
-    }
-  }, [isVisible, value]);
-
-  return (
-    <span id="community-members" ref={ref}>
-      {/* does some math to display 1000 as 1K, which looks nicer */}
-      {count > 1000 ? (
-        <span>{(Math.ceil(count / 1000) * 1000) / 1000}K+</span>
-      ) : (
-        <span>{count}+</span>
-      )}
-    </span>
-  );
-};
-
-const HomePageCourseCard = ({ course }: { course: any }) => {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border-solid bg-white px-[50px] py-[20px] shadow-custom md:px-[10px] md:pb-[25px] md:pt-[50px] lg:mx-4 lg:px-[50px]">
-      <div className="">
-        <Image
-          src="/DWI-logo-circle.webp"
-          alt="Course Logo"
-          width={120}
-          height={120}
-          className="mt-[-80px] rounded-3xl"
-        />
-      </div>
-
-      <div className="relative w-full bg-blue-primary pb-4 pt-2 text-center font-bold text-white transition-all duration-300">
-        <h2 className="text-xl">{course.attributes.tagline}</h2>
-        <svg
-          className="absolute left-1/2 top-1/2 z-[2] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible lg:w-[calc(50%)] lg:py-3 xl:pb-5"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 500 150"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
-            strokeWidth="10px"
-            fill="none"
-            className="path-1 stroke-blue-secondary"
-          ></path>
-          <path
-            d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
-            strokeWidth="10px"
-            fill="none"
-            className="path-2 stroke-blue-secondary"
-          ></path>
-        </svg>
-        <style jsx>{`
-          @keyframes draw {
-            0% {
-              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-              opacity: 0;
-            }
-            10% {
-              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-              opacity: 1;
-            }
-            20% {
-              stroke-dasharray: 2500, 0; /* Complete visible stroke */
-              opacity: 1;
-            }
-            80% {
-              stroke-dasharray: 2500, 0; /* Keep the stroke */
-              opacity: 1;
-            }
-            100% {
-              opacity: 0;
-            }
-          }
-
-          .path-1 {
-            animation: draw 8s forwards; /* Animate drawing and fading */
-            animation-iteration-count: infinite;
-          }
-
-          .path-2 {
-            animation: draw 8s forwards; /* Animate drawing and fading */
-            animation-delay: 0.5s;
-            animation-iteration-count: infinite;
-          }
-        `}</style>
-      </div>
-
-      <div className="flex flex-col items-center p-4 pt-8 md:grow">
-        <Image
-          src={course.attributes.cover.data.attributes.url}
-          alt={course.attributes.title}
-          width={180}
-          height={440}
-          className="md:w-[234px] lg:w-[362px]"
-        />{" "}
-        <p className="mb-4 text-sm font-semibold text-blue-primary md:mt-8 md:text-xl">
-          {course.attributes.description}
-        </p>
-        <Button className="w-2/3 rounded-md bg-orange-600 px-3 py-4 text-white hover:bg-orange-500 ">
-          <Link href={course.attributes.navigation_url}>Course Details</Link>
-        </Button>
-      </div>
-    </div>
-  );
-};
-
 export default function Home({ pageData }: { pageData: HomePageAttributes }) {
   console.log("pageData", pageData);
   const title = "Popular content";
@@ -391,7 +219,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
     description: "Some stuff here",
     url: "Test",
     imageUrl:
-      "https://assets.dentistswhoinvest.com/sarah_grace_profile_be4c1f5882/sarah_grace_profile_be4c1f5882.jpg",
+      "https://assets.dentistswhoinvest.com/financial_freedom_exit_sign_part_2_429f18592c/financial_freedom_exit_sign_part_2_429f18592c.webp",
     imageAlt: "Test",
   };
 
@@ -477,8 +305,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   className="object-cover"
                 />
               </div>
-              <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-12">
-                <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:px-4 lg:text-lg">
+              <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-4">
+                <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:mt-4 lg:self-start lg:px-4 lg:text-base">
                   FOLLOW US:
                 </p>
                 <div className="flex flex-row space-x-1 lg:space-x-3">
@@ -490,7 +318,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                       alt="Facebook"
                       width={30}
                       height={30}
-                      className="md:size-[70px]"
+                      className="md:size-[50px]"
                     ></Image>
                   </Link>
                   <Link href={"https://www.linkedin.com/in/dr-james-martin/"}>
@@ -499,7 +327,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                       alt="Linked in"
                       width={30}
                       height={30}
-                      className="md:size-[70px]"
+                      className="md:size-[50px]"
                     ></Image>
                   </Link>
                   <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
@@ -508,7 +336,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                       alt="Instagram"
                       width={30}
                       height={30}
-                      className="md:size-[70px]"
+                      className="md:size-[50px]"
                     ></Image>
                   </Link>
                 </div>
@@ -530,7 +358,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 />
               </div>
               <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
-                <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-8 lg:text-lg">
+                <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-2 lg:text-lg">
                   <Link href={pageData.hero_button_navigation_url}>
                     {pageData.hero_button_text}
                   </Link>
@@ -546,8 +374,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
           >
             <div
-              className="relative size-full"
-              style={{ aspectRatio: "1 / 1" }}
+              className="relative aspect-square size-full lg:aspect-[4/5]"
+              
             >
               <Image
                 src={pageData.founder_image.data.attributes.url}
