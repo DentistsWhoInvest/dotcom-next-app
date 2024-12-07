@@ -41,6 +41,7 @@ const SplashCard = ({
           alt={imageAlt || title}
           layout="fill"
           className="size-full object-cover"
+          priority={true}
         />
       </div>
       <div className="flex flex-col items-start p-4">
@@ -71,6 +72,7 @@ const LargeCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
           alt={imageAlt || title}
           layout="fill"
           className="aspect-square size-full object-cover lg:aspect-video"
+          priority={false}
         />
       </div>
       <div className="flex flex-col items-start p-4">
@@ -97,6 +99,7 @@ const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
           alt={imageAlt || title}
           layout="fill"
           className="w-1/4 object-cover"
+          priority={false}
         />
       </div>
       <div className="flex flex-col items-start p-4">
