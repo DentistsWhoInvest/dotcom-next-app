@@ -465,13 +465,18 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               id="socials"
               className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
             >
-              <Image
-                src={pageData.hero_cover.data.attributes.url}
-                alt={pageData.hero_cover.data.attributes.name}
-                width={pageData.hero_cover.data.attributes.width}
-                height={pageData.hero_cover.data.attributes.height}
-                className="h-2/3 w-full "
-              />
+              {" "}
+              <div
+                className="relative h-2/3 w-full"
+                style={{ aspectRatio: "5 / 3" }}
+              >
+                <Image
+                  src={pageData.hero_cover.data.attributes.url}
+                  alt={pageData.hero_cover.data.attributes.name}
+                  layout="fill"
+                  className="object-cover"
+                />
+              </div>
               <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-12">
                 <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:px-4 lg:text-lg">
                   FOLLOW US:
@@ -513,13 +518,17 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               id="cta"
               className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
             >
-              <Image
-                src={pageData.hero_cover.data.attributes.url}
-                alt={pageData.hero_cover.data.attributes.name}
-                width={pageData.hero_cover.data.attributes.width}
-                height={pageData.hero_cover.data.attributes.height}
-                className="h-2/3 w-full"
-              />
+              <div
+                className="relative h-2/3 w-full"
+                style={{ aspectRatio: "5 / 3" }}
+              >
+                <Image
+                  src={pageData.hero_cover.data.attributes.url}
+                  alt={pageData.hero_cover.data.attributes.name}
+                  layout="fill"
+                  className="object-cover"
+                />
+              </div>
               <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
                 <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-8 lg:text-lg">
                   <Link href={pageData.hero_button_navigation_url}>
@@ -536,13 +545,17 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             id="founder"
             className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:flex-row"
           >
-            <Image
-              src={pageData.founder_image.data.attributes.url}
-              alt={pageData.founder_image.data.attributes.name}
-              width={pageData.founder_image.data.attributes.width}
-              height={pageData.founder_image.data.attributes.height}
-              className="lg:max-w-1/3 object-cover lg:size-1/4 "
-            />
+            <div
+              className="relative size-full"
+              style={{ aspectRatio: "1 / 1" }}
+            >
+              <Image
+                src={pageData.founder_image.data.attributes.url}
+                alt={pageData.founder_image.data.attributes.name}
+                layout="fill"
+                className="object-cover"
+              />
+            </div>
             <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-8">
               <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-lg xl:mr-12 xl:text-wrap xl:text-left">
                 {pageData.founder_subtext}

@@ -26,94 +26,90 @@ type HomePageContentCardProps = {
 };
 
 const SplashCard = ({
-    title,
-    type,
-    description,
-    url,
-    imageUrl,
-    imageAlt,
-  }: CardProps) => {
-    return (
-      <div
-        id={title}
-        className=" overflow-hidden bg-white shadow-lg"
-      >
+  title,
+  type,
+  description,
+  url,
+  imageUrl,
+  imageAlt,
+}: CardProps) => {
+  return (
+    <div id={title} className="overflow-hidden bg-white shadow-lg">
+      <div className="relative w-full" style={{ aspectRatio: "5 / 3" }}>
         <Image
           src={imageUrl}
           alt={imageAlt || title}
-          width={300}
-          height={300}
-          className="w-[66%] object-cover"
+          layout="fill"
+          className="size-full object-cover"
         />
-        <div className="flex flex-col items-start p-4">
-          <Link href={url} className="text-base font-semibold text-blue-primary">{title}</Link>
-          <p>{description}</p>
-        </div>
       </div>
-    );
-  };
+      <div className="flex flex-col items-start p-4">
+        <Link
+          href={url}
+          className="pb-4 text-base font-semibold text-blue-primary"
+        >
+          {title}
+        </Link>
+        <p className="text-sm">{description}</p>
+        <Link href={url} className="text-sm font-semibold text-blue-primary">
+          Read More...
+        </Link>
+      </div>
+    </div>
+  );
+};
 
-const LargeCard = ({
-    title,
-    type,
-    description,
-    url,
-    imageUrl,
-    imageAlt,
-  }: CardProps) => {
-    return (
-      <div
-        id={title}
-        className="flex flex-col overflow-hidden bg-white shadow-lg"
-      >
+const LargeCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
+  return (
+    <div
+      id={title}
+      className="flex flex-col overflow-hidden bg-white shadow-lg"
+    >
+      <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
         <Image
           src={imageUrl}
           alt={imageAlt || title}
-          width={300}
-          height={300}
-          className="h-auto w-1/4 object-cover lg:w-full"
+          layout="fill"
+          className="size-full object-cover"
         />
-        <div className="flex flex-col items-start p-4">
-          <p className="mb-2 bg-blue-primary px-3 py-1 text-xs font-semibold uppercase text-white">
-            {type}
-          </p>
-          <Link href={url} className="text-base font-semibold text-blue-primary">{title}</Link>
-        </div>
       </div>
-    );
-  };
-  
+      <div className="flex flex-col items-start p-4">
+        <p className="mb-2 bg-blue-primary px-3 py-1 text-xs font-semibold uppercase text-white">
+          {type}
+        </p>
+        <Link href={url} className="text-base font-semibold text-blue-primary">
+          {title}
+        </Link>
+      </div>
+    </div>
+  );
+};
 
-const MediumCard = ({
-    title,
-    type,
-    description,
-    url,
-    imageUrl,
-    imageAlt,
-  }: CardProps) => {
-    return (
-      <div
-        id={title}
-        className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col"
-      >
+const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
+  return (
+    <div
+      id={title}
+      className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col"
+    >
+      <div className="relative w-1/4" style={{ aspectRatio: "1 / 1" }}>
         <Image
           src={imageUrl}
           alt={imageAlt || title}
-          width={300}
-          height={300}
-          className="h-auto w-1/4 object-cover lg:w-full"
+          layout="fill"
+          className="w-1/4 object-cover"
         />
-        <div className="flex flex-col items-start p-4">
-          <p className="mb-2 bg-blue-primary px-3 py-1 text-xs font-semibold uppercase text-white">
-            {type}
-          </p>
-          <Link href={url} className="text-base font-semibold text-blue-primary">{title}</Link>
-        </div>
       </div>
-    );
-  };
-  
+      <div className="flex flex-col items-start p-4">
+        <p className="mb-2 bg-blue-primary px-3 py-1 text-xs font-semibold uppercase text-white">
+          {type}
+        </p>
+        <Link href={url} className="text-base font-semibold text-blue-primary">
+          {title}
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export const HomePageContentCard = ({
   size,
@@ -126,17 +122,17 @@ export const HomePageContentCard = ({
 }: HomePageContentCardProps) => {
   switch (size) {
     case "splash":
-        return (
-          <SplashCard
-            title={title}
-            type={type}
-            description={description}
-            url={url}
-            imageUrl={imageUrl}
-            imageAlt={imageAlt}
-          />
-        );
-  
+      return (
+        <SplashCard
+          title={title}
+          type={type}
+          description={description}
+          url={url}
+          imageUrl={imageUrl}
+          imageAlt={imageAlt}
+        />
+      );
+
     case "large":
       return (
         <LargeCard
