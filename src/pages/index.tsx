@@ -406,8 +406,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
         />
       </Head>
-      <main className="space-y-12 bg-gray-100 lg:px-[50px]">
-        <section className="lg:bg-blue-primary lg:px-12" id="latest content">
+      <main className="space-y-12 bg-gray-100 lg:px-[150px] lg:pt-8">
+        <section className="lg:bg-blue-primary lg:p-8 " id="latest content">
           <FrontSectionTitle title={"Latest Contents"} />
           <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
             {latestContent.map((content, index) => (
@@ -431,9 +431,9 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
         <section className="" id="popular content">
-          <FrontSectionTitle title={"popular content"} />
+          <FrontSectionTitle title={"Popular content"} />
 
-          <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:grid-cols-3">
+          <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
             {popularContent.map((content, index) => (
               <HomePageContentCard
                 key={index}
@@ -449,7 +449,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
 
-        <section className="mx-3" id="banner">
+        <section className="mx-3 lg:mx-0" id="banner">
           <Image
             src="https://assets.dentistswhoinvest.com/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2.webp"
             alt={""}
@@ -459,8 +459,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="" id="follow us">
-          <FrontSectionTitle title={"follow us"} />
-          <div className="mx-3 flex justify-center gap-2">
+          <FrontSectionTitle title={"Follow us"} />
+          <div className="mx-3 flex justify-center gap-2 lg:mx-0">
             <div
               id="socials"
               className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
@@ -540,10 +540,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
         <section className="" id="meet the founder">
-          <FrontSectionTitle title={"meet the founder"} />
+          <FrontSectionTitle title={"Meet the founder"} />
           <section
             id="founder"
-            className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:flex-row"
+            className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
           >
             <div
               className="relative size-full"
@@ -575,13 +575,13 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="" id="what we do">
-          <FrontSectionTitle title={"what we do for dentists"} />
+          <FrontSectionTitle title={"What we do for dentists"} />
           {pageData.what_we_do_reasons.map((reason: ReasonData) => {
             console.log("reason", reason);
             return (
               <div
                 key={reason.id}
-                className="mx-3 my-2 flex bg-blue-primary text-white"
+                className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
               >
                 <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
                 <div className="flex flex-col self-center pr-4">
@@ -600,7 +600,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
           <div
             id="testimonial-cards"
-            className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+            className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
           >
             {pageData.testimonials.data.map(
               (testimonial: any, index: number) => {
@@ -866,7 +866,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section> */}
 
         <section
-          className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:px-[50px]"
+          className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:mx-0"
           id="tax relief form"
         >
           <HomepageFreeTaxReliefForm />

@@ -34,8 +34,8 @@ const SplashCard = ({
   imageAlt,
 }: CardProps) => {
   return (
-    <div id={title} className="overflow-hidden bg-white shadow-lg">
-      <div className="relative w-full" style={{ aspectRatio: "5 / 3" }}>
+    <div id={title} className="flex flex-col overflow-hidden bg-white shadow-lg lg:flex-row">
+      <div className="relative aspect-[5/3] w-full lg:w-2/3">
         <Image
           src={imageUrl}
           alt={imageAlt || title}
@@ -65,12 +65,12 @@ const LargeCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
       id={title}
       className="flex flex-col overflow-hidden bg-white shadow-lg"
     >
-      <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+      <div className="lg:aspect-[5:4] relative aspect-square w-full">
         <Image
           src={imageUrl}
           alt={imageAlt || title}
           layout="fill"
-          className="size-full object-cover"
+          className="aspect-square size-full object-cover lg:aspect-video"
         />
       </div>
       <div className="flex flex-col items-start p-4">
@@ -91,7 +91,7 @@ const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
       id={title}
       className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col"
     >
-      <div className="relative w-1/4" style={{ aspectRatio: "1 / 1" }}>
+      <div className="relative w-1/4 lg:w-full" style={{ aspectRatio: "1 / 1" }}>
         <Image
           src={imageUrl}
           alt={imageAlt || title}
