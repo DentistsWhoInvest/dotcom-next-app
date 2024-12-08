@@ -429,8 +429,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
       <main className=" bg-gray-100  lg:pt-8">
         <section className="lg:mx-auto lg:max-w-[1000px] space-y-12">
           <section className="lg:bg-blue-primary lg:p-8" id="latest content">
-            <FrontSectionTitle title={"Latest Contents"} />
-            <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
+            <FrontSectionTitle title={"Latest Content"} />
+            <div className="mx-3 grid grid-cols-2 gap-4 lg:gap-8 lg:grid-cols-3">
               {extractedLatestContent.map((content, index) => (
                 <div
                   key={index}
@@ -497,16 +497,15 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                 id="socials"
                 className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
               >
-                {" "}
                 <div
-                  className="relative h-2/3 w-full"
+                  className="relative h-2/3 w-full inline-block"
                   style={{ aspectRatio: "5 / 3" }}
                 >
                   <Image
-                    src={pageData.hero_cover.data.attributes.url}
+                    src="https://assets.dentistswhoinvest.com/dwitextlogo_467490d260/dwitextlogo_467490d260.png"
                     alt={pageData.hero_cover.data.attributes.name}
                     layout="fill"
-                    className="object-cover"
+                    className="object-cover bg-blue-primary"
                   />
                 </div>
                 <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-4">
@@ -634,7 +633,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
             <div
               id="testimonial-cards"
-              className="mx-3 grid grid-cols-1 gap-4 lg:gap-8 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp]"
+              className="mx-3 grid grid-cols-1 gap-4 lg:gap-8 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200px]"
             >
               {pageData.testimonials.data.map(
                 (testimonial: any, index: number) => {
