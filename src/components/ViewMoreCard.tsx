@@ -3,6 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { processDate } from "@/lib/dateUtils";
 
+
+export const trimAfterWords = (text: string, wordLimit: number) => {
+  const words = text.split(" "); // Split the text into an array of words
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(" ") + "..."; // Join the first 'wordLimit' words and add ellipsis
+  }
+  return text; // If there are fewer words than the limit, return the full text
+};
+
+
 export const ViewMoreCard = ({
   page,
   contentType,
@@ -30,14 +40,6 @@ export const ViewMoreCard = ({
     }
   }
   const hrefStarter = getHrefStarter(contentType);
-
-  const trimAfterWords = (text: string, wordLimit: number) => {
-    const words = text.split(" "); // Split the text into an array of words
-    if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(" ") + "..."; // Join the first 'wordLimit' words and add ellipsis
-    }
-    return text; // If there are fewer words than the limit, return the full text
-  };
 
   const trimmedExcerpt =
     hrefStarter === "article" && trimAfterWords(page.attributes.excerpt, 25);

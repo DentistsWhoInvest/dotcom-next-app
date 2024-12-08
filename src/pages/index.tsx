@@ -381,7 +381,11 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         content.podcast.data.attributes.title
       ).replace(/-dwi-ep\d+$/, "");
       const podcastLink = `/episodes/e${content.podcast.data.attributes.episode_number}-${podcastSlug}`;
-      const podcastTitle = "EP" + content.podcast.data.attributes.episode_number + " " + content.podcast.data.attributes.title.split(" DWI-")[0]
+      const podcastTitle =
+        "EP" +
+        content.podcast.data.attributes.episode_number +
+        " " +
+        content.podcast.data.attributes.title.split(" DWI-")[0];
       extractedContent.title = podcastTitle;
       extractedContent.type = contentType;
       extractedContent.url = podcastLink;
@@ -447,7 +451,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
         <section className="" id="popular content">
-          <FrontSectionTitle title={"Popular content"} />
+          <FrontSectionTitle title={"Popular Content"} />
 
           <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
             {extractedPopularContent.map((content, index) => (
@@ -486,7 +490,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="" id="follow us">
-          <FrontSectionTitle title={"Follow us"} />
+          <FrontSectionTitle title={"Follow Us"} />
           <div className="mx-3 flex justify-center gap-2 lg:mx-0">
             <div
               id="socials"
@@ -546,14 +550,15 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
             >
               <div
-                className="relative h-2/3 w-full"
+                className="relative h-2/3 w-full overflow-hidden"
                 style={{ aspectRatio: "5 / 3" }}
               >
                 <Image
                   src={pageData.hero_cover.data.attributes.url}
                   alt={pageData.hero_cover.data.attributes.name}
-                  layout="fill"
-                  className="object-cover"
+                  width={pageData.hero_cover.data.attributes.width}
+                  height={pageData.hero_cover.data.attributes.height}
+                  className=""
                 />
               </div>
               <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
@@ -567,7 +572,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </div>
         </section>
         <section className="" id="meet the founder">
-          <FrontSectionTitle title={"Meet the founder"} />
+          <FrontSectionTitle title={"Meet the Founder"} />
           <section
             id="founder"
             className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
@@ -599,7 +604,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="" id="what we do">
-          <FrontSectionTitle title={"What we do for dentists"} />
+          <FrontSectionTitle title={"What We Do For Dentists"} />
           {pageData.what_we_do_reasons.map((reason: ReasonData) => {
             return (
               <div
@@ -619,7 +624,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="" id="testimonials">
-          <FrontSectionTitle title={"check out what our members say..."} />
+          <FrontSectionTitle title={"Check Out What Our Members Say..."} />
 
           <div
             id="testimonial-cards"

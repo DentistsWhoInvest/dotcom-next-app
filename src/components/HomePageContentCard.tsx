@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { trimAfterWords } from "./ViewMoreCard";
 
 // desktop: image top, text bottom
 // mobile: image left, text right
@@ -34,7 +35,10 @@ const SplashCard = ({
   imageAlt,
 }: CardProps) => {
   return (
-    <div id={title} className="flex flex-col overflow-hidden bg-white shadow-lg lg:flex-row">
+    <div
+      id={title}
+      className="flex flex-col overflow-hidden bg-white shadow-lg lg:flex-row"
+    >
       <div className="relative aspect-[5/3] w-full lg:w-2/3">
         <Image
           src={imageUrl}
@@ -51,7 +55,16 @@ const SplashCard = ({
         >
           {title}
         </Link>
-        <p className="text-sm">{description}</p>
+        {description && (
+          <>
+            <p className="text-sm hidden lg:block">
+              {trimAfterWords(description, 50)}
+            </p>
+            <p className="text-sm block lg:hidden">
+              {trimAfterWords(description, 25)}
+            </p>
+          </>
+        )}
         <Link href={url} className="text-sm font-semibold text-blue-primary">
           Read More...
         </Link>
@@ -93,7 +106,10 @@ const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
       id={title}
       className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col"
     >
-      <div className="relative w-1/4 lg:w-full" style={{ aspectRatio: "1 / 1" }}>
+      <div
+        className="relative w-1/4 lg:w-full"
+        style={{ aspectRatio: "1 / 1" }}
+      >
         <Image
           src={imageUrl}
           alt={imageAlt || title}
@@ -123,6 +139,7 @@ export const HomePageContentCard = ({
   imageUrl,
   imageAlt,
 }: HomePageContentCardProps) => {
+  const trimmedTitle = trimAfterWords(title, 7);
   switch (size) {
     case "splash":
       return (
@@ -139,7 +156,7 @@ export const HomePageContentCard = ({
     case "large":
       return (
         <LargeCard
-          title={title}
+          title={trimmedTitle}
           type={type}
           description={description}
           url={url}
@@ -152,7 +169,7 @@ export const HomePageContentCard = ({
     default:
       return (
         <MediumCard
-          title={title}
+          title={trimmedTitle}
           type={type}
           description={description}
           url={url}
