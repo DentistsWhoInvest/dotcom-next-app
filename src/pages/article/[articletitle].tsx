@@ -216,6 +216,7 @@ export default function ArticlePage({
         <div className="md:col-span-1 md:w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
+            {pageData.attributes.vertical_banners?.data[0] && (
             <Link
               href={
                 pageData.attributes.vertical_banners?.data[0].attributes
@@ -232,7 +233,7 @@ export default function ArticlePage({
                 height={598}
                 className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
               />
-            </Link>
+            </Link>)}
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HomepageFreeTaxReliefForm() {
   return (
-    <div className="flex min-h-[550px] flex-col justify-center rounded-2xl bg-orange-600 text-white md:min-h-[560px] md:flex-row lg:min-h-[580px] xl:mx-[100px]">
+    <div className="flex min-h-[550px] flex-col justify-center bg-blue-primary text-white md:min-h-[560px] md:flex-row lg:min-h-[580px]">
       <Image
         src="https://assets.dentistswhoinvest.com/David_Hossein_tax_relief_8729644e8b/David_Hossein_tax_relief_8729644e8b.jpg"
         alt="checklist"
@@ -25,7 +25,7 @@ export default function HomepageFreeTaxReliefForm() {
         ></div>
         <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" />
 
-        <p className="ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
+        <p className="md:ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
           BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST EMAIL
           LIST. THIS LIST CAN BE LEFT AT ANY TIME.
         </p>

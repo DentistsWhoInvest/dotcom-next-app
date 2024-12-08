@@ -1,29 +1,303 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { fetchEndpointData } from "@/lib/fetchUtils";
-// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import Link from "next/link";
-import Lottie from "lottie-react";
-import lottieProject from "../../public/animations/project.json";
-import lottieRocket from "../../public/animations/rocket.json";
-import lottieTreasure from "../../public/animations/treasure.json";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { CustomHomePageCarousel } from "@/components/CustomHomePageCarousel";
-import { Button } from "@/components/ui/button";
-import { useState, useRef, useEffect } from "react";
-import { TestimonialCard } from "@/components/TestimonialCard";
-import { HeroBanner } from "@/components/HeroBanner";
-import { FreeTaxReliefPopupForm } from "@/components/FreeTaxReliefPopupForm";
 import Head from "next/head";
 import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
+import { FrontSectionTitle } from "@/components/FrontSectionTitle";
+import { HomePageTestimonialCard } from "@/components/HomePageTestimonialCard";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import {
+  HomePageContentCard,
+  HomePageContentCardProps,
+} from "@/components/HomePageContentCard";
+import { createSlug } from "./articles/[page]";
+import DWIHomePageFollowUsLogo from "@/components/DWIHomePageFollowUsLogo";
+
+type TextNode = {
+  text: string;
+  type: string;
+};
+
+type Paragraph = {
+  type: "paragraph";
+  children: TextNode[];
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  id: number;
+  attributes: ImageAttributes;
+};
+
+type Cover = {
+  data: ImageData;
+};
+
+type FounderDescription = Paragraph[];
+
+type Thought = {
+  id: number;
+  title: string;
+  cover: Cover;
+};
+
+type Reason = {
+  id: number;
+  reason: string;
+};
+
+type Metric = {
+  id: number;
+  value: number;
+  title: string;
+};
+
+type Review = Paragraph[];
+
+type TestimonialAttributes = {
+  title: string;
+  review: Review;
+  author: string;
+  author_job_location: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  author_thumbnail: {
+    data: ImageData;
+  };
+};
+
+type TestimonialData = {
+  id: number;
+  attributes: TestimonialAttributes;
+};
+
+type Testimonials = {
+  data: TestimonialData[];
+};
+
+type CourseAttributes = {
+  title: string;
+  description: string;
+  cta_text: string;
+  navigation_url: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  tagline: string;
+  cover: Cover;
+};
+
+type CourseData = {
+  id: number;
+  attributes: CourseAttributes;
+};
+
+type Courses = {
+  data: CourseData[];
+};
+
+type ReasonData = {
+  id: number;
+  lottie_name: string;
+  title: string;
+  description: any;
+  cta_text: string;
+  cta_navigation_url: string;
+  cta_navigation_description: string;
+  cta_navigation_is_internal: boolean;
+};
+
+// type ReasonData = {
+//   id: number;
+//   attributes: ReasonAttributes;
+// };
+
+type WhatWeDoReasons = ReasonData[];
+
+type ArticleAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  excerpt: string;
+  category: string;
+  publish_date: string;
+  cover: Cover;
+};
+
+type ArticleData = {
+  id: number;
+  attributes: ArticleAttributes;
+};
+
+type Article = {
+  data: ArticleData | null;
+};
+
+type PodcastAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  buzzsprout_id: number;
+  duration: number;
+  description: string;
+  artwork_url: string;
+  buzzsprout_hash: string;
+  episode_number: number;
+};
+
+type PodcastData = {
+  id: number;
+  attributes: PodcastAttributes;
+};
+
+type Podcast = {
+  data: PodcastData | null;
+};
+
+type VideoAttributes = {
+  name: string;
+  uri: string;
+  duration: number;
+  modified_time: string;
+  status: string;
+  is_playable: boolean;
+  hash: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  description: string;
+};
+
+type VideoData = {
+  id: number;
+  attributes: VideoAttributes;
+};
+
+type Video = {
+  data: VideoData | null;
+};
+
+type Content = {
+  id: number;
+  video: Video;
+  podcast: Podcast;
+  article: Article;
+};
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+  cover_image: { data: ImageData };
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type HomePageAttributes = {
+  hero_text: string;
+  hero_subtext: string;
+  hero_button_text: string;
+  founder_text: string;
+  founder_subtext: string;
+  founder_description: FounderDescription;
+  what_we_do_title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  locale: string;
+  why_you_title: string;
+  founder_cta_text: string;
+  why_you_familiar_title: string;
+  why_you_familiar_subtitle: string;
+  courses_title: string;
+  courses_subtitle: string;
+  courses_description: string;
+  testimonials_title: string;
+  founder_cta_link_description: string;
+  hero_button_navigation_url: string;
+  hero_button_link_description: string;
+  why_you_familiar_thoughts: Thought[];
+  hero_cover: {
+    data: ImageData;
+  };
+  founder_image: {
+    data: ImageData;
+  };
+  what_we_do_reasons: WhatWeDoReasons;
+  why_you_reasons: Reason[];
+  metrics: Metric[];
+  testimonials: Testimonials;
+  courses: Courses;
+  latest_contents: Content[];
+  popular_contents: Content[];
+  horizontal_banner: {
+    data: BannerData;
+  };
+};
+
+type HomePage = {
+  id: number;
+  attributes: HomePageAttributes;
+};
 
 export const getStaticProps = async () => {
   const populateFields = [
+    "latest_contents",
+    "latest_contents.article",
+    "latest_contents.article.cover",
+    "latest_contents.podcast",
+    "latest_contents.video",
+    "popular_contents",
+    "popular_contents.article",
+    "popular_contents.article.cover",
+    "popular_contents.podcast",
+    "popular_contents.video",
+    "horizontal_banner",
+    "horizontal_banner.cover_image",
     "why_you_familiar_thoughts.cover",
     "hero_cover",
     "founder_image",
@@ -42,483 +316,350 @@ export const getStaticProps = async () => {
   };
 };
 
-const MetricCounter = ({ value }: { value: number }) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+export default function Home({ pageData }: { pageData: HomePageAttributes }) {
+  console.log("pageData", pageData);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Stop observing after it becomes visible
-        }
-      },
-      { threshold: 0.1 } // Trigger when 10% of the element is visible
-    );
+  // when we get the latest content, it will be an array of content
+  // the content can be an article, video or podcast, two of those objects will be null
+  // we want to filter out the null objects and only keep the ones that are not null
 
-    if (ref.current) {
-      observer.observe(ref.current);
+  function determineContentType(content: Content) {
+    if (
+      content.article.data != null &&
+      content.video.data === null &&
+      content.podcast.data === null
+    ) {
+      return "article";
+    } else if (
+      content.video.data != null &&
+      content.article.data === null &&
+      content.podcast.data === null
+    ) {
+      return "video";
+    } else if (
+      content.podcast.data != null &&
+      content.article.data === null &&
+      content.video.data === null
+    ) {
+      return "podcast";
+    } else {
+      return "";
     }
+  }
 
-    return () => {
-      if (ref.current) {
-        // think it's working as intended
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(ref.current);
-      }
+  function extractContent(
+    content: Content,
+    index: number,
+    isLatestContent: boolean
+  ): HomePageContentCardProps {
+    const extractedContent: HomePageContentCardProps = {
+      title: "",
+      size: "medium",
+      type: "",
+      url: "",
+      imageUrl: "",
+      imageAlt: "",
     };
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      let isMounted = true;
-      const duration = 1000; // Duration of the animation in milliseconds
-      const incrementTime = 10; // Time between increments in milliseconds
-      const totalSteps = duration / incrementTime; // Total number of increments
-      const incrementValue = Math.ceil(value / totalSteps); // Calculate increment value
-
-      const interval = setInterval(() => {
-        setCount((prevCount) => {
-          if (prevCount + incrementValue >= value) {
-            clearInterval(interval);
-            return value; // Ensure we don't exceed the target value
-          }
-          return prevCount + incrementValue;
-        });
-      }, incrementTime);
-
-      return () => {
-        isMounted = false; // Cleanup
-        clearInterval(interval);
-      };
+    const contentType = determineContentType(content);
+    const cardSize = isLatestContent
+      ? index === 0
+        ? "splash"
+        : "large"
+      : "medium";
+    if (contentType === "article" && content.article.data !== null) {
+      const slug = createSlug(content.article.data.attributes.title);
+      extractedContent.title = content.article.data.attributes.title;
+      extractedContent.type = contentType;
+      extractedContent.description = content.article.data.attributes.excerpt;
+      extractedContent.url = `/article/${slug}`;
+      extractedContent.imageUrl =
+        content.article.data.attributes.cover.data.attributes.url;
+      extractedContent.imageAlt =
+        content.article.data.attributes.cover.data.attributes.name;
+      extractedContent.size = cardSize;
+    } else if (contentType === "podcast" && content.podcast.data !== null) {
+      const podcastSlug = createSlug(
+        content.podcast.data.attributes.title
+      ).replace(/-dwi-ep\d+$/, "");
+      const podcastLink = `/episodes/e${content.podcast.data.attributes.episode_number}-${podcastSlug}`;
+      const podcastTitle =
+        "EP" +
+        content.podcast.data.attributes.episode_number +
+        " " +
+        content.podcast.data.attributes.title.split(" DWI-")[0];
+      extractedContent.title = podcastTitle;
+      extractedContent.type = contentType;
+      extractedContent.url = podcastLink;
+      extractedContent.imageUrl = content.podcast.data.attributes.artwork_url;
+      extractedContent.imageAlt = content.podcast.data.attributes.title;
+      extractedContent.size = cardSize;
+    } else if (contentType === "video" && content.video.data !== null) {
+      const slug = createSlug(content.video.data.attributes.name);
+      const videoId = content.video.data.attributes.uri.replace("/videos/", "");
+      extractedContent.title = content.video.data.attributes.name;
+      extractedContent.type = contentType;
+      extractedContent.url = `/videos/${slug}`;
+      extractedContent.imageUrl = `https://vumbnail.com/${videoId}.jpg`;
+      extractedContent.imageAlt = content.video.data.attributes.name;
+      extractedContent.size = cardSize;
     }
-  }, [isVisible, value]);
+    return extractedContent;
+  }
 
-  return (
-    <span id="community-members" ref={ref}>
-      {/* does some math to display 1000 as 1K, which looks nicer */}
-      {count > 1000 ? (
-        <span>{(Math.ceil(count / 1000) * 1000) / 1000}K+</span>
-      ) : (
-        <span>{count}+</span>
-      )}
-    </span>
+  // map over latest content and popular content and extract the content
+  const extractedLatestContent = pageData.latest_contents.map(
+    (content: Content, index) => {
+      return extractContent(content, index, true);
+    }
   );
-};
-
-const HomePageCourseCard = ({ course }: { course: any }) => {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border-solid bg-white px-[50px] py-[20px] shadow-custom md:px-[10px] md:pb-[25px] md:pt-[50px] lg:mx-4 lg:px-[50px]">
-      <div className="">
-        <Image
-          src="/DWI-logo-circle.webp"
-          alt="Course Logo"
-          width={120}
-          height={120}
-          className="mt-[-80px] rounded-3xl"
-        />
-      </div>
-
-      <div className="relative w-full bg-blue-primary pb-4 pt-2 text-center font-bold text-white transition-all duration-300">
-        <h2 className="text-xl">{course.attributes.tagline}</h2>
-        <svg
-          className="absolute left-1/2 top-1/2 z-[2] w-[calc(60%)] -translate-x-1/2 -translate-y-1/2 overflow-visible lg:w-[calc(50%)] lg:py-3 xl:pb-5"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 500 150"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M5,125.4c30.5-3.8,137.9-7.6,177.3-7.6c117.2,0,252.2,4.7,312.7,7.6"
-            strokeWidth="10px"
-            fill="none"
-            className="path-1 stroke-blue-secondary"
-          ></path>
-          <path
-            d="M26.9,143.8c55.1-6.1,126-6.3,162.2-6.1c46.5,0.2,203.9,3.2,268.9,6.4"
-            strokeWidth="10px"
-            fill="none"
-            className="path-2 stroke-blue-secondary"
-          ></path>
-        </svg>
-        <style jsx>{`
-          @keyframes draw {
-            0% {
-              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-              opacity: 0;
-            }
-            10% {
-              stroke-dasharray: 0, 2500; /* Start with no visible stroke */
-              opacity: 1;
-            }
-            20% {
-              stroke-dasharray: 2500, 0; /* Complete visible stroke */
-              opacity: 1;
-            }
-            80% {
-              stroke-dasharray: 2500, 0; /* Keep the stroke */
-              opacity: 1;
-            }
-            100% {
-              opacity: 0;
-            }
-          }
-
-          .path-1 {
-            animation: draw 8s forwards; /* Animate drawing and fading */
-            animation-iteration-count: infinite;
-          }
-
-        .path-2 {
-            animation: draw 8s forwards; /* Animate drawing and fading */
-            animation-delay: 0.5s;
-            animation-iteration-count: infinite;
-          }
-        `}</style>
-      </div>
-
-      <div className="flex flex-col items-center p-4 pt-8 md:grow">
-        <Image
-          src={course.attributes.cover.data.attributes.url}
-          alt={course.attributes.title}
-          width={180}
-          height={440}
-          className="md:w-[234px] lg:w-[362px]"
-        />{" "}
-        <p className="mb-4 text-sm font-semibold text-blue-primary md:mt-8 md:text-xl">
-          {course.attributes.description}
-        </p>
-        <Button className="w-2/3 rounded-md bg-orange-600 px-3 py-4 text-white hover:bg-orange-500 ">
-          <Link href={course.attributes.navigation_url}>Course Details</Link>
-        </Button>
-      </div>
-    </div>
+  const extractedPopularContent = pageData.popular_contents.map(
+    (content: Content, index) => {
+      return extractContent(content, index, false);
+    }
   );
-};
 
-export default function Home({ pageData }: { pageData: any }) {
-  // const [isPopupVisible, setIsPopupVisible] = useState(false);
-  // const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
-
-  // // Show the popup after 10 seconds
-  // useEffect(() => {
-  //   if (hasPopupBeenShown) {
-  //     return;
-  //   }
-  //   const timer = setTimeout(() => {
-  //     setIsPopupVisible(true);
-  //   }, 15000); // 15 seconds
-
-  //   const handleMouseLeave = () => {
-  //     setIsPopupVisible(true);
-  //   };
-
-  //   document.addEventListener("mouseleave", handleMouseLeave);
-
-  //   // Cleanup the timer if the component is unmounted
-  //   return () => {
-  //     clearTimeout(timer);
-  //     document.removeEventListener("mouseleave", handleMouseLeave);
-  //   };
-  // }, [hasPopupBeenShown]);
-
-  // const closePopup = () => {
-  //   setHasPopupBeenShown(true);
-  //   setIsPopupVisible(false);
-  // };
-
-  // const [popupFullyVisible, setPopupFullyVisible] = useState(isPopupVisible);
-
-  // useEffect(() => {
-  //   if (isPopupVisible) {
-  //     setPopupFullyVisible(true);
-  //   } else {
-  //     const timer = setTimeout(() => setPopupFullyVisible(false), 300); // Match duration with the transition
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [isPopupVisible]);
-
-  //replace the image url depending on breakpoint
   return (
     <>
       <Head>
         <title>Dentists Who Invest</title>
-        <meta name="description" content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists" />
+        <meta
+          name="description"
+          content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
+        />
       </Head>
-      <main>
-        {/* <section id="popupform"
-        // Disabling the exit pop altogether - leaving some of the code here for the moment in case we want to re-enable it soon.
-        // the popup form is hidden on mobile, but visibile from tablet.
-        className="hidden md:block">
-          <div
-            id="overlay"
-            // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-            className={`fixed inset-0 z-50 flex items-center justify-center bg-blue-primary bg-opacity-50 transition-opacity duration-300 ${
-              popupFullyVisible
-                ? "opacity-100"
-                : "pointer-events-none opacity-0"
-            }`}
-            onClick={closePopup}
-          >
-            <FreeTaxReliefPopupForm
-              isVisible={isPopupVisible}
-              onClose={closePopup}
-            />
-          </div>
-        </section> */}
-
-        <section>
-          <div className="sm:block md:hidden">
-            <HeroBanner
-              bannerText={pageData.hero_text}
-              bannerImage={{
-                url: pageData.hero_cover.data.attributes.url,
-                name: pageData.hero_cover.data.attributes.alternativeText,
-              }}
-              subText={pageData.hero_subtext}
-              ctaButton={{
-                url: pageData.hero_button_navigation_url,
-                text: pageData.hero_button_text,
-                description: pageData.hero_button_link_description,
-              }}
-            />
-          </div>
-          <div className="sm:hidden md:block">
-            <HeroBanner
-              bannerText={pageData.hero_text}
-              bannerImage={{
-                url: pageData.hero_cover.data.attributes.url,
-                name: pageData.hero_cover.data.attributes.alternativeText,
-              }}
-              subText={pageData.hero_subtext}
-              ctaButton={{
-                url: pageData.hero_button_navigation_url,
-                text: pageData.hero_button_text,
-                description: pageData.hero_button_link_description,
-              }}
-            />
-          </div>
-        </section>
-
-        <section
-          id="founder"
-          className="m-4 flex flex-col items-center space-y-4 p-4 pt-[20px] md:space-y-8 md:p-[50px] lg:px-2 lg:flex-row-reverse lg:justify-center lg:max-w-[1140px] lg:mx-auto "
-        >
-          <div className="lg:w-1/2 lg:mx-8">
-            <h3 className="text-center text-[30px] font-bold text-blue-primary md:text-[35px] md:leading-[42px] ">
-              {pageData.founder_text}
-            </h3>
-            <h6 className="my-[18px] text-center text-lg text-blue-secondary md:text-xl xl:mr-12 xl:text-wrap xl:text-left lg:my-[25px]">
-              {pageData.founder_subtext}
-            </h6>
-            {pageData.founder_description.map((block: any) => {
-              return (
-                <div key={block.id}>
-                  <p className="my-2 md:my-4 lg:my-12">
-                    {block.children[0].text}
-                  </p>
+      <main className=" bg-gray-100  lg:pt-8">
+        <section className="lg:mx-auto lg:max-w-[1000px] space-y-12">
+          <section className="lg:bg-blue-primary lg:p-8" id="latest content">
+            <FrontSectionTitle title={"Latest Content"} />
+            <div className="mx-3 grid grid-cols-2 gap-4 lg:gap-8 lg:grid-cols-3">
+              {extractedLatestContent.map((content, index) => (
+                <div
+                  key={index}
+                  className={`${index === 0 ? "col-span-full" : "col-span-1"}
+                ${index === 3 ? "hidden lg:block" : ""}
+              `}
+                >
+                  <HomePageContentCard
+                    size={content.size}
+                    title={content.title}
+                    type={content.type}
+                    url={content.url}
+                    imageUrl={content.imageUrl}
+                    imageAlt={content.imageAlt}
+                    description={content.description}
+                  />
                 </div>
-              );
-            })}
-            <div className="hidden lg:block">
-              <Button className="rounded-md bg-orange-600 px-[55px] py-8 text-lg text-white hover:bg-orange-500">
-                <Link href={"/about"}>Learn More</Link>
-              </Button>
+              ))}
             </div>
-          </div>
-          <Image
-            src={pageData.founder_image.data.attributes.formats.large.url}
-            alt={pageData.founder_image.data.attributes.alternativeText}
-            width={pageData.founder_image.data.attributes.width}
-            height={pageData.founder_image.data.attributes.height}
-            // className="h-[441px] w-[315px] rounded-2xl object-cover md:max-h-[499px] md:max-w-[356px] xl:max-h-[654px] xl:max-w-[468px]"
-            className="size-full rounded-xl object-cover md:max-h-[700px] md:max-w-[500px] lg:max-h-[654px] lg:max-w-1/2 lg:w-1/2 lg:mr-[50px]"
-          />
-        </section>
+          </section>
+          <section className="" id="popular content">
+            <FrontSectionTitle title={"Popular Content"} />
 
-        <section className="bg-gray-100 py-2 text-center">
-          <h2 className="px-[30px] pt-[30px] text-[30px] font-bold text-blue-primary xl:p-8 xl:text-[50px]">
-            {pageData.what_we_do_title}
-          </h2>
-          <div className="grid grid-cols-1 place-items-center md:grid-cols-3 xl:mx-[150px]">
-            {pageData.what_we_do_reasons.map((reason: any) => {
-              let lottieVar;
-              if (reason.lottie_name === "treasure") {
-                lottieVar = lottieTreasure;
-              } else if (reason.lottie_name === "project") {
-                lottieVar = lottieProject;
-              } else {
-                lottieVar = lottieRocket;
-              }
+            <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 md:grid-cols-2 lg:grid-cols-3">
+              {extractedPopularContent.map((content, index) => (
+                <HomePageContentCard
+                  key={index}
+                  size={content.size}
+                  title={content.title}
+                  type={content.type}
+                  url={content.url}
+                  imageUrl={content.imageUrl}
+                  imageAlt={content.imageAlt}
+                  description={content.description}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="mx-3 lg:mx-0" id="banner">
+            {pageData.horizontal_banner.data && (
+              <Link
+                href={pageData.horizontal_banner.data.attributes.navigation_url}
+              >
+                <Image
+                  src={
+                    pageData.horizontal_banner.data.attributes.cover_image.data
+                      .attributes.url
+                  }
+                  alt={pageData.horizontal_banner.data.attributes.title}
+                  width={1200}
+                  height={200}
+                  layout="responsive"
+                  className=""
+                />
+              </Link>
+            )}
+          </section>
+
+          <section className="" id="follow us">
+            <FrontSectionTitle title={"Follow Us"} />
+            <div className="mx-3 flex justify-center gap-4 lg:gap-8 lg:mx-0">
+              <div
+                id="socials"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
+              >
+                <div
+                  className="relative h-2/3 w-full inline-block bg-blue-primary"
+                  style={{ aspectRatio: "5 / 3" }}
+                >
+                  <div className="p-4 absolute inset-0 flex lg:hidden items-center justify-center">
+                    <DWIHomePageFollowUsLogo />
+                  </div>
+                  <Image
+                    src="https://assets.dentistswhoinvest.com/dwitextlogo_467490d260/dwitextlogo_467490d260.png"
+                    alt={pageData.hero_cover.data.attributes.name}
+                    layout="fill"
+                    className="object-cover bg-blue-primary lg:block hidden"
+                  />
+                </div>
+                <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 md:mx-4 pb-2">
+                  <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white md:mt-4 md:self-start md:px-4 md:text-base">
+                    FOLLOW US:
+                  </p>
+                  <div className="flex flex-row space-x-1 md:space-x-3">
+                    <Link
+                      href={"https://www.facebook.com/groups/dentistswhoinvest"}
+                    >
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
+                        alt="Facebook"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                    <Link href={"https://www.linkedin.com/in/dr-james-martin/"}>
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
+                        alt="Linked in"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                    <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
+                        alt="Instagram"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="cta"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
+              >
+                <div
+                  className="relative h-2/3 w-full overflow-hidden"
+                  style={{ aspectRatio: "5 / 3" }}
+                >
+                  <Image
+                    src={pageData.hero_cover.data.attributes.url}
+                    alt={pageData.hero_cover.data.attributes.name}
+                    layout="fill"
+                    className=""
+                  />
+                </div>
+                <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 md:mx-12">
+                  <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white md:py-2 md:text-lg">
+                    <Link href={pageData.hero_button_navigation_url}>
+                      {pageData.hero_button_text}
+                    </Link>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="" id="meet the founder">
+            <FrontSectionTitle title={"Meet the Founder"} />
+            <section
+              id="founder"
+              className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
+            >
+              <div className="relative aspect-square w-full h-1/2 lg:aspect-[4/5] lg:w-1/3 max-h-[351px] lg:max-h-full">
+                <Image
+                  src={pageData.founder_image.data.attributes.url}
+                  alt={pageData.founder_image.data.attributes.name}
+                  layout="fill"
+                  className="object-cover object-[50%_15%] lg:object-center"
+                />
+              </div>
+              <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-4">
+                <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-2xl xl:mr-12 xl:text-wrap xl:text-left">
+                  {pageData.founder_subtext}
+                </h3>
+                {pageData.founder_description.map((block: any) => {
+                  return (
+                    <div key={block.id}>
+                      <p className="text-xs lg:text-sm pb-2">
+                        {block.children[0].text}
+                      </p>
+                    </div>
+                  );
+                })}
+                <Link
+                  href={"/about"}
+                  className="text-xs lg:text-sm font-semibold text-blue-primary"
+                >
+                  Read More...
+                </Link>
+              </div>
+            </section>
+          </section>
+
+          <section className="" id="what we do">
+            <FrontSectionTitle title={"What We Do For Dentists"} />
+            {pageData.what_we_do_reasons.map((reason: ReasonData) => {
               return (
                 <div
                   key={reason.id}
-                  className="m-6 flex h-96 flex-col justify-center rounded-[2rem] border-2 bg-white p-8 shadow-custom-br md:h-[415px] md:w-[245px] md:p-0 lg:h-[436px] lg:w-[308px] xl:h-[493px]"
+                  className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
                 >
-                  <div className="flex grow flex-col p-6 pt-0 text-center">
-                    <div className="mx-auto my-4 size-20 xl:size-40">
-                      <Lottie
-                        animationData={lottieVar}
-                        loop={true}
-                        width="200"
-                        height="200"
-                      />
+                  <p className="flex justify-center mx-4 py-2 text-[60px] font-semibold w-1/12">
+                    {reason.id}
+                  </p>
+                  <div className="flex flex-col self-center w-2/3">
+                    <p className="pb-2 text-base lg:text-2xl">{reason.title}</p>
+                    <div className="text-[10px] md:text-sm">
+                      <BlocksRenderer content={reason.description} />
                     </div>
-                    <CardTitle className="p-2 text-lg font-bold text-blue-primary md:text-xl lg:mx-8 xl:mx-0">
-                      <p>{reason.title}</p>
-                    </CardTitle>
-                    <CardDescription className="mt-auto p-2 text-grey-primary md:p-0">
-                      {reason.description.map((block: any) => {
-                        return (
-                          <div key={block.id}>
-                            <p>{block.children[0].text}</p>
-                          </div>
-                        );
-                      })}
-                    </CardDescription>
-                    <Link
-                      href={reason.cta_navigation_url}
-                      aria-label={reason.cta_navigation_description}
-                      className="mx-2 mb-2 mt-auto max-w-[195px] place-self-center rounded-md bg-orange-600 px-4 py-3 text-white hover:text-blue-primary"
-                    >
-                      <button>{reason.cta_text}</button>
-                    </Link>{" "}
                   </div>
                 </div>
               );
             })}
-          </div>
-        </section>
+          </section>
 
-        <section>
-          <Card className="m-6 flex flex-col rounded-[2rem] border-0 bg-gradient-to-b from-blue-primary to-blue-secondary text-white shadow-2xl md:mx-12 md:p-12 lg:mx-auto lg:max-w-[1140px]">
-            <CardTitle className="p-8 text-center text-2xl font-bold md:text-[35px] xl:mx-[200px] xl:text-[50px] xl:leading-[56px]">
-              {pageData.why_you_title}
-            </CardTitle>
-            <div className="md:mx-14 xl:mx-[240px]">
-              {pageData.why_you_reasons.map((reason: any, index: number) => {
-                return (
-                  <div key={reason.id}>
-                    <CardContent className="flex flex-row space-x-2 text-left">
-                      <Image
-                        src={"/tick-in-circle-orange.svg"}
-                        alt="Checkmark"
-                        width="40"
-                        height="40"
-                      />
-                      <div>
-                        <p
-                          className="text-xl font-semibold md:max-w-[90%] xl:font-normal"
-                          key={reason.id}
-                        >
-                          {reason.reason}
-                        </p>
-                        <div className="md:hidden">
-                          {index < pageData.why_you_reasons.length - 1 && (
-                            <div className="mx-6 my-2 border border-orange-400" />
-                          )}
-                        </div>
-                        <div className="my-2 hidden border border-orange-400 md:block" />
-                      </div>
-                    </CardContent>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        </section>
+          <section className="" id="testimonials">
+            <FrontSectionTitle title={"Check Out What Our Members Say..."} />
 
-        <section id="familiar-section" className="p-4">
-          <div
-            id="container"
-            className="flex flex-col items-center lg:mx-auto lg:max-w-[1140px] lg:flex-row"
-          >
             <div
-              id="text-content"
-              className="text-center lg:mr-[50px] lg:flex lg:w-1/2 lg:flex-col lg:space-y-12 lg:text-left"
+              id="testimonial-cards"
+              className="mx-3 grid grid-cols-1 gap-4 lg:gap-8 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200px]"
             >
-              <h2 className="pb-[20px] text-[30px] font-bold text-blue-primary lg:text-[45px] lg:leading-[54px]">
-                {pageData.why_you_familiar_title}
-              </h2>
-              <h6 className="font-semibold text-blue-secondary lg:text-xl">
-                {pageData.why_you_familiar_subtitle}
-              </h6>
+              {pageData.testimonials.data.map(
+                (testimonial: any, index: number) => {
+                  return (
+                    <HomePageTestimonialCard
+                      key={testimonial.id}
+                      testimonial={testimonial}
+                      index={index}
+                    />
+                  );
+                }
+              )}
             </div>
+          </section>
 
-            <div id="carousel-container">
-              <CustomHomePageCarousel
-                thoughts={pageData.why_you_familiar_thoughts}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="enrolment"
-          className="flex flex-col items-center bg-gray-200 p-4 text-center"
-        >
-          <h3 className="my-4 text-lg font-semibold text-blue-primary md:text-xl">
-            {pageData.courses_subtitle}
-          </h3>
-          <h2 className="text-[30px] font-bold text-blue-primary md:text-[35px]">
-            {pageData.courses_title}
-          </h2>
-          <p className="my-4">{pageData.courses_description}</p>
-          <div
-            id="courses"
-            className="mt-16 grid grid-cols-1 space-y-20 md:grid-cols-2 md:gap-8 md:space-y-0"
+          <section
+            className="mx-3 flex justify-center bg-gray-100 pb-8 lg:mx-0"
+            id="tax relief form"
           >
-            {pageData.courses.data.map((course: any) => {
-              return <HomePageCourseCard key={course.id} course={course} />;
-            })}
-          </div>
-        </section>
-
-        <section id="stats">
-          <div
-            id="stats-container"
-            className="grid grid-cols-1 space-y-2 bg-blue-tertiary py-8 text-center text-white md:grid-cols-3 md:space-y-0 "
-          >
-            {pageData.metrics.map((metric: any) => {
-              return (
-                <div id="stat" key={metric.id}>
-                  <h2 className="text-[45px] font-bold leading-[1.2em]">
-                    <MetricCounter value={metric.value} />
-                  </h2>
-                  <p className="text-xl">{metric.title}</p>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section id="testimonials" className="bg-white py-8 text-center">
-          <h2 className="text-wrap text-[30px] font-bold leading-9 text-blue-primary md:mx-[120px] md:my-12 md:text-[35px]">
-            {pageData.testimonials_title}
-          </h2>
-
-          <div
-            id="testimonial-cards"
-            // className="grid grid-cols-1 md:m-8 md:auto-rows-auto md:grid-cols-2 xl:grid-cols-3"
-            className="grid grid-cols-1 px-2 md:auto-rows-auto md:grid-cols-2 md:px-[50px] lg:grid-cols-3 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
-          >
-            {pageData.testimonials.data.map(
-              (testimonial: any, index: number) => {
-                return (
-                  <TestimonialCard
-                    key={testimonial.id}
-                    testimonial={testimonial}
-                    index={index}
-                  />
-                );
-              }
-            )}
-          </div>
-        </section>
-
-        <section className="flex justify-center bg-gray-200 px-[30px] py-[50px] lg:px-[50px]">
-          <HomepageFreeTaxReliefForm />
+            <HomepageFreeTaxReliefForm />
+          </section>
         </section>
       </main>
     </>
