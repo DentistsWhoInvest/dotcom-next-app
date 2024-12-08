@@ -7,7 +7,11 @@ import HomepageFreeTaxReliefForm from "@/components/HomepageFreeTaxReliefForm";
 import { FrontSectionTitle } from "@/components/FrontSectionTitle";
 import { HomePageTestimonialCard } from "@/components/HomePageTestimonialCard";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { HomePageContentCard } from "@/components/HomePageContentCard";
+import {
+  HomePageContentCard,
+  HomePageContentCardProps,
+} from "@/components/HomePageContentCard";
+import { createSlug } from "./articles/[page]";
 
 type TextNode = {
   text: string;
@@ -147,6 +151,91 @@ type ReasonData = {
 
 type WhatWeDoReasons = ReasonData[];
 
+type ArticleAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  excerpt: string;
+  category: string;
+  publish_date: string;
+  cover: Cover;
+};
+
+type ArticleData = {
+  id: number;
+  attributes: ArticleAttributes;
+};
+
+type Article = {
+  data: ArticleData | null;
+};
+
+type PodcastAttributes = {
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  buzzsprout_id: number;
+  duration: number;
+  description: string;
+  artwork_url: string;
+  buzzsprout_hash: string;
+  episode_number: number;
+};
+
+type PodcastData = {
+  id: number;
+  attributes: PodcastAttributes;
+};
+
+type Podcast = {
+  data: PodcastData | null;
+};
+
+type VideoAttributes = {
+  name: string;
+  uri: string;
+  duration: number;
+  modified_time: string;
+  status: string;
+  is_playable: boolean;
+  hash: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  description: string;
+};
+
+type VideoData = {
+  id: number;
+  attributes: VideoAttributes;
+};
+
+type Video = {
+  data: VideoData | null;
+};
+
+type Content = {
+  id: number;
+  video: Video;
+  podcast: Podcast;
+  article: Article;
+};
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+  cover_image: { data: ImageData };
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
 type HomePageAttributes = {
   hero_text: string;
   hero_subtext: string;
@@ -182,6 +271,11 @@ type HomePageAttributes = {
   metrics: Metric[];
   testimonials: Testimonials;
   courses: Courses;
+  latest_contents: Content[];
+  popular_contents: Content[];
+  horizontal_banner: {
+    data: BannerData;
+  };
 };
 
 type HomePage = {
@@ -191,6 +285,18 @@ type HomePage = {
 
 export const getStaticProps = async () => {
   const populateFields = [
+    "latest_contents",
+    "latest_contents.article",
+    "latest_contents.article.cover",
+    "latest_contents.podcast",
+    "latest_contents.video",
+    "popular_contents",
+    "popular_contents.article",
+    "popular_contents.article.cover",
+    "popular_contents.podcast",
+    "popular_contents.video",
+    "horizontal_banner",
+    "horizontal_banner.cover_image",
     "why_you_familiar_thoughts.cover",
     "hero_cover",
     "founder_image",
@@ -211,20 +317,101 @@ export const getStaticProps = async () => {
 
 export default function Home({ pageData }: { pageData: HomePageAttributes }) {
   console.log("pageData", pageData);
-  const title = "Popular content";
-  const sampleContent = {
-    size: "medium",
-    title: "Why business planning...",
-    type: "Article",
-    description: "Some stuff here",
-    url: "Test",
-    imageUrl:
-      "https://assets.dentistswhoinvest.com/financial_freedom_exit_sign_part_2_429f18592c/financial_freedom_exit_sign_part_2_429f18592c.webp",
-    imageAlt: "Test",
-  };
 
-  const latestContent = Array(4).fill(sampleContent);
-  const popularContent = Array(6).fill(sampleContent);
+  // when we get the latest content, it will be an array of content
+  // the content can be an article, video or podcast, two of those objects will be null
+  // we want to filter out the null objects and only keep the ones that are not null
+
+  function determineContentType(content: Content) {
+    if (
+      content.article.data != null &&
+      content.video.data === null &&
+      content.podcast.data === null
+    ) {
+      return "article";
+    } else if (
+      content.video.data != null &&
+      content.article.data === null &&
+      content.podcast.data === null
+    ) {
+      return "video";
+    } else if (
+      content.podcast.data != null &&
+      content.article.data === null &&
+      content.video.data === null
+    ) {
+      return "podcast";
+    } else {
+      return "";
+    }
+  }
+
+  function extractContent(
+    content: Content,
+    index: number,
+    isLatestContent: boolean
+  ): HomePageContentCardProps {
+    const extractedContent: HomePageContentCardProps = {
+      title: "",
+      size: "medium",
+      type: "",
+      url: "",
+      imageUrl: "",
+      imageAlt: "",
+    };
+    const contentType = determineContentType(content);
+    const cardSize = isLatestContent
+      ? index === 0
+        ? "splash"
+        : "large"
+      : "medium";
+    if (contentType === "article" && content.article.data !== null) {
+      const slug = createSlug(content.article.data.attributes.title);
+      extractedContent.title = content.article.data.attributes.title;
+      extractedContent.type = contentType;
+      extractedContent.description = content.article.data.attributes.excerpt;
+      extractedContent.url = `/article/${slug}`;
+      extractedContent.imageUrl =
+        content.article.data.attributes.cover.data.attributes.url;
+      extractedContent.imageAlt =
+        content.article.data.attributes.cover.data.attributes.name;
+      extractedContent.size = cardSize;
+    } else if (contentType === "podcast" && content.podcast.data !== null) {
+      const podcastSlug = createSlug(
+        content.podcast.data.attributes.title
+      ).replace(/-dwi-ep\d+$/, "");
+      const podcastLink = `/episodes/e${content.podcast.data.attributes.episode_number}-${podcastSlug}`;
+      extractedContent.title = content.podcast.data.attributes.title;
+      extractedContent.type = contentType;
+      extractedContent.url = podcastLink;
+      extractedContent.imageUrl = content.podcast.data.attributes.artwork_url;
+      extractedContent.imageAlt = content.podcast.data.attributes.title;
+      extractedContent.size = cardSize;
+    } else if (contentType === "video" && content.video.data !== null) {
+      const slug = createSlug(content.video.data.attributes.name);
+      const videoId = content.video.data.attributes.uri.replace("/videos/", "");
+      extractedContent.title = content.video.data.attributes.name;
+      extractedContent.type = contentType;
+      extractedContent.url = `/videos/${slug}`;
+      extractedContent.imageUrl = `https://vumbnail.com/${videoId}.jpg`;
+      extractedContent.imageAlt = content.video.data.attributes.name;
+      extractedContent.size = cardSize;
+    }
+    return extractedContent;
+  }
+
+  // map over latest content and popular content and extract the content
+  const extractedLatestContent = pageData.latest_contents.map(
+    (content: Content, index) => {
+      return extractContent(content, index, true);
+    }
+  );
+  const extractedPopularContent = pageData.popular_contents.map(
+    (content: Content, index) => {
+      return extractContent(content, index, false);
+    }
+  );
+
   return (
     <>
       <Head>
@@ -238,7 +425,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         <section className="lg:bg-blue-primary lg:p-8 " id="latest content">
           <FrontSectionTitle title={"Latest Contents"} />
           <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
-            {latestContent.map((content, index) => (
+            {extractedLatestContent.map((content, index) => (
               <div
                 key={index}
                 className={`${index === 0 ? "col-span-full" : "col-span-1"} 
@@ -246,7 +433,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               `}
               >
                 <HomePageContentCard
-                  size={index === 0 ? "splash" : "large"}
+                  size={content.size}
                   title={content.title}
                   type={content.type}
                   url={content.url}
@@ -262,10 +449,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           <FrontSectionTitle title={"Popular content"} />
 
           <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
-            {popularContent.map((content, index) => (
+            {extractedPopularContent.map((content, index) => (
               <HomePageContentCard
                 key={index}
-                size="medium"
+                size={content.size}
                 title={content.title}
                 type={content.type}
                 url={content.url}
@@ -278,12 +465,23 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         </section>
 
         <section className="mx-3 lg:mx-0" id="banner">
-          <Image
-            src="https://assets.dentistswhoinvest.com/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2/understand_how_to_invest_as_a_dentist_horizontal_07b3de41c2.webp"
-            alt={""}
-            width={350}
-            height={300}
-          />
+          {pageData.horizontal_banner.data && (
+            <Link
+              href={pageData.horizontal_banner.data.attributes.navigation_url}
+            >
+              <Image
+                src={
+                  pageData.horizontal_banner.data.attributes.cover_image.data
+                    .attributes.url
+                }
+                alt={pageData.horizontal_banner.data.attributes.title}
+                width={1200}
+                height={400}
+                layout="responsive"
+                className="h-auto"
+              />
+            </Link>
+          )}
         </section>
 
         <section className="" id="follow us">
@@ -373,10 +571,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             id="founder"
             className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
           >
-            <div
-              className="relative aspect-square size-full lg:aspect-[4/5]"
-              
-            >
+            <div className="relative aspect-square size-full lg:aspect-[4/5]">
               <Image
                 src={pageData.founder_image.data.attributes.url}
                 alt={pageData.founder_image.data.attributes.name}
@@ -405,7 +600,6 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         <section className="" id="what we do">
           <FrontSectionTitle title={"What we do for dentists"} />
           {pageData.what_we_do_reasons.map((reason: ReasonData) => {
-            console.log("reason", reason);
             return (
               <div
                 key={reason.id}

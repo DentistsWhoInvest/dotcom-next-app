@@ -15,7 +15,7 @@ type CardProps = {
   imageAlt: string;
 };
 
-type HomePageContentCardProps = {
+export type HomePageContentCardProps = {
   size: string;
   title: string;
   type: string;
