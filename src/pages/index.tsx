@@ -624,7 +624,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   </p>
                   <div className="flex flex-col self-center w-2/3">
                     <p className="pb-2 text-base lg:text-2xl">{reason.title}</p>
-                    <div className="text-[10px] lg:text-sm">
+                    <div className="text-[10px] md:text-sm">
                       <BlocksRenderer content={reason.description} />
                     </div>
                   </div>
