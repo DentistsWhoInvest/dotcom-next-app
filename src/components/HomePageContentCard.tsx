@@ -58,7 +58,7 @@ const SplashCard = ({
         {description && (
           <>
             <p className="text-sm hidden lg:block">
-              {trimAfterWords(description, 50)}
+              {trimAfterWords(description, 45)}
             </p>
             <p className="text-sm block lg:hidden">
               {trimAfterWords(description, 25)}

@@ -426,18 +426,38 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
         />
       </Head>
-      <main className="space-y-12 bg-gray-100 lg:px-[300px] lg:pt-8">
-        <section className="lg:bg-blue-primary lg:p-8" id="latest content">
-          <FrontSectionTitle title={"Latest Contents"} />
-          <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
-            {extractedLatestContent.map((content, index) => (
-              <div
-                key={index}
-                className={`${index === 0 ? "col-span-full" : "col-span-1"} 
+      <main className=" bg-gray-100  lg:pt-8">
+        <section className="lg:mx-auto lg:max-w-[1020px] space-y-12">
+          <section className="lg:bg-blue-primary lg:p-8" id="latest content">
+            <FrontSectionTitle title={"Latest Contents"} />
+            <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
+              {extractedLatestContent.map((content, index) => (
+                <div
+                  key={index}
+                  className={`${index === 0 ? "col-span-full" : "col-span-1"}
                 ${index === 3 ? "hidden lg:block" : ""}
               `}
-              >
+                >
+                  <HomePageContentCard
+                    size={content.size}
+                    title={content.title}
+                    type={content.type}
+                    url={content.url}
+                    imageUrl={content.imageUrl}
+                    imageAlt={content.imageAlt}
+                    description={content.description}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className="" id="popular content">
+            <FrontSectionTitle title={"Popular Content"} />
+
+            <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
+              {extractedPopularContent.map((content, index) => (
                 <HomePageContentCard
+                  key={index}
                   size={content.size}
                   title={content.title}
                   type={content.type}
@@ -446,209 +466,191 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   imageAlt={content.imageAlt}
                   description={content.description}
                 />
-              </div>
-            ))}
-          </div>
-        </section>
-        <section className="" id="popular content">
-          <FrontSectionTitle title={"Popular Content"} />
+              ))}
+            </div>
+          </section>
 
-          <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
-            {extractedPopularContent.map((content, index) => (
-              <HomePageContentCard
-                key={index}
-                size={content.size}
-                title={content.title}
-                type={content.type}
-                url={content.url}
-                imageUrl={content.imageUrl}
-                imageAlt={content.imageAlt}
-                description={content.description}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mx-3 lg:mx-0" id="banner">
-          {pageData.horizontal_banner.data && (
-            <Link
-              href={pageData.horizontal_banner.data.attributes.navigation_url}
-            >
-              <Image
-                src={
-                  pageData.horizontal_banner.data.attributes.cover_image.data
-                    .attributes.url
-                }
-                alt={pageData.horizontal_banner.data.attributes.title}
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto"
-              />
-            </Link>
-          )}
-        </section>
-
-        <section className="" id="follow us">
-          <FrontSectionTitle title={"Follow Us"} />
-          <div className="mx-3 flex justify-center gap-2 lg:mx-0">
-            <div
-              id="socials"
-              className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
-            >
-              {" "}
-              <div
-                className="relative h-2/3 w-full"
-                style={{ aspectRatio: "5 / 3" }}
+          <section className="mx-3 lg:mx-0" id="banner">
+            {pageData.horizontal_banner.data && (
+              <Link
+                href={pageData.horizontal_banner.data.attributes.navigation_url}
               >
                 <Image
-                  src={pageData.hero_cover.data.attributes.url}
-                  alt={pageData.hero_cover.data.attributes.name}
+                  src={
+                    pageData.horizontal_banner.data.attributes.cover_image.data
+                      .attributes.url
+                  }
+                  alt={pageData.horizontal_banner.data.attributes.title}
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto"
+                />
+              </Link>
+            )}
+          </section>
+
+          <section className="" id="follow us">
+            <FrontSectionTitle title={"Follow Us"} />
+            <div className="mx-3 flex justify-center gap-2 lg:mx-0">
+              <div
+                id="socials"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+              >
+                {" "}
+                <div
+                  className="relative h-2/3 w-full"
+                  style={{ aspectRatio: "5 / 3" }}
+                >
+                  <Image
+                    src={pageData.hero_cover.data.attributes.url}
+                    alt={pageData.hero_cover.data.attributes.name}
+                    layout="fill"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-4">
+                  <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:mt-4 lg:self-start lg:px-4 lg:text-base">
+                    FOLLOW US:
+                  </p>
+                  <div className="flex flex-row space-x-1 lg:space-x-3">
+                    <Link
+                      href={"https://www.facebook.com/groups/dentistswhoinvest"}
+                    >
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
+                        alt="Facebook"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                    <Link href={"https://www.linkedin.com/in/dr-james-martin/"}>
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
+                        alt="Linked in"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                    <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
+                      <Image
+                        src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
+                        alt="Instagram"
+                        width={30}
+                        height={30}
+                        className="md:size-[50px]"
+                      ></Image>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="cta"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+              >
+                <div
+                  className="relative h-2/3 w-full overflow-hidden"
+                  style={{ aspectRatio: "5 / 3" }}
+                >
+                  <Image
+                    src={pageData.hero_cover.data.attributes.url}
+                    alt={pageData.hero_cover.data.attributes.name}
+                    width={pageData.hero_cover.data.attributes.width}
+                    height={pageData.hero_cover.data.attributes.height}
+                    className=""
+                  />
+                </div>
+                <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
+                  <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-2 lg:text-lg">
+                    <Link href={pageData.hero_button_navigation_url}>
+                      {pageData.hero_button_text}
+                    </Link>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="" id="meet the founder">
+            <FrontSectionTitle title={"Meet the Founder"} />
+            <section
+              id="founder"
+              className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
+            >
+              <div className="relative aspect-square size-full lg:aspect-[4/5]">
+                <Image
+                  src={pageData.founder_image.data.attributes.url}
+                  alt={pageData.founder_image.data.attributes.name}
                   layout="fill"
                   className="object-cover"
                 />
               </div>
-              <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-4">
-                <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:mt-4 lg:self-start lg:px-4 lg:text-base">
-                  FOLLOW US:
-                </p>
-                <div className="flex flex-row space-x-1 lg:space-x-3">
-                  <Link
-                    href={"https://www.facebook.com/groups/dentistswhoinvest"}
-                  >
-                    <Image
-                      src="https://assets.dentistswhoinvest.com/Facebook_Logo_Primary_357f62df13/Facebook_Logo_Primary_357f62df13.webp"
-                      alt="Facebook"
-                      width={30}
-                      height={30}
-                      className="md:size-[50px]"
-                    ></Image>
-                  </Link>
-                  <Link href={"https://www.linkedin.com/in/dr-james-martin/"}>
-                    <Image
-                      src="https://assets.dentistswhoinvest.com/linkedin_logo_681e6eb0d0/linkedin_logo_681e6eb0d0.webp"
-                      alt="Linked in"
-                      width={30}
-                      height={30}
-                      className="md:size-[50px]"
-                    ></Image>
-                  </Link>
-                  <Link href={"https://www.instagram.com/dentistswhoinvest/"}>
-                    <Image
-                      src="https://assets.dentistswhoinvest.com/Instagram_Glyph_Gradient_0fde9ef993/Instagram_Glyph_Gradient_0fde9ef993.webp"
-                      alt="Instagram"
-                      width={30}
-                      height={30}
-                      className="md:size-[50px]"
-                    ></Image>
-                  </Link>
-                </div>
+              <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-8">
+                <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-lg xl:mr-12 xl:text-wrap xl:text-left">
+                  {pageData.founder_subtext}
+                </h3>
+                {pageData.founder_description.map((block: any) => {
+                  return (
+                    <div key={block.id}>
+                      <p className="text-xs">{block.children[0].text}</p>
+                    </div>
+                  );
+                })}
+                <Link href={"/about"} className="text-xs text-blue-primary">
+                  Read More...
+                </Link>
               </div>
-            </div>
-            <div
-              id="cta"
-              className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
-            >
-              <div
-                className="relative h-2/3 w-full overflow-hidden"
-                style={{ aspectRatio: "5 / 3" }}
-              >
-                <Image
-                  src={pageData.hero_cover.data.attributes.url}
-                  alt={pageData.hero_cover.data.attributes.name}
-                  width={pageData.hero_cover.data.attributes.width}
-                  height={pageData.hero_cover.data.attributes.height}
-                  className=""
-                />
-              </div>
-              <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
-                <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-2 lg:text-lg">
-                  <Link href={pageData.hero_button_navigation_url}>
-                    {pageData.hero_button_text}
-                  </Link>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="" id="meet the founder">
-          <FrontSectionTitle title={"Meet the Founder"} />
-          <section
-            id="founder"
-            className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
-          >
-            <div className="relative aspect-square size-full lg:aspect-[4/5]">
-              <Image
-                src={pageData.founder_image.data.attributes.url}
-                alt={pageData.founder_image.data.attributes.name}
-                layout="fill"
-                className="object-cover"
-              />
-            </div>
-            <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-8">
-              <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-lg xl:mr-12 xl:text-wrap xl:text-left">
-                {pageData.founder_subtext}
-              </h3>
-              {pageData.founder_description.map((block: any) => {
-                return (
-                  <div key={block.id}>
-                    <p className="text-xs">{block.children[0].text}</p>
+            </section>
+          </section>
+
+          <section className="" id="what we do">
+            <FrontSectionTitle title={"What We Do For Dentists"} />
+            {pageData.what_we_do_reasons.map((reason: ReasonData) => {
+              return (
+                <div
+                  key={reason.id}
+                  className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
+                >
+                  <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
+                  <div className="flex flex-col self-center pr-4">
+                    <p className="pb-2 text-base lg:text-xl">{reason.title}</p>
+                    <div className="text-[10px]">
+                      <BlocksRenderer content={reason.description} />
+                    </div>
                   </div>
-                );
-              })}
-              <Link href={"/about"} className="text-xs text-blue-primary">
-                Read More...
-              </Link>
+                </div>
+              );
+            })}
+          </section>
+
+          <section className="" id="testimonials">
+            <FrontSectionTitle title={"Check Out What Our Members Say..."} />
+
+            <div
+              id="testimonial-cards"
+              className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+            >
+              {pageData.testimonials.data.map(
+                (testimonial: any, index: number) => {
+                  return (
+                    <HomePageTestimonialCard
+                      key={testimonial.id}
+                      testimonial={testimonial}
+                      index={index}
+                    />
+                  );
+                }
+              )}
             </div>
           </section>
-        </section>
 
-        <section className="" id="what we do">
-          <FrontSectionTitle title={"What We Do For Dentists"} />
-          {pageData.what_we_do_reasons.map((reason: ReasonData) => {
-            return (
-              <div
-                key={reason.id}
-                className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
-              >
-                <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
-                <div className="flex flex-col self-center pr-4">
-                  <p className="pb-2 text-base lg:text-xl">{reason.title}</p>
-                  <div className="text-[10px]">
-                    <BlocksRenderer content={reason.description} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </section>
-
-        <section className="" id="testimonials">
-          <FrontSectionTitle title={"Check Out What Our Members Say..."} />
-
-          <div
-            id="testimonial-cards"
-            className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+          <section
+            className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:mx-0"
+            id="tax relief form"
           >
-            {pageData.testimonials.data.map(
-              (testimonial: any, index: number) => {
-                return (
-                  <HomePageTestimonialCard
-                    key={testimonial.id}
-                    testimonial={testimonial}
-                    index={index}
-                  />
-                );
-              }
-            )}
-          </div>
-        </section>
-
-        <section
-          className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:mx-0"
-          id="tax relief form"
-        >
-          <HomepageFreeTaxReliefForm />
+            <HomepageFreeTaxReliefForm />
+          </section>
         </section>
       </main>
     </>
