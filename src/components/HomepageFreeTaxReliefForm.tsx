@@ -25,7 +25,7 @@ export default function HomepageFreeTaxReliefForm() {
         ></div>
         <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" />
 
-        <p className="ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
+        <p className="md:ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
           BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST EMAIL
           LIST. THIS LIST CAN BE LEFT AT ANY TIME.
         </p>
