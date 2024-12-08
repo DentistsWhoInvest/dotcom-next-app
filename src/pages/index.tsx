@@ -426,8 +426,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           content="Dentists Who Invest homepage, detailing courses we offer, information on the founder, and content we've created for dentists"
         />
       </Head>
-      <main className="space-y-12 bg-gray-100 lg:px-[150px] lg:pt-8">
-        <section className="lg:bg-blue-primary lg:p-8 " id="latest content">
+      <main className="space-y-12 bg-gray-100 lg:px-[300px] lg:pt-8">
+        <section className="lg:bg-blue-primary lg:p-8" id="latest content">
           <FrontSectionTitle title={"Latest Contents"} />
           <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
             {extractedLatestContent.map((content, index) => (
