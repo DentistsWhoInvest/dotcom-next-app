@@ -655,7 +655,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           </section>
 
           <section
-            className="mx-3 flex justify-center bg-gray-100 py-[50px] lg:mx-0"
+            className="mx-3 flex justify-center bg-gray-100 pb-8 lg:mx-0"
             id="tax relief form"
           >
             <HomepageFreeTaxReliefForm />
