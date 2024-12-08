@@ -3,7 +3,7 @@ export const FrontSectionTitle = ({ title }: { title: string }) => {
     <div className="mb-6 flex w-full items-center justify-between bg-blue-primary p-2 shadow-custom lg:bg-transparent lg:shadow-none">
       <h2
         className={`mx-3 whitespace-nowrap text-lg lg:mx-0 lg:text-xl lg:font-semibold ${
-          title === "Latest Contents"
+          title === "Latest Content"
             ? "text-white"
             : "text-white lg:text-blue-primary"
         }`}
