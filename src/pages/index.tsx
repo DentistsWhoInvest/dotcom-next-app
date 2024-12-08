@@ -381,7 +381,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         content.podcast.data.attributes.title
       ).replace(/-dwi-ep\d+$/, "");
       const podcastLink = `/episodes/e${content.podcast.data.attributes.episode_number}-${podcastSlug}`;
-      extractedContent.title = content.podcast.data.attributes.title;
+      const podcastTitle = "EP" + content.podcast.data.attributes.episode_number + " " + content.podcast.data.attributes.title.split(" DWI-")[0]
+      extractedContent.title = podcastTitle;
       extractedContent.type = contentType;
       extractedContent.url = podcastLink;
       extractedContent.imageUrl = content.podcast.data.attributes.artwork_url;
