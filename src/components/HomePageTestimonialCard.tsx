@@ -26,16 +26,16 @@ export const HomePageTestimonialCard = ({
           id="testimonial-profile"
           className="rounded-full bg-blue-primary/60"
         />
-        <p className="mt-2 text-lg text-blue-primary underline">
+        <p className="mt-2 text-base text-blue-primary underline">
           {testimonial.attributes.author}
         </p>
       </div>
 
-      <div className="flex grow flex-col p-4">
-        <p className="text-center text-lg font-semibold text-blue-primary lg:text-left lg:text-xl">
+      <div className="flex grow flex-col py-2 px-4">
+        <p className="text-center text-base font-semibold text-blue-primary lg:text-left lg:text-lg min-h-[5rem] flex items-center">
           {testimonial.attributes.title}
         </p>
-        <p className="mt-4 text-left text-sm lg:text-base">
+        <p className="mt-4 text-left text-xs lg:text-sm grow ">
           {testimonial.attributes.review[0].children[0].text}
         </p>
       </div>

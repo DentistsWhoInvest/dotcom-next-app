@@ -427,7 +427,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
         />
       </Head>
       <main className=" bg-gray-100  lg:pt-8">
-        <section className="lg:mx-auto lg:max-w-[1020px] space-y-12">
+        <section className="lg:mx-auto lg:max-w-[1000px] space-y-12">
           <section className="lg:bg-blue-primary lg:p-8" id="latest content">
             <FrontSectionTitle title={"Latest Contents"} />
             <div className="mx-3 grid grid-cols-2 gap-8 lg:grid-cols-3">
@@ -482,9 +482,9 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   }
                   alt={pageData.horizontal_banner.data.attributes.title}
                   width={1200}
-                  height={400}
+                  height={200}
                   layout="responsive"
-                  className="h-auto"
+                  className=""
                 />
               </Link>
             )}
@@ -492,10 +492,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
           <section className="" id="follow us">
             <FrontSectionTitle title={"Follow Us"} />
-            <div className="mx-3 flex justify-center gap-2 lg:mx-0">
+            <div className="mx-3 flex justify-center gap-2 lg:gap-8 lg:mx-0">
               <div
                 id="socials"
-                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
               >
                 {" "}
                 <div
@@ -548,7 +548,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               </div>
               <div
                 id="cta"
-                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full"
+                className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
               >
                 <div
                   className="relative h-2/3 w-full overflow-hidden"
@@ -578,7 +578,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               id="founder"
               className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
             >
-              <div className="relative aspect-square size-full lg:aspect-[4/5]">
+              <div className="relative aspect-square size-full lg:aspect-[4/5] lg:w-1/3">
                 <Image
                   src={pageData.founder_image.data.attributes.url}
                   alt={pageData.founder_image.data.attributes.name}
@@ -586,18 +586,23 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   className="object-cover"
                 />
               </div>
-              <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-8">
-                <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-lg xl:mr-12 xl:text-wrap xl:text-left">
+              <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-4">
+                <h3 className="pb-2 text-lg text-blue-primary md:text-xl lg:text-2xl xl:mr-12 xl:text-wrap xl:text-left">
                   {pageData.founder_subtext}
                 </h3>
                 {pageData.founder_description.map((block: any) => {
                   return (
                     <div key={block.id}>
-                      <p className="text-xs">{block.children[0].text}</p>
+                      <p className="text-xs lg:text-sm pb-2">
+                        {block.children[0].text}
+                      </p>
                     </div>
                   );
                 })}
-                <Link href={"/about"} className="text-xs text-blue-primary">
+                <Link
+                  href={"/about"}
+                  className="text-xs lg:text-sm font-semibold text-blue-primary"
+                >
                   Read More...
                 </Link>
               </div>
@@ -612,10 +617,10 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   key={reason.id}
                   className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
                 >
-                  <p className="p-4 text-[50px] font-semibold">{reason.id}</p>
-                  <div className="flex flex-col self-center pr-4">
-                    <p className="pb-2 text-base lg:text-xl">{reason.title}</p>
-                    <div className="text-[10px]">
+                  <p className="flex justify-center mx-4 py-2 text-[60px] font-semibold w-1/12">{reason.id}</p>
+                  <div className="flex flex-col self-center w-2/3">
+                    <p className="pb-2 text-base lg:text-2xl">{reason.title}</p>
+                    <div className="text-[10px] lg:text-sm">
                       <BlocksRenderer content={reason.description} />
                     </div>
                   </div>
@@ -629,7 +634,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
             <div
               id="testimonial-cards"
-              className="mx-3 grid grid-cols-1 gap-4 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp] xl:px-[150px]"
+              className="mx-3 grid grid-cols-1 gap-4 lg:gap-8 md:auto-rows-auto md:grid-cols-3 lg:mx-0 xl:mx-auto xl:max-w-[1200xp]"
             >
               {pageData.testimonials.data.map(
                 (testimonial: any, index: number) => {
