@@ -12,6 +12,7 @@ import {
   HomePageContentCardProps,
 } from "@/components/HomePageContentCard";
 import { createSlug } from "./articles/[page]";
+import DWIHomePageFollowUsLogo from "@/components/DWIHomePageFollowUsLogo";
 
 type TextNode = {
   text: string;
@@ -454,7 +455,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
           <section className="" id="popular content">
             <FrontSectionTitle title={"Popular Content"} />
 
-            <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 lg:grid-cols-3">
+            <div className="mx-3 grid gap-8 sm:grid-cols-1 lg:mx-0 md:grid-cols-2 lg:grid-cols-3">
               {extractedPopularContent.map((content, index) => (
                 <HomePageContentCard
                   key={index}
@@ -492,27 +493,30 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
 
           <section className="" id="follow us">
             <FrontSectionTitle title={"Follow Us"} />
-            <div className="mx-3 flex justify-center gap-2 lg:gap-8 lg:mx-0">
+            <div className="mx-3 flex justify-center gap-4 lg:gap-8 lg:mx-0">
               <div
                 id="socials"
                 className="w-1/2 flex-col bg-white shadow-custom-br lg:w-full max-h-[300px]"
               >
                 <div
-                  className="relative h-2/3 w-full inline-block"
+                  className="relative h-2/3 w-full inline-block bg-blue-primary"
                   style={{ aspectRatio: "5 / 3" }}
                 >
+                  <div className="p-4 absolute inset-0 flex lg:hidden items-center justify-center">
+                    <DWIHomePageFollowUsLogo />
+                  </div>
                   <Image
                     src="https://assets.dentistswhoinvest.com/dwitextlogo_467490d260/dwitextlogo_467490d260.png"
                     alt={pageData.hero_cover.data.attributes.name}
                     layout="fill"
-                    className="object-cover bg-blue-primary"
+                    className="object-cover bg-blue-primary lg:block hidden"
                   />
                 </div>
-                <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 lg:mx-4">
-                  <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white lg:mt-4 lg:self-start lg:px-4 lg:text-base">
+                <div className="mx-1 flex h-1/3 items-center justify-between space-x-1 md:mx-4 pb-2">
+                  <p className="self-center text-nowrap bg-blue-primary px-1 text-[10px] text-white md:mt-4 md:self-start md:px-4 md:text-base">
                     FOLLOW US:
                   </p>
-                  <div className="flex flex-row space-x-1 lg:space-x-3">
+                  <div className="flex flex-row space-x-1 md:space-x-3">
                     <Link
                       href={"https://www.facebook.com/groups/dentistswhoinvest"}
                     >
@@ -556,13 +560,12 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   <Image
                     src={pageData.hero_cover.data.attributes.url}
                     alt={pageData.hero_cover.data.attributes.name}
-                    width={pageData.hero_cover.data.attributes.width}
-                    height={pageData.hero_cover.data.attributes.height}
+                    layout="fill"
                     className=""
                   />
                 </div>
-                <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 lg:mx-12">
-                  <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white lg:py-2 lg:text-lg">
+                <div className="mx-1 flex h-1/3 items-center justify-center space-x-1 md:mx-12">
+                  <button className="text-nowrap bg-orange-400 px-2 py-1 text-[10px] text-white md:py-2 md:text-lg">
                     <Link href={pageData.hero_button_navigation_url}>
                       {pageData.hero_button_text}
                     </Link>
@@ -577,12 +580,12 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
               id="founder"
               className="mx-3 flex flex-col items-center bg-white shadow-custom-br lg:mx-0 lg:flex-row"
             >
-              <div className="relative aspect-square size-full lg:aspect-[4/5] lg:w-1/3">
+              <div className="relative aspect-square w-full h-1/2 lg:aspect-[4/5] lg:w-1/3 max-h-[351px] lg:max-h-full">
                 <Image
                   src={pageData.founder_image.data.attributes.url}
                   alt={pageData.founder_image.data.attributes.name}
                   layout="fill"
-                  className="object-cover"
+                  className="object-cover object-[50%_15%] lg:object-center"
                 />
               </div>
               <div className="m-4 space-y-2 text-left lg:mx-[50px] lg:w-3/4 lg:space-y-4">
@@ -616,7 +619,9 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
                   key={reason.id}
                   className="mx-3 my-2 flex bg-blue-primary text-white lg:mx-0"
                 >
-                  <p className="flex justify-center mx-4 py-2 text-[60px] font-semibold w-1/12">{reason.id}</p>
+                  <p className="flex justify-center mx-4 py-2 text-[60px] font-semibold w-1/12">
+                    {reason.id}
+                  </p>
                   <div className="flex flex-col self-center w-2/3">
                     <p className="pb-2 text-base lg:text-2xl">{reason.title}</p>
                     <div className="text-[10px] lg:text-sm">

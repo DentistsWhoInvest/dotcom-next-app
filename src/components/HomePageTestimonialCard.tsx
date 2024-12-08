@@ -8,9 +8,7 @@ export const HomePageTestimonialCard = ({
   index: number;
 }) => {
   return (
-    <div
-      className="col-span-1 flex flex-col border-0 bg-white text-black shadow-xl"
-    >
+    <div className="col-span-1 flex flex-col border-0 bg-white text-black shadow-xl">
       <div className="flex flex-col items-center p-4">
         <Image
           src={
@@ -32,7 +30,7 @@ export const HomePageTestimonialCard = ({
       </div>
 
       <div className="flex grow flex-col py-2 px-4">
-        <p className="text-center text-base font-semibold text-blue-primary lg:text-left lg:text-lg min-h-[5rem] flex items-center">
+        <p className="text-center text-base font-semibold text-blue-primary lg:text-left lg:text-lg md:min-h-[6rem] lg:min-h-[5rem] flex items-center">
           {testimonial.attributes.title}
         </p>
         <p className="mt-4 text-left text-xs lg:text-sm grow ">

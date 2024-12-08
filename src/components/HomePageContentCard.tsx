@@ -39,7 +39,7 @@ const SplashCard = ({
       id={title}
       className="flex flex-col overflow-hidden bg-white shadow-lg lg:flex-row max-h-[630px] lg:max-h-[380px]"
     >
-      <div className="relative aspect-[5/3] w-[full] lg:w-[65.5%] max-h-full">
+      <div className="relative aspect-[5/3] w-[full] lg:w-[65.5%] lg:max-h-full max-h-[450px]">
         <Link href={url}>
           <Image
             src={imageUrl}
@@ -117,9 +117,9 @@ const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
   return (
     <div
       id={title}
-      className="flex flex-row overflow-hidden bg-white shadow-lg lg:flex-col lg:max-h-[320px]"
+      className="flex flex-row overflow-hidden bg-white shadow-lg md:flex-col md:max-h-[300px] lg:max-h-[320px]"
     >
-      <div className="relative w-2/5 lg:w-full aspect-square max-h-full overflow-hidden">
+      <div className="relative aspect-square max-h-full overflow-hidden max-w-[130px] md:max-w-full w-full">
         <Link href={url}>
           <Image
             src={imageUrl}
@@ -131,7 +131,7 @@ const MediumCard = ({ title, type, url, imageUrl, imageAlt }: CardProps) => {
         </Link>
       </div>
       <div className="flex flex-col items-start p-3 grow h-2/5">
-        <p className="mb-2 bg-blue-primary px-3 text-[10px] font-semibold uppercase text-white">
+        <p className="md:mb-2 mb-4 bg-blue-primary px-3 text-[10px] font-semibold uppercase text-white">
           {type}
         </p>
         <Link href={url} className="text-base font-semibold text-blue-primary">
