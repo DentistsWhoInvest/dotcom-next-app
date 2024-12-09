@@ -2,7 +2,7 @@
 const { exec } = require("child_process");
 
 const nextConfig = {
-  trailingSlash: true,
+  trailingSlash: false,
   reactStrictMode: true,
   swcMinify: true,
   images: {
