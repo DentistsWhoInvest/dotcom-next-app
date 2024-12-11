@@ -230,6 +230,7 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       pageData: matchingPodcast,
+      episodeUrlPath: params.podcastepisode,
       otherPodcasts: otherPodcasts,
       someArticles: someArticles.data,
     },
@@ -238,10 +239,12 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function PodcastPage({
   pageData,
+  episodeUrlPath,
   otherPodcasts,
   someArticles,
 }: {
   pageData: PodcastEpisode;
+  episodeUrlPath: string;
   otherPodcasts: any;
   someArticles: any;
 }) {
@@ -367,7 +370,7 @@ export default function PodcastPage({
         <meta property="og:type" content="video.other"/>
         <meta property="og:title" content={pageData.attributes.title} />
         <meta property="og:description" content={pageData.attributes.page_metadata?.description || pageData.attributes.description} />
-        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
+        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/episodes/${episodeUrlPath}`}/> 
         {/* todo: distinguish between beta and prod somehow? */}
         <meta property="og:image" content={pageData.attributes.page_metadata?.image.data.attributes.formats.large?.url || pageData.attributes.page_metadata?.image.data.attributes.url || pageData.attributes.artwork_url} />
         <meta property="og:site_name" content="Dentists Who Invest"/>
