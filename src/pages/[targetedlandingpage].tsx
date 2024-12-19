@@ -247,7 +247,6 @@ export default function TargetedMarketingLandingPage({
       </main>
     );
   } else if (leadMagnet) {
-    console.log(`leadMagnet: ${JSON.stringify(leadMagnet)}`);
     return (
       <>
         <Head>
