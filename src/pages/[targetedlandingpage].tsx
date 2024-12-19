@@ -98,12 +98,12 @@ type LeadMagnetAttributes = {
   form_id: number;
   show_recaptcha: boolean;
   post_form_disclaimer: string;
-  image: { data: ImageData };
+  image: ImageData;
   background_colour: string;  
   page_metadata: {
     title: string;
     description: string;
-    image: { data: ImageData };
+    image: ImageData;
     url: string;
   };
   createdAt: string;
