@@ -84,6 +84,13 @@ type LandingPageAttributes = {
   publishedAt: string;
   contributor: Contributor;
   slug: string;
+  form_id: number; 
+  page_metadata: {
+    title: string;
+    description: string;
+    image: ImageData;
+    url: string;
+  };
 };
 
 type LandingPage = {
@@ -213,39 +220,56 @@ export default function TargetedMarketingLandingPage({
   leadMagnet: LeadMagnetPage;
 }) {
   if (targettedLandingPage) {
-    const embedForm = embed(1);
+    const embedForm = embed(targettedLandingPage.attributes.form_id);
   
     return (
-      <main
-        className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary xl:h-screen`}
-      >
-        <section className="m-auto pt-[100px]">
-          <div className="flex flex-col items-center justify-center space-y-5 p-5 xl:m-auto xl:max-w-[1140px] xl:flex-row">
-            {targettedLandingPage.attributes.contributor.data?.attributes
-              .profilePicture && (
-              <Image
-                src={
-                  targettedLandingPage.attributes.contributor.data.attributes
-                    .profilePicture.data.attributes.url
-                }
-                alt={
-                  targettedLandingPage.attributes.contributor.data.attributes
-                    .profilePicture.data.attributes.name
-                }
-                height={335}
-                width={251}
-                className="rounded-3xl md:h-[550px] md:w-[413px]"
-              />
-            )}
-            <div className="px-[20px] py-2 md:px-[40px] md:py-8 xl:px-[80px]">
-              <div className="flex flex-col content-center items-center pb-5 text-center text-[25px] font-bold leading-[1.2em] text-white xl:text-[35px]">
-                <BlocksRenderer content={targettedLandingPage.attributes.description} />
+      <>
+        <Head>
+          <title>{targettedLandingPage.attributes.page_metadata?.title || targettedLandingPage.attributes.title}</title>
+          <meta name="title" content={targettedLandingPage.attributes.page_metadata?.title || targettedLandingPage.attributes.title} />
+          <meta name="description" content={targettedLandingPage.attributes.page_metadata?.description || targettedLandingPage.attributes.description} />
+          <meta name="author" content="Dr. James Martin" />
+          {/* todo: add proper author, not always James, default to James if empty. */}
+          
+          <meta property="og:type" content="website"/>
+          <meta property="og:title" content={targettedLandingPage.attributes.page_metadata?.title || targettedLandingPage.attributes.title} />
+          <meta property="og:description" content={targettedLandingPage.attributes.page_metadata?.description || targettedLandingPage.attributes.title}  />
+          <meta property="og:url" content={targettedLandingPage.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(targettedLandingPage.attributes.slug)}`}/> 
+          {/* todo: distinguish between beta and prod somehow? */}
+          {/* <meta property="og:image" content={leadMagnet.attributes.page_metadata.image?.data.data.attributes .attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} /> */}
+          <meta property="og:site_name" content="Dentists Who Invest"/>
+          </Head>
+        <main
+          className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary xl:h-screen`}
+        >
+          <section className="m-auto pt-[100px]">
+            <div className="flex flex-col items-center justify-center space-y-5 p-5 xl:m-auto xl:max-w-[1140px] xl:flex-row">
+              {targettedLandingPage.attributes.contributor.data?.attributes
+                .profilePicture && (
+                <Image
+                  src={
+                    targettedLandingPage.attributes.contributor.data.attributes
+                      .profilePicture.data.attributes.url
+                  }
+                  alt={
+                    targettedLandingPage.attributes.contributor.data.attributes
+                      .profilePicture.data.attributes.name
+                  }
+                  height={335}
+                  width={251}
+                  className="rounded-3xl md:h-[550px] md:w-[413px]"
+                />
+              )}
+              <div className="px-[20px] py-2 md:px-[40px] md:py-8 xl:px-[80px]">
+                <div className="flex flex-col content-center items-center pb-5 text-center text-[25px] font-bold leading-[1.2em] text-white xl:text-[35px]">
+                  <BlocksRenderer content={targettedLandingPage.attributes.description} />
+                </div>
+                {embedForm}
               </div>
-              {embedForm}
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      </>
     );
   } else if (leadMagnet) {
     return (
