@@ -19,6 +19,7 @@ function removeHtmlExtension(dir) {
             removeHtmlExtension(fullPath);
         } else if (file.endsWith('.html')) {
             // Rename the .html file by removing its extension
+            if (file === 'index.html') return;
             const newFilename = file.replace(/\.html$/, '');
             if (files.includes(newFilename)) {
                 console.error(`Error: ${newFilename} already exists, must be index page.`);

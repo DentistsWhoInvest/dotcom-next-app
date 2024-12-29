@@ -109,6 +109,7 @@ type LeadMagnetAttributes = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  slug: string;
 }
 
 type LeadMagnetPage = {
@@ -259,7 +260,7 @@ export default function TargetedMarketingLandingPage({
           <meta property="og:type" content="website"/>
           <meta property="og:title" content={leadMagnet.attributes.page_metadata?.title || leadMagnet.attributes.name} />
           <meta property="og:description" content={leadMagnet.attributes.page_metadata?.description || leadMagnet.attributes.main_text}  />
-          <meta property="og:url" content={leadMagnet.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(leadMagnet.attributes.name)}`}/> 
+          <meta property="og:url" content={leadMagnet.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(leadMagnet.attributes.slug)}`}/> 
           {/* todo: distinguish between beta and prod somehow? */}
           {/* <meta property="og:image" content={leadMagnet.attributes.page_metadata.image?.data.data.attributes .attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} /> */}
           <meta property="og:site_name" content="Dentists Who Invest"/>
