@@ -277,6 +277,7 @@ type HomePageAttributes = {
   horizontal_banner: {
     data: BannerData;
   };
+  form_id: number;
 };
 
 type HomePage = {
@@ -656,7 +657,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             className="mx-3 flex justify-center bg-gray-100 pb-8 lg:mx-0"
             id="tax relief form"
           >
-            <HomepageFreeTaxReliefForm />
+            {HomepageFreeTaxReliefForm(pageData.form_id)}
           </section>
         </section>
       </main>

@@ -2,7 +2,7 @@ import Script from "next/script";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
-export default function HomepageFreeTaxReliefForm() {
+export default function HomepageFreeTaxReliefForm(form_id: number) {
   return (
     <div className="flex min-h-[550px] flex-col justify-center bg-blue-primary text-white md:min-h-[560px] md:flex-row lg:min-h-[580px]">
       <Image
@@ -21,9 +21,9 @@ export default function HomepageFreeTaxReliefForm() {
         </div>
         <div
           // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="_form_23"
+          className={"_form_" + form_id}
         ></div>
-        <Script src="https://dentistswhoinvest.activehosted.com/f/embed.php?id=23" />
+        <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + form_id}/>
 
         <p className="md:ml-5 pb-4 text-center text-xs md:pb-0 md:text-left lg:text-base">
           BY SUBMITTING MY EMAIL I CONSENT TO JOIN THE DENTISTS WHO INVEST EMAIL
