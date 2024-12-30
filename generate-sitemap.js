@@ -218,15 +218,31 @@ const generateSitemap = async () => {
       };
     });
   };
+  const fetchLeadMagnetPages = async () => {
+    const leadMagnetPagesResponse = await fetchSitemapEndpointData(
+      `/lead-magnet-pages`
+    );
+
+    // Use your custom logic to generate URLs
+    return leadMagnetPagesResponse.data.map(page => {
+      // Example custom URL generation
+      return {
+        url: `/${createSlug(page.attributes.slug)}`,
+        changefreq: 'monthly',
+        priority: 0.8,
+      };
+    });
+  }
 
   //await all dynamic pages
   const videoPages = await fetchVideoPages();
   const podcastPages = await fetchPodcastPages();
   const articlePages = await fetchArticlePages();
   const targetedPages = await fetchTargetedDataCollectionPages();
+  const leadMagnetPages = await fetchLeadMagnetPages();
 
   // Combine static and dynamic pages
-  const allPages = [...staticPages, ...videoPages, ...podcastPages, ...articlePages, ...targetedPages];
+  const allPages = [...staticPages, ...videoPages, ...podcastPages, ...articlePages, ...targetedPages, ...leadMagnetPages];
 
   // Write pages to the sitemap
   allPages.forEach(page => {

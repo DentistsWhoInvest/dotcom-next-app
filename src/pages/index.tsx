@@ -277,6 +277,7 @@ type HomePageAttributes = {
   horizontal_banner: {
     data: BannerData;
   };
+  form_id: number;
 };
 
 type HomePage = {
@@ -317,8 +318,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ pageData }: { pageData: HomePageAttributes }) {
-  console.log("pageData", pageData);
-
   // when we get the latest content, it will be an array of content
   // the content can be an article, video or podcast, two of those objects will be null
   // we want to filter out the null objects and only keep the ones that are not null
@@ -658,7 +657,7 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
             className="mx-3 flex justify-center bg-gray-100 pb-8 lg:mx-0"
             id="tax relief form"
           >
-            <HomepageFreeTaxReliefForm />
+            {HomepageFreeTaxReliefForm(pageData.form_id)}
           </section>
         </section>
       </main>

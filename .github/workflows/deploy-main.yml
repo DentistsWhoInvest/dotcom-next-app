@@ -81,4 +81,5 @@ jobs:
         id: deploy-to-gcs
         run: |-
           gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-static-assets
+          bash ./set-metadata.bash PROD
           gsutil -m rsync -r -d ./public/ gs://dwi-dotcom-static-assets/public/
