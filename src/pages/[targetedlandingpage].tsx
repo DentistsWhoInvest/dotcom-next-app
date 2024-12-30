@@ -139,15 +139,15 @@ export const getStaticPaths = async () => {
       ...(targetedDataCollectionResults.data.map(
         (result: { attributes: { slug: string }; id: number }) => ({
           params: {
-            targetedlandingpage: result.attributes.slug.replace(/^\//, ""),
+            targetedlandingpage: createSlug(result.attributes.slug).replace(/^\//, ""),
             isLeadMagnet: false
           },
         })
       )),
       ...(leadMagnetsResults.data.map(
-        (result: { attributes: { name: string }; id: number }) => ({
+        (result: { attributes: { slug: string }; id: number }) => ({
           params: {
-            targetedlandingpage: createSlug(result.attributes.name).replace(/^\//, ""),
+            targetedlandingpage: createSlug(result.attributes.slug).replace(/^\//, ""),
             isLeadMagnet: true
           },
         })
@@ -174,13 +174,13 @@ export const getStaticProps = async ({
   );
 
   const isLeadMagnet = leadMagnetPages.data.some((page: LeadMagnetPage) =>
-    createSlug(page.attributes.name) === params.targetedlandingpage
+    createSlug(page.attributes.slug) === params.targetedlandingpage
   );
 
   if (isLeadMagnet) {
     const matchingPage = leadMagnetPages.data.find(
       (page: LeadMagnetPage) =>
-        createSlug(page.attributes.name) === params.targetedlandingpage
+        createSlug(page.attributes.slug).replace(/^\//, "") === params.targetedlandingpage
     );
     return {
       props: {
@@ -191,7 +191,7 @@ export const getStaticProps = async ({
   } else {
     const matchingPage = landingPages.data.find(
       (page: LandingPage) =>
-        page.attributes.slug.replace(/^\//, "") === params.targetedlandingpage
+        createSlug(page.attributes.slug).replace(/^\//, "") === params.targetedlandingpage
     );
 
     return {
@@ -257,6 +257,7 @@ export default function TargetedMarketingLandingPage({
                   }
                   height={335}
                   width={251}
+                  layout="instrisic"
                   className="rounded-3xl md:h-[550px] md:w-[413px]"
                 />
               )}
@@ -311,7 +312,7 @@ export default function TargetedMarketingLandingPage({
                 ></div>
                 <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + leadMagnet.attributes.form_id}/>
                 <p className="ml-5 text-center text-xs md:text-left lg:text-base">
-                  {leadMagnet.attributes.post_form_disclaimer}
+                  {embed(leadMagnet.attributes.form_id)}
                 </p>
               </section>
             </div>

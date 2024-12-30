@@ -20,6 +20,6 @@ echo "Using bucket: $BUCKET_NAME"
 
 # Find all files in the "out" directory
 find out -type f ! -name "*.*" | sed 's|^out/||' | \
-  xargs -I {} -P 20 gsutil setmeta -h "Content-Type:text/html" "gs://$BUCKET_NAME/{}"
+  xargs -I {} -P 100 gsutil setmeta -h "Content-Type:text/html" "gs://$BUCKET_NAME/{}"
 
 echo "Metadata setting completed."
