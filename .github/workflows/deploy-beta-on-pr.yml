@@ -1,6 +1,7 @@
 name: 'Build and Deploy beta to GCS'
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
