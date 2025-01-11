@@ -7,6 +7,9 @@ on:
     paths:
       - 'public/**'
       - 'src/**'
+      - generate-sitemap.js
+      - set-metadata.bash
+      - strip-html-suffix.js
       - components.json
       - next.config.js
       - package.json
@@ -77,6 +80,6 @@ jobs:
       - name: 'Deploy to GCS bucket'
         id: deploy-to-gcs
         run: |-
-          gsutil -m rsync -r -d ./out/    gs://dwi-dotcom-beta-static-assets
+          gsutil -m rsync -r -d -c ./out/    gs://dwi-dotcom-beta-static-assets
           bash ./set-metadata.bash BETA
-          gsutil -m rsync -r -d ./public/ gs://dwi-dotcom-beta-static-assets/public/
+          gsutil -m rsync -r -d -c ./public/ gs://dwi-dotcom-beta-static-assets/public/

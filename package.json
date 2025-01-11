@@ -6,7 +6,7 @@
     "gcloud": "./gcloudLogin.sh",
     "dev": "npm run gcloud && next dev",
     "local-build": "npm run gcloud && next build && node strip-html-suffix.js",
-    "build": "next build && node strip-html-suffix.js",
+    "build": "next build && node strip-html-suffix.js && npm run generate-sitemap",
     "debug-build": "next build --debug && node strip-html-suffix.js",
     "start": "next start",
     "lint": "next lint",
