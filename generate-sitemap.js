@@ -220,9 +220,8 @@ const generateSitemap = async () => {
   };
   const fetchLeadMagnetPages = async () => {
     const leadMagnetPagesResponse = await fetchSitemapEndpointData(
-      `/lead-magnet-pages`
+      `/lead-magnets`
     );
-
     // Use your custom logic to generate URLs
     return leadMagnetPagesResponse.data.map(page => {
       // Example custom URL generation
