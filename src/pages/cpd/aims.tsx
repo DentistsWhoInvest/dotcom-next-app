@@ -1,9 +1,10 @@
 import React from "react";
 import Head from "next/head";
-import type { Video } from "../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { Clock } from "lucide-react";
 
 // export const getStaticProps = async ({ params }: any) => {
 //   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
@@ -23,7 +24,7 @@ export default function Aims({}: //   pageData,
 }) {
   const pageData = {
     attributes: {
-      name: "Aims",
+      name: "Description",
       description: "Aims of the CPD",
       horizontal_banner: {
         data: {
@@ -112,6 +113,19 @@ export default function Aims({}: //   pageData,
           },
         },
       },
+      aims_data: {
+        title: "Aims of the CPD: ",
+        description: [
+          {
+            id: 1,
+            text: "To improve your knowledge and understanding of the CPD",
+          },
+          { id: 2, text: "To provide you with a certificate of completion" },
+          { id: 3, text: "To help you reflect on your learning" },
+          { id: 4, text: "To help you plan your future learning" },
+        ],
+        timeRequired: "1 hour",
+      },
     },
   };
 
@@ -121,39 +135,59 @@ export default function Aims({}: //   pageData,
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="w-full items-center">
-        <CPDPagesHeader title="Aims" />
-        aims
-        <Link href={"/cpd/quiz"} className="place-self-center">
-          <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
-            TAKE THE CPD/CE QUIZ
-          </button>
-        </Link>
-        {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">
-            <Link
-              href={
-                pageData.attributes.horizontal_banner.data.attributes
-                  .navigation_url
-              }
-            >
-              <Image
-                src={
-                  pageData.attributes.horizontal_banner.data.attributes
-                    .cover_image.data.attributes.url
-                }
-                alt={
-                  pageData.attributes.horizontal_banner.data.attributes.title
-                }
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto"
-              />
-            </Link>
+      <section className="w-full">
+        <CPDPagesHeader title={pageData.attributes.name} />
+        <section className="space-y-12 lg:mx-auto lg:max-w-[1000px]">
+          <div className="mt-20 flex flex-col items-start justify-center gap-4 border-2 border-blue-primary px-20 pb-12 pt-8">
+            <div className="flex flex-row">
+              <span className="font-semibold ">
+                {pageData.attributes.aims_data.title}
+              </span>
+              <Clock size={20} className="ml-8 mr-2 place-self-center text-blue-secondary" />{" "}
+              <span className="text-blue-secondary">
+                {pageData.attributes.aims_data.timeRequired} Verifiable CPD/CE
+              </span>
+            </div>
+            <div>
+              {pageData.attributes.aims_data.description.map((item) => (
+                // <BlocksRenderer key={item.id} content={item.text} /> // update when data is set, in the meantimwe just map
+
+                <p key={item.id}>{item.text}</p>
+              ))}
+            </div>
           </div>
-        )}
-      </div>
+
+          <Link href={"/cpd/quiz"} className="">
+            <button className="mt-12 rounded-md bg-orange-600 px-6 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105">
+              TAKE THE CPD/CE QUIZ
+            </button>
+          </Link>
+          {pageData.attributes.horizontal_banner.data && (
+            <div className="pb-20">
+              <Link
+                href={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .navigation_url
+                }
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.horizontal_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto"
+                />
+              </Link>
+            </div>
+          )}
+        </section>
+      </section>
     </>
   );
 }
