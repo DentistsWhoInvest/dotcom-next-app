@@ -4,6 +4,9 @@ import type { Video } from "../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuizStore } from "@/stores/quizStore";
+import Router from "next/router";
+
 // export const getStaticProps = async ({ params }: any) => {
 //   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
 //   const allVideos = await fetchEndpointData(`/videos`, populateFields);
@@ -22,8 +25,8 @@ export default function Results({}: //   pageData,
 }) {
   const pageData = {
     attributes: {
-      name: "Aims",
-      description: "Aims of the CPD",
+      name: "Quiz",
+      description: "CPD Quiz",
       horizontal_banner: {
         data: {
           id: 6,
@@ -111,10 +114,70 @@ export default function Results({}: //   pageData,
           },
         },
       },
+      quiz_questions: [
+        {
+          id: 1,
+          question_title: "What is the capital of France?",
+          answers: [
+            { id: 1, answer: "Paris", is_correct: true },
+            { id: 2, answer: "London", is_correct: false },
+            { id: 3, answer: "Berlin", is_correct: false },
+            { id: 4, answer: "Madrid", is_correct: false },
+          ],
+        },
+        {
+          id: 2,
+          question_title: "What is the capital of Germany?",
+          answers: [
+            { id: 1, answer: "Paris", is_correct: false },
+            { id: 2, answer: "London", is_correct: false },
+            { id: 3, answer: "Berlin", is_correct: true },
+            { id: 4, answer: "Madrid", is_correct: false },
+          ],
+        },
+        {
+          id: 3,
+          question_title: "What is the capital of Spain?",
+          answers: [
+            { id: 1, answer: "Paris", is_correct: false },
+            { id: 2, answer: "London", is_correct: false },
+            { id: 3, answer: "Berlin", is_correct: false },
+            { id: 4, answer: "Madrid", is_correct: true },
+          ],
+        },
+        {
+          id: 4,
+          question_title: "What is the capital of England?",
+          answers: [
+            { id: 1, answer: "Paris", is_correct: false },
+            { id: 2, answer: "London", is_correct: true },
+            { id: 3, answer: "Berlin", is_correct: false },
+            { id: 4, answer: "Madrid", is_correct: false },
+          ],
+        },
+        {
+          id: 5,
+          question_title: "What is the capital of Italy?",
+          answers: [
+            { id: 1, answer: "Paris", is_correct: false },
+            { id: 2, answer: "London", is_correct: false },
+            { id: 3, answer: "Berlin", is_correct: false },
+            { id: 4, answer: "Rome", is_correct: true },
+          ],
+        },
+      ],
     },
   };
 
-  const isSuccessful = true;
+  const { correctAnswers, resetQuiz } = useQuizStore();
+
+  const isSuccessful =
+    correctAnswers >= pageData.attributes.quiz_questions.length / 2;
+
+  function handleRetake() {
+    resetQuiz();
+    Router.push("/cpd/quiz");
+  }
 
   return (
     <>
@@ -135,12 +198,13 @@ export default function Results({}: //   pageData,
         {
           // update when data comes through}
         }
-        {isSuccessful && (
-          <Link href={"/cpd/quiz"} className="place-self-center">
-            <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
-              RETAKE QUIZ
-            </button>
-          </Link>
+        {!isSuccessful && (
+          <button
+            onClick={() => handleRetake()}
+            className="m-2 place-self-center rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105"
+          >
+            RETAKE QUIZ
+          </button>
         )}
         {pageData.attributes.horizontal_banner.data && (
           <div className="my-5">
