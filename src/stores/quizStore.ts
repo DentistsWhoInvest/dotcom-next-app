@@ -2,14 +2,16 @@
 import { create } from "zustand";
 
 type QuizState = {
-  correctAnswers: number;
-  incrementCorrectAnswers: () => void;
-  resetQuiz: () => void;
+  selectedAnswers: Record<number, number>; // Maps question ID to selected answer ID
+  setAnswer: (questionId: number, answerId: number) => void;
+  resetAnswers: () => void;
 };
 
 export const useQuizStore = create<QuizState>((set) => ({
-  correctAnswers: 0,
-  incrementCorrectAnswers: () =>
-    set((state) => ({ correctAnswers: state.correctAnswers + 1 })),
-  resetQuiz: () => set({ correctAnswers: 0 }),
+  selectedAnswers: {},
+  setAnswer: (questionId, answerId) =>
+    set((state) => ({
+      selectedAnswers: { ...state.selectedAnswers, [questionId]: answerId },
+    })),
+  resetAnswers: () => set({ selectedAnswers: {} }),
 }));

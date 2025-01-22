@@ -5,6 +5,7 @@ import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
+import Router from "next/router";
 // export const getStaticProps = async ({ params }: any) => {
 //   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
 //   const allVideos = await fetchEndpointData(`/videos`, populateFields);
@@ -167,11 +168,23 @@ export default function Quiz({}: // pageData
     },
   };
 
-  const { incrementCorrectAnswers } = useQuizStore();
+  const [error, setError] = React.useState<boolean>(false);
 
-  const handleAnswer = (isCorrect: boolean) => {
-    if (isCorrect) {
-      incrementCorrectAnswers();
+  const { selectedAnswers, setAnswer } = useQuizStore();
+
+  const handleSelect = (questionId: number, answerId: number) => {
+    setAnswer(questionId, answerId);
+  };
+
+  const handleSubmitQuiz = () => {
+    if (
+      Object.keys(selectedAnswers).length !==
+      pageData.attributes.quiz_questions.length
+    ) {
+      setError(true);
+      return;
+    } else {
+      Router.push("/cpd/results");
     }
   };
 
@@ -181,30 +194,60 @@ export default function Quiz({}: // pageData
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="w-full items-center">
-        <CPDPagesHeader title="Quiz" />
+      <CPDPagesHeader title="Quiz" />
 
-        <div>
-          <h1>Quiz</h1>
-          {pageData.attributes.quiz_questions.map((q, index) => (
-            <div key={q.id}>
-              <p>{q.question_title}</p>
+      <section className="mt-12 flex flex-col justify-start space-y-8 lg:mx-auto lg:max-w-[1000px]">
+        {pageData.attributes.quiz_questions.map((q, index) => (
+          <div key={q.id}>
+            <p className="mb-2 text-[18px] font-semibold">
+              {q.id}. {q.question_title}
+            </p>
+            <div className="flex flex-col items-start">
               {q.answers.map((a, i) => (
-                <button key={i} onClick={() => handleAnswer(a.is_correct)}>
-                  {a.answer}
-                </button>
+                <div key={i} className="my-2 flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id={`question-${q.id}-answer-${a.id}`}
+                    name={`question-${q.id}`}
+                    checked={selectedAnswers[q.id] === a.id}
+                    onChange={() => handleSelect(q.id, a.id)}
+                    className="hidden"
+                  />
+
+                  <label
+                    htmlFor={`question-${q.id}-answer-${a.id}`}
+                    className={`flex cursor-pointer items-center space-x-2`}
+                  >
+                    <span
+                      className={`flex size-6 items-center justify-center rounded-full border-2 ${
+                        selectedAnswers[q.id] === a.id
+                          ? "border-blue-primary bg-blue-secondary"
+                          : "border-gray-400 bg-white"
+                      }`}
+                    />
+                    <span className="text-black">{a.answer}</span>
+                  </label>
+                </div>
               ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
 
-        <Link href={"/cpd/results"} className="place-self-center">
-          <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
+        {error && (
+          <p className="text-red-500">Please select an answer for each question</p>
+        )}
+
+        <div>
+          <button
+            onClick={() => handleSubmitQuiz()}
+            className="rounded-md bg-orange-600 px-6 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105"
+          >
             COMPLETE QUIZ
           </button>
-        </Link>
+        </div>
+
         {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">
+          <div className="pb-20">
             <Link
               href={
                 pageData.attributes.horizontal_banner.data.attributes
@@ -227,7 +270,7 @@ export default function Quiz({}: // pageData
             </Link>
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 }

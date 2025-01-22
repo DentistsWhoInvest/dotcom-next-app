@@ -169,13 +169,19 @@ export default function Results({}: //   pageData,
     },
   };
 
-  const { correctAnswers, resetQuiz } = useQuizStore();
+  const { selectedAnswers, resetAnswers } = useQuizStore();
 
+  const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
+    q.answers.find((a) => a.is_correct && a.id === selectedAnswers[q.id])
+  );
+
+  const numberOfCorrectAnswers = correctAnswers.length;
+  
   const isSuccessful =
-    correctAnswers >= pageData.attributes.quiz_questions.length / 2;
+    numberOfCorrectAnswers >= pageData.attributes.quiz_questions.length / 2;
 
   function handleRetake() {
-    resetQuiz();
+    resetAnswers();
     Router.push("/cpd/quiz");
   }
 
