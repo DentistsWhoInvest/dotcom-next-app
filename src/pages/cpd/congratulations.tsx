@@ -124,7 +124,7 @@ export default function Congratulations({}: //   pageData,
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <section className="w-full items-center ">
+      <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Congratulations" />
         form should come from active campaign
         <div className="lg:mx-auto lg:max-w-[1000px]">

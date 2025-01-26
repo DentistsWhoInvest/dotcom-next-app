@@ -191,9 +191,9 @@ export default function Results({}: //   pageData,
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <section className="w-full ">
+      <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Results" />
-        <section className="mt-12 flex flex-col items-center space-y-12 lg:mx-auto lg:max-w-[1000px]">
+        <section className="mx-3 mt-12 flex flex-col items-center space-y-12 lg:mx-auto lg:max-w-[1000px]">
           <div
             className={`flex size-40 items-center justify-center rounded-full border-8 ${
               isSuccessful

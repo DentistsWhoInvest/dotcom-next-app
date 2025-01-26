@@ -167,20 +167,20 @@ export default function Reflections({}: //   pageData,
         <meta name="description" content={pageData.attributes.description} />
       </Head>
 
-      <section className="w-full ">
+      <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Reflections" />
-        <section className="mt-12 flex flex-col justify-start space-y-12 lg:mx-auto lg:max-w-[1000px]">
+        <section className="mx-3 mt-12 flex flex-col justify-start space-y-12 lg:mx-auto lg:max-w-[1000px]">
           <div className="font-semibold">
             Please complete your reflections to receive your CPD/CE
           </div>
           <div className="space-y-4">
             {pageData.attributes.reflections_questions.map((question) => (
               <div key={question.id} className="space-y-2">
-                <div className="">
+                <div className="mx-2 pb-4">
                   {question.id}. {question.question_title}
                 </div>
                 <textarea
-                  className="h-32 w-full border border-blue-primary p-4"
+                  className="h-32 w-full border-2 border-blue-primary p-4"
                   placeholder=""
                   value={reflectionAnswers[question.id] || ""}
                   onChange={(e) =>
@@ -191,9 +191,7 @@ export default function Reflections({}: //   pageData,
             ))}
           </div>
           {error && (
-            <p className="text-red-500">
-              Please select answer each question
-            </p>
+            <p className="text-red-500">Please select answer each question</p>
           )}
           <div>
             <button

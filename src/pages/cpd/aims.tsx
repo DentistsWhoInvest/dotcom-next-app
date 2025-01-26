@@ -135,26 +135,30 @@ export default function Aims({}: //   pageData,
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <section className="w-full">
+      <section className="w-full bg-gray-50">
         <CPDPagesHeader title={pageData.attributes.name} />
-        <section className="space-y-12 lg:mx-auto lg:max-w-[1000px]">
-          <div className="mt-20 flex flex-col items-start justify-center gap-4 border-2 border-blue-primary px-20 pb-12 pt-8">
-            <div className="flex flex-row">
+        <section className="mx-3 space-y-12 lg:mx-auto lg:max-w-[1000px]">
+          <div className="privacy-policy mt-8 flex flex-col items-start justify-center gap-4 border-2 border-blue-primary bg-white px-2 pb-12 pt-8 md:mt-20 md:px-20">
+            <div className="flex flex-col md:flex-row">
               <span className="font-semibold ">
                 {pageData.attributes.aims_data.title}
               </span>
-              <Clock size={20} className="ml-8 mr-2 place-self-center text-blue-secondary" />{" "}
-              <span className="text-blue-secondary">
+              <span className="flex flex-row text-blue-secondary">
+                {" "}
+                <Clock
+                  size={20}
+                  className="mr-2 place-self-center text-blue-secondary md:ml-8"
+                />{" "}
                 {pageData.attributes.aims_data.timeRequired} Verifiable CPD/CE
               </span>
             </div>
-            <div>
+            <ul className="flex flex-col gap-2">
               {pageData.attributes.aims_data.description.map((item) => (
                 // <BlocksRenderer key={item.id} content={item.text} /> // update when data is set, in the meantimwe just map
 
-                <p key={item.id}>{item.text}</p>
+                <li key={item.id}>{item.text}</li>
               ))}
-            </div>
+            </ul>
           </div>
 
           <Link href={"/cpd/quiz"} className="">
