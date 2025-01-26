@@ -33,9 +33,9 @@ export const getStaticProps = async ({ params }: any) => {
     (video: { attributes: { name: string } }) =>
       createSlug(video.attributes.name) === params.videotitle
   );
-  const otherVideos = allVideos.data.filter(
-    (video: { id: number }) => video.id !== matchingVideo.id
-  ).slice(0, 6);
+  const otherVideos = allVideos.data
+    .filter((video: { id: number }) => video.id !== matchingVideo.id)
+    .slice(0, 6);
 
   return {
     props: {
@@ -55,6 +55,10 @@ export default function VideoPage({
   //the uri has the pattern of /videos/1, /videos/2, etc and we want to remove the /videos/ part
   const videoUri = pageData.attributes.uri.replace("/videos/", "");
 
+  // temp until we have the show_cpd_quiz attribute
+  // const showCPDQuiz = pageData.attributes.show_cpd_quiz;
+  const showCPDQuiz = true;
+
   return (
     <>
       <Head>
@@ -73,11 +77,13 @@ export default function VideoPage({
               className="left-0 top-0 size-full p-2.5"
             ></iframe>
           </div>
-          <Link href={"/cpd/aims"} className="place-self-center">
-                  <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
-                    TAKE THE CPD/CE QUIZ
-                  </button>
-                </Link>
+          {showCPDQuiz && (
+            <Link href={"/cpd/aims"} className="place-self-center">
+              <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
+                TAKE THE CPD/CE QUIZ
+              </button>
+            </Link>
+          )}
           <h2 className="mx-6 mt-6 text-xl font-bold text-blue-primary md:text-3xl">
             {pageData.attributes.name}
           </h2>
