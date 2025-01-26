@@ -176,7 +176,7 @@ export default function Results({}: //   pageData,
   );
 
   const numberOfCorrectAnswers = correctAnswers.length;
-  
+
   const isSuccessful =
     numberOfCorrectAnswers >= pageData.attributes.quiz_questions.length / 2;
 
@@ -191,52 +191,83 @@ export default function Results({}: //   pageData,
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="w-full items-center">
+      <section className="w-full ">
         <CPDPagesHeader title="Results" />
-        Results
-        {isSuccessful && (
-          <Link href={"/cpd/reflections"} className="place-self-center">
-            <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
-              COMPLETE REFLECTIONS
-            </button>
-          </Link>
-        )}
-        {
-          // update when data comes through}
-        }
-        {!isSuccessful && (
-          <button
-            onClick={() => handleRetake()}
-            className="m-2 place-self-center rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105"
+        <section className="mt-12 flex flex-col items-center space-y-12 lg:mx-auto lg:max-w-[1000px]">
+          <div
+            className={`flex size-40 items-center justify-center rounded-full border-8 ${
+              isSuccessful
+                ? "border-green-500 text-green-500"
+                : "border-red-500 text-red-500"
+            }`}
           >
-            RETAKE QUIZ
-          </button>
-        )}
-        {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">
-            <Link
-              href={
-                pageData.attributes.horizontal_banner.data.attributes
-                  .navigation_url
-              }
-            >
-              <Image
-                src={
-                  pageData.attributes.horizontal_banner.data.attributes
-                    .cover_image.data.attributes.url
-                }
-                alt={
-                  pageData.attributes.horizontal_banner.data.attributes.title
-                }
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto"
-              />
-            </Link>
+            <span className="text-4xl font-semibold">
+              {numberOfCorrectAnswers}/
+              {pageData.attributes.quiz_questions.length}
+            </span>
           </div>
-        )}
-      </div>
+          {isSuccessful && (
+            <div className="flex max-w-[700px] flex-col items-center space-y-4 text-center">
+              <p className="pb-4 text-3xl font-semibold text-blue-primary">
+                Congratulations!
+              </p>
+              <p className="pb-10 text-lg text-blue-primary">
+                You have successfully passed this quiz. Please use the button
+                below to complete your reflections and receive your CPD/CE
+                certificate.
+              </p>
+              <Link href={"/cpd/reflections"} className="place-self-center">
+                <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
+                  COMPLETE REFLECTIONS
+                </button>
+              </Link>
+            </div>
+          )}
+
+          {!isSuccessful && (
+            <div className="flex max-w-[700px] flex-col items-center space-y-4 text-center">
+              <p className="text-xl font-semibold text-blue-primary">
+                Unfortunately, you did not score highly enough to pass this quiz
+                (pass mark: 60% and above).
+              </p>
+              <p className="pb-10 text-lg text-blue-primary">
+                Please review the content material and retake the quiz when you
+                feel ready.
+              </p>
+              <button
+                onClick={() => handleRetake()}
+                className="m-2 place-self-center rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105"
+              >
+                RETAKE QUIZ
+              </button>
+            </div>
+          )}
+          {pageData.attributes.horizontal_banner.data && (
+            <div className="pb-20">
+              <Link
+                href={
+                  pageData.attributes.horizontal_banner.data.attributes
+                    .navigation_url
+                }
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.horizontal_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto"
+                />
+              </Link>
+            </div>
+          )}
+        </section>
+      </section>
     </>
   );
 }

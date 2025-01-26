@@ -4,6 +4,7 @@ import type { Video } from "../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuizStore } from "@/stores/quizStore";
 
 // export const getStaticProps = async ({ params }: any) => {
 //   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
@@ -115,41 +116,44 @@ export default function Congratulations({}: //   pageData,
     },
   };
 
+  const { reflectionAnswers } = useQuizStore();
+
   return (
     <>
       <Head>
         <title>{pageData.attributes.name}</title>
         <meta name="description" content={pageData.attributes.description} />
       </Head>
-      <div className="w-full items-center">
+      <section className="w-full items-center ">
         <CPDPagesHeader title="Congratulations" />
         form should come from active campaign
-       
-        {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">
-            <Link
-              href={
-                pageData.attributes.horizontal_banner.data.attributes
-                  .navigation_url
-              }
-            >
-              <Image
-                src={
+        <div className="lg:mx-auto lg:max-w-[1000px]">
+          {pageData.attributes.horizontal_banner.data && (
+            <div className="mx-3 pb-20 lg:mx-0">
+              <Link
+                href={
                   pageData.attributes.horizontal_banner.data.attributes
-                    .cover_image.data.attributes.url
+                    .navigation_url
                 }
-                alt={
-                  pageData.attributes.horizontal_banner.data.attributes.title
-                }
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto"
-              />
-            </Link>
-          </div>
-        )}
-      </div>
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt={
+                    pageData.attributes.horizontal_banner.data.attributes.title
+                  }
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto"
+                />
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }
