@@ -6,168 +6,135 @@ import Link from "next/link";
 import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
 import Router from "next/router";
-// export const getStaticProps = async ({ params }: any) => {
-//   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
-//   const allVideos = await fetchEndpointData(`/videos`, populateFields);
+import { fetchEndpointData } from "@/lib/fetchUtils";
 
-//   return {
-//     props: {
-//       pageData: matchingVideo,
-//       otherVideos: otherVideos,
-//     },
-//   };
-// };
+type TextNode = {
+  text: string;
+  type: string;
+};
 
-export default function Quiz({}: // pageData
-{
-  // pageData: Video
-}) {
-  const pageData = {
-    attributes: {
-      name: "Quiz",
-      description: "CPD Quiz",
-      horizontal_banner: {
-        data: {
-          id: 6,
-          attributes: {
-            createdAt: "2024-08-24T11:47:49.797Z",
-            updatedAt: "2024-08-24T12:32:52.498Z",
-            title: "Warren Robins Need to Review Your Income Protection",
-            navigation_url: "/income-protection",
-            is_internal: true,
-            cover_image: {
-              data: {
-                id: 65,
-                attributes: {
-                  name: "warren-robins-horizontal-banner-small.webp",
-                  alternativeText:
-                    "Ad of Dentists Who Invest about questioning income protection review with Mr. Warren Robins, an Income Protection expert.",
-                  caption:
-                    "Time to reassess your income protection? Click to learn how we can help.",
-                  width: 2184,
-                  height: 540,
-                  formats: {
-                    large: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/large_warren_robins_horizontal_banner_small_1666bc2a1e/large_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "large_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "large_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 20.32,
-                      width: 1000,
-                      height: 247,
-                      sizeInBytes: 20316,
-                    },
-                    small: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/small_warren_robins_horizontal_banner_small_1666bc2a1e/small_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "small_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "small_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 9.3,
-                      width: 500,
-                      height: 124,
-                      sizeInBytes: 9298,
-                    },
-                    medium: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/medium_warren_robins_horizontal_banner_small_1666bc2a1e/medium_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "medium_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "medium_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 15.12,
-                      width: 750,
-                      height: 185,
-                      sizeInBytes: 15120,
-                    },
-                    thumbnail: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e/thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "thumbnail_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 3.86,
-                      width: 245,
-                      height: 61,
-                      sizeInBytes: 3864,
-                    },
-                  },
-                  hash: "warren_robins_horizontal_banner_small_1666bc2a1e",
-                  ext: ".webp",
-                  mime: "image/webp",
-                  size: 56.02,
-                  url: "https://assets.dentistswhoinvest.com/warren_robins_horizontal_banner_small_1666bc2a1e/warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                  previewUrl: null,
-                  provider:
-                    "@strapi-community/strapi-provider-upload-google-cloud-storage",
-                  provider_metadata: null,
-                  createdAt: "2024-08-11T15:47:35.148Z",
-                  updatedAt: "2024-09-13T07:42:03.808Z",
-                },
-              },
-            },
-          },
-        },
-      },
-      quiz_questions: [
-        {
-          id: 1,
-          question_title: "What is the capital of France?",
-          answers: [
-            { id: 1, answer: "Paris", is_correct: true },
-            { id: 2, answer: "London", is_correct: false },
-            { id: 3, answer: "Berlin", is_correct: false },
-            { id: 4, answer: "Madrid", is_correct: false },
-          ],
-        },
-        {
-          id: 2,
-          question_title: "What is the capital of Germany?",
-          answers: [
-            { id: 1, answer: "Paris", is_correct: false },
-            { id: 2, answer: "London", is_correct: false },
-            { id: 3, answer: "Berlin", is_correct: true },
-            { id: 4, answer: "Madrid", is_correct: false },
-          ],
-        },
-        {
-          id: 3,
-          question_title: "What is the capital of Spain?",
-          answers: [
-            { id: 1, answer: "Paris", is_correct: false },
-            { id: 2, answer: "London", is_correct: false },
-            { id: 3, answer: "Berlin", is_correct: false },
-            { id: 4, answer: "Madrid", is_correct: true },
-          ],
-        },
-        {
-          id: 4,
-          question_title: "What is the capital of England?",
-          answers: [
-            { id: 1, answer: "Paris", is_correct: false },
-            { id: 2, answer: "London", is_correct: true },
-            { id: 3, answer: "Berlin", is_correct: false },
-            { id: 4, answer: "Madrid", is_correct: false },
-          ],
-        },
-        {
-          id: 5,
-          question_title: "What is the capital of Italy?",
-          answers: [
-            { id: 1, answer: "Paris", is_correct: false },
-            { id: 2, answer: "London", is_correct: false },
-            { id: 3, answer: "Berlin", is_correct: false },
-            { id: 4, answer: "Rome", is_correct: true },
-          ],
-        },
-      ],
+type ListItem = {
+  type: "list-item";
+  children: TextNode[];
+};
+
+type List = {
+  type: "list";
+  format: "unordered" | "ordered";
+  children: ListItem[];
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
+
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  id: number;
+  attributes: ImageAttributes;
+};
+
+type CoverImage = {
+  data: ImageData;
+};
+
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+  cover_image: CoverImage;
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type Banner = {
+  data: BannerData;
+};
+
+type Answer = {
+  id: number;
+  answer: string;
+  is_correct: boolean;
+};
+
+type Question = {
+  id: number;
+  question: string;
+  potential_answers: Answer[];
+};
+
+type QuizQuestions = {
+  course_name: string;
+  aims: List[];
+  course_duration: string;
+  form_id: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  quiz_horizontal_banner: Banner;
+  quiz_questions: Question[];
+};
+
+export const getStaticProps = async () => {
+  const populateFields = [
+    "quiz_horizontal_banner",
+    "quiz_horizontal_banner.cover_image",
+    "quiz_questions",
+    "quiz_questions.potential_answers",
+  ];
+  const CPDQuestions = await fetchEndpointData(
+    `/cpd-courses/1`,
+    populateFields
+  );
+  console.log("CPDQuestions", CPDQuestions.data);
+
+  return {
+    props: {
+      pageData: CPDQuestions.data.attributes,
     },
   };
+};
 
+export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
+  console.log("pageData", pageData);
+ 
   const [error, setError] = React.useState<boolean>(false);
 
   const { selectedAnswers, setAnswer } = useQuizStore();
@@ -178,8 +145,7 @@ export default function Quiz({}: // pageData
 
   const handleSubmitQuiz = () => {
     if (
-      Object.keys(selectedAnswers).length !==
-      pageData.attributes.quiz_questions.length
+      Object.keys(selectedAnswers).length !== pageData.quiz_questions.length
     ) {
       setError(true);
       return;
@@ -191,19 +157,20 @@ export default function Quiz({}: // pageData
   return (
     <>
       <Head>
-        <title>{pageData.attributes.name}</title>
-        <meta name="description" content={pageData.attributes.description} />
+        {/* <title>{pageData.attributes.name}</title> */}
+        <title>test</title>
+        {/* <meta name="description" content={pageData.attributes.description} /> */}
       </Head>
       <section className="bg-gray-50 ">
         <CPDPagesHeader title="Quiz" />
         <section className="mx-3 mt-8 flex flex-col justify-start space-y-8 md:mt-20 lg:mx-auto lg:max-w-[1000px]">
-          {pageData.attributes.quiz_questions.map((q, index) => (
+          {pageData.quiz_questions.map((q, index) => (
             <div key={q.id}>
               <p className="mb-2 text-[18px] font-semibold">
-                {q.id}. {q.question_title}
+                {q.id}. {q.question}
               </p>
               <div className="flex flex-col items-start">
-                {q.answers.map((a, i) => (
+                {q.potential_answers.map((a, i) => (
                   <div key={i} className="my-2 flex items-center space-x-2">
                     <input
                       type="radio"
@@ -248,22 +215,19 @@ export default function Quiz({}: // pageData
             </button>
           </div>
 
-          {pageData.attributes.horizontal_banner.data && (
+          {pageData.quiz_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.attributes.horizontal_banner.data.attributes
-                    .navigation_url
+                  pageData.quiz_horizontal_banner.data.attributes.navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.attributes.horizontal_banner.data.attributes
-                      .cover_image.data.attributes.url
+                    pageData.quiz_horizontal_banner.data.attributes.cover_image
+                      .data.attributes.url
                   }
-                  alt={
-                    pageData.attributes.horizontal_banner.data.attributes.title
-                  }
+                  alt={pageData.quiz_horizontal_banner.data.attributes.title}
                   width={1200}
                   height={400}
                   layout="responsive"
