@@ -93,10 +93,9 @@ type Answer = {
   is_correct: boolean;
 };
 
-type Question = {
-  id: number;
-  question: string;
-  potential_answers: Answer[];
+type PageMetadata = {
+  title: string;
+  description: string;
 };
 
 type QuizAims = {
@@ -107,18 +106,19 @@ type QuizAims = {
   updatedAt: string;
   publishedAt: string;
   overview_horizontal_banner: Banner;
+  page_metadata: PageMetadata
 };
 
 export const getStaticProps = async () => {
   const populateFields = [
     "overview_horizontal_banner",
     "overview_horizontal_banner.cover_image",
+    "page_metadata"
   ];
   const CPDQuestions = await fetchEndpointData(
     `/cpd-courses/1`,
     populateFields
   );
-  console.log("CPDQuestions", CPDQuestions.data);
 
   return {
     props: {
@@ -128,13 +128,11 @@ export const getStaticProps = async () => {
 };
 
 export default function Aims({ pageData }: { pageData: QuizAims }) {
-  console.log("pageData", pageData);
   return (
     <>
       <Head>
-        {/* <title>{pageData.attributes.name}</title> */}
-        <title>test</title>
-        {/* <meta name="description" content={pageData.attributes.description} /> */}
+        <title>{pageData.page_metadata.title}</title>
+        <meta name="description" content={pageData.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Description" />

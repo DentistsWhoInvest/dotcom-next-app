@@ -99,7 +99,10 @@ type Question = {
   question: string;
   potential_answers: Answer[];
 };
-
+type PageMetadata = {
+  title: string;
+  description: string;
+};
 type QuizResults = {
   createdAt: string;
   updatedAt: string;
@@ -107,6 +110,8 @@ type QuizResults = {
   quiz_result_pass_horizontal_banner: Banner;
   quiz_result_fail_horizontal_banner: Banner;
   quiz_questions: Question[];
+  page_metadata: PageMetadata
+
 };
 
 export const getStaticProps = async () => {
@@ -117,12 +122,12 @@ export const getStaticProps = async () => {
     "quiz_result_fail_horizontal_banner.cover_image",
     "quiz_questions",
     "quiz_questions.potential_answers",
+    "page_metadata"
   ];
   const CPDQuestions = await fetchEndpointData(
     `/cpd-courses/1`,
     populateFields
   );
-  console.log("CPDQuestions", CPDQuestions.data);
 
   return {
     props: {
@@ -132,7 +137,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Results({ pageData }: { pageData: QuizResults }) {
-  console.log("pageData", pageData);
   const { selectedAnswers, resetAnswers } = useQuizStore();
 
   const correctAnswers = pageData.quiz_questions.filter((q) =>
@@ -152,9 +156,8 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
   return (
     <>
       <Head>
-        {/* <title>{pageData.attributes.name}</title> */}
-        <title>test</title>
-        {/* <meta name="description" content={pageData.attributes.description} /> */}
+      <title>{pageData.page_metadata.title}</title>
+      <meta name="description" content={pageData.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Results" />

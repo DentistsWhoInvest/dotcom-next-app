@@ -99,6 +99,11 @@ type Reflections = {
   reflection_question: string;
 };
 
+type PageMetadata = {
+  title: string;
+  description: string;
+};
+
 type QuizReflections = {
   course_name: string;
   reflections: Reflections[];
@@ -107,6 +112,8 @@ type QuizReflections = {
   updatedAt: string;
   publishedAt: string;
   reflections_horizontal_banner: Banner;
+  page_metadata: PageMetadata
+
 };
 
 export const getStaticProps = async () => {
@@ -115,12 +122,12 @@ export const getStaticProps = async () => {
     "reflections_horizontal_banner.cover_image",
     "reflections",
     "reflections.reflection_question",
+    "page_metadata"
   ];
   const CPDQuestions = await fetchEndpointData(
     `/cpd-courses/1`,
     populateFields
   );
-  console.log("CPDQuestions", CPDQuestions.data);
 
   return {
     props: {
@@ -134,9 +141,7 @@ export default function Reflections({
 }: {
   pageData: QuizReflections;
 }) {
-  console.log("pageData", pageData);
   const { reflectionAnswers, setReflectionAnswers } = useQuizStore();
-  console.log(reflectionAnswers);
   const [error, setError] = React.useState<boolean>(false);
 
   const handleSubmitQuiz = () => {
@@ -151,9 +156,8 @@ export default function Reflections({
   return (
     <>
       <Head>
-        {/* <title>{pageData.attributes.name}</title> */}
-        <title>test</title>
-        {/* <meta name="description" content={pageData.attributes.description} /> */}
+      <title>{pageData.page_metadata.title}</title>
+      <meta name="description" content={pageData.page_metadata.description} />
       </Head>
 
       <section className="w-full bg-gray-50">

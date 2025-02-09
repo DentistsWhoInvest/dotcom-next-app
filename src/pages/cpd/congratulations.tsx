@@ -5,145 +5,137 @@ import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
+import { fetchEndpointData } from "@/lib/fetchUtils";
 
-// export const getStaticProps = async ({ params }: any) => {
-//   const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
-//   const allVideos = await fetchEndpointData(`/videos`, populateFields);
-//
-//   return {
-//     props: {
-//       pageData: matchingVideo,
-//       otherVideos: otherVideos,
-//     },
-//   };
-// };
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
 
-export default function Congratulations({}: //   pageData,
-{
-  //   pageData: Video;
-}) {
-  const pageData = {
-    attributes: {
-      name: "Congrats",
-      description: "",
-      horizontal_banner: {
-        data: {
-          id: 6,
-          attributes: {
-            createdAt: "2024-08-24T11:47:49.797Z",
-            updatedAt: "2024-08-24T12:32:52.498Z",
-            title: "Warren Robins Need to Review Your Income Protection",
-            navigation_url: "/income-protection",
-            is_internal: true,
-            cover_image: {
-              data: {
-                id: 65,
-                attributes: {
-                  name: "warren-robins-horizontal-banner-small.webp",
-                  alternativeText:
-                    "Ad of Dentists Who Invest about questioning income protection review with Mr. Warren Robins, an Income Protection expert.",
-                  caption:
-                    "Time to reassess your income protection? Click to learn how we can help.",
-                  width: 2184,
-                  height: 540,
-                  formats: {
-                    large: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/large_warren_robins_horizontal_banner_small_1666bc2a1e/large_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "large_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "large_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 20.32,
-                      width: 1000,
-                      height: 247,
-                      sizeInBytes: 20316,
-                    },
-                    small: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/small_warren_robins_horizontal_banner_small_1666bc2a1e/small_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "small_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "small_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 9.3,
-                      width: 500,
-                      height: 124,
-                      sizeInBytes: 9298,
-                    },
-                    medium: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/medium_warren_robins_horizontal_banner_small_1666bc2a1e/medium_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "medium_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "medium_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 15.12,
-                      width: 750,
-                      height: 185,
-                      sizeInBytes: 15120,
-                    },
-                    thumbnail: {
-                      ext: ".webp",
-                      url: "https://assets.dentistswhoinvest.com/thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e/thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                      hash: "thumbnail_warren_robins_horizontal_banner_small_1666bc2a1e",
-                      mime: "image/webp",
-                      name: "thumbnail_warren-robins-horizontal-banner-small.webp",
-                      path: null,
-                      size: 3.86,
-                      width: 245,
-                      height: 61,
-                      sizeInBytes: 3864,
-                    },
-                  },
-                  hash: "warren_robins_horizontal_banner_small_1666bc2a1e",
-                  ext: ".webp",
-                  mime: "image/webp",
-                  size: 56.02,
-                  url: "https://assets.dentistswhoinvest.com/warren_robins_horizontal_banner_small_1666bc2a1e/warren_robins_horizontal_banner_small_1666bc2a1e.webp",
-                  previewUrl: null,
-                  provider:
-                    "@strapi-community/strapi-provider-upload-google-cloud-storage",
-                  provider_metadata: null,
-                  createdAt: "2024-08-11T15:47:35.148Z",
-                  updatedAt: "2024-09-13T07:42:03.808Z",
-                },
-              },
-            },
-          },
-        },
-      },
+type ImageAttributes = {
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: {
+    large?: ImageFormat;
+    small?: ImageFormat;
+    medium?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type ImageData = {
+  id: number;
+  attributes: ImageAttributes;
+};
+
+type CoverImage = {
+  data: ImageData;
+};
+
+type BannerAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  navigation_url: string;
+  is_internal: boolean;
+  cover_image: CoverImage;
+};
+
+type BannerData = {
+  id: number;
+  attributes: BannerAttributes;
+};
+
+type Banner = {
+  data: BannerData;
+};
+
+type Answer = {
+  id: number;
+  answer: string;
+  is_correct: boolean;
+};
+
+type PageMetadata = {
+  title: string;
+  description: string;
+};
+
+type QuizCongratulations = {
+  course_name: string;
+  form_id: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  form_horizontal_banner: Banner;
+  page_metadata: PageMetadata;
+};
+
+export const getStaticProps = async () => {
+  const populateFields = [
+    "form_horizontal_banner",
+    "form_horizontal_banner.cover_image",
+    "page_metadata"
+  ];
+  const CPDQuestions = await fetchEndpointData(
+    `/cpd-courses/1`,
+    populateFields
+  );
+
+  return {
+    props: {
+      pageData: CPDQuestions.data.attributes,
     },
   };
+};
 
+export default function Congratulations({ pageData }: { pageData: QuizCongratulations }) {
   const { reflectionAnswers } = useQuizStore();
 
   return (
     <>
       <Head>
-        <title>{pageData.attributes.name}</title>
-        <meta name="description" content={pageData.attributes.description} />
+        <title>{pageData.page_metadata.title}</title>
+        <meta name="description" content={pageData.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Congratulations" />
         form should come from active campaign
         <div className="lg:mx-auto lg:max-w-[1000px]">
-          {pageData.attributes.horizontal_banner.data && (
+          {pageData.form_horizontal_banner.data && (
             <div className="mx-3 pb-20 lg:mx-0">
               <Link
                 href={
-                  pageData.attributes.horizontal_banner.data.attributes
-                    .navigation_url
+                  pageData.form_horizontal_banner.data.attributes.navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.attributes.horizontal_banner.data.attributes
-                      .cover_image.data.attributes.url
+                    pageData.form_horizontal_banner.data.attributes.cover_image
+                      .data.attributes.url
                   }
-                  alt={
-                    pageData.attributes.horizontal_banner.data.attributes.title
-                  }
+                  alt={pageData.form_horizontal_banner.data.attributes.title}
                   width={1200}
                   height={400}
                   layout="responsive"
