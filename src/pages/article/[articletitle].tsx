@@ -192,48 +192,51 @@ export default function ArticlePage({
             })}
           </div>
           <Disclaimer contentType="article" />
-          <div className="my-5 w-full">
-            <Link
-              href={
-                pageData.attributes.horizontal_banners?.data[0].attributes
-                  .navigation_url
-              }
-            >
-              <Image
-                src={
+          {pageData.attributes.horizontal_banners?.data[0] && (
+            <div className="my-5 w-full">
+              <Link
+                href={
                   pageData.attributes.horizontal_banners?.data[0].attributes
-                    .cover_image.data.attributes.url
+                    .navigation_url
                 }
-                alt="Want to increase your income?"
-                width={1200}
-                height={400}
-                layout="responsive"
-                className="h-auto w-full object-cover"
-              />
-            </Link>
-          </div>
+              >
+                <Image
+                  src={
+                    pageData.attributes.horizontal_banners?.data[0].attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt="Want to increase your income?"
+                  width={1200}
+                  height={400}
+                  layout="responsive"
+                  className="h-auto w-full object-cover"
+                />
+              </Link>
+            </div>
+          )}
         </div>
         <div className="md:col-span-1 md:w-[233px] lg:w-[318px] xl:w-[330px]">
           <NHSPensionChecklistForm />
           <div className="my-5 hidden md:block">
             {pageData.attributes.vertical_banners?.data[0] && (
-            <Link
-              href={
-                pageData.attributes.vertical_banners?.data[0].attributes
-                  .navigation_url
-              }
-            >
-              <Image
-                src={
+              <Link
+                href={
                   pageData.attributes.vertical_banners?.data[0].attributes
-                    .cover_image.data.attributes.url
+                    .navigation_url
                 }
-                alt="Want to increase your income?"
-                width={233}
-                height={598}
-                className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
-              />
-            </Link>)}
+              >
+                <Image
+                  src={
+                    pageData.attributes.vertical_banners?.data[0].attributes
+                      .cover_image.data.attributes.url
+                  }
+                  alt="Want to increase your income?"
+                  width={233}
+                  height={598}
+                  className="h-[598px] w-[233px] object-cover lg:h-[817px] lg:w-[318px] xl:h-[848px] xl:w-[330px]"
+                />
+              </Link>
+            )}
           </div>
         </div>
       </div>
