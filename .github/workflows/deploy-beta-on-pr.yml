@@ -77,6 +77,12 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v2'
         with:
           project_id: ${{ env.PROJECT_ID }}
+
+      - name: 'Install crcmod'
+        id: install-crcmod
+        run: |-
+          sudo apt-get install -y python3-pip
+          sudo pip3 install --upgrade crcmod
       
       - name: 'Deploy to GCS bucket'
         id: deploy-to-gcs
@@ -84,3 +90,48 @@ jobs:
           gsutil -m rsync -r -d -c ./out/    gs://dwi-dotcom-beta-static-assets
           bash ./set-metadata.bash BETA
           gsutil -m rsync -r -d -c ./public/ gs://dwi-dotcom-beta-static-assets/public/
+
+      - name: 'Tell people on Teams'
+        id: notify-teams-success
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
+          -d '{
+                "text": "Deployed a new beta site to https://beta.dentistswhoinvest.com 🚀"
+              }'
+
+      - name: 'Tell people on Teams that it failed'
+        id: notify-teams-failure
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
+          -d '{
+                "type": "message",
+                "attachments": [
+                    {
+                        "contentType": "application/vnd.microsoft.card.adaptive",
+                        "content": {
+                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                            "type": "AdaptiveCard",
+                            "version": "1.4",
+                            "body": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "⚠️ **Beta site's deployment failed**",
+                                    "weight": "Bolder",
+                                    "size": "Medium",
+                                    "color": "Attention"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Something happened in the workflow, check latest PR on github, ask developers",
+                                    "wrap": true
+                                }
+                            ]
+                        }
+
+                    }
+                ]
+            }'

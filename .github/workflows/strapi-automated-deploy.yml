@@ -71,3 +71,47 @@ jobs:
           gsutil -m rsync -r -d ./out/ gs://dwi-dotcom-static-assets
           bash ./set-metadata.bash PROD
           gsutil -m rsync -r -d ./public/ gs://dwi-dotcom-static-assets/public/
+
+      - name: 'Tell people on Teams'
+        id: notify-teams-success
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
+          -d '{
+                "text": "Updated site content with a new deployment, go to https://www.dentistswhoinvest.com to see the changes"
+              }'
+
+      - name: 'Tell people on Teams that it failed'
+        id: notify-teams-failure
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
+          -d '{
+                "type": "message",
+                "attachments": [
+                    {
+                        "contentType": "application/vnd.microsoft.card.adaptive",
+                        "content": {
+                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                            "type": "AdaptiveCard",
+                            "version": "1.4",
+                            "body": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "⚠️ **Site's content failed to update**",
+                                    "weight": "Bolder",
+                                    "size": "Medium",
+                                    "color": "Attention"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Something happened in the workflow, check latest build on github, ask developers. Has a recent change been made to an object? Is something possibly not filled in correctly in Strapi?",
+                                    "wrap": true
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }'
