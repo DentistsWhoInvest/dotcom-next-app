@@ -3,9 +3,9 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 interface StoreTutorialProps {
-  tutorialCopy: string;
+  tutorialCopy: any;
   ctaCopy: string;
-  video: string;
+  video: any;
   ctaNavigationUrl: string;
 }
 

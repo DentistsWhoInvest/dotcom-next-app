@@ -3,9 +3,9 @@ import { fetchEndpointData } from "@/lib/fetchUtils";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 interface StoreIntroProps {
-  introCopy: string;
+  introCopy: any;
   ctaCopy: string;
-  introVideo: string;
+  introVideo: any;
 }
 
 export const getStaticProps = async () => {
