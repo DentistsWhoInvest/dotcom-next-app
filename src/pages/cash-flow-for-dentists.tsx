@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
