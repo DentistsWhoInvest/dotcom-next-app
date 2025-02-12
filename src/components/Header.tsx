@@ -100,9 +100,9 @@ export default function Header() {
             />{" "}
           </Link>
         </div>
-
+        <div className="grow"></div>
         <button
-          className="pr-2 text-gray-700 hover:text-blue-primary md:hidden"
+          className="text-gray-700 hover:text-blue-primary md:hidden"
           onClick={() => setShowOverlay(true)}
         >
           <svg
@@ -120,8 +120,6 @@ export default function Header() {
         </button>
 
         {showOverlay && <MenuOverlay />}
-
-        <div className="md:grow"></div>
 
         <ul className="hidden flex-row items-center md:flex">
           <MenuLinks menuLinksList={menuLinksList} />
