@@ -44,7 +44,7 @@ export default function Header() {
             <li>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
                 <Link href={"https://courses.dentistswhoinvest.com/login"}>
-                  <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transform hover:scale-105 transition duration-200 ease-in-out">
+                  <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transition duration-200 ease-in-out hover:scale-105">
                     Members
                   </button>
                 </Link>
@@ -87,8 +87,8 @@ export default function Header() {
   };
 
   return (
-    <div className="bg-[white]">
-      <div className="relative z-20 flex h-[60px] flex-row items-center justify-between px-5 py-3.5  drop-shadow-lg md:h-[90px] md:px-8 md:py-4 lg:justify-evenly xl:m-auto xl:max-w-[1200px]">
+    <div className="bg-[white] ">
+      <div className="relative z-20 flex h-[60px] flex-row items-center justify-between py-3.5 drop-shadow-lg md:h-[90px] md:py-4 lg:mx-auto lg:max-w-[1000px] lg:justify-between">
         <div>
           <Link href={"/"}>
             <Image
@@ -121,12 +121,14 @@ export default function Header() {
 
         {showOverlay && <MenuOverlay />}
 
-        <ul className="hidden flex-row items-center md:flex lg:mr-32">
+        <div className="md:grow"></div>
+
+        <ul className="hidden flex-row items-center md:flex">
           <MenuLinks menuLinksList={menuLinksList} />
           <li>
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
               <Link href={"https://courses.dentistswhoinvest.com/login"}>
-                <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transform hover:scale-105 transition duration-200 ease-in-out">
+                <button className="transform rounded-md bg-orange-600 px-4 py-3 font-bold text-white transition duration-200 ease-in-out hover:scale-105">
                   Members
                 </button>
               </Link>
