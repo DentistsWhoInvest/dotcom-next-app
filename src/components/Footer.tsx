@@ -72,10 +72,10 @@ export default function Footer() {
 
   return (
     <div className="bg-[#f0f3f6] shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px]">
-      <div className="flex flex-row mx-3 py-2 text-blue-primary md:flex-col lg:flex-row lg:py-8 max-w-[1000px] lg:mx-auto">
+      <div className="flex flex-row mx-3 py-2 text-blue-primary md:flex-col lg:flex-row lg:pt-8 lg:pb-4 max-w-[1000px] lg:mx-auto lg:justify-evenly">
         
         {/* Logo and Text Section */}
-        <div className="justify-evenly md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4">
+        <div className="justify-evenly md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4 lg:place-self-start">
           <Image
             src="https://assets.dentistswhoinvest.com/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
             alt="logo"
@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         {/* Links Section */}
-        <div className="hidden grow flex-row content-center justify-center space-x-28 self-center justify-self-center md:flex lg:space-x-8">
+        <div className="hidden grow flex-row content-center lg:justify-end space-x-28 self-center justify-self-center md:flex lg:space-x-8">
           
           {/* Explore Links */}
           <div className="text-center">
