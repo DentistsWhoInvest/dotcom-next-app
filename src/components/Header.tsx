@@ -33,7 +33,7 @@ export default function Header() {
         onClick={() => setShowOverlay(false)}
       >
         <div
-          className="absolute right-0 top-0 flex h-full w-[35%] flex-col items-end bg-[#f0f3f6] p-2 md:w-1/5 pr-2.5"
+          className="absolute right-0 top-0 flex h-full w-[35%] flex-col items-end bg-[#f0f3f6] p-2 md:w-1/5 pr-5"
           onClick={(e) => e.stopPropagation()}
         >
           <button className="mt-2 mb-0.5 mx-2.5 w-4" onClick={() => setShowOverlay(false)}>
