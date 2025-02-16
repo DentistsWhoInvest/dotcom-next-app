@@ -18,7 +18,7 @@ const menuLinksList: MenuLink[] = [
   { href: "/articles/1/", text: "Articles", category: "articles" },
   { href: "https://www.dwimarket.com/", text: "Store" },
   { href: "/courses/", text: "Courses" },
-  { href: "/videos/", text: "Videos" },
+  { href: "/videos/", text: "Videos/CPD" },
   { href: "/contact/", text: "Contact" },
 ];
 
@@ -67,7 +67,7 @@ export default function Header() {
       return (
         <li
           key={link.href}
-          className={`p-1 text-right text-base lg:text-lg ${
+          className={`p-[3px] lg:p-2 text-right text-[15px] lg:text-lg ${
             isActive
               ? "text-orange-700"
               : "text-blue-primary hover:text-blue-secondary"
