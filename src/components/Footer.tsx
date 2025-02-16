@@ -75,7 +75,7 @@ export default function Footer() {
       <div className="flex flex-row mx-3 py-2 text-blue-primary md:flex-col lg:flex-row lg:pt-8 lg:pb-4 max-w-[1000px] lg:mx-auto lg:justify-evenly">
         
         {/* Logo and Text Section */}
-        <div className="justify-evenly md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4 lg:place-self-start">
+        <div className="justify-evenly md:flex md:flex-row md:space-x-0 lg:w-1/3 lg:flex-col lg:space-x-0 md:space-y-4 lg:place-self-start md:py-4 lg:py-0">
           <Image
             src="https://assets.dentistswhoinvest.com/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
             alt="logo"
