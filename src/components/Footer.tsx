@@ -3,19 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BottomBar = () => {
+  const currentYear = new Date().getFullYear();
   return (
     //on desktop, single line, copyright name is on the left, links on the right
     //on mobile, stacked, copyright on the bottom, links on top
-    <div className="flex flex-col items-center justify-between bg-blue-primary p-4 text-center text-xs text-white md:flex-row md:text-left md:text-base xl:px-[150px]">
+    <div className="bg-blue-primary">
+    <div className="flex flex-col items-center justify-between py-4 text-center text-xs text-white md:flex-row md:text-left mx-3 md:text-base lg:mx-auto lg:max-w-[1000px]">
       <span className="order-2 md:order-1">
-        © 2024 Dentists Who Invest All Rights Reserved.
+        © {currentYear} Dentists Who Invest All Rights Reserved.
       </span>
       <span className="order-1 mb-2 md:order-2 md:mb-0">
         <Link href="/privacy-policy"> Privacy Policy </Link>
         <span> | </span>
         <Link href="/terms-and-conditions"> Terms and conditions </Link>
       </span>
-    </div>
+    </div></div>
   );
 };
 
@@ -70,10 +72,10 @@ export default function Footer() {
 
   return (
     <div className="bg-[#f0f3f6] shadow-[rgba(0,0,15,0.5)_0px_0px_15px_0px]">
-      <div className="flex flex-row p-2 text-blue-primary md:flex-col lg:flex-row lg:px-32 lg:py-8 max-w-[1140px] xl:mx-auto">
+      <div className="flex flex-row mx-3 py-2 text-blue-primary md:flex-col lg:flex-row lg:pt-8 lg:pb-4 max-w-[1000px] lg:mx-auto lg:justify-evenly">
         
         {/* Logo and Text Section */}
-        <div className="justify-evenly md:m-8 md:flex md:flex-row md:space-x-8 lg:w-1/3 lg:flex-col lg:space-x-0 lg:space-y-4">
+        <div className="justify-evenly md:flex md:flex-row md:space-x-0 lg:w-1/3 lg:flex-col lg:space-x-0 md:space-y-4 lg:place-self-start md:py-4 lg:py-0">
           <Image
             src="https://assets.dentistswhoinvest.com/DWI_initials_logo_41a62b9b9a/DWI_initials_logo_41a62b9b9a.webp"
             alt="logo"
@@ -91,7 +93,7 @@ export default function Footer() {
         </div>
 
         {/* Links Section */}
-        <div className="hidden grow flex-row content-center justify-center space-x-28 self-center justify-self-center md:flex lg:space-x-8">
+        <div className="hidden grow flex-row content-center lg:justify-end space-x-28 self-center justify-self-center md:flex lg:space-x-8">
           
           {/* Explore Links */}
           <div className="text-center">
