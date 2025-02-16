@@ -74,7 +74,7 @@ export const ViewMoreCard = ({
 
   return (
     <>
-      <div className="m-6 flex h-[92%] w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white shadow-custom lg:w-[430px]">
+      <div className="m-6 flex sm:h-fit md:h-[92%] w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white shadow-custom lg:w-[430px]">
         <Link href={`/${hrefStarter}/${slug}`}>
           <Image
             src={
@@ -95,7 +95,7 @@ export const ViewMoreCard = ({
           </p>
           {hrefStarter === "article" && (
             <div
-              className="grow text-base text-grey-primary"
+              className="md:grow text-base text-grey-primary"
               key={page.attributes.excerpt}
               dangerouslySetInnerHTML={{
                 __html: trimmedExcerpt,
@@ -103,7 +103,7 @@ export const ViewMoreCard = ({
             />
           )}
           {hrefStarter === "videos" && (
-            <div className="grow text-base text-grey-primary">
+            <div className="md:grow text-base text-grey-primary">
               {" "}
               {page.attributes.description}
             </div>
