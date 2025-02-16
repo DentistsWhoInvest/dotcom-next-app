@@ -66,11 +66,11 @@ export default function VideoPage({
           <div className="m-4 aspect-video">
             <iframe
               src={`https://player.vimeo.com/video/${videoUri}`}
-              width="640"
-              height="360"
+              width="1920"
+              height="1080"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
-              className="left-0 top-0 size-full"
+              className="left-0 top-0 h-full max-w-[91%] md:max-w-[95%] lg:max-w-full"
             ></iframe>
           </div>
           <h2 className="mx-6 mt-6 text-xl font-bold text-blue-primary md:text-3xl">
