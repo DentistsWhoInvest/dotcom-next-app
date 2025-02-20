@@ -11,9 +11,6 @@ interface StoreIntroProps {
 
 export const getStaticProps = async () => {
   const pageData = await fetchEndpointData("/page-store-intro");
-  console.log(`pageData: \n`, pageData);
-  console.log(`introCopy: \n`, pageData.data.attributes.intro_copy);
-  console.log(`introCopy 0 children: \n`, pageData.data.attributes.intro_copy[0].children);
   return {
     props: {
       introCopy: pageData.data.attributes.intro_copy,
@@ -27,9 +24,7 @@ export const getStaticProps = async () => {
 
 export default function StoreIntro({ introCopy, ctaCopy, introVideo }: StoreIntroProps) {
   return (
-      <main
-        className={`w-screen h-screen bg-gradient-to-b from-blue-secondary to-blue-primary `}
-      >
+      <main className={`w-screen min-h-screen bg-gradient-to-b from-blue-secondary to-blue-primary flex flex-col justify-center`}>
         <section className="p-[20px] size-full flex flex-col content-center place-content-center items-center justify-items-center xl:max-w-[1440px] xl:mx-auto">
           <div className="text-center  text-white">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">{introCopy[0].children[0].text}</h1>

@@ -23,8 +23,8 @@ export const getStaticProps = async () => {
 
 export default function StoreTutorial({ tutorialCopy, ctaCopy, video, ctaNavigationUrl }: StoreTutorialProps) {
   return (
-    <main className="w-screen h-screen bg-gradient-to-b from-blue-secondary to-blue-primary flex items-center justify-center">
-      <section className="p-[20px] text-center text-white max-w-[1140px]">
+    <main className={`w-screen min-h-screen bg-gradient-to-b from-blue-secondary to-blue-primary flex flex-col justify-center`}>
+      <section className="p-[20px] text-white size-full flex flex-col content-center place-content-center items-center justify-items-center xl:max-w-[1440px] xl:mx-auto">
         {/* Dynamic Intro Copy */}
         <p className="font-bold md:text-[45px] md:leading-[54px] pb-[20px] text-[31px] leading-[43.4px]">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">{tutorialCopy[0].children[0].text}</h1>
