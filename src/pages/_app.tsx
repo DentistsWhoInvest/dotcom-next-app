@@ -36,7 +36,9 @@ export default function App({ Component, pageProps }: AppProps) {
     "/free-nhs-checklist",
     "/subscribe-to-our-newsletter",
     "/congrats",
-    "/instagramreport"
+    "/instagramreport",
+    "/dwimarket",
+    "/dwimarket-tutorial"
   ];
 
   const showHeaderAndFooter = !noHeaderOrFooterRoute.includes(router.pathname);

@@ -17,6 +17,7 @@ const menuLinksList: MenuLink[] = [
   { href: "/podcast/1/", text: "Podcast", category: "podcast" },
   { href: "/articles/1/", text: "Articles", category: "articles" },
   { href: "/courses/", text: "Courses" },
+  { href: "/dwimarket/", text: "Store" },
   { href: "/videos/", text: "Videos" },
   { href: "/contact/", text: "Contact" },
 ];
@@ -122,15 +123,6 @@ export default function Header() {
 
         <ul className="hidden flex-row items-center md:flex lg:mr-32">
           <MenuLinks menuLinksList={menuLinksList} />
-          <li>
-            <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <Link href={"https://www.dwimarket.com/"}>
-                <button className="m-2 rounded-md bg-orange-600 px-4 py-3 font-bold text-white transform hover:scale-105 transition duration-200 ease-in-out">
-                  Store
-                </button>
-              </Link>
-            </div>
-          </li>
           <li>
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
               <Link href={"https://courses.dentistswhoinvest.com/login"}>
