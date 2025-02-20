@@ -16,7 +16,6 @@ const menuLinksList: MenuLink[] = [
   { href: "/about/", text: "About" },
   { href: "/podcast/1/", text: "Podcast", category: "podcast" },
   { href: "/articles/1/", text: "Articles", category: "articles" },
-  { href: "https://www.dwimarket.com/", text: "Store" },
   { href: "/courses/", text: "Courses" },
   { href: "/dwimarket/", text: "Store" },
   { href: "/videos/", text: "Videos/CPD" },
