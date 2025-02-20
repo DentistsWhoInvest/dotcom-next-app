@@ -27,13 +27,13 @@ export default function StoreTutorial({ tutorialCopy, ctaCopy, video, ctaNavigat
       <section className="p-[20px] text-center text-white max-w-[1140px]">
         {/* Dynamic Intro Copy */}
         <p className="font-bold md:text-[45px] md:leading-[54px] pb-[20px] text-[31px] leading-[43.4px]">
-          <h1 style={{ fontSize: '4rem', fontWeight: 'bold' }}>{tutorialCopy[0].children[0].text}</h1>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">{tutorialCopy[0].children[0].text}</h1>
         </p>
 
         {/* Video Player if Available */}
         {video && (
-          <video controls className="w-full max-w-2xl mx-auto mb-6">
-            <source src="https://assets.dentistswhoinvest.com/manually_managed_assets/store_tutorial.mp4" type="video/mp4" />
+          <video controls className="w-full max-w-5xl mx-auto mb-6" poster="https://assets.dentistswhoinvest.com/manually_managed_assets/tutorial-poster.webp">
+            <source src="https://assets.dentistswhoinvest.com/manually_managed_assets/store_tutorial.mp4" type="video/mp4"/>
             Your browser does not support the video tag.
           </video>
         )}
