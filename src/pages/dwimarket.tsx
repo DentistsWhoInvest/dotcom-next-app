@@ -34,7 +34,7 @@ export default function StoreIntro({ introCopy, ctaCopy, introVideo }: StoreIntr
           
           {/* Video Player if Available */}
           {introVideo && (
-            <video controls className="w-full max-w-[60rem] mx-auto mb-8" poster="https://assets.dentistswhoinvest.com/manually_managed_assets/intro-poster.webp">
+            <video controls className="w-full max-w-3xl mx-auto mb-8" poster="https://assets.dentistswhoinvest.com/manually_managed_assets/intro-poster.webp">
               <source src={introVideo.data.attributes.url} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
