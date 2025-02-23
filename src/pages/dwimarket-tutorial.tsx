@@ -26,7 +26,7 @@ export default function StoreTutorial({ tutorialCopy, ctaCopy, video, ctaNavigat
     <main className={`w-screen min-h-screen bg-gradient-to-b from-blue-secondary to-blue-primary flex flex-col justify-center`}>
       <section className="p-[20px] text-white size-full flex flex-col content-center place-content-center items-center justify-items-center xl:max-w-[1440px] xl:mx-auto">
         {/* Dynamic Intro Copy */}
-        <p className="font-bold md:text-[45px] md:leading-[54px] pb-[20px] text-[31px] leading-[43.4px]">
+        <p className="font-bold md:text-[45px] md:leading-[54px] pb-[20px] text-[31px] leading-[43.4px] text-center">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold">{tutorialCopy[0].children[0].text}</h1>
         </p>
 
@@ -40,7 +40,7 @@ export default function StoreTutorial({ tutorialCopy, ctaCopy, video, ctaNavigat
 
         {/* CTA Button */}
         <Link href={ctaNavigationUrl} passHref>
-          <button className="bg-orange-400 py-[15px] px-[30px] text-[25px] md:text-[45px] text-white">
+          <button className="bg-orange-400 py-[10px] px-[20px] lg:px-[30px] text-[20px] md:text-[45px] text-white">
             {ctaCopy}
           </button>
         </Link>
