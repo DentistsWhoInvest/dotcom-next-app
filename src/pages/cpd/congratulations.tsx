@@ -171,7 +171,6 @@ export default function Congratulations({
       email: email,
       answers: reflectionAnswers,
       duration: pageData.course_duration,
-      reflectionAnswers
     }
     console.log({formData})
 
