@@ -89,6 +89,7 @@ type QuizCongratulations = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  course_duration: string;
   form_horizontal_banner: Banner;
   page_metadata: PageMetadata;
 };
@@ -161,7 +162,20 @@ export default function Congratulations({
 
   const { reflectionAnswers } = useQuizStore();
 
-  function sendForm() {}
+  function sendForm() {
+
+    const formData = {
+      first_name: firstName,
+      last_name: lastName,
+      gdc_number: gdcNumber,
+      email: email,
+      answers: reflectionAnswers,
+      duration: pageData.course_duration,
+      reflectionAnswers
+    }
+    console.log({formData})
+
+  }
 
   return (
     <>

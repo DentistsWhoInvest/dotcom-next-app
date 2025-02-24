@@ -27,7 +27,7 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = ["horizontal_banner", "horizontal_banner.cover_image"];
+  const populateFields = ["horizontal_banner", "horizontal_banner.cover_image", "cpd_course"];
   const allVideos = await fetchEndpointData(`/videos`, populateFields);
   const matchingVideo = allVideos.data.find(
     (video: { attributes: { name: string } }) =>
@@ -57,7 +57,7 @@ export default function VideoPage({
 
   // temp until we have the show_cpd_quiz attribute
   // const showCPDQuiz = pageData.attributes.show_cpd_quiz;
-  const showCPDQuiz = true;
+  const showCPDQuiz = !!pageData.attributes.cpd_course;
 
   return (
     <>
