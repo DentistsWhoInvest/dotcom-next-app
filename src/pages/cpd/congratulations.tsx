@@ -169,7 +169,7 @@ export default function Congratulations({
       last_name: lastName,
       gdc_number: gdcNumber,
       email: email,
-      answers: reflectionAnswers,
+      reflections: reflectionAnswers,
       duration: pageData.course_duration,
     }
     console.log({formData})

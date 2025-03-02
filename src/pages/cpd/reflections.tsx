@@ -175,9 +175,9 @@ export default function Reflections({
                 <textarea
                   className="h-32 w-full border-2 border-blue-primary p-4"
                   placeholder=""
-                  value={reflectionAnswers[question.id] || ""}
+                  value={reflectionAnswers[question.id]?.answer || ""}
                   onChange={(e) =>
-                    setReflectionAnswers(question.id, e.target.value)
+                    setReflectionAnswers(question.id, question.reflection_question, e.target.value)
                   }
                 ></textarea>
               </div>

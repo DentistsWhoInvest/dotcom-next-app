@@ -4,8 +4,8 @@ type QuizState = {
   selectedAnswers: Record<number, number>; // Maps question ID to selected answer ID
   setAnswer: (questionId: number, answerId: number) => void;
   resetAnswers: () => void;
-  reflectionAnswers: Record<number, string>; // Store answers keyed by question ID
-  setReflectionAnswers: (questionId: number, answer: string) => void;
+  reflectionAnswers: Record<number, { question: string; answer: string }>
+  setReflectionAnswers: (questionId: number, question: string, answer: string) => void;
 };
 
 export const useQuizStore = create<QuizState>((set) => ({
@@ -16,8 +16,8 @@ export const useQuizStore = create<QuizState>((set) => ({
     })),
   resetAnswers: () => set({ selectedAnswers: {} }),
   reflectionAnswers: {},
-  setReflectionAnswers: (questionId, answer) =>
+  setReflectionAnswers: (questionId, question, answer) =>
     set((state) => ({
-      reflectionAnswers: { ...state.reflectionAnswers, [questionId]: answer },
+      reflectionAnswers: { ...state.reflectionAnswers, [questionId]: {question, answer} },
     })),
 }));
