@@ -58,8 +58,6 @@ export default function VideoPage({
   // temp until we have the show_cpd_quiz attribute
   // const showCPDQuiz = pageData.attributes.show_cpd_quiz;
   const showCPDQuiz = !pageData.attributes.cpd_course;
-  console.log("showCPDQuiz", showCPDQuiz);
-  console.log("cpd course", pageData.attributes.cpd_course);
 
   return (
     <>

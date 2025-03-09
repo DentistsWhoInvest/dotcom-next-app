@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import type { Video } from "../../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
@@ -140,11 +140,19 @@ export default function Congratulations({
   pageData: QuizCongratulations;
 }) {
   // add use effect to redirect if answers and reflections are not filled out
+  const { reflectionAnswers } = useQuizStore();
+
+  useEffect(() => {
+    if (Object.keys(reflectionAnswers).length === 0) {
+      window.location.href = `/cpd/${pageData.id}/reflections`;
+    }
+  });
 
   const [firstName, setFirstName] = useState<string | "">("");
   const [lastName, setLastName] = useState<string | "">("");
-  const [gdcNumber, setGDCNumber] = useState<string | "">("");
+  const [gdcNumberEntry, setGDCNumberEntry] = useState<string | "">("");
   const [email, setEmail] = useState<string | "">("");
+  const gdcNumber = Number(gdcNumberEntry)
 
   const [error, setError] = useState<ShowErrorObject | null>(null);
 
@@ -175,6 +183,9 @@ export default function Congratulations({
     } else if (!gdcNumber) {
       setError({ type: "gdc", message: "Please enter your GDC Number" });
       isError = true;
+    } else if (isNaN(gdcNumber)) {
+      setError({ type: "gdc", message: "Please enter a valid GDC Number" });
+      isError = true;
     } else if (!email) {
       setError({ type: "email", message: "An Email is required" });
       isError = true;
@@ -184,9 +195,6 @@ export default function Congratulations({
     }
     return isError;
   };
-
-  const { reflectionAnswers } = useQuizStore();
-
   async function sendForm() {
     setIsLoading(true);
 
@@ -214,7 +222,6 @@ export default function Congratulations({
       learningObjectives: learningObjectives,
       reflections: formattedReflectionAnswers,
     };
-    console.log("formdata", formData);
     // try {
     //   const response = await fetch(
     //     "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/pdf-generator/generate-pdf",
@@ -278,9 +285,9 @@ export default function Congratulations({
               />
 
               <TextInput
-                string={gdcNumber}
+                string={gdcNumberEntry}
                 placeholder="GDC Number"
-                onUpdate={setGDCNumber}
+                onUpdate={setGDCNumberEntry}
                 inputType="text"
                 error={showError("gdc")}
               />

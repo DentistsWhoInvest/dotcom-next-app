@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect } from "react";
 import Head from "next/head";
 import type { Video } from "../../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
@@ -112,7 +112,7 @@ type QuizReflectionsAttributes = {
   updatedAt: string;
   publishedAt: string;
   reflections_horizontal_banner: Banner;
-  page_metadata: PageMetadata
+  page_metadata: PageMetadata;
 };
 
 type QuizReflections = {
@@ -136,7 +136,7 @@ export const getStaticProps = async () => {
     "reflections_horizontal_banner.cover_image",
     "reflections",
     "reflections.reflection_question",
-    "page_metadata"
+    "page_metadata",
   ];
   const CPDQuestions = await fetchEndpointData(
     `/cpd-courses/1`,
@@ -155,13 +155,21 @@ export default function Reflections({
 }: {
   pageData: QuizReflections;
 }) {
-  const { reflectionAnswers, setReflectionAnswers } = useQuizStore();
+  const { selectedAnswers, reflectionAnswers, setReflectionAnswers } =
+    useQuizStore();
   const [error, setError] = React.useState<boolean>(false);
 
-  // todo add a use effect to redirect if original answers weren't there
+  useEffect(() => {
+    if (Object.keys(selectedAnswers).length === 0) {
+      window.location.href = `/cpd/${pageData.id}/quiz`;
+    }
+  });
 
   const handleSubmitQuiz = () => {
-    if (Object.keys(reflectionAnswers).length !== pageData.attributes.reflections.length) {
+    if (
+      Object.keys(reflectionAnswers).length !==
+      pageData.attributes.reflections.length
+    ) {
       setError(true);
       return;
     } else {
@@ -172,8 +180,11 @@ export default function Reflections({
   return (
     <>
       <Head>
-      <title>{pageData.attributes.page_metadata.title}</title>
-      <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <title>{pageData.attributes.page_metadata.title}</title>
+        <meta
+          name="description"
+          content={pageData.attributes.page_metadata.description}
+        />
       </Head>
 
       <section className="w-full bg-gray-50">
@@ -193,7 +204,11 @@ export default function Reflections({
                   placeholder=""
                   value={reflectionAnswers[question.id]?.answer || ""}
                   onChange={(e) =>
-                    setReflectionAnswers(question.id, question.reflection_question, e.target.value)
+                    setReflectionAnswers(
+                      question.id,
+                      question.reflection_question,
+                      e.target.value
+                    )
                   }
                 ></textarea>
               </div>
@@ -215,17 +230,18 @@ export default function Reflections({
             <div className="pb-20">
               <Link
                 href={
-                  pageData.attributes.reflections_horizontal_banner.data.attributes
-                    .navigation_url
+                  pageData.attributes.reflections_horizontal_banner.data
+                    .attributes.navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.attributes.reflections_horizontal_banner.data.attributes
-                      .cover_image.data.attributes.url
+                    pageData.attributes.reflections_horizontal_banner.data
+                      .attributes.cover_image.data.attributes.url
                   }
                   alt={
-                    pageData.attributes.reflections_horizontal_banner.data.attributes.title
+                    pageData.attributes.reflections_horizontal_banner.data
+                      .attributes.title
                   }
                   width={1200}
                   height={400}
