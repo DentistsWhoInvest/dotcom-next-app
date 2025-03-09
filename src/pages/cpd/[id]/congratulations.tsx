@@ -84,6 +84,7 @@ type PageMetadata = {
 };
 
 type QuizCongratulationsAttributes = {
+  aims: any;
   course_name: string;
   form_id: number;
   createdAt: string;
@@ -160,6 +161,7 @@ export default function Congratulations({
 
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+    // todo: add case where it's not numbers
     if (!firstName) {
       setError({ type: "firstname", message: "Please enter your first name" });
       isError = true;
@@ -183,16 +185,31 @@ export default function Congratulations({
 
   function sendForm() {
 
-    const formData = {
-      first_name: firstName,
-      last_name: lastName,
-      gdc_number: gdcNumber,
-      email: email,
-      reflections: reflectionAnswers,
-      duration: pageData.attributes.course_duration,
+    const learningObjectives = pageData.attributes.aims.flatMap((aim: any) =>
+      aim.children.flatMap((listItem: any) =>
+        listItem.children.map((child: any) => child.text)
+      )
+    );
 
+    const formattedReflectionAnswers = Object.values(reflectionAnswers).map(({ question, answer }) => ({
+      question,
+      answer,
+    }));
+
+    const formData = {
+      firstName: firstName,
+      lastName: lastName,
+      GDC_number: gdcNumber,
+      courseName: pageData.attributes.course_name,
+      courseId: pageData.id,
+      emailAddress: email,
+      duration: pageData.attributes.course_duration,
+      learningObjectives: learningObjectives,
+      reflections: formattedReflectionAnswers,
     }
-    console.log({formData})
+    console.log("formdata", formData);
+
+    
 
   }
 
