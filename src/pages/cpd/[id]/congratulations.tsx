@@ -83,7 +83,7 @@ type PageMetadata = {
   description: string;
 };
 
-type QuizCongratulations = {
+type QuizCongratulationsAttributes = {
   course_name: string;
   form_id: number;
   createdAt: string;
@@ -93,6 +93,12 @@ type QuizCongratulations = {
   form_horizontal_banner: Banner;
   page_metadata: PageMetadata;
 };
+
+type QuizCongratulations = {
+  id: number;
+  attributes: QuizCongratulationsAttributes;
+};
+
 interface ShowErrorObject {
   type: string;
   message: string;
@@ -100,7 +106,6 @@ interface ShowErrorObject {
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/cpd-courses`);
-  console.log("results", results);
   return {
     paths: results.data.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
@@ -122,7 +127,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      pageData: CPDQuestions.data.attributes,
+      pageData: CPDQuestions.data,
     },
   };
 };
@@ -132,6 +137,9 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
+
+  // add use effect to redirect if answers and reflections are not filled out
+
   const [firstName, setFirstName] = useState<string | "">("");
   const [lastName, setLastName] = useState<string | "">("");
   const [gdcNumber, setGDCNumber] = useState<string | "">("");
@@ -181,18 +189,21 @@ export default function Congratulations({
       gdc_number: gdcNumber,
       email: email,
       reflections: reflectionAnswers,
-      duration: pageData.course_duration,
+      duration: pageData.attributes.course_duration,
 
     }
     console.log({formData})
 
   }
 
+
+  // add spinner while form is submitting
+
   return (
     <>
       <Head>
-        <title>{pageData.page_metadata.title}</title>
-        <meta name="description" content={pageData.page_metadata.description} />
+        <title>{pageData.attributes.page_metadata.title}</title>
+        <meta name="description" content={pageData.attributes.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Congratulations" />
@@ -261,20 +272,20 @@ export default function Congratulations({
           </div>
 
           <div className="lg:mx-auto lg:max-w-[1000px]">
-            {pageData.form_horizontal_banner.data && (
+            {pageData.attributes.form_horizontal_banner.data && (
               <div className="mx-3 pb-20 lg:mx-0">
                 <Link
                   href={
-                    pageData.form_horizontal_banner.data.attributes
+                    pageData.attributes.form_horizontal_banner.data.attributes
                       .navigation_url
                   }
                 >
                   <Image
                     src={
-                      pageData.form_horizontal_banner.data.attributes
+                      pageData.attributes.form_horizontal_banner.data.attributes
                         .cover_image.data.attributes.url
                     }
-                    alt={pageData.form_horizontal_banner.data.attributes.title}
+                    alt={pageData.attributes.form_horizontal_banner.data.attributes.title}
                     width={1200}
                     height={400}
                     layout="responsive"

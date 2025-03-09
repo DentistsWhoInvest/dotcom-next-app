@@ -103,7 +103,7 @@ type PageMetadata = {
   title: string;
   description: string;
 };
-type QuizQuestions = {
+type QuizQuestionsAttributes = {
   course_name: string;
   aims: List[];
   course_duration: string;
@@ -114,12 +114,15 @@ type QuizQuestions = {
   quiz_horizontal_banner: Banner;
   quiz_questions: Question[];
   page_metadata: PageMetadata
+};
 
+type QuizQuestions = {
+  id: number;
+  attributes: QuizQuestionsAttributes; 
 };
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/cpd-courses`);
-  console.log("results", results);
   return {
     paths: results.data.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
@@ -143,7 +146,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      pageData: CPDQuestions.data.attributes,
+      pageData: CPDQuestions.data,
     },
   };
 };
@@ -160,25 +163,25 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
 
   const handleSubmitQuiz = () => {
     if (
-      Object.keys(selectedAnswers).length !== pageData.quiz_questions.length
+      Object.keys(selectedAnswers).length !== pageData.attributes.quiz_questions.length
     ) {
       setError(true);
       return;
     } else {
-      Router.push("/cpd/results");
+      Router.push(`/cpd/${pageData.id}/results`);
     }
   };
 
   return (
     <>
       <Head>
-      <title>{pageData.page_metadata.title}</title>
-        <meta name="description" content={pageData.page_metadata.description} />
+      <title>{pageData.attributes.page_metadata.title}</title>
+        <meta name="description" content={pageData.attributes.page_metadata.description} />
       </Head>
       <section className="bg-gray-50 ">
         <CPDPagesHeader title="Quiz" />
         <section className="mx-3 mt-8 flex flex-col justify-start space-y-8 md:mt-20 lg:mx-auto lg:max-w-[1000px]">
-          {pageData.quiz_questions.map((q, index) => (
+          {pageData.attributes.quiz_questions.map((q, index) => (
             <div key={q.id}>
               <p className="mb-2 text-[18px] font-semibold">
                 {q.id}. {q.question}
@@ -229,19 +232,19 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
             </button>
           </div>
 
-          {pageData.quiz_horizontal_banner.data && (
+          {pageData.attributes.quiz_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.quiz_horizontal_banner.data.attributes.navigation_url
+                  pageData.attributes.quiz_horizontal_banner.data.attributes.navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.quiz_horizontal_banner.data.attributes.cover_image
+                    pageData.attributes.quiz_horizontal_banner.data.attributes.cover_image
                       .data.attributes.url
                   }
-                  alt={pageData.quiz_horizontal_banner.data.attributes.title}
+                  alt={pageData.attributes.quiz_horizontal_banner.data.attributes.title}
                   width={1200}
                   height={400}
                   layout="responsive"

@@ -98,7 +98,7 @@ type PageMetadata = {
   description: string;
 };
 
-type QuizAims = {
+type QuizAimsAttributes = {
   course_name: string;
   aims: any;
   course_duration: string;
@@ -109,14 +109,17 @@ type QuizAims = {
   page_metadata: PageMetadata;
 };
 
+type QuizAims = {
+  id: number;
+  attributes: QuizAimsAttributes;
+};
+
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/cpd-courses`);
-  console.log("results", results);
   return {
     paths: results.data.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
-
     fallback: false,
   };
 };
@@ -134,7 +137,7 @@ export const getStaticProps = async ({params}: any) => {
 
   return {
     props: {
-      pageData: CPDQuestions.data.attributes,
+      pageData: CPDQuestions.data,
     },
   };
 };
@@ -143,8 +146,8 @@ export default function Aims({ pageData }: { pageData: QuizAims }) {
   return (
     <>
       <Head>
-        <title>{pageData.page_metadata.title}</title>
-        <meta name="description" content={pageData.page_metadata.description} />
+        <title>{pageData.attributes.page_metadata.title}</title>
+        <meta name="description" content={pageData.attributes.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Description" />
@@ -157,34 +160,34 @@ export default function Aims({ pageData }: { pageData: QuizAims }) {
                   size={20}
                   className="mr-2 place-self-center text-blue-secondary md:ml-8"
                 />{" "}
-                {pageData.course_duration} Verifiable CPD/CE
+                {pageData.attributes.course_duration} Verifiable CPD/CE
               </span>
             </div>
             <ul className="show-bulleted-disc flex flex-col gap-2">
-              <BlocksRenderer key="1" content={pageData.aims} />
+              <BlocksRenderer key="1" content={pageData.attributes.aims} />
             </ul>
           </div>
 
-          <Link href={"/cpd/quiz"} className="">
+          <Link href={`/cpd/${pageData.id}/quiz`} className="">
             <button className="mt-12 rounded-md bg-orange-600 px-6 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105">
               TAKE THE CPD/CE QUIZ
             </button>
           </Link>
-          {pageData.overview_horizontal_banner.data && (
+          {pageData.attributes.overview_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.overview_horizontal_banner.data.attributes
+                  pageData.attributes.overview_horizontal_banner.data.attributes
                     .navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.overview_horizontal_banner.data.attributes
+                    pageData.attributes.overview_horizontal_banner.data.attributes
                       .cover_image.data.attributes.url
                   }
                   alt={
-                    pageData.overview_horizontal_banner.data.attributes.title
+                    pageData.attributes.overview_horizontal_banner.data.attributes.title
                   }
                   width={1200}
                   height={400}

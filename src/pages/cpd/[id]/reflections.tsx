@@ -104,7 +104,7 @@ type PageMetadata = {
   description: string;
 };
 
-type QuizReflections = {
+type QuizReflectionsAttributes = {
   course_name: string;
   reflections: Reflections[];
   course_duration: string;
@@ -113,12 +113,15 @@ type QuizReflections = {
   publishedAt: string;
   reflections_horizontal_banner: Banner;
   page_metadata: PageMetadata
+};
 
+type QuizReflections = {
+  id: number;
+  attributes: QuizReflectionsAttributes;
 };
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/cpd-courses`);
-  console.log("results", results);
   return {
     paths: results.data.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
@@ -142,7 +145,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      pageData: CPDQuestions.data.attributes,
+      pageData: CPDQuestions.data,
     },
   };
 };
@@ -155,20 +158,22 @@ export default function Reflections({
   const { reflectionAnswers, setReflectionAnswers } = useQuizStore();
   const [error, setError] = React.useState<boolean>(false);
 
+  // todo add a use effect to redirect if original answers weren't there
+
   const handleSubmitQuiz = () => {
-    if (Object.keys(reflectionAnswers).length !== pageData.reflections.length) {
+    if (Object.keys(reflectionAnswers).length !== pageData.attributes.reflections.length) {
       setError(true);
       return;
     } else {
-      Router.push("/cpd/congratulations");
+      Router.push(`/cpd/${pageData.id}/congratulations`);
     }
   };
 
   return (
     <>
       <Head>
-      <title>{pageData.page_metadata.title}</title>
-      <meta name="description" content={pageData.page_metadata.description} />
+      <title>{pageData.attributes.page_metadata.title}</title>
+      <meta name="description" content={pageData.attributes.page_metadata.description} />
       </Head>
 
       <section className="w-full bg-gray-50">
@@ -178,7 +183,7 @@ export default function Reflections({
             Please complete your reflections to receive your CPD/CE
           </div>
           <div className="space-y-4">
-            {pageData.reflections.map((question, index) => (
+            {pageData.attributes.reflections.map((question, index) => (
               <div key={index + 1} className="space-y-2">
                 <div className="mx-2 pb-4">
                   {index + 1}. {question.reflection_question}
@@ -206,21 +211,21 @@ export default function Reflections({
             </button>
           </div>
 
-          {pageData.reflections_horizontal_banner.data && (
+          {pageData.attributes.reflections_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.reflections_horizontal_banner.data.attributes
+                  pageData.attributes.reflections_horizontal_banner.data.attributes
                     .navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.reflections_horizontal_banner.data.attributes
+                    pageData.attributes.reflections_horizontal_banner.data.attributes
                       .cover_image.data.attributes.url
                   }
                   alt={
-                    pageData.reflections_horizontal_banner.data.attributes.title
+                    pageData.attributes.reflections_horizontal_banner.data.attributes.title
                   }
                   width={1200}
                   height={400}

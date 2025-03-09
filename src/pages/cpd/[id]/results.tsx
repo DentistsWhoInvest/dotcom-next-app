@@ -103,7 +103,7 @@ type PageMetadata = {
   title: string;
   description: string;
 };
-type QuizResults = {
+type QuizResultsAttributes = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -111,12 +111,15 @@ type QuizResults = {
   quiz_result_fail_horizontal_banner: Banner;
   quiz_questions: Question[];
   page_metadata: PageMetadata
+};
 
+type QuizResults = {
+  id: number;
+  attributes: QuizResultsAttributes;
 };
 
 export const getStaticPaths = async () => {
   const results: any = await fetchEndpointData(`/cpd-courses`);
-  console.log("results", results);
   return {
     paths: results.data.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
@@ -142,7 +145,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      pageData: CPDQuestions.data.attributes,
+      pageData: CPDQuestions.data,
     },
   };
 };
@@ -150,25 +153,25 @@ export const getStaticProps = async () => {
 export default function Results({ pageData }: { pageData: QuizResults }) {
   const { selectedAnswers, resetAnswers } = useQuizStore();
 
-  const correctAnswers = pageData.quiz_questions.filter((q) =>
+  const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
     q.potential_answers.find((a) => a.is_correct && a.id === selectedAnswers[q.id])
   );
 
   const numberOfCorrectAnswers = correctAnswers.length;
 
   const isSuccessful =
-    numberOfCorrectAnswers >= pageData.quiz_questions.length / 2;
+    numberOfCorrectAnswers >= pageData.attributes.quiz_questions.length / 2;
 
   function handleRetake() {
     resetAnswers();
-    Router.push("/cpd/quiz");
+    Router.push(`/cpd/${pageData.id}/quiz`);
   }
 
   return (
     <>
       <Head>
-      <title>{pageData.page_metadata.title}</title>
-      <meta name="description" content={pageData.page_metadata.description} />
+      <title>{pageData.attributes.page_metadata.title}</title>
+      <meta name="description" content={pageData.attributes.page_metadata.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Results" />
@@ -182,7 +185,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
           >
             <span className="text-4xl font-semibold">
               {numberOfCorrectAnswers}/
-              {pageData.quiz_questions.length}
+              {pageData.attributes.quiz_questions.length}
             </span>
           </div>
           {isSuccessful && (
@@ -195,7 +198,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
                 below to complete your reflections and receive your CPD/CE
                 certificate.
               </p>
-              <Link href={"/cpd/reflections"} className="place-self-center">
+              <Link href={`/cpd/${pageData.id}/reflections`} className="place-self-center">
                 <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
                   COMPLETE REFLECTIONS
                 </button>
@@ -221,21 +224,21 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
               </button>
             </div>
           )}
-          {isSuccessful && pageData.quiz_result_pass_horizontal_banner.data && (
+          {isSuccessful && pageData.attributes.quiz_result_pass_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.quiz_result_pass_horizontal_banner.data.attributes
+                  pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes
                     .navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.quiz_result_pass_horizontal_banner.data.attributes
+                    pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes
                       .cover_image.data.attributes.url
                   }
                   alt={
-                    pageData.quiz_result_pass_horizontal_banner.data.attributes.title
+                    pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes.title
                   }
                   width={1200}
                   height={400}
@@ -245,21 +248,21 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
               </Link>
             </div>
           )}
-          {!isSuccessful && pageData.quiz_result_fail_horizontal_banner.data && (
+          {!isSuccessful && pageData.attributes.quiz_result_fail_horizontal_banner.data && (
             <div className="pb-20">
               <Link
                 href={
-                  pageData.quiz_result_fail_horizontal_banner.data.attributes
+                  pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes
                     .navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.quiz_result_fail_horizontal_banner.data.attributes
+                    pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes
                       .cover_image.data.attributes.url
                   }
                   alt={
-                    pageData.quiz_result_fail_horizontal_banner.data.attributes.title
+                    pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes.title
                   }
                   width={1200}
                   height={400}
