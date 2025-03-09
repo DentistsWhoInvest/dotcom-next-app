@@ -70,7 +70,9 @@ const config: Config = {
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			'spin-slow': 'spin 2.5s linear infinite',
+
   		}
   	}
   },

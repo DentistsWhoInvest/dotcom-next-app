@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import TextInput from "@/components/TextInput";
+import { BiLoaderCircle } from "react-icons/bi";
 
 type ImageFormat = {
   ext: string;
@@ -138,7 +139,6 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
-
   // add use effect to redirect if answers and reflections are not filled out
 
   const [firstName, setFirstName] = useState<string | "">("");
@@ -147,6 +147,10 @@ export default function Congratulations({
   const [email, setEmail] = useState<string | "">("");
 
   const [error, setError] = useState<ShowErrorObject | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] =
+    useState<boolean>(false);
 
   const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error?.type == type) {
@@ -183,7 +187,8 @@ export default function Congratulations({
 
   const { reflectionAnswers } = useQuizStore();
 
-  function sendForm() {
+  async function sendForm() {
+    setIsLoading(true);
 
     const learningObjectives = pageData.attributes.aims.flatMap((aim: any) =>
       aim.children.flatMap((listItem: any) =>
@@ -191,10 +196,12 @@ export default function Congratulations({
       )
     );
 
-    const formattedReflectionAnswers = Object.values(reflectionAnswers).map(({ question, answer }) => ({
-      question,
-      answer,
-    }));
+    const formattedReflectionAnswers = Object.values(reflectionAnswers).map(
+      ({ question, answer }) => ({
+        question,
+        answer,
+      })
+    );
 
     const formData = {
       firstName: firstName,
@@ -206,21 +213,41 @@ export default function Congratulations({
       duration: pageData.attributes.course_duration,
       learningObjectives: learningObjectives,
       reflections: formattedReflectionAnswers,
-    }
+    };
     console.log("formdata", formData);
-
-    
-
+    // try {
+    //   const response = await fetch(
+    //     "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/pdf-generator/generate-pdf",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData),
+    //     }
+    //   );
+    //   if (response.ok) {
+    //     console.log("success");
+    //     setIsLoading(false);
+    //     setHasSuccessfullySubmitted(true);
+    //   } else {
+    //     console.log("error");
+    //     setIsLoading(false);
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   setIsLoading(false);
+    // }
   }
-
-
-  // add spinner while form is submitting
 
   return (
     <>
       <Head>
         <title>{pageData.attributes.page_metadata.title}</title>
-        <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <meta
+          name="description"
+          content={pageData.attributes.page_metadata.description}
+        />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Congratulations" />
@@ -230,7 +257,9 @@ export default function Congratulations({
             <div className="mx-4 flex flex-col text-center text-2xl font-semibold text-blue-primary md:flex-row">
               Type your details below to receive your certificate via email
             </div>
-            <div className="mx-2 text-center text-sm lg:mx-0">(Please check your promotional or spam folder too)</div>
+            <div className="mx-2 text-center text-sm lg:mx-0">
+              (Please check your promotional or spam folder too)
+            </div>
             <div id="form" className="mt-2 flex w-full flex-col gap-2">
               <TextInput
                 string={firstName}
@@ -275,6 +304,19 @@ export default function Congratulations({
               </p>
             </div>
             <div className="mt-4 flex place-self-start">
+            {isLoading ? (
+              <div className="flex flex-col items-center gap-2">
+                <BiLoaderCircle className="animate-spin-slow" size="25" />
+                <p>
+                  We are generating your certificate, this may take a few
+                  seconds...
+                </p>
+              </div>
+            ) : hasSuccessfullySubmitted ? (
+              <p className="">
+                Your certificate has been sent! Please check your email.
+              </p>
+            ) : (
               <button
                 onClick={() => {
                   if (!validate()) {
@@ -283,8 +325,9 @@ export default function Congratulations({
                 }}
                 className="rounded-md bg-orange-600 px-8 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105"
               >
-                SUBMIT
+                Submit
               </button>
+            )}
             </div>
           </div>
 
@@ -302,7 +345,10 @@ export default function Congratulations({
                       pageData.attributes.form_horizontal_banner.data.attributes
                         .cover_image.data.attributes.url
                     }
-                    alt={pageData.attributes.form_horizontal_banner.data.attributes.title}
+                    alt={
+                      pageData.attributes.form_horizontal_banner.data.attributes
+                        .title
+                    }
                     width={1200}
                     height={400}
                     layout="responsive"
