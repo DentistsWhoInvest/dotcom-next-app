@@ -139,12 +139,11 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
-  // add use effect to redirect if answers and reflections are not filled out
   const { reflectionAnswers } = useQuizStore();
 
   useEffect(() => {
     if (Object.keys(reflectionAnswers).length === 0) {
-      window.location.href = `/cpd/${pageData.id}/reflections`;
+      window.location.href = `/cpd/${pageData.id}/aims`;
     }
   });
 

@@ -161,7 +161,7 @@ export default function Reflections({
 
   useEffect(() => {
     if (Object.keys(selectedAnswers).length === 0) {
-      window.location.href = `/cpd/${pageData.id}/quiz`;
+      window.location.href = `/cpd/${pageData.id}/aims`;
     }
   });
 
