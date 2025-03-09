@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import type { Video } from "../videos";
+import type { Video } from "../../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -112,6 +112,17 @@ type QuizResults = {
   quiz_questions: Question[];
   page_metadata: PageMetadata
 
+};
+
+export const getStaticPaths = async () => {
+  const results: any = await fetchEndpointData(`/cpd-courses`);
+  console.log("results", results);
+  return {
+    paths: results.data.map((result: { id: string }) => ({
+      params: { id: result.id.toString() },
+    })),
+    fallback: false,
+  };
 };
 
 export const getStaticProps = async () => {

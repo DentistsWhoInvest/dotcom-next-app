@@ -106,17 +106,29 @@ type QuizAims = {
   updatedAt: string;
   publishedAt: string;
   overview_horizontal_banner: Banner;
-  page_metadata: PageMetadata
+  page_metadata: PageMetadata;
 };
 
-export const getStaticProps = async () => {
+export const getStaticPaths = async () => {
+  const results: any = await fetchEndpointData(`/cpd-courses`);
+  console.log("results", results);
+  return {
+    paths: results.data.map((result: { id: string }) => ({
+      params: { id: result.id.toString() },
+    })),
+
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({params}: any) => {
   const populateFields = [
     "overview_horizontal_banner",
     "overview_horizontal_banner.cover_image",
-    "page_metadata"
+    "page_metadata",
   ];
   const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/1`,
+    `/cpd-courses/${params.id}`,
     populateFields
   );
 
@@ -139,9 +151,7 @@ export default function Aims({ pageData }: { pageData: QuizAims }) {
         <section className="mx-3 space-y-12 lg:mx-auto lg:max-w-[1000px]">
           <div className="privacy-policy mt-8 flex flex-col items-start justify-center gap-4 border-2 border-blue-primary bg-white px-2 pb-12 pt-8 md:mt-20 md:px-20">
             <div className="flex flex-col md:flex-row">
-              <span className="font-semibold ">
-                Aims & Objectives:
-              </span>
+              <span className="font-semibold ">Aims & Objectives:</span>
               <span className="flex flex-row text-blue-secondary">
                 <Clock
                   size={20}
@@ -151,7 +161,7 @@ export default function Aims({ pageData }: { pageData: QuizAims }) {
               </span>
             </div>
             <ul className="show-bulleted-disc flex flex-col gap-2">
-                <BlocksRenderer key="1" content={pageData.aims} />
+              <BlocksRenderer key="1" content={pageData.aims} />
             </ul>
           </div>
 
