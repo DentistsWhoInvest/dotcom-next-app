@@ -157,7 +157,9 @@ export default function Reflections({
 }) {
   const { selectedAnswers, reflectionAnswers, setReflectionAnswers } =
     useQuizStore();
+
   const [error, setError] = React.useState<boolean>(false);
+  const [errorType, setErrorType] = React.useState<string>("");
 
   useEffect(() => {
     if (Object.keys(selectedAnswers).length === 0) {
@@ -166,10 +168,26 @@ export default function Reflections({
   });
 
   const handleSubmitQuiz = () => {
+    setErrorType("");
+    setError(false);
+    const hasEmptyAnswer = Object.values(reflectionAnswers).some(
+      (reflection) => reflection.answer.length === 0
+    );
     if (
       Object.keys(reflectionAnswers).length !==
-      pageData.attributes.reflections.length
+        pageData.attributes.reflections.length ||
+      hasEmptyAnswer
     ) {
+      setErrorType("missingreflection");
+      setError(true);
+      return;
+    }
+    const hasTooLongAnswer = Object.values(reflectionAnswers).some(
+      (reflection) => reflection.answer.length > 350
+    );
+
+    if (hasTooLongAnswer) {
+      setErrorType("toolong");
       setError(true);
       return;
     } else {
@@ -226,9 +244,14 @@ export default function Reflections({
               </div>
             ))}
           </div>
-          {error && (
-            <p className="text-red-500">Please select answer each question</p>
-          )}
+          {error &&
+            (errorType === "toolong" ? (
+              <p className="text-red-500">
+                Please limit your answers to 350 characters.
+              </p>
+            ) : (
+              <p className="text-red-500">Please answer each question.</p>
+            ))}
           <div>
             <button
               onClick={() => handleSubmitQuiz()}
