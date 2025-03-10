@@ -189,18 +189,18 @@ export default function Reflections({
 
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Reflections" />
-        <section className="mx-3 mt-12 flex flex-col justify-start space-y-12 lg:mx-auto lg:max-w-[1000px]">
+        <section className="mx-3 mt-12 flex flex-col justify-start space-y-8 lg:mx-auto lg:max-w-[1000px]">
           <div className="font-semibold">
             Please complete your reflections to receive your CPD/CE
           </div>
           <div className="space-y-4">
             {pageData.attributes.reflections.map((question, index) => (
               <div key={index + 1} className="space-y-2">
-                <div className="mx-2 pb-4">
+                <div className="mx-2 pb-2">
                   {index + 1}. {question.reflection_question}
                 </div>
                 <textarea
-                  className="h-32 w-full border-2 border-blue-primary p-4"
+                  className="h-[170px] w-full border-2 border-blue-primary p-4 lg:h-32"
                   placeholder=""
                   value={reflectionAnswers[question.id]?.answer || ""}
                   onChange={(e) =>
@@ -211,6 +211,18 @@ export default function Reflections({
                     )
                   }
                 ></textarea>
+                <div
+                  className={`flex justify-end text-sm ${
+                    reflectionAnswers[question.id]?.answer.length > 350
+                      ? "text-red-500"
+                      : "text-gray-600"
+                  }`}
+                >
+                  {reflectionAnswers[question.id]?.answer
+                    ? reflectionAnswers[question.id]?.answer.length
+                    : 0}{" "}
+                  / 350
+                </div>
               </div>
             ))}
           </div>
