@@ -221,29 +221,29 @@ export default function Congratulations({
       learningObjectives: learningObjectives,
       reflections: formattedReflectionAnswers,
     };
-    // try {
-    //   const response = await fetch(
-    //     "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/pdf-generator/generate-pdf",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(formData),
-    //     }
-    //   );
-    //   if (response.ok) {
-    //     console.log("success");
-    //     setIsLoading(false);
-    //     setHasSuccessfullySubmitted(true);
-    //   } else {
-    //     console.log("error");
-    //     setIsLoading(false);
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   setIsLoading(false);
-    // }
+    try {
+      const response = await fetch(
+        "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/pdf-generator/generate-pdf",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (response.ok) {
+        console.log("success");
+        setIsLoading(false);
+        setHasSuccessfullySubmitted(true);
+      } else {
+        console.log("error");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setIsLoading(false);
+    }
   }
 
   return (
