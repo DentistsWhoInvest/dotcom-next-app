@@ -151,13 +151,14 @@ export default function Congratulations({
   const [lastName, setLastName] = useState<string | "">("");
   const [gdcNumberEntry, setGDCNumberEntry] = useState<string | "">("");
   const [email, setEmail] = useState<string | "">("");
-  const gdcNumber = Number(gdcNumberEntry)
+  const gdcNumber = Number(gdcNumberEntry);
 
   const [error, setError] = useState<ShowErrorObject | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] =
     useState<boolean>(false);
+  const [certificateLink, setCertificateLink] = useState<string | null>(null);
 
   const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error?.type == type) {
@@ -236,6 +237,8 @@ export default function Congratulations({
         console.log("success");
         setIsLoading(false);
         setHasSuccessfullySubmitted(true);
+        const text = await response.text();
+        setCertificateLink(text);
       } else {
         console.log("error");
         setIsLoading(false);
@@ -243,6 +246,12 @@ export default function Congratulations({
     } catch (error) {
       console.error("Error:", error);
       setIsLoading(false);
+    }
+  }
+
+  function OpenCertificate() {
+    {
+      certificateLink && window.open(certificateLink, "_blank");
     }
   }
 
@@ -262,9 +271,6 @@ export default function Congratulations({
           <div className="mt-8 flex flex-col items-center justify-center gap-4 place-self-center bg-white px-2 pb-12 pt-8 md:mt-20 md:px-14 lg:max-w-[600px]">
             <div className="mx-4 flex flex-col text-center text-2xl font-semibold text-blue-primary md:flex-row">
               Type your details below to receive your certificate via email
-            </div>
-            <div className="mx-2 text-center text-sm lg:mx-0">
-              (Please check your promotional or spam folder too)
             </div>
             <div id="form" className="mt-2 flex w-full flex-col gap-2">
               <TextInput
@@ -310,30 +316,44 @@ export default function Congratulations({
               </p>
             </div>
             <div className="mt-4 flex place-self-start">
-            {isLoading ? (
-              <div className="flex flex-col items-center gap-2">
-                <BiLoaderCircle className="animate-spin-slow" size="25" />
-                <p>
-                  We are generating your certificate, this may take a few
-                  seconds...
-                </p>
-              </div>
-            ) : hasSuccessfullySubmitted ? (
-              <p className="">
-                Your certificate has been sent! Please check your email.
-              </p>
-            ) : (
-              <button
-                onClick={() => {
-                  if (!validate()) {
-                    sendForm();
-                  }
-                }}
-                className="rounded-md bg-orange-600 px-8 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105"
-              >
-                Submit
-              </button>
-            )}
+              {isLoading ? (
+                <div className="flex flex-col items-center gap-2">
+                  <BiLoaderCircle className="animate-spin-slow" size="25" />
+                  <p>
+                    We are generating your certificate, this may take a few
+                    seconds...
+                  </p>
+                </div>
+              ) : hasSuccessfullySubmitted ? (
+                <div className="flex flex-col items-center gap-1">
+                  <p className="-mt-1 mb-4">Your certificate is ready!</p>
+                  {certificateLink && (
+                    <button
+                      onClick={OpenCertificate}
+                      className="mb-4 rounded-md bg-orange-600 px-8 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105"
+                    >
+                      View your certificate
+                    </button>
+                  )}
+                  <p className="text-center text-sm italic">
+                    It has also been sent to your email.
+                  </p>
+                  <p className="text-center text-sm italic">
+                    (Please check your promotional or spam folder too.)
+                  </p>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    if (!validate()) {
+                      sendForm();
+                    }
+                  }}
+                  className="rounded-md bg-orange-600 px-8 py-2.5 text-white transition duration-200 ease-in-out hover:scale-105"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </div>
 
