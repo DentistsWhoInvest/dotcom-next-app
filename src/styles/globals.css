@@ -76,10 +76,17 @@ body {
     font-size: 1rem;
   }
 
+  /* I'm sure there's a better name for this */
   .show-bullet ul,
   .show-bullet ol {
     list-style: none; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
     padding-left: 1.5rem;
+  }
+
+  .show-bulleted-disc ul,
+  .show-bulleted-disc ol {
+    list-style: disc; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
+    padding-left: 0rem;
   }
 
   /* Probably used in conjunction with the show-bullet class */

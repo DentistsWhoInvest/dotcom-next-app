@@ -26,6 +26,8 @@ const config: Config = {
   		black: colors.black,
   		white: colors.white,
   		gray: colors.gray,
+  		red: colors.red,
+		green: colors.green,
   		emerald: colors.emerald,
 		indigo: colors.indigo,
 		orange: colors.orange,
@@ -68,7 +70,9 @@ const config: Config = {
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			'spin-slow': 'spin 2.5s linear infinite',
+
   		}
   	}
   },

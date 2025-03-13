@@ -83,6 +83,7 @@ type VideoAttributes = {
   description: string;
   tags: Tag[];
   horizontal_banner: HorizontalBanner;
+  cpd_course: any;
 };
 
 export type Video = {
