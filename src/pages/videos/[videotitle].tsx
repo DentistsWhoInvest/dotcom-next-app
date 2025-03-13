@@ -80,7 +80,7 @@ export default function VideoPage({
             ></iframe>
           </div>
           {showCPDQuiz && (
-            <Link href={`/cpd/[${pageData.attributes.cpd_course.id}/aims`} className="place-self-center">
+            <Link href={`/cpd/${pageData.attributes.cpd_course.data.id}/aims`} className="place-self-center">
               <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
                 TAKE THE CPD/CE QUIZ
               </button>
