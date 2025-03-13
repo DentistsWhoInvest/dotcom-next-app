@@ -116,14 +116,14 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ params }: any) => {
   const populateFields = [
     "form_horizontal_banner",
     "form_horizontal_banner.cover_image",
     "page_metadata",
   ];
   const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/1`,
+    `/cpd-courses/${params.id}`,
     populateFields
   );
 
