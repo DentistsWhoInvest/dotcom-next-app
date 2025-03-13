@@ -308,8 +308,7 @@ export default function Congratulations({
             </div>
             <div className="flex flex-col gap-4 text-sm italic">
               <p>
-                *If you have any issues receiving your certificate please email:
-                danielle.narciso@dentistswhoinvest.com
+                *If you have any issues receiving your certificate please <u><em><a href={"mailto:info@dentistswhoinvest.com?subject=Problems%20with%20my%20course%20certificate%20for%20course%20%23" + pageData.id + "&body=Hi,%0A%0AI%20just%20submitted%20my%20details%20for%20my%20certificate,%20but%20I%20need%20some%20help,%0A%0AThe%20problem%20is%20"}>Email Us</a></em></u>
               </p>
               <p>
                 **By submitting my email I consent to join the Dentists Who

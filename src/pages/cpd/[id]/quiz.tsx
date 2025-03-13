@@ -185,7 +185,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
           {pageData.attributes.quiz_questions.map((q, index) => (
             <div key={q.id}>
               <p className="mb-2 text-[18px] font-semibold">
-                {q.id}. {q.question}
+                {index + 1}. {q.question}
               </p>
               <div className="flex flex-col items-start">
                 {q.potential_answers.map((a, i) => (

@@ -130,8 +130,7 @@ export const getStaticProps = async ({params}: any) => {
     "overview_horizontal_banner.cover_image",
     "page_metadata",
   ];
-  const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/${params.id}`,
+  const CPDQuestions = await fetchEndpointData(`/cpd-courses/${params.id}`,
     populateFields
   );
 
