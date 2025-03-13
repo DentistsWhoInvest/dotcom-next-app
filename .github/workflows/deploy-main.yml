@@ -94,16 +94,14 @@ jobs:
         run: |
           curl -H "Content-Type: application/json" \
           -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
-          -d '{
-                "text": "Deployed a new site build to https://www.dentistswhoinvest.com  🚀"
-              }'
+          -d '{ "text": "Deployed a new site build to https://www.dentistswhoinvest.com  🚀" }'
 
       - name: 'Tell people on Teams that it failed'
         id: notify-teams-failure
         if: failure()
-        run: |
-          curl -H "Content-Type: application/json" \
-          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" \
+        run: >
+          curl -H "Content-Type: application/json" 
+          -X POST "${{ secrets.TEAMS_WEBHOOK_URL }}" 
           -d '{
                 "type": "message",
                 "attachments": [
@@ -128,7 +126,6 @@ jobs:
                                 }
                             ]
                         }
-
                     }
                 ]
             }'

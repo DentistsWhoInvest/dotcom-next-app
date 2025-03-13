@@ -57,7 +57,9 @@ export default function VideoPage({
 
   // temp until we have the show_cpd_quiz attribute
   // const showCPDQuiz = pageData.attributes.show_cpd_quiz;
-  const showCPDQuiz = !pageData.attributes.cpd_course;
+  console.log(`pageData.attributes: `);
+  console.log(pageData.attributes);
+  const showCPDQuiz = !!pageData.attributes.cpd_course.data;
 
   return (
     <>
@@ -97,7 +99,7 @@ export default function VideoPage({
         </div>
 
         {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">
+          <div className="my-5">3
             <Link
               href={
                 pageData.attributes.horizontal_banner.data.attributes

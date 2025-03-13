@@ -93,7 +93,7 @@ type QuizCongratulationsAttributes = {
   publishedAt: string;
   course_duration: string;
   form_horizontal_banner: Banner;
-  page_metadata: PageMetadata;
+  page_metadata?: PageMetadata;
 };
 
 type QuizCongratulations = {
@@ -258,10 +258,11 @@ export default function Congratulations({
   return (
     <>
       <Head>
-        <title>{pageData.attributes.page_metadata.title}</title>
+        <title>DWI CPD Complete: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
+        <meta name="title" content={"DWI CPD Complete: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
         <meta
           name="description"
-          content={pageData.attributes.page_metadata.description}
+          content={pageData.attributes.page_metadata?.description}
         />
       </Head>
       <section className="w-full bg-gray-50">

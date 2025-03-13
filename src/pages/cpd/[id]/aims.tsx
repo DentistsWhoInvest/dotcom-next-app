@@ -106,7 +106,7 @@ type QuizAimsAttributes = {
   updatedAt: string;
   publishedAt: string;
   overview_horizontal_banner: Banner;
-  page_metadata: PageMetadata;
+  page_metadata?: PageMetadata;
 };
 
 type QuizAims = {
@@ -146,8 +146,8 @@ export default function Aims({ pageData }: { pageData: QuizAims }) {
   return (
     <>
       <Head>
-        <title>{pageData.attributes.page_metadata.title}</title>
-        <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <meta name="title" content={pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name} />
+        <meta name="description" content={pageData.attributes.page_metadata?.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Description" />

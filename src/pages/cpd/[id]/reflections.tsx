@@ -1,6 +1,5 @@
 import React, { use, useEffect } from "react";
 import Head from "next/head";
-import type { Video } from "../../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
@@ -112,7 +111,7 @@ type QuizReflectionsAttributes = {
   updatedAt: string;
   publishedAt: string;
   reflections_horizontal_banner: Banner;
-  page_metadata: PageMetadata;
+  page_metadata?: PageMetadata;
 };
 
 type QuizReflections = {
@@ -198,10 +197,11 @@ export default function Reflections({
   return (
     <>
       <Head>
-        <title>{pageData.attributes.page_metadata.title}</title>
+        <title>DWI CPD Reflections: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
+        <meta name="title" content={"DWI CPD: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
         <meta
           name="description"
-          content={pageData.attributes.page_metadata.description}
+          content={pageData.attributes.page_metadata?.description}
         />
       </Head>
 

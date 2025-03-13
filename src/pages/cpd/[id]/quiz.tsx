@@ -113,7 +113,7 @@ type QuizQuestionsAttributes = {
   publishedAt: string;
   quiz_horizontal_banner: Banner;
   quiz_questions: Question[];
-  page_metadata: PageMetadata
+  page_metadata?: PageMetadata
 };
 
 type QuizQuestions = {
@@ -175,8 +175,9 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
   return (
     <>
       <Head>
-      <title>{pageData.attributes.page_metadata.title}</title>
-        <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <title>DWI CPD Test: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
+        <meta name="title" content={"DWI CPD Test: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
+        <meta name="description" content={pageData.attributes.page_metadata?.description} />
       </Head>
       <section className="bg-gray-50 ">
         <CPDPagesHeader title="Quiz" />

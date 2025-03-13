@@ -110,7 +110,7 @@ type QuizResultsAttributes = {
   quiz_result_pass_horizontal_banner: Banner;
   quiz_result_fail_horizontal_banner: Banner;
   quiz_questions: Question[];
-  page_metadata: PageMetadata
+  page_metadata?: PageMetadata
 };
 
 type QuizResults = {
@@ -170,8 +170,9 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
   return (
     <>
       <Head>
-      <title>{pageData.attributes.page_metadata.title}</title>
-      <meta name="description" content={pageData.attributes.page_metadata.description} />
+        <title>DWI CPD Result</title>
+        <meta name="title" content="DWI CPD Result"/>
+        <meta name="description" content={pageData.attributes.page_metadata?.description} />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Results" />
