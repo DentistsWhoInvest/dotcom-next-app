@@ -99,7 +99,7 @@ export default function VideoPage({
         </div>
 
         {pageData.attributes.horizontal_banner.data && (
-          <div className="my-5">3
+          <div className="my-5">
             <Link
               href={
                 pageData.attributes.horizontal_banner.data.attributes

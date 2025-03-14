@@ -204,7 +204,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
                       className={`flex cursor-pointer items-center space-x-2`}
                     >
                       <span
-                        className={`flex size-4 items-center justify-center rounded-full border-2 md:size-6 ${
+                        className={`flex size-4 flex-shrink-0 items-center justify-center rounded-full border-2 md:size-6 ${
                           selectedAnswers[q.id] === a.id
                             ? "border-blue-primary bg-blue-secondary"
                             : "border-gray-400 bg-white"
