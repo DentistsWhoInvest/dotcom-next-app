@@ -197,8 +197,19 @@ export default function Reflections({
   return (
     <>
       <Head>
-        <title>DWI CPD Reflections: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
-        <meta name="title" content={"DWI CPD: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
+        <title>
+          DWI CPD Reflections:{" "}
+          {pageData.attributes.page_metadata?.title ||
+            pageData.attributes.course_name}
+        </title>
+        <meta
+          name="title"
+          content={
+            "DWI CPD: " +
+            (pageData.attributes.page_metadata?.title ??
+              pageData.attributes.course_name)
+          }
+        />
         <meta
           name="description"
           content={pageData.attributes.page_metadata?.description}
@@ -220,15 +231,20 @@ export default function Reflections({
                 <textarea
                   className="h-[170px] w-full border-2 border-blue-primary p-4 lg:h-32"
                   placeholder=""
-                  value={reflectionAnswers[question.id]?.answer || ""}
-                  onChange={(e) =>
-                    setReflectionAnswers(
-                      question.id,
-                      question.reflection_question,
-                      e.target.value
-                    )
+                  value={
+                    reflectionAnswers.find(
+                      (item) => item.questionId === question.id
+                    )?.answer || ""
                   }
-                ></textarea>
+                  onChange={
+                    (e) =>
+                      setReflectionAnswers(
+                        question.id,
+                        question.reflection_question,
+                        e.target.value
+                      )
+                  }
+                />
                 <div
                   className={`flex justify-end text-sm ${
                     reflectionAnswers[question.id]?.answer.length > 350
