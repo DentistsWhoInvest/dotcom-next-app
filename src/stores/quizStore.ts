@@ -1,11 +1,17 @@
 import { create } from "zustand";
 
 type QuizState = {
-  selectedAnswers: Record<number, number>; // Maps question ID to selected answer ID
+  selectedAnswers: Record<number, number>;
   setAnswer: (questionId: number, answerId: number) => void;
   resetAnswers: () => void;
-  reflectionAnswers: Record<number, { question: string; answer: string }>
-  setReflectionAnswers: (questionId: number, question: string, answer: string) => void;
+  reflectionAnswers:
+    | { questionId: number; question: string; answer: string }[]
+    | [];
+  setReflectionAnswers: (
+    questionId: number,
+    question: string,
+    answer: string
+  ) => void;
 };
 
 export const useQuizStore = create<QuizState>((set) => ({
@@ -15,9 +21,23 @@ export const useQuizStore = create<QuizState>((set) => ({
       selectedAnswers: { ...state.selectedAnswers, [questionId]: answerId },
     })),
   resetAnswers: () => set({ selectedAnswers: {} }),
-  reflectionAnswers: {},
+  reflectionAnswers: [],
   setReflectionAnswers: (questionId, question, answer) =>
-    set((state) => ({
-      reflectionAnswers: { ...state.reflectionAnswers, [questionId]: {question, answer} },
-    })),
+    set((state) => {
+      const index = state.reflectionAnswers.findIndex(
+        (item) => item.questionId === questionId
+      );
+      if (index >= 0) {
+        const updated = [...state.reflectionAnswers];
+        updated[index] = { questionId, question, answer };
+        return { reflectionAnswers: updated };
+      } else {
+        return {
+          reflectionAnswers: [
+            ...state.reflectionAnswers,
+            { questionId, question, answer },
+          ],
+        };
+      }
+    }),
 }));
