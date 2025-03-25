@@ -106,9 +106,15 @@ export const VideoCard = ({ page }: { page: Video }) => {
   const videoId = page.attributes.uri.replace("/videos/", "");
   const [thumbnailLink, setThumbnailLink] = useState("");
   const getVimeoThumbnail = async (videoId: string) => {
-    const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+    const response = await fetch(
+      `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`
+    );
     const data = await response.json();
-    setThumbnailLink(data.thumbnail_url);
+    const highResThumbnail = data.thumbnail_url.replace(
+      /-d_[0-9]+x[0-9]+/,
+      "-d_1280"
+    );
+    setThumbnailLink(highResThumbnail);
   };
   getVimeoThumbnail(videoId);
   return (
@@ -131,12 +137,12 @@ export const VideoCard = ({ page }: { page: Video }) => {
             {page.attributes.description}
           </p>
           <div className="grow"></div>
-            <Link
-              className={"text-xs font-semibold text-blue-secondary mb-5 "}
-              href={`/videos/${slug}`}
-            >
-              WATCH HERE
-            </Link>
+          <Link
+            className={"text-xs font-semibold text-blue-secondary mb-5 "}
+            href={`/videos/${slug}`}
+          >
+            WATCH HERE
+          </Link>
         </div>
       </div>
     </>
