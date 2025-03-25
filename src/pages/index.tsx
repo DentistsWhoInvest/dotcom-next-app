@@ -13,6 +13,8 @@ import {
 } from "@/components/HomePageContentCard";
 import { createSlug } from "./articles/[page]";
 import DWIHomePageFollowUsLogo from "@/components/DWIHomePageFollowUsLogo";
+import { useEffect, useState } from "react";
+import { get } from "http";
 
 type TextNode = {
   text: string;
@@ -346,6 +348,38 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
     }
   }
 
+  const [thumbnails, setThumbnails] = useState<{ [key: string]: string }>({});
+  const getVimeoThumbnail = async (videoId: string) => {
+    const response = await fetch(
+      `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`
+    );
+    const data = await response.json();
+
+    const highResThumbnail = data.thumbnail_url.replace(/-d_[0-9]+x[0-9]+/, "-d_1280");
+
+    return highResThumbnail;
+  };
+  useEffect(() => {
+    const fetchThumbnails = async () => {
+      const newThumbnails: { [key: string]: string } = {};
+      await Promise.all(
+        pageData.latest_contents
+          .map((content) => {
+            return content.video.data?.attributes.uri.replace("/videos/", "");
+          })
+          .filter((videoId) => videoId !== undefined)
+          .map(async (videoId) => {
+            const url = await getVimeoThumbnail(videoId);
+            newThumbnails[videoId] = url;
+          })
+      );
+      setThumbnails(newThumbnails);
+    };
+
+    fetchThumbnails();
+  }, [pageData.latest_contents]);
+  console.log({ thumbnails });
+
   function extractContent(
     content: Content,
     index: number,
@@ -398,7 +432,8 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
       extractedContent.title = content.video.data.attributes.name;
       extractedContent.type = contentType;
       extractedContent.url = `/videos/${slug}`;
-      extractedContent.imageUrl = `https://vumbnail.com/${videoId}.jpg`;
+      
+      extractedContent.imageUrl = thumbnails[videoId];
       extractedContent.imageAlt = content.video.data.attributes.name;
       extractedContent.size = cardSize;
     }

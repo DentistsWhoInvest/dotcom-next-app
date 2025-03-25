@@ -2,6 +2,7 @@ import { ChevronsRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { processDate } from "@/lib/dateUtils";
+import { useState } from "react";
 
 
 export const trimAfterWords = (text: string, wordLimit: number) => {
@@ -44,12 +45,22 @@ export const ViewMoreCard = ({
   const trimmedExcerpt =
     hrefStarter === "article" && trimAfterWords(page.attributes.excerpt, 25);
 
+  const [thumbnailLink, setThumbnailLink] = useState("");
+
+  if (contentType === "video") {
+    const videoId = page.attributes.uri.replace("/videos/", "");
+    const getVimeoThumbnail = async (videoId: string) => {
+      const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+      const data = await response.json();
+      setThumbnailLink(data.thumbnail_url);
+    };
+    getVimeoThumbnail(videoId);
+  }
+
   function getImageLink(contentType: string) {
     switch (contentType) {
       case "video":
-        const videoId = page.attributes.uri.replace("/videos/", "");
-
-        return `https://vumbnail.com/${videoId}.jpg`;
+        return thumbnailLink;
       case "article":
         return page.attributes.cover.data.attributes.url;
       case "podcast":

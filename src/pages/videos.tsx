@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createSlug } from "./articles/[page]";
 import { HeroBanner } from "@/components/HeroBanner";
+import { useState } from "react";
 
 type Tag = {
   id: number;
@@ -103,12 +104,19 @@ export const getStaticProps = async () => {
 export const VideoCard = ({ page }: { page: Video }) => {
   const slug = createSlug(page.attributes.name);
   const videoId = page.attributes.uri.replace("/videos/", "");
+  const [thumbnailLink, setThumbnailLink] = useState("");
+  const getVimeoThumbnail = async (videoId: string) => {
+    const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+    const data = await response.json();
+    setThumbnailLink(data.thumbnail_url);
+  };
+  getVimeoThumbnail(videoId);
   return (
     <>
       <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
         <Link href={`/videos/${slug}`}>
           <Image
-            src={`https://vumbnail.com/${videoId}.jpg`}
+            src={thumbnailLink}
             alt={page.attributes.name}
             width={387}
             height={218}
