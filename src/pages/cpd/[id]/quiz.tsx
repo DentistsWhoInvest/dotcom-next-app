@@ -1,6 +1,5 @@
 import React, { use, useEffect } from "react";
 import Head from "next/head";
-import type { Video } from "../../videos";
 import CPDPagesHeader from "@/components/CPDPagesHeader";
 import Link from "next/link";
 import Image from "next/image";
