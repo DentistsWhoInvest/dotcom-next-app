@@ -93,9 +93,10 @@ type Testimonial = {
 
 type AcademyCoursePageData = {
   hero_text: string;
+  second_hero_text: string;
   first_description: any;
   collective_content_description: any;
-  // summary: Paragraph[];
+  second_description: any;
   summary: any;
   cta_text: string;
   cta_navigation_url: string;
@@ -110,6 +111,7 @@ type AcademyCoursePageData = {
   testimonial: Testimonial;
   sign_off_testimonial: Testimonial;
   sign_off_cover: ImageData;
+  post_sign_off_description: any;
 };
 
 export const getStaticProps = async () => {
@@ -128,7 +130,6 @@ export const getStaticProps = async () => {
     "sign_off_cover",
   ];
   const pageData = await fetchEndpointData(`/dwi-academy-page`, populateFields);
-  console.log(pageData);
 
   return {
     props: {
@@ -142,23 +143,21 @@ export default function DWIAcademySalesPage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
-  console.log({ courseData });
-
   return (
     <>
       <main className="text-lg">
         <section id="topbanner">
-          <div className="relative z-10 h-[492px] w-screen overflow-hidden md:h-[402px] lg:h-[542px]">
+          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[602px] lg:h-[542px]">
             <Image
               src={courseData.hero_cover.data.attributes.url}
               alt={"mobile"}
               layout="fill"
               objectFit="cover"
-              className="inset-0 object-[left_70%] md:bg-blue-secondary md:object-[right_0%] md:pr-[36px] lg:object-[center_0%] lg:pr-0"
+              className="inset-0 object-[left_70%] md:object-[right_50%] lg:object-[center_0%] lg:pr-0"
             />
             <div className="relative z-10 flex size-full flex-col items-center justify-center px-5 text-center md:mx-auto md:max-w-[800px] md:items-start md:px-0 md:text-left lg:w-[1140px] lg:max-w-[1140px]">
               <div className="-mt-4 mb-5 text-3xl font-bold text-white md:my-0 md:pl-[40px] md:text-[35px] lg:pl-[130px] lg:text-[45px] lg:leading-[54px]">
-                <div className=" md:w-[71.833%]">
+                <div className=" md:w-[60.833%] lg:w-[71.833%]">
                   <div className="p-[10px]">
                     <Image
                       src={courseData.hero_logo_ribbon.data.attributes.url}
@@ -168,8 +167,11 @@ export default function DWIAcademySalesPage({
                       objectFit="cover"
                       className="sm:aspect-auto md:h-[53px] md:w-[272px] lg:h-[71px] lg:w-[365px]"
                     />
-                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[74.2%] md:leading-[50px] lg:text-[40px]">
+                    <h1 className="mt-[32px] text-left text-[30px] md:text-[25px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[80%] md:leading-[35px] lg:text-[30px]">
                       {courseData.hero_text}
+                    </h1>
+                    <h1 className="mt-[32px] text-left text-[30px] md:text-[25px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[65%] md:leading-[35px] lg:text-[30px]">
+                      {courseData.second_hero_text}
                     </h1>
                   </div>
                 </div>
@@ -179,7 +181,7 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="first-description">
-          <div className="m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.first_description} />
           </div>
         </section>
@@ -197,6 +199,11 @@ export default function DWIAcademySalesPage({
                 content={courseData.collective_content_description}
               />
             </div>
+          </div>
+        </section>
+        <section id="second-description">
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.second_description} />
           </div>
         </section>
         <section className="flex justify-center bg-blue-secondary p-2">
@@ -323,7 +330,7 @@ export default function DWIAcademySalesPage({
 
         <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
           <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
-            <div className="space-y-4 lg:px-[150px]">
+            <div className="space-y-4 dwiH5 articleContent lg:px-[150px]">
               <BlocksRenderer content={courseData.summary} />
             </div>
             <Link
@@ -337,6 +344,11 @@ export default function DWIAcademySalesPage({
             <div className="flex flex-col items-center space-y-8 lg:py-6">
               <BlocksRenderer content={courseData.sign_off} />
             </div>
+          </div>
+        </section>
+        <section id="post-sign-off-description">
+          <div className="m-8 space-y-4 text-sm md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.post_sign_off_description} />
           </div>
         </section>
         <div className="relative h-[440px] w-full ">

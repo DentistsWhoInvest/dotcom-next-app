@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const noHeaderOrFooterRoute = [
     "/cash-flow-for-dentists",
     "/the-academy",
+    "/dwi-academy",
     "/100k",
     "/the-informed-investors-club",
     "/404",
