@@ -42,7 +42,7 @@ export async function fetchEndpointData(
     makingPaginatedRequest: boolean,
     paginationOptions?: PaginationOptions
   ) {
-    const baseUrl: string = `${endpoint}?populate=${populateFields.join(",")}&publicationState=preview`;
+    const baseUrl: string = `${endpoint}?populate=${populateFields.join(",")}`;
     if (makingPaginatedRequest && paginationOptions) {
       return `${baseUrl}&pagination[page]=${paginationOptions.page}&pagination[pageSize]=${paginationOptions.pageSize}`;
     } else {
