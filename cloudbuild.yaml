@@ -28,7 +28,7 @@ steps:
 
   - name: gcr.io/cloud-builders/gsutil
     id: upload-public-assets
-    args: ['-m', 'rsync', '-r', '-d', './public/', 'gs://${_BUCKET}/public/']
+    args: ['-m', 'rsync', '-r', '-d', './public/', 'gs://${_BUCKET}-staging/public/']
 
   - name: gcr.io/cloud-builders/gsutil
     id: publish
@@ -36,8 +36,11 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-substitutions:
-  _BUCKET: dwi-dotcom-beta-static-assets
+
+# injected for each trigger, either dwi-dotcom-beta-static-assets or dwi-dotcom-static-assets
+# substitutions:
+  # _BUCKET: 
+
 availableSecrets:
   secretManager:
     - versionName: projects/276123986162/secrets/STRAPI_TOKEN/versions/latest
