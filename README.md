@@ -12,3 +12,4 @@ ___
 `npm run build` -> should output static content to /out
 
 `cd out` then `serve` -> run with a local server
+
