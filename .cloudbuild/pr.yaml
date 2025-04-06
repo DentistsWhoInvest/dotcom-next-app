@@ -64,9 +64,11 @@ steps:
           echo "Build succeeded, skipping failure notification"
           exit 0
         fi
-        curl -H "Content-Type: application/json" \
-            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL \
+      - >
+        curl -H "Content-Type: application/json"
+            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
             -d '{"text": "❌ Build failed! Please investigate the issue, some PR is wrong"}'
+
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
