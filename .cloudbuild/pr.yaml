@@ -34,41 +34,6 @@ steps:
     id: publish
     args: ['-m', 'rsync', '-r', '-d', 'gs://${_BUCKET}-staging/', 'gs://${_BUCKET}/']
 
-  - name: 'curlimages/curl:latest'
-    id: notify-teams-success
-    waitFor:
-      - '-'
-    secretEnv:
-      - MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
-    entrypoint: sh
-    args:
-      - '-c'
-      - >
-        curl -H "Content-Type: application/json"
-            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
-            -d '{"text": "✅ Build succeeded! Deployed to https://beta.dentistswhoinvest.com"}'
-      - touch /workspace/success
-
-  - name: 'curlimages/curl:latest'
-    id: notify-teams-failure
-    waitFor:
-      - '-'
-    secretEnv:
-      - MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
-    entrypoint: sh
-    allowFailure: true
-    args:
-      - '-c'
-      - |
-        if [ -f /workspace/success ]; then
-          echo "Build succeeded, skipping failure notification"
-          exit 0
-        fi
-      - >
-        curl -H "Content-Type: application/json"
-            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
-            -d '{"text": "❌ Build failed! Please investigate the issue, some PR is wrong"}'
-
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
@@ -77,6 +42,3 @@ availableSecrets:
   secretManager:
     - versionName: projects/276123986162/secrets/STRAPI_TOKEN/versions/latest
       env: STRAPI_API_KEY
-    - versionName: >-
-        projects/276123986162/secrets/MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL/versions/latest
-      env: MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
