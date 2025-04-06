@@ -1,0 +1,80 @@
+steps:
+  - name: gcr.io/cloud-builders/npm
+    id: install-deps
+    args:
+      - ci
+
+  - name: gcr.io/cloud-builders/npm
+    id: build-site
+    secretEnv:
+      - STRAPI_API_KEY
+    env:
+      - 'NEXT_ADMIN_STRAPI_URL=https://admin.dentistswhoinvest.com/api'
+    args: ['run', 'build']
+
+  - name: gcr.io/cloud-builders/gsutil
+    id: upload-site
+    args: ['-m', 'rsync', '-r', '-d', './out/', 'gs://${_BUCKET}-staging']
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: set-metadata
+    entrypoint: bash
+    args:
+      - '-c'
+      - >
+        set -e find out -type f ! -name "*.*" -print0 | while IFS= read -r -d '' file; do
+          gsutil -m setmeta -h "Content-Type:text/html" "gs://${_BUCKET}-staging/${file#out/}"
+        done
+
+  - name: gcr.io/cloud-builders/gsutil
+    id: upload-public-assets
+    args: ['-m', 'rsync', '-r', '-d', './public/', 'gs://${_BUCKET}/public/']
+
+  - name: gcr.io/cloud-builders/gsutil
+    id: publish
+    args: ['-m', 'rsync', '-r', '-d', 'gs://${_BUCKET}-staging/', 'gs://${_BUCKET}/']
+
+  - name: 'curlimages/curl:latest'
+    id: notify-teams-success
+    waitFor:
+      - '-'
+    secretEnv:
+      - MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
+    entrypoint: sh
+    args:
+      - '-c'
+      - >
+        curl -H "Content-Type: application/json"
+            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
+            -d '{"text": "✅ Build succeeded! Deployed to https://beta.dentistswhoinvest.com"}'
+      - touch /workspace/success
+
+  - name: 'curlimages/curl:latest'
+    id: notify-teams-failure
+    waitFor:
+      - '-'
+    secretEnv:
+      - MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
+    entrypoint: sh
+    allowFailure: true
+    args:
+      - '-c'
+      - |
+        if [ -f /workspace/success ]; then
+          echo "Build succeeded, skipping failure notification"
+          exit 0
+        fi
+        curl -H "Content-Type: application/json" \
+            -X POST $$MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL \
+            -d '{"text": "❌ Build failed! Please investigate the issue, some PR is wrong"}'
+options:
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _BUCKET: dwi-dotcom-beta-static-assets
+availableSecrets:
+  secretManager:
+    - versionName: projects/276123986162/secrets/STRAPI_TOKEN/versions/latest
+      env: STRAPI_API_KEY
+    - versionName: >-
+        projects/276123986162/secrets/MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL/versions/latest
+      env: MS_TEAMS_WEBHOOK_URL_NOTIFICATION_CHANNEL
