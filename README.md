@@ -1,3 +1,7 @@
+# Dotcom Next App
+
+The primary codebase powering dentistswhoinvest.com and beta.dentistswhoinvest.com
+
 `npm i` -> install dependencies
 
 Add strapi api key to .env
