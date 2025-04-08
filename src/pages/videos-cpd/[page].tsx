@@ -1,9 +1,12 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
 import Link from "next/link";
-import { createSlug } from "./articles/[page]";
+import { createSlug } from "../articles/[page]";
 import { HeroBanner } from "@/components/HeroBanner";
 import { useState } from "react";
+import path from "path";
+import fs from "fs";
+import { PaginationNav } from "@/components/PaginationNav";
 
 type Tag = {
   id: number;
@@ -94,11 +97,101 @@ export type Video = {
 
 type VideosResponse = Video[];
 
-export const getStaticProps = async () => {
-  const result = await fetchEndpointData("/videos");
-  return {
-    props: { pageData: result.data },
-  };
+const fetchAllItems = async (url: string) => {
+  let allItems: any[] = [];
+  let page = 1;
+  const pageSize = 100;
+  let hasMore = true;
+
+  while (hasMore) {
+    try {
+      const response = await fetchEndpointData(url, undefined, true, {
+        page: page,
+        pageSize: pageSize,
+      });
+      const meta = response.meta;
+      allItems = allItems.concat(response.data);
+      hasMore = page < meta.pagination.pageCount;
+      page++;
+    } catch (error) {
+      console.error("Error fetching items:", error);
+      hasMore = false;
+    }
+  }
+  return allItems;
+};
+
+function writeToLocal(result: any[]) {
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(result), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function getStaticPaths() {
+  const fetchedVideos = await fetchAllItems("/videos");
+
+  await writeToLocal(fetchedVideos);
+
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const parsedData = JSON.parse(jsonData);
+  const totalVideos = parsedData;
+  const videosPerPage = 15;
+  const totalPages = Math.ceil(totalVideos.length / videosPerPage);
+
+  const paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export const getStaticProps = async ({ params }: any) => {
+  //   const result = await fetchEndpointData("/videos");
+  //   return {
+  //     props: { pageData: result.data },
+  //   };
+  // };
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const page = parseInt(params.page, 10) || 1;
+  const videosPerPage = 15; // Adjust as needed
+
+  try {
+    const jsonData = fs.readFileSync(filePath, "utf-8");
+    const allVideos = JSON.parse(jsonData);
+
+    // Calculate the start and end indices for pagination
+    const startIndex = (page - 1) * videosPerPage;
+    const endIndex = startIndex + videosPerPage;
+
+    // Extract the relevant items based on pagination
+    const paginatedVideos = allVideos.slice(startIndex, endIndex);
+
+    return {
+      props: {
+        pageData: paginatedVideos,
+        currentPage: page,
+        totalPages: Math.ceil(allVideos.length / videosPerPage),
+      },
+    };
+  } catch (error) {
+    console.error("Error reading or parsing JSON file:", error);
+    return {
+      props: {
+        pageData: [],
+        currentPage: page,
+        totalPages: 0,
+      },
+    };
+  }
 };
 
 export const VideoCard = ({ page }: { page: Video }) => {
@@ -149,7 +242,15 @@ export const VideoCard = ({ page }: { page: Video }) => {
   );
 };
 
-export default function Videos({ pageData }: { pageData: VideosResponse }) {
+export default function Videos({
+  pageData,
+  currentPage,
+  totalPages,
+}: {
+  pageData: VideosResponse;
+  currentPage: number;
+  totalPages: number;
+}) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       new Date(b.attributes.createdAt).getTime() -
@@ -171,6 +272,15 @@ export default function Videos({ pageData }: { pageData: VideosResponse }) {
           return <VideoCard key={page.id} page={page} />;
         })}
       </ul>
+      <div className="mt-6 self-center pb-10">
+        <div>
+          <PaginationNav
+            navPath="videos-cpd"
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
+        </div>
+      </div>
     </main>
   );
 }
