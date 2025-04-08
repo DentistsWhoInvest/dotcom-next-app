@@ -155,24 +155,17 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  //   const result = await fetchEndpointData("/videos");
-  //   return {
-  //     props: { pageData: result.data },
-  //   };
-  // };
   const filePath = path.join(process.cwd(), "public", "videos.json");
   const page = parseInt(params.page, 10) || 1;
-  const videosPerPage = 15; // Adjust as needed
+  const videosPerPage = 15;
 
   try {
     const jsonData = fs.readFileSync(filePath, "utf-8");
     const allVideos = JSON.parse(jsonData);
 
-    // Calculate the start and end indices for pagination
     const startIndex = (page - 1) * videosPerPage;
     const endIndex = startIndex + videosPerPage;
 
-    // Extract the relevant items based on pagination
     const paginatedVideos = allVideos.slice(startIndex, endIndex);
 
     return {
