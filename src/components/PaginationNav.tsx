@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type NavPath = "podcast" | "articles" | "videos-cpd";
+type NavPath = "podcast" | "articles" | "videos";
 
 export const PaginationNav = ({
     navPath,

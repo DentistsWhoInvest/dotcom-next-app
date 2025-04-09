@@ -18,7 +18,7 @@ const menuLinksList: MenuLink[] = [
   { href: "/articles/1/", text: "Articles", category: "articles" },
   { href: "/courses/", text: "Courses" },
   { href: "/dwimarket/", text: "Store" },
-  { href: "/videos-cpd/1/", text: "Videos/CPD" },
+  { href: "/videos/1/", text: "Videos/CPD" },
   { href: "/contact/", text: "Contact" },
 ];
 
