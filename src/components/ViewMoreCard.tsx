@@ -29,7 +29,7 @@ export const ViewMoreCard = ({
   function getHrefStarter(contentType: string) {
     switch (contentType) {
       case "video":
-        return "videos";
+        return "video";
       case "article":
         return "article";
       case "podcast":
@@ -115,7 +115,7 @@ export const ViewMoreCard = ({
               }}
             />
           )}
-          {hrefStarter === "videos" && (
+          {hrefStarter === "video" && (
             <div className="md:grow text-base text-grey-primary">
               {" "}
               {page.attributes.description}
