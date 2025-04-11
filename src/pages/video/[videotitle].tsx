@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { Video } from "../videos-cpd/[page]";
+import type { Video } from "../videos/[page]";
 import Disclaimer from "@/components/Disclaimer";
 import Link from "next/link";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
