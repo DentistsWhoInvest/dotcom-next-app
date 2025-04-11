@@ -206,7 +206,7 @@ export const VideoCard = ({ page }: { page: Video }) => {
   return (
     <>
       <div className="m-6 flex w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom lg:w-[430px]">
-        <Link href={`/videos/${slug}`}>
+        <Link href={`/video/${slug}`}>
           <Image
             src={thumbnailLink}
             alt={page.attributes.name}
@@ -217,7 +217,7 @@ export const VideoCard = ({ page }: { page: Video }) => {
         </Link>
         <div className="mx-8 my-4 flex grow flex-col space-y-4 text-center">
           <p className="text-[21px] font-bold text-blue-primary">
-            <Link href={`/videos/${slug}`}>{page.attributes.name}</Link>
+            <Link href={`/video/${slug}`}>{page.attributes.name}</Link>
           </p>
           <p className="text-sm text-grey-primary">
             {page.attributes.description}
@@ -225,7 +225,7 @@ export const VideoCard = ({ page }: { page: Video }) => {
           <div className="grow"></div>
           <Link
             className={"mb-5 text-xs font-semibold text-blue-secondary "}
-            href={`/videos/${slug}`}
+            href={`/video/${slug}`}
           >
             WATCH HERE
           </Link>
