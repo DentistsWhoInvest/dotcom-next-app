@@ -63,7 +63,7 @@ export default function Footer() {
     { href: "/about/", text: "About" },
     { href: "/podcast/1/", text: "Podcast", category: "podcast" },
     { href: "/articles/1/", text: "Articles", category: "articles" },
-    { href: "/videos/", text: "Videos/CPD" },
+    { href: "/videos/1/", text: "Videos/CPD" },
   ];
   const CoursesLinks = [
     { href: "/cash-flow-for-dentists/", text: "Cash Flow For Dentists" },
