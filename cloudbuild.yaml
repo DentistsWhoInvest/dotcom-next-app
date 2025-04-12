@@ -22,9 +22,8 @@ steps:
     args:
       - '-c'
       - >
-        set -e find out -type f ! -name "*.*" -print0 | while IFS= read -r -d '' file; do
-          gsutil -m setmeta -h "Content-Type:text/html" "gs://${_BUCKET}-staging/${file#out/}"
-        done
+        find out -type f ! -name "*.*" | sed 's|^out/||' | \
+          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/html" "gs://${_BUCKET}-staging/{}"
 
   - name: gcr.io/cloud-builders/gsutil
     id: upload-public-assets
