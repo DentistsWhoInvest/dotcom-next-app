@@ -1,28 +1,33 @@
 steps:
-  - name: gcr.io/cloud-builders/npm
-    id: install-deps
+  - id: &install install-deps
+    name: &npm gcr.io/cloud-builders/npm
     args:
       - ci
 
-  - name: gcr.io/cloud-builders/npm
-    id: build-site
+  - id: &build build-site
+    name: *npm
+    waitFor:
+      - *install
     secretEnv:
       - STRAPI_API_KEY
     env:
       - 'NEXT_ADMIN_STRAPI_URL=https://admin.dentistswhoinvest.com/api'
     args: ['run', 'build']
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: create-empty-directory
+  - id: &empty_dir create-empty-directory
+    name: &gcloud gcr.io/google.com/cloudsdktool/cloud-sdk # odd to use this to run bash, but this downloads the image first. Next step timing is then realistic for how long the job took, not how long to download the image
+    waitFor: ['-']
     entrypoint: bash
     args:
       - -c
       - mkdir -p ./empty
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: empty-bucket
+  - id: &empty_bucket empty-bucket
+    name: *gcloud
+    waitFor:
+      - *empty_dir
     entrypoint: gcloud
-    args:
+    args: &empty_bucket_args
       - storage
       - rsync
       - ./empty/
@@ -30,8 +35,11 @@ steps:
       - --recursive
       - --delete-unmatched-destination-objects
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: upload-html-files
+  - id: upload-html-files
+    name: *gcloud
+    waitFor:
+      - *build
+      - *empty_bucket
     entrypoint: gcloud
     args:
       - storage
@@ -42,8 +50,8 @@ steps:
       - --exclude='.+\..*'
       - --recursive
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: upload-rest-of-site
+  - id: upload-rest-of-site
+    name: *gcloud
     entrypoint: gcloud
     args:
       - storage
@@ -52,8 +60,8 @@ steps:
       - gs://${_BUCKET}-staging
       - --recursive
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: upload-public-assets
+  - id: upload-public-assets
+    name: *gcloud
     entrypoint: gcloud
     args:
       - storage
@@ -62,8 +70,8 @@ steps:
       - gs://${_BUCKET}-staging/public/
       - --recursive
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: publish
+  - id: publish
+    name: *gcloud
     entrypoint: gcloud
     args:
       - storage
@@ -73,16 +81,10 @@ steps:
       - --recursive
       - --delete-unmatched-destination-objects
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  - name: *gcloud
     id: empty-bucket-again
     entrypoint: gcloud
-    args:
-      - storage
-      - rsync
-      - ./empty/
-      - gs://${_BUCKET}-staging
-      - --recursive
-      - --delete-unmatched-destination-objects
+    args: *empty_bucket_args
 
 options:
   logging: CLOUD_LOGGING_ONLY
