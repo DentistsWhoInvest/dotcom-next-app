@@ -14,6 +14,7 @@ steps:
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-entire-site
+    entrypoint: gcloud
     args:
       - storage
       - rsync
@@ -29,6 +30,7 @@ steps:
   # the file’s basename.
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-html-files
+    entrypoint: gcloud
     args:
       - storage
       - cp
@@ -40,6 +42,7 @@ steps:
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-public-assets
+    entrypoint: gcloud
     args:
       - storage
       - rsync
@@ -49,6 +52,7 @@ steps:
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: publish
+    entrypoint: gcloud
     args:
       - storage
       - rsync
