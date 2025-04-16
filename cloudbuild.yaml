@@ -18,7 +18,8 @@ steps:
     args:
       - storage
       - rsync
-      - --delete
+      - --recursive
+      - --delete-unmatched-destination-objects
       - ./out/
       - gs://${_BUCKET}-staging
 
@@ -46,7 +47,7 @@ steps:
     args:
       - storage
       - rsync
-      - --delete
+      - --delete-unmatched-destination-objects
       - ./public/
       - gs://${_BUCKET}-staging/public/
 
@@ -56,7 +57,7 @@ steps:
     args:
       - storage
       - rsync
-      - --delete
+      - --delete-unmatched-destination-objects
       - gs://${_BUCKET}-staging/
       - gs://${_BUCKET}/
 options:
