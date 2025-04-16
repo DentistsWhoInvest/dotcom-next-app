@@ -18,10 +18,10 @@ steps:
     args:
       - storage
       - rsync
-      - --recursive
-      - --delete-unmatched-destination-objects
       - ./out/
       - gs://${_BUCKET}-staging
+      - --recursive
+      - --delete-unmatched-destination-objects
 
   # Step 2: Upload just the files with no suffix (i.e. filenames that don’t contain a dot)
   #         with the content type explicitly set to text/html.
@@ -35,11 +35,11 @@ steps:
     args:
       - storage
       - cp
-      - --content-type=text/html
-      - --recursive
-      - --exclude=.*\..*
       - ./out/
       - gs://${_BUCKET}-staging
+      - --content-type=text/html
+      - --exclude='.+\..*'
+      - --recursive
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-public-assets
@@ -47,9 +47,9 @@ steps:
     args:
       - storage
       - rsync
-      - --delete-unmatched-destination-objects
       - ./public/
       - gs://${_BUCKET}-staging/public/
+      - --delete-unmatched-destination-objects
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: publish
@@ -57,9 +57,11 @@ steps:
     args:
       - storage
       - rsync
-      - --delete-unmatched-destination-objects
       - gs://${_BUCKET}-staging/
       - gs://${_BUCKET}/
+      - --delete-unmatched-destination-objects
+      - --recursive
+
 options:
   logging: CLOUD_LOGGING_ONLY
 
