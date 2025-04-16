@@ -34,7 +34,7 @@ steps:
     entrypoint: gcloud
     args:
       - storage
-      - cp
+      - rsync
       - ./out/
       - gs://${_BUCKET}-staging
       - --content-type=text/html
