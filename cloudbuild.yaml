@@ -13,22 +13,23 @@ steps:
     args: ['run', 'build']
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: upload-entire-site
+    id: create-empty-directory
+    entrypoint: bash
+    args:
+      - -c
+      - mkdir -p ./empty
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: empty-bucket
     entrypoint: gcloud
     args:
       - storage
       - rsync
-      - ./out/
+      - ./empty/
       - gs://${_BUCKET}-staging
       - --recursive
       - --delete-unmatched-destination-objects
 
-  # Step 2: Upload just the files with no suffix (i.e. filenames that don’t contain a dot)
-  #         with the content type explicitly set to text/html.
-  #
-  # The --exclude flag below uses a regex that skips any file whose path contains a dot.
-  # If your directory names might contain periods, you may need to adjust the regex to apply only to
-  # the file’s basename.
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-html-files
     entrypoint: gcloud
@@ -42,6 +43,16 @@ steps:
       - --recursive
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: upload-rest-of-site
+    entrypoint: gcloud
+    args:
+      - storage
+      - rsync
+      - ./out/
+      - gs://${_BUCKET}-staging
+      - --recursive
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: upload-public-assets
     entrypoint: gcloud
     args:
@@ -49,7 +60,7 @@ steps:
       - rsync
       - ./public/
       - gs://${_BUCKET}-staging/public/
-      - --delete-unmatched-destination-objects
+      - --recursive
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: publish
@@ -59,8 +70,19 @@ steps:
       - rsync
       - gs://${_BUCKET}-staging/
       - gs://${_BUCKET}/
-      - --delete-unmatched-destination-objects
       - --recursive
+      - --delete-unmatched-destination-objects
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: empty-bucket-again
+    entrypoint: gcloud
+    args:
+      - storage
+      - rsync
+      - ./empty/
+      - gs://${_BUCKET}-staging
+      - --recursive
+      - --delete-unmatched-destination-objects
 
 options:
   logging: CLOUD_LOGGING_ONLY
