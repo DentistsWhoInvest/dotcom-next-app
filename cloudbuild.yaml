@@ -12,27 +12,49 @@ steps:
       - 'NEXT_ADMIN_STRAPI_URL=https://admin.dentistswhoinvest.com/api'
     args: ['run', 'build']
 
-  - name: gcr.io/cloud-builders/gsutil
-    id: upload-site
-    args: ['-m', 'rsync', '-r', '-d', './out/', 'gs://${_BUCKET}-staging']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: upload-entire-site
+    args:
+      - storage
+      - rsync
+      - --delete
+      - ./out/
+      - gs://${_BUCKET}-staging
+
+  # Step 2: Upload just the files with no suffix (i.e. filenames that don’t contain a dot)
+  #         with the content type explicitly set to text/html.
+  #
+  # The --exclude flag below uses a regex that skips any file whose path contains a dot.
+  # If your directory names might contain periods, you may need to adjust the regex to apply only to
+  # the file’s basename.
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    id: upload-html-files
+    args:
+      - storage
+      - cp
+      - --content-type=text/html
+      - --recursive
+      - --exclude=.*\..*
+      - ./out/
+      - gs://${_BUCKET}-staging
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: set-metadata
-    entrypoint: bash
-    args:
-      - '-c'
-      - >
-        find out -type f ! -name "*.*" | sed 's|^out/||' | \
-          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/html" "gs://${_BUCKET}-staging/{}"
-
-  - name: gcr.io/cloud-builders/gsutil
     id: upload-public-assets
-    args: ['-m', 'rsync', '-r', '-d', './public/', 'gs://${_BUCKET}-staging/public/']
+    args:
+      - storage
+      - rsync
+      - --delete
+      - ./public/
+      - gs://${_BUCKET}-staging/public/
 
-  - name: gcr.io/cloud-builders/gsutil
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     id: publish
-    args: ['-m', 'rsync', '-r', '-d', 'gs://${_BUCKET}-staging/', 'gs://${_BUCKET}/']
-
+    args:
+      - storage
+      - rsync
+      - --delete
+      - gs://${_BUCKET}-staging/
+      - gs://${_BUCKET}/
 options:
   logging: CLOUD_LOGGING_ONLY
 
