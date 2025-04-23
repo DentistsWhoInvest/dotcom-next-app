@@ -22,6 +22,31 @@ steps:
       - -c
       - mkdir -p ./empty
 
+  - id: cancel-older-builds
+    name: *gcloud
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        #!/bin/bash
+        set -euo pipefail
+        WORKFLOW=$_WORKFLOW
+        echo "Finding all running/queued builds for workflow: $WORKFLOW"
+
+        builds=$(gcloud builds list \
+          --region=europe-west1 \
+          --ongoing \
+          --filter="substitutions._WORKFLOW=$WORKFLOW" \
+          --format="json")
+
+        latest_build_id=$(echo "$builds" | jq -r 'sort_by(.createTime) | last(.[]).id')
+        echo "Latest build ID: $latest_build_id"
+
+        echo "$builds" | jq -r '.[] | select(.id != "'$latest_build_id'") | .id' | while read -r build_id; do
+          echo "Cancelling build $build_id"
+          gcloud builds cancel "$build_id" || echo "Failed to cancel build $build_id"
+        done
+
   - id: &empty_bucket empty-bucket
     name: *gcloud
     waitFor:
@@ -91,7 +116,6 @@ options:
 
 # injected for each trigger, either dwi-dotcom-beta-static-assets or dwi-dotcom-static-assets
 # substitutions:
-  # _BUCKET: 
 
 availableSecrets:
   secretManager:
