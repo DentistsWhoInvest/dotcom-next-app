@@ -1,4 +1,4 @@
-# Dotcom Next App
+# Dotcom Next App for dentistswhoinvest.com
 
 The primary codebase powering dentistswhoinvest.com and beta.dentistswhoinvest.com
 
