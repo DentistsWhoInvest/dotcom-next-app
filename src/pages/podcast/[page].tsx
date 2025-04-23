@@ -192,7 +192,7 @@ export default function Podcasts({
     <main className={`flex flex-col bg-[#f0f3f6]`}>
       <HeroBanner
         bannerImage={{
-          url: "https://assets.dentistswhoinvest.com/james_podcasting_c38220ce04/james_podcasting_c38220ce04.webp",
+          url: "https://assets.dentistswhoinvest.com/HERO_Banner_1_aaea46dfb1/HERO_Banner_1_aaea46dfb1.webp",
           name: "James podcasting",
         }}
         bannerText={"The Dentists Who Invest Podcast "}
