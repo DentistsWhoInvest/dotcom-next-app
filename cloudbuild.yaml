@@ -50,7 +50,7 @@ steps:
 
         echo "$builds" | jq -r '.[] | select(.id != "'$latest_build_id'") | .id' | while read -r build_id; do
           echo "Cancelling build $build_id"
-          gcloud builds cancel "$build_id" || echo "Failed to cancel build $build_id"
+          gcloud builds cancel --region=europe-west1 "$build_id" || echo "Failed to cancel build $build_id"
         done
 
   - id: &empty_bucket empty-staging-bucket
