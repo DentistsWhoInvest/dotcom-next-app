@@ -32,6 +32,10 @@ steps:
       - |
         #!/bin/bash
         set -euo pipefail
+
+        echo "Installing jq..."
+        apt-get update -qq && apt-get install -y -qq jq
+
         WORKFLOW="${_WORKFLOW_STAGE}"
         echo "Finding all running/queued builds for workflow: ${_WORKFLOW_STAGE}"
 
