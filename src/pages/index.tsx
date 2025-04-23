@@ -362,23 +362,28 @@ export default function Home({ pageData }: { pageData: HomePageAttributes }) {
   useEffect(() => {
     const fetchThumbnails = async () => {
       const newThumbnails: { [key: string]: string } = {};
-      await Promise.all(
-        pageData.latest_contents
-          .map((content) => {
-            return content.video.data?.attributes.uri.replace("/videos/", "");
-          })
-          .filter((videoId) => videoId !== undefined)
+      await Promise.all([
+        ...pageData.latest_contents
+          .map((content) => content.video.data?.attributes.uri.replace("/videos/", ""))
+          .filter((videoId): videoId is string => videoId !== undefined)
           .map(async (videoId) => {
             const url = await getVimeoThumbnail(videoId);
             newThumbnails[videoId] = url;
-          })
-      );
+          }),
+      
+        ...pageData.popular_contents
+          .map((content) => content.video.data?.attributes.uri.replace("/videos/", ""))
+          .filter((videoId): videoId is string => videoId !== undefined)
+          .map(async (videoId) => {
+            const url = await getVimeoThumbnail(videoId);
+            newThumbnails[videoId] = url;
+          }),
+      ]);
       setThumbnails(newThumbnails);
     };
 
     fetchThumbnails();
-  }, [pageData.latest_contents]);
-  console.log({ thumbnails });
+  }, [pageData.latest_contents, pageData.popular_contents]);
 
   function extractContent(
     content: Content,
