@@ -32,13 +32,13 @@ steps:
       - |
         #!/bin/bash
         set -euo pipefail
-        WORKFLOW=$_WORKFLOW_STAGE
-        echo "Finding all running/queued builds for workflow: $WORKFLOW"
+        WORKFLOW="${_WORKFLOW_STAGE}"
+        echo "Finding all running/queued builds for workflow: ${_WORKFLOW_STAGE}"
 
         builds=$(gcloud builds list \
           --region=europe-west1 \
           --ongoing \
-          --filter="substitutions._WORKFLOW_STAGE=$WORKFLOW" \
+          --filter="substitutions._WORKFLOW_STAGE=${_WORKFLOW_STAGE}" \
           --format="json")
 
         latest_build_id=$(echo "$builds" | jq -r 'sort_by(.createTime) | last(.[]).id')
@@ -49,7 +49,7 @@ steps:
           gcloud builds cancel "$build_id" || echo "Failed to cancel build $build_id"
         done
 
-  - id: &empty_bucket empty-bucket
+  - id: &empty_bucket empty-staging-bucket
     name: *gcloud
     waitFor:
       - *empty_dir
@@ -97,7 +97,7 @@ steps:
       - gs://${_BUCKET}-staging/public/
       - --recursive
 
-  - id: publish
+  - id: publish-to-prod-bucket
     name: *gcloud
     entrypoint: gcloud
     args:
@@ -108,8 +108,8 @@ steps:
       - --recursive
       - --delete-unmatched-destination-objects
 
-  - name: *gcloud
-    id: empty-bucket-again
+  - id: empty-staging-bucket-again
+    name: *gcloud
     entrypoint: gcloud
     args: *empty_bucket_args
 
