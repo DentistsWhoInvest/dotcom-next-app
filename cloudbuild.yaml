@@ -32,13 +32,13 @@ steps:
       - |
         #!/bin/bash
         set -euo pipefail
-        WORKFLOW=$_WORKFLOW
+        WORKFLOW=$_WORKFLOW_STAGE
         echo "Finding all running/queued builds for workflow: $WORKFLOW"
 
         builds=$(gcloud builds list \
           --region=europe-west1 \
           --ongoing \
-          --filter="substitutions._WORKFLOW=$WORKFLOW" \
+          --filter="substitutions._WORKFLOW_STAGE=$WORKFLOW" \
           --format="json")
 
         latest_build_id=$(echo "$builds" | jq -r 'sort_by(.createTime) | last(.[]).id')
