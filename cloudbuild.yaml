@@ -110,7 +110,7 @@ steps:
         #!/bin/bash
         set -euo pipefail
 
-        find out -type f ! -name "*.css" | sed 's|^out/||' | \
+        find out -type f -name "*.css" | sed 's|^out/||' | \
           xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}/{}"
       # todo: add --content-type=text/css to _next css stuff
 
