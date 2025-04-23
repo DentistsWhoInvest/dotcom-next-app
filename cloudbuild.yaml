@@ -24,6 +24,8 @@ steps:
 
   - id: cancel-older-builds
     name: *gcloud
+    waitFor:
+      - *empty_dir
     entrypoint: bash
     args:
       - -c
