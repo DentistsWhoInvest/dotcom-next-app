@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import { createSlug } from "../articles/[page]";
-import { VideoCard } from "../videos";
 import Image from "next/image";
 import {
   Carousel,
@@ -11,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { Video } from "../videos";
+import type { Video } from "../video/[page]";
 import Disclaimer from "@/components/Disclaimer";
 import Link from "next/link";
 import { ViewMoreCard } from "@/components/ViewMoreCard";

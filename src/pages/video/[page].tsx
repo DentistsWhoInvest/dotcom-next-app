@@ -1,9 +1,12 @@
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
 import Link from "next/link";
-import { createSlug } from "./articles/[page]";
+import { createSlug } from "../articles/[page]";
 import { HeroBanner } from "@/components/HeroBanner";
 import { useState } from "react";
+import path from "path";
+import fs from "fs";
+import { PaginationNav } from "@/components/PaginationNav";
 
 type Tag = {
   id: number;
@@ -94,11 +97,94 @@ export type Video = {
 
 type VideosResponse = Video[];
 
-export const getStaticProps = async () => {
-  const result = await fetchEndpointData("/videos");
-  return {
-    props: { pageData: result.data },
-  };
+const fetchAllItems = async (url: string) => {
+  let allItems: any[] = [];
+  let page = 1;
+  const pageSize = 100;
+  let hasMore = true;
+
+  while (hasMore) {
+    try {
+      const response = await fetchEndpointData(url, undefined, true, {
+        page: page,
+        pageSize: pageSize,
+      });
+      const meta = response.meta;
+      allItems = allItems.concat(response.data);
+      hasMore = page < meta.pagination.pageCount;
+      page++;
+    } catch (error) {
+      console.error("Error fetching items:", error);
+      hasMore = false;
+    }
+  }
+  return allItems;
+};
+
+function writeToLocal(result: any[]) {
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(result), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function getStaticPaths() {
+  const fetchedVideos = await fetchAllItems("/videos");
+
+  await writeToLocal(fetchedVideos);
+
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const parsedData = JSON.parse(jsonData);
+  const totalVideos = parsedData;
+  const videosPerPage = 15;
+  const totalPages = Math.ceil(totalVideos.length / videosPerPage);
+
+  const paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: String(i + 1) },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export const getStaticProps = async ({ params }: any) => {
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const page = parseInt(params.page, 10) || 1;
+  const videosPerPage = 15;
+
+  try {
+    const jsonData = fs.readFileSync(filePath, "utf-8");
+    const allVideos = JSON.parse(jsonData);
+
+    const startIndex = (page - 1) * videosPerPage;
+    const endIndex = startIndex + videosPerPage;
+
+    const paginatedVideos = allVideos.slice(startIndex, endIndex);
+
+    return {
+      props: {
+        pageData: paginatedVideos,
+        currentPage: page,
+        totalPages: Math.ceil(allVideos.length / videosPerPage),
+      },
+    };
+  } catch (error) {
+    console.error("Error reading or parsing JSON file:", error);
+    return {
+      props: {
+        pageData: [],
+        currentPage: page,
+        totalPages: 0,
+      },
+    };
+  }
 };
 
 export const VideoCard = ({ page }: { page: Video }) => {
@@ -119,26 +205,26 @@ export const VideoCard = ({ page }: { page: Video }) => {
   getVimeoThumbnail(videoId);
   return (
     <>
-      <div className="m-6 justify-evenly border-2 border-blue-secondary shadow-custom bg-white rounded-2xl w-[315px] text-center flex flex-col lg:w-[430px]">
+      <div className="m-6 flex w-[315px] flex-col justify-evenly rounded-2xl border-2 border-blue-secondary bg-white text-center shadow-custom lg:w-[430px]">
         <Link href={`/videos/${slug}`}>
           <Image
             src={thumbnailLink}
             alt={page.attributes.name}
             width={387}
             height={218}
-            className="rounded-t-xl h-[218px] object-cover bg-blue-secondary border-blue-secondary border lg:w-[430px] lg:h-[300px]"
+            className="h-[218px] rounded-t-xl border border-blue-secondary bg-blue-secondary object-cover lg:h-[300px] lg:w-[430px]"
           />
         </Link>
-        <div className="text-center flex flex-col mx-8 my-4 grow space-y-4">
-          <p className="text-blue-primary text-[21px] font-bold">
+        <div className="mx-8 my-4 flex grow flex-col space-y-4 text-center">
+          <p className="text-[21px] font-bold text-blue-primary">
             <Link href={`/videos/${slug}`}>{page.attributes.name}</Link>
           </p>
-          <p className="text-grey-primary text-sm">
+          <p className="text-sm text-grey-primary">
             {page.attributes.description}
           </p>
           <div className="grow"></div>
           <Link
-            className={"text-xs font-semibold text-blue-secondary mb-5 "}
+            className={"mb-5 text-xs font-semibold text-blue-secondary "}
             href={`/videos/${slug}`}
           >
             WATCH HERE
@@ -149,7 +235,15 @@ export const VideoCard = ({ page }: { page: Video }) => {
   );
 };
 
-export default function Videos({ pageData }: { pageData: VideosResponse }) {
+export default function Videos({
+  pageData,
+  currentPage,
+  totalPages,
+}: {
+  pageData: VideosResponse;
+  currentPage: number;
+  totalPages: number;
+}) {
   const sortedData = pageData.sort(
     (a: any, b: any) =>
       new Date(b.attributes.createdAt).getTime() -
@@ -171,6 +265,15 @@ export default function Videos({ pageData }: { pageData: VideosResponse }) {
           return <VideoCard key={page.id} page={page} />;
         })}
       </ul>
+      <div className="mt-6 self-center pb-10">
+        <div>
+          <PaginationNav
+            navPath="videos"
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
+        </div>
+      </div>
     </main>
   );
 }
