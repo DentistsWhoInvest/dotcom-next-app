@@ -22,7 +22,38 @@ steps:
       - -c
       - mkdir -p ./empty
 
-  - id: &empty_bucket empty-bucket
+  - id: cancel-older-builds
+    name: *gcloud
+    waitFor:
+      - *empty_dir
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        #!/bin/bash
+        set -euo pipefail
+
+        echo "Installing jq..."
+        apt-get update -qq && apt-get install -y -qq jq
+
+        WORKFLOW="${_WORKFLOW_STAGE}"
+        echo "Finding all running/queued builds for workflow: ${_WORKFLOW_STAGE}"
+
+        builds=$(gcloud builds list \
+          --region=europe-west1 \
+          --ongoing \
+          --filter="substitutions._WORKFLOW_STAGE=${_WORKFLOW_STAGE}" \
+          --format="json")
+
+        latest_build_id=$(echo "$builds" | jq -r 'sort_by(.createTime) | last(.[]).id')
+        echo "Latest build ID: $latest_build_id"
+
+        echo "$builds" | jq -r '.[] | select(.id != "'$latest_build_id'") | .id' | while read -r build_id; do
+          echo "Cancelling build $build_id"
+          gcloud builds cancel --region=europe-west1 "$build_id" || echo "Failed to cancel build $build_id"
+        done
+
+  - id: &empty_bucket empty-staging-bucket
     name: *gcloud
     waitFor:
       - *empty_dir
@@ -70,7 +101,20 @@ steps:
       - gs://${_BUCKET}-staging/public/
       - --recursive
 
-  - id: publish
+  - id: set-content-type-to-css
+    name: *gcloud
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        #!/bin/bash
+        set -euo pipefail
+
+        find out -type f -name "*.css" | sed 's|^out/||' | \
+          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}/{}"
+      # todo: add --content-type=text/css to _next css stuff
+
+  - id: publish-to-prod-bucket
     name: *gcloud
     entrypoint: gcloud
     args:
@@ -81,8 +125,8 @@ steps:
       - --recursive
       - --delete-unmatched-destination-objects
 
-  - name: *gcloud
-    id: empty-bucket-again
+  - id: empty-staging-bucket-again
+    name: *gcloud
     entrypoint: gcloud
     args: *empty_bucket_args
 
@@ -91,7 +135,6 @@ options:
 
 # injected for each trigger, either dwi-dotcom-beta-static-assets or dwi-dotcom-static-assets
 # substitutions:
-  # _BUCKET: 
 
 availableSecrets:
   secretManager:
