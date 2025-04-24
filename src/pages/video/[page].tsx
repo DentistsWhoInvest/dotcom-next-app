@@ -268,7 +268,7 @@ export default function Videos({
       <div className="mt-6 self-center pb-10">
         <div>
           <PaginationNav
-            navPath="videos"
+            navPath="video"
             currentPage={currentPage}
             totalPages={totalPages}
           />
