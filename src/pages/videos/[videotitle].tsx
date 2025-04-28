@@ -14,25 +14,78 @@ import type { Video } from "../video/[page]";
 import Disclaimer from "@/components/Disclaimer";
 import Link from "next/link";
 import { ViewMoreCard } from "@/components/ViewMoreCard";
+import fs from "fs";
+import path from "path";
 
-export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/videos`);
+const fetchAllItems = async (url: string) => {
+  let allItems: any[] = [];
+  let page = 1;
+  const pageSize = 100;
+  let hasMore = true;
+
+  while (hasMore) {
+    try {
+      const populateFields = [
+        "horizontal_banner",
+        "horizontal_banner.cover_image",
+        "cpd_course",
+      ];
+      const response = await fetchEndpointData(url, populateFields, true, {
+        page: page,
+        pageSize: pageSize,
+      });
+      const meta = response.meta;
+      allItems = allItems.concat(response.data);
+      hasMore = page < meta.pagination.pageCount;
+      page++;
+    } catch (error) {
+      console.error("Error fetching items:", error);
+      hasMore = false;
+    }
+  }
+  return allItems;
+};
+
+function writeToLocal(result: any[]) {
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+
+  return new Promise<void>((resolve, reject) => {
+    fs.writeFile(filePath, JSON.stringify(result), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function getStaticPaths() {
+  const fetchedVideos = await fetchAllItems("/videos");
+
+  await writeToLocal(fetchedVideos);
+
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const parsedData = JSON.parse(jsonData);
+
   return {
-    paths: results.data.map((result: { attributes: { name: string } }) => ({
+    paths: parsedData.map((result: { attributes: { name: string } }) => ({
       params: { videotitle: createSlug(result.attributes.name) },
     })),
     fallback: false,
   };
-};
+}
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = ["horizontal_banner", "horizontal_banner.cover_image", "cpd_course"];
-  const allVideos = await fetchEndpointData(`/videos`, populateFields);
-  const matchingVideo = allVideos.data.find(
+  const filePath = path.join(process.cwd(), "public", "videos.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const allVideos = JSON.parse(jsonData);
+  const matchingVideo = allVideos.find(
     (video: { attributes: { name: string } }) =>
       createSlug(video.attributes.name) === params.videotitle
   );
-  const otherVideos = allVideos.data
+  const otherVideos = allVideos
     .filter((video: { id: number }) => video.id !== matchingVideo.id)
     .slice(0, 6);
 
@@ -53,9 +106,6 @@ export default function VideoPage({
 }) {
   //the uri has the pattern of /videos/1, /videos/2, etc and we want to remove the /videos/ part
   const videoUri = pageData.attributes.uri.replace("/videos/", "");
-
-  // temp until we have the show_cpd_quiz attribute
-  // const showCPDQuiz = pageData.attributes.show_cpd_quiz;
   const showCPDQuiz = !!pageData.attributes.cpd_course.data;
 
   return (
@@ -77,7 +127,10 @@ export default function VideoPage({
             ></iframe>
           </div>
           {showCPDQuiz && (
-            <Link href={`/cpd/${pageData.attributes.cpd_course.data.id}/aims`} className="place-self-center">
+            <Link
+              href={`/cpd/${pageData.attributes.cpd_course.data.id}/aims`}
+              className="place-self-center"
+            >
               <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
                 TAKE THE CPD/CE QUIZ
               </button>
