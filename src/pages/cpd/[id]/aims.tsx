@@ -6,6 +6,7 @@ import Image from "next/image";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Clock } from "lucide-react";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { fetchCPD } from "@/lib/cpdFetchUtil";
 
 type TextNode = {
   text: string;
@@ -115,9 +116,9 @@ type QuizAims = {
 };
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/cpd-courses`);
+  const results = await fetchCPD();
   return {
-    paths: results.data.map((result: { id: string }) => ({
+    paths: results.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
     fallback: false,
@@ -125,18 +126,12 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({params}: any) => {
-  const populateFields = [
-    "overview_horizontal_banner",
-    "overview_horizontal_banner.cover_image",
-    "page_metadata",
-  ];
-  const CPDQuestions = await fetchEndpointData(`/cpd-courses/${params.id}`,
-    populateFields
-  );
+  const CPDData = await fetchCPD();
+  const CPDQuestions = CPDData.find((course: { id: string }) => course.id.toString() === params.id);
 
   return {
     props: {
-      pageData: CPDQuestions.data,
+      pageData: CPDQuestions,
     },
   };
 };

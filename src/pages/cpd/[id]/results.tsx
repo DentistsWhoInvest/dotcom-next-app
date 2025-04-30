@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
 import Router from "next/router";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { fetchCPD } from "@/lib/cpdFetchUtil";
 
 type TextNode = {
   text: string;
@@ -109,7 +110,7 @@ type QuizResultsAttributes = {
   quiz_result_pass_horizontal_banner: Banner;
   quiz_result_fail_horizontal_banner: Banner;
   quiz_questions: Question[];
-  page_metadata?: PageMetadata
+  page_metadata?: PageMetadata;
 };
 
 type QuizResults = {
@@ -118,9 +119,10 @@ type QuizResults = {
 };
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/cpd-courses`);
+  const results = await fetchCPD();
+
   return {
-    paths: results.data.map((result: { id: string }) => ({
+    paths: results.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
     fallback: false,
@@ -128,23 +130,13 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = [
-    "quiz_result_pass_horizontal_banner",
-    "quiz_result_pass_horizontal_banner.cover_image",
-    "quiz_result_fail_horizontal_banner",
-    "quiz_result_fail_horizontal_banner.cover_image",
-    "quiz_questions",
-    "quiz_questions.potential_answers",
-    "page_metadata"
-  ];
-  const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/${params.id}`,
-    populateFields
+  const CPDData = await fetchCPD();
+  const CPDQuestions = CPDData.find(
+    (course: { id: string }) => course.id.toString() === params.id
   );
-
   return {
     props: {
-      pageData: CPDQuestions.data,
+      pageData: CPDQuestions,
     },
   };
 };
@@ -153,7 +145,9 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
   const { selectedAnswers, resetAnswers } = useQuizStore();
 
   const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
-    q.potential_answers.find((a) => a.is_correct && a.id === selectedAnswers[q.id])
+    q.potential_answers.find(
+      (a) => a.is_correct && a.id === selectedAnswers[q.id]
+    )
   );
 
   const numberOfCorrectAnswers = correctAnswers.length;
@@ -170,8 +164,11 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
     <>
       <Head>
         <title>DWI CPD Result</title>
-        <meta name="title" content="DWI CPD Result"/>
-        <meta name="description" content={pageData.attributes.page_metadata?.description} />
+        <meta name="title" content="DWI CPD Result" />
+        <meta
+          name="description"
+          content={pageData.attributes.page_metadata?.description}
+        />
       </Head>
       <section className="w-full bg-gray-50">
         <CPDPagesHeader title="Results" />
@@ -198,7 +195,10 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
                 below to complete your reflections and receive your CPD/CE
                 certificate.
               </p>
-              <Link href={`/cpd/${pageData.id}/reflections`} className="place-self-center">
+              <Link
+                href={`/cpd/${pageData.id}/reflections`}
+                className="place-self-center"
+              >
                 <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
                   COMPLETE REFLECTIONS
                 </button>
@@ -224,54 +224,58 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
               </button>
             </div>
           )}
-          {isSuccessful && pageData.attributes.quiz_result_pass_horizontal_banner.data && (
-            <div className="pb-20">
-              <Link
-                href={
-                  pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes
-                    .navigation_url
-                }
-              >
-                <Image
-                  src={
-                    pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes
-                      .cover_image.data.attributes.url
+          {isSuccessful &&
+            pageData.attributes.quiz_result_pass_horizontal_banner.data && (
+              <div className="pb-20">
+                <Link
+                  href={
+                    pageData.attributes.quiz_result_pass_horizontal_banner.data
+                      .attributes.navigation_url
                   }
-                  alt={
-                    pageData.attributes.quiz_result_pass_horizontal_banner.data.attributes.title
+                >
+                  <Image
+                    src={
+                      pageData.attributes.quiz_result_pass_horizontal_banner
+                        .data.attributes.cover_image.data.attributes.url
+                    }
+                    alt={
+                      pageData.attributes.quiz_result_pass_horizontal_banner
+                        .data.attributes.title
+                    }
+                    width={1200}
+                    height={400}
+                    layout="responsive"
+                    className="h-auto"
+                  />
+                </Link>
+              </div>
+            )}
+          {!isSuccessful &&
+            pageData.attributes.quiz_result_fail_horizontal_banner.data && (
+              <div className="pb-20">
+                <Link
+                  href={
+                    pageData.attributes.quiz_result_fail_horizontal_banner.data
+                      .attributes.navigation_url
                   }
-                  width={1200}
-                  height={400}
-                  layout="responsive"
-                  className="h-auto"
-                />
-              </Link>
-            </div>
-          )}
-          {!isSuccessful && pageData.attributes.quiz_result_fail_horizontal_banner.data && (
-            <div className="pb-20">
-              <Link
-                href={
-                  pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes
-                    .navigation_url
-                }
-              >
-                <Image
-                  src={
-                    pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes
-                      .cover_image.data.attributes.url
-                  }
-                  alt={
-                    pageData.attributes.quiz_result_fail_horizontal_banner.data.attributes.title
-                  }
-                  width={1200}
-                  height={400}
-                  layout="responsive"
-                  className="h-auto"
-                />
-              </Link>
-            </div>
-          )}
+                >
+                  <Image
+                    src={
+                      pageData.attributes.quiz_result_fail_horizontal_banner
+                        .data.attributes.cover_image.data.attributes.url
+                    }
+                    alt={
+                      pageData.attributes.quiz_result_fail_horizontal_banner
+                        .data.attributes.title
+                    }
+                    width={1200}
+                    height={400}
+                    layout="responsive"
+                    className="h-auto"
+                  />
+                </Link>
+              </div>
+            )}
         </section>
       </section>
     </>

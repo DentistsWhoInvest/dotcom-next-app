@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
 import Router from "next/router";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { fetchCPD } from "@/lib/cpdFetchUtil";
 
 type TextNode = {
   text: string;
@@ -112,18 +113,19 @@ type QuizQuestionsAttributes = {
   publishedAt: string;
   quiz_horizontal_banner: Banner;
   quiz_questions: Question[];
-  page_metadata?: PageMetadata
+  page_metadata?: PageMetadata;
 };
 
 type QuizQuestions = {
   id: number;
-  attributes: QuizQuestionsAttributes; 
+  attributes: QuizQuestionsAttributes;
 };
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/cpd-courses`);
+  const results = await fetchCPD();
+
   return {
-    paths: results.data.map((result: { id: string }) => ({
+    paths: results.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
     fallback: false,
@@ -131,27 +133,19 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = [
-    "quiz_horizontal_banner",
-    "quiz_horizontal_banner.cover_image",
-    "quiz_questions",
-    "quiz_questions.potential_answers",
-    "page_metadata"
-  ];
-  const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/${params.id}`,
-    populateFields
+  const CPDData = await fetchCPD();
+  const CPDQuestions = CPDData.find(
+    (course: { id: string }) => course.id.toString() === params.id
   );
 
   return {
     props: {
-      pageData: CPDQuestions.data,
+      pageData: CPDQuestions,
     },
   };
 };
 
 export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
- 
   const [error, setError] = React.useState<boolean>(false);
 
   const { selectedAnswers, setAnswer } = useQuizStore();
@@ -162,7 +156,8 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
 
   const handleSubmitQuiz = () => {
     if (
-      Object.keys(selectedAnswers).length !== pageData.attributes.quiz_questions.length
+      Object.keys(selectedAnswers).length !==
+      pageData.attributes.quiz_questions.length
     ) {
       setError(true);
       return;
@@ -174,9 +169,23 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
   return (
     <>
       <Head>
-        <title>DWI CPD Test: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
-        <meta name="title" content={"DWI CPD Test: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
-        <meta name="description" content={pageData.attributes.page_metadata?.description} />
+        <title>
+          DWI CPD Test:{" "}
+          {pageData.attributes.page_metadata?.title ||
+            pageData.attributes.course_name}
+        </title>
+        <meta
+          name="title"
+          content={
+            "DWI CPD Test: " +
+            (pageData.attributes.page_metadata?.title ??
+              pageData.attributes.course_name)
+          }
+        />
+        <meta
+          name="description"
+          content={pageData.attributes.page_metadata?.description}
+        />
       </Head>
       <section className="bg-gray-50 ">
         <CPDPagesHeader title="Quiz" />
@@ -236,15 +245,19 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
             <div className="pb-20">
               <Link
                 href={
-                  pageData.attributes.quiz_horizontal_banner.data.attributes.navigation_url
+                  pageData.attributes.quiz_horizontal_banner.data.attributes
+                    .navigation_url
                 }
               >
                 <Image
                   src={
-                    pageData.attributes.quiz_horizontal_banner.data.attributes.cover_image
-                      .data.attributes.url
+                    pageData.attributes.quiz_horizontal_banner.data.attributes
+                      .cover_image.data.attributes.url
                   }
-                  alt={pageData.attributes.quiz_horizontal_banner.data.attributes.title}
+                  alt={
+                    pageData.attributes.quiz_horizontal_banner.data.attributes
+                      .title
+                  }
                   width={1200}
                   height={400}
                   layout="responsive"

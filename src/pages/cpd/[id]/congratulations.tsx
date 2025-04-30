@@ -7,6 +7,7 @@ import { useQuizStore } from "@/stores/quizStore";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import TextInput from "@/components/TextInput";
 import { BiLoaderCircle } from "react-icons/bi";
+import { fetchCPD } from "@/lib/cpdFetchUtil";
 
 type ImageFormat = {
   ext: string;
@@ -106,9 +107,10 @@ interface ShowErrorObject {
 }
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/cpd-courses`);
+  const results = await fetchCPD();
+
   return {
-    paths: results.data.map((result: { id: string }) => ({
+    paths: results.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
     fallback: false,
@@ -116,19 +118,14 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = [
-    "form_horizontal_banner",
-    "form_horizontal_banner.cover_image",
-    "page_metadata",
-  ];
-  const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/${params.id}`,
-    populateFields
+  const CPDData = await fetchCPD();
+  const CPDQuestions = CPDData.find(
+    (course: { id: string }) => course.id.toString() === params.id
   );
 
   return {
     props: {
-      pageData: CPDQuestions.data,
+      pageData: CPDQuestions,
     },
   };
 };
@@ -257,8 +254,19 @@ export default function Congratulations({
   return (
     <>
       <Head>
-        <title>DWI CPD Complete: {pageData.attributes.page_metadata?.title || pageData.attributes.course_name}</title>
-        <meta name="title" content={"DWI CPD Complete: " + (pageData.attributes.page_metadata?.title ?? pageData.attributes.course_name)}/>
+        <title>
+          DWI CPD Complete:{" "}
+          {pageData.attributes.page_metadata?.title ||
+            pageData.attributes.course_name}
+        </title>
+        <meta
+          name="title"
+          content={
+            "DWI CPD Complete: " +
+            (pageData.attributes.page_metadata?.title ??
+              pageData.attributes.course_name)
+          }
+        />
         <meta
           name="description"
           content={pageData.attributes.page_metadata?.description}
@@ -307,7 +315,20 @@ export default function Congratulations({
             </div>
             <div className="flex flex-col gap-4 text-sm italic">
               <p>
-                *If you have any issues receiving your certificate please <u><em><a href={"mailto:info@dentistswhoinvest.com?subject=Problems%20with%20my%20course%20certificate%20for%20course%20%23" + pageData.id + "&body=Hi,%0A%0AI%20just%20submitted%20my%20details%20for%20my%20certificate,%20but%20I%20need%20some%20help,%0A%0AThe%20problem%20is%20"}>Email Us</a></em></u>
+                *If you have any issues receiving your certificate please{" "}
+                <u>
+                  <em>
+                    <a
+                      href={
+                        "mailto:info@dentistswhoinvest.com?subject=Problems%20with%20my%20course%20certificate%20for%20course%20%23" +
+                        pageData.id +
+                        "&body=Hi,%0A%0AI%20just%20submitted%20my%20details%20for%20my%20certificate,%20but%20I%20need%20some%20help,%0A%0AThe%20problem%20is%20"
+                      }
+                    >
+                      Email Us
+                    </a>
+                  </em>
+                </u>
               </p>
               <p>
                 **By submitting my email I consent to join the Dentists Who

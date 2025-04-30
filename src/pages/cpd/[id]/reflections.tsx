@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useQuizStore } from "@/stores/quizStore";
 import Router from "next/router";
 import { fetchEndpointData } from "@/lib/fetchUtils";
+import { fetchCPD } from "@/lib/cpdFetchUtil";
 
 type TextNode = {
   text: string;
@@ -120,9 +121,9 @@ type QuizReflections = {
 };
 
 export const getStaticPaths = async () => {
-  const results: any = await fetchEndpointData(`/cpd-courses`);
+  const results = await fetchCPD();
   return {
-    paths: results.data.map((result: { id: string }) => ({
+    paths: results.map((result: { id: string }) => ({
       params: { id: result.id.toString() },
     })),
     fallback: false,
@@ -130,21 +131,14 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const populateFields = [
-    "reflections_horizontal_banner",
-    "reflections_horizontal_banner.cover_image",
-    "reflections",
-    "reflections.reflection_question",
-    "page_metadata",
-  ];
-  const CPDQuestions = await fetchEndpointData(
-    `/cpd-courses/${params.id}`,
-    populateFields
+  const CPDData = await fetchCPD();
+  const CPDQuestions = CPDData.find(
+    (course: { id: string }) => course.id.toString() === params.id
   );
 
   return {
     props: {
-      pageData: CPDQuestions.data,
+      pageData: CPDQuestions,
     },
   };
 };
@@ -236,13 +230,12 @@ export default function Reflections({
                       (item) => item.questionId === question.id
                     )?.answer || ""
                   }
-                  onChange={
-                    (e) =>
-                      setReflectionAnswers(
-                        question.id,
-                        question.reflection_question,
-                        e.target.value
-                      )
+                  onChange={(e) =>
+                    setReflectionAnswers(
+                      question.id,
+                      question.reflection_question,
+                      e.target.value
+                    )
                   }
                 />
                 <div
