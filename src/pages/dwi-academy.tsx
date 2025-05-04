@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchEndpointData } from "@/lib/fetchUtils";
 import Image from "next/image";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type TextNode = {
   text: string;
@@ -143,6 +144,95 @@ export default function DWIAcademySalesPage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
+  const router = useRouter();
+
+  const [status, setStatus] = useState("loading"); // 'loading', 'valid', 'expired', 'invalid'
+
+  useEffect(() => {
+    if (!router.isReady) return; 
+    const email = router.query.email;
+    console.log("router query", router.query);
+    console.log("router query email:", email);
+    console.log("router query email type:", typeof email);
+    console.log("email", email);
+
+    if (!email || typeof email !== "string") {
+      console.error("Invalid email parameter:", email);
+      setStatus("invalid");
+      return;
+    }
+
+    const checkAccess = async () => {
+      try {
+        const res = await fetch("https://example.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+
+        if (data?.access === "granted") {
+          setStatus("valid");
+        } else if (data?.access === "expired") {
+          setStatus("expired");
+          setTimeout(() => {
+            router.push("/the-academy");
+          }, 10000);
+        } else {
+          setStatus("valid"); // fail open
+        }
+      } catch (err) {
+        console.error("API failed, showing page anyway", err);
+        setStatus("valid"); // fail open
+      }
+    };
+
+    checkAccess();
+  }, [router]);
+
+  // probably tweak the pages to have the DWI banner
+  const LoadingPage = () => {
+    console.log("Loading page");
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-4 text-center">
+        <div>
+          <p className="ml-4 text-lg">Loading...</p>
+          <p className="ml-4 text-lg">
+            Please wait while we verify your access to this special offer.
+          </p>
+        </div>
+        <div className="size-32 animate-spin rounded-full border-b-2 border-blue-primary"></div>
+      </div>
+    );
+  };
+
+  const MissingEmail = () => {
+    console.log("Missing email");
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="ml-4 text-lg">Missing email parameter.</p>
+      </div>
+    );
+  };
+
+  const ExpiredOffer = () => {
+    console.log("Expired offer");
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="ml-4 text-lg">Offer expired. Redirecting...</p>
+        <div className="size-32 animate-spin rounded-full border-b-2 border-blue-primary"></div>
+      </div>
+    );
+  };
+
+  
+  console.log("status", status);
+  
+  if (status === "loading") return LoadingPage();
+  if (status === "invalid") return MissingEmail();
+  if (status === "expired") return ExpiredOffer();
+
   return (
     <>
       <main className="text-lg">
@@ -167,10 +257,10 @@ export default function DWIAcademySalesPage({
                       objectFit="cover"
                       className="sm:aspect-auto md:h-[53px] md:w-[272px] lg:h-[71px] lg:w-[365px]"
                     />
-                    <h1 className="mt-[32px] text-left text-[30px] md:text-[25px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[80%] md:leading-[35px] lg:text-[30px]">
+                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-4/5 md:text-[25px] md:leading-[35px] lg:text-[30px]">
                       {courseData.hero_text}
                     </h1>
-                    <h1 className="mt-[32px] text-left text-[30px] md:text-[25px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[65%] md:leading-[35px] lg:text-[30px]">
+                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[65%] md:text-[25px] md:leading-[35px] lg:text-[30px]">
                       {courseData.second_hero_text}
                     </h1>
                   </div>
@@ -220,7 +310,6 @@ export default function DWIAcademySalesPage({
             <div className="grid grid-cols-1 gap-8">
               <div className="space-y-2 text-center font-bold">
                 <p className="mx-8 flex flex-row justify-center text-xl text-blue-secondary md:text-[30px] md:leading-9">
-                  
                   {courseData.informed_investor_club.sales_part_1.map(
                     (item: any, index: number) => {
                       return (
@@ -330,7 +419,7 @@ export default function DWIAcademySalesPage({
 
         <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
           <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
-            <div className="space-y-4 dwiH5 articleContent lg:px-[150px]">
+            <div className="dwiH5 articleContent space-y-4 lg:px-[150px]">
               <BlocksRenderer content={courseData.summary} />
             </div>
             <Link
