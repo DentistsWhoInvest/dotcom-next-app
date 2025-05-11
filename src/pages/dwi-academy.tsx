@@ -396,15 +396,22 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="first-description">
-          {/* <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
-            <BlocksRenderer content={courseData.first_description} />
-          </div> */}
-
           <div
             id="james"
             className="dwiH5 articleContent m-8 space-y-4 bg-blue-primary text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
-            <BlocksRenderer content={firstDescJames} />
+            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
+              <Image
+                src={courseData.collective_content_image.data.attributes.url}
+                alt="Collective content image"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={firstDescJames} />{" "}
+              </div>
+            </div>
           </div>
           <div
             id="seemingly"
@@ -412,11 +419,21 @@ export default function DWIAcademySalesPage({
           >
             <BlocksRenderer content={ButASeeminglyText} />
           </div>
-          <div
-            id="inflation"
-            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
-          >
-            <BlocksRenderer content={ThenTheresInflationText} />
+          <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
+            <Image
+              src={courseData.hero_cover.data.attributes.url}
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              className="inset-0"
+            />
+
+            <div
+              id="inflation"
+              className="dwiH5 bg-white w-full articleContent relative m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            >
+              <BlocksRenderer content={ThenTheresInflationText} />
+            </div>
           </div>
           <div
             id="not always"
@@ -424,11 +441,21 @@ export default function DWIAcademySalesPage({
           >
             <BlocksRenderer content={NotAlwaysObviousText} />
           </div>
-          <div
-            id="in 2022"
-            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
-          >
-            <BlocksRenderer content={In2022Text} />
+          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[602px] lg:h-[542px]">
+            <Image
+              src={courseData.hero_cover.data.attributes.url}
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              className="inset-0"
+            />
+
+            <div
+              id="inflation"
+              className="dwiH5 articleContent relative m-8 w-full space-y-4 bg-white text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            >
+              <BlocksRenderer content={In2022Text} />
+            </div>
           </div>
           <div
             id="compound"
@@ -443,25 +470,40 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={SmallDetailsText} />
           </div>
           <div
-            id="no wonder"
+            id="james"
             className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
-            <BlocksRenderer content={NoWonderText} />
+            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={NoWonderText} />
+              </div>
+              <Image
+                src={courseData.collective_content_image.data.attributes.url}
+                alt="Collective content image"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+            </div>
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
-          <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
+          <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
             <Image
-              src={courseData.collective_content_image.data.attributes.url}
-              alt="Collective content image"
-              width={315}
-              height={315}
-              className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              src={courseData.hero_cover.data.attributes.url}
+              alt={"mobile"}
+              layout="fill"
+              objectFit="cover"
+              className="inset-0"
             />
-            <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+
+            <div
+              id="inflation"
+              className="dwiH5 text-white  w-full articleContent relative m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            >
               <BlocksRenderer
                 content={courseData.collective_content_description}
-              />
+              />{" "}
             </div>
           </div>
         </section>
