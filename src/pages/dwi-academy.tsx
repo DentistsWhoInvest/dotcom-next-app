@@ -167,12 +167,26 @@ export default function DWIAcademySalesPage({
 
     const checkAccess = async () => {
       try {
-        const res = await fetch("https://example.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
+        const res = await fetch(
+          "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/academy-offer-access-check/hello",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          }
+        );
+        console.log("res", res);
+        // const text = await res.text();
+        // console.log("Raw response:", text);
 
+        // // Try to extract JSON if needed
+        // try {
+        //   const jsonString = text.replace(/^Received:\s*/, "");
+        //   const data = JSON.parse(jsonString);
+        //   console.log("Parsed JSON:", data);
+        // } catch (e) {
+        //   console.error("Failed to parse JSON:", e);
+        // }
         const data = await res.json();
 
         if (data?.access === "granted") {
@@ -266,6 +280,84 @@ export default function DWIAcademySalesPage({
   if (status === "invalid") return MissingEmail();
   if (status === "expired") return ExpiredOffer();
 
+  const ButASeeminglysplitIndex = courseData.first_description.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes("But A Seemingly Innocent Game Of Football")
+      )
+  );
+  const firstDescJames = courseData.first_description.slice(
+    0,
+    ButASeeminglysplitIndex
+  );
+  const firstDescRest = courseData.first_description.slice(
+    ButASeeminglysplitIndex
+  );
+  const ThenTheresInflationSplit = firstDescRest.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes("Then There’s Inflation")
+      )
+  );
+  const ButASeeminglyText = firstDescRest.slice(0, ThenTheresInflationSplit);
+  const firstDescRest2 = firstDescRest.slice(ThenTheresInflationSplit);
+  const NotAlwaysObviousSplit = firstDescRest2.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes(
+          "It’s not always obvious at the time, but inflation’s like pouring petrol"
+        )
+      )
+  );
+  const ThenTheresInflationText = firstDescRest2.slice(
+    0,
+    NotAlwaysObviousSplit
+  );
+  const firstDescRest3 = firstDescRest2.slice(NotAlwaysObviousSplit);
+  const in2022AloneSplit = firstDescRest3.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes(
+          "In 2022 Alone, £50,000 Dropped A Whopping 10% In Terms Of Buying Power"
+        )
+      )
+  );
+  const NotAlwaysObviousText = firstDescRest3.slice(0, in2022AloneSplit);
+  const firstDescRest4 = firstDescRest3.slice(in2022AloneSplit);
+  const targetText =
+    "“Compound Interest Is The Eighth Wonder Of The World. He Who Understands It, Earns It… He Who Doesn't… Pays It”";
+
+  // Find the index of the object that matches the target text
+  const CompoundInterestSplit = firstDescRest4.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some(
+        (child: { text: string | string[] }) => child.text === targetText // Direct match of the exact text
+      )
+  );
+  const In2022Text = firstDescRest4.slice(0, CompoundInterestSplit);
+  const firstDescRest5 = firstDescRest4.slice(CompoundInterestSplit);
+  const targetTextSmall =
+    "“Small Details Make A Big Difference  When Building A Precision Portfolio” ";
+  const SmallDetailsSplit = firstDescRest5.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some(
+        (child: { text: string | string[] }) => child.text === targetTextSmall // Direct match of the exact text
+      )
+  );
+  const CompoundInterestText = firstDescRest5.slice(0, SmallDetailsSplit);
+  const firstDescRest6 = firstDescRest5.slice(SmallDetailsSplit);
+  const targetTextNoWonder =
+    "No Wonder 70% Of Newbie Investors Lose Money At First…";
+  const NoWonderSplit = firstDescRest6.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some(
+        (child: { text: string | string[] }) =>
+          child.text === targetTextNoWonder // Direct match of the exact text
+      )
+  );
+  const SmallDetailsText = firstDescRest6.slice(0, NoWonderSplit);
+  const NoWonderText = firstDescRest6.slice(NoWonderSplit);
+
   return (
     <>
       <main className="text-lg">
@@ -304,8 +396,57 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="first-description">
-          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+          {/* <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.first_description} />
+          </div> */}
+
+          <div
+            id="james"
+            className="dwiH5 articleContent m-8 space-y-4 bg-blue-primary text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={firstDescJames} />
+          </div>
+          <div
+            id="seemingly"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={ButASeeminglyText} />
+          </div>
+          <div
+            id="inflation"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={ThenTheresInflationText} />
+          </div>
+          <div
+            id="not always"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={NotAlwaysObviousText} />
+          </div>
+          <div
+            id="in 2022"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={In2022Text} />
+          </div>
+          <div
+            id="compound"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={CompoundInterestText} />
+          </div>
+          <div
+            id="small"
+            className="dwiH5 articleContent m-8 space-y-4 bg-blue-secondary text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={SmallDetailsText} />
+          </div>
+          <div
+            id="no wonder"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={NoWonderText} />
           </div>
         </section>
         <section id="collective-content" className="bg-gray-100">
