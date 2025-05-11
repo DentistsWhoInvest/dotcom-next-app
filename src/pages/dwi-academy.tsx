@@ -184,7 +184,7 @@ export default function DWIAcademySalesPage({
         }
       } catch (err) {
         console.error("API failed, showing page anyway", err);
-        setStatus("expired"); // fail open
+        setStatus("valid"); // fail open
       }
     };
 
@@ -204,7 +204,6 @@ export default function DWIAcademySalesPage({
             Please wait while we verify your access to this special offer.
           </p>
           <p className="my-4 size-12 animate-spin place-self-center rounded-full border-b-2 border-white"></p>
-
         </div>
         <Footer />
       </main>
