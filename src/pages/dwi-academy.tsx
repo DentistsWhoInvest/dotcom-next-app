@@ -5,6 +5,9 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import DWIBanner from "@/components/DWIBanner";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 type TextNode = {
   text: string;
@@ -149,7 +152,7 @@ export default function DWIAcademySalesPage({
   const [status, setStatus] = useState("loading"); // 'loading', 'valid', 'expired', 'invalid'
 
   useEffect(() => {
-    if (!router.isReady) return; 
+    if (!router.isReady) return;
     const email = router.query.email;
     console.log("router query", router.query);
     console.log("router query email:", email);
@@ -176,15 +179,12 @@ export default function DWIAcademySalesPage({
           setStatus("valid");
         } else if (data?.access === "expired") {
           setStatus("expired");
-          setTimeout(() => {
-            router.push("/the-academy");
-          }, 10000);
         } else {
           setStatus("valid"); // fail open
         }
       } catch (err) {
         console.error("API failed, showing page anyway", err);
-        setStatus("valid"); // fail open
+        setStatus("expired"); // fail open
       }
     };
 
@@ -195,40 +195,74 @@ export default function DWIAcademySalesPage({
   const LoadingPage = () => {
     console.log("Loading page");
     return (
-      <div className="flex h-screen flex-col items-center justify-center gap-4 text-center">
-        <div>
-          <p className="ml-4 text-lg">Loading...</p>
-          <p className="ml-4 text-lg">
+      <main className="flex h-dvh flex-col">
+        <DWIBanner />
+        <Header />
+        <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
+          <p className="my-4 text-2xl font-bold">Loading...</p>
+          <p className="my-4 text-lg">
             Please wait while we verify your access to this special offer.
           </p>
+          <p className="my-4 size-12 animate-spin place-self-center rounded-full border-b-2 border-white"></p>
+
         </div>
-        <div className="size-32 animate-spin rounded-full border-b-2 border-blue-primary"></div>
-      </div>
+        <Footer />
+      </main>
     );
   };
 
   const MissingEmail = () => {
     console.log("Missing email");
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="ml-4 text-lg">Missing email parameter.</p>
-      </div>
+      <main className="flex h-dvh flex-col">
+        <DWIBanner />
+        <Header />
+        <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
+          <span className="my-8 text-5xl font-bold">
+            Sorry, this link is not valid.{" "}
+          </span>
+          <span>You can view the Dentist Who Invest Academy here:</span>
+
+          <Link
+            href="/the-academy"
+            className="mx-auto mt-8 max-w-xs bg-orange-400
+        px-4 py-2 text-center transition-all duration-300 hover:bg-white hover:text-blue-primary "
+          >
+            <Button className="text-xl">Click Here</Button>
+          </Link>
+        </div>
+        <Footer />
+      </main>
     );
   };
 
   const ExpiredOffer = () => {
     console.log("Expired offer");
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="ml-4 text-lg">Offer expired. Redirecting...</p>
-        <div className="size-32 animate-spin rounded-full border-b-2 border-blue-primary"></div>
-      </div>
+      <main className="flex h-dvh flex-col">
+        <DWIBanner />
+        <Header />
+        <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
+          <span className="my-8 text-5xl font-bold">
+            Sorry, this offer has expired.{" "}
+          </span>
+          <span>You can view the Dentist Who Invest Academy here:</span>
+
+          <Link
+            href="/the-academy"
+            className="mx-auto mt-8 max-w-xs bg-orange-400
+      px-4 py-2 text-center transition-all duration-300 hover:bg-white hover:text-blue-primary "
+          >
+            <Button className="text-xl">Click Here</Button>
+          </Link>
+        </div>
+        <Footer />
+      </main>
     );
   };
 
-  
   console.log("status", status);
-  
+
   if (status === "loading") return LoadingPage();
   if (status === "invalid") return MissingEmail();
   if (status === "expired") return ExpiredOffer();
