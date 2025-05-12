@@ -187,8 +187,8 @@ export default function DWIAcademySalesPage({
     const emailAddress = router.query.email;
     const campaignId = Number(router.query.c);
 
-    if (!emailAddress || typeof emailAddress !== "string") {
-      console.error("Invalid email parameter:", emailAddress);
+    if (!emailAddress || typeof emailAddress !== "string" || !campaignId) {
+      console.error("Invalid email or campaign parameter:", emailAddress, campaignId);
       setStatus("invalid");
       return;
     }
