@@ -8,7 +8,12 @@ import { useRouter } from "next/router";
 import DWIBanner from "@/components/DWIBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type TextNode = {
   text: string;
@@ -156,7 +161,7 @@ export const getStaticProps = async () => {
     "informed_investor_club.sales_cards.image",
     "informed_investor_club.video_club",
     "sign_off_cover",
-    "faq_details"
+    "faq_details",
   ];
   const pageData = await fetchEndpointData(`/dwi-academy-page`, populateFields);
 
@@ -180,10 +185,6 @@ export default function DWIAcademySalesPage({
   useEffect(() => {
     if (!router.isReady) return;
     const emailAddress = router.query.email;
-    console.log("router query", router.query);
-    console.log("router query email:", emailAddress);
-    console.log("router query email type:", typeof emailAddress);
-    console.log("email", emailAddress);
 
     if (!emailAddress || typeof emailAddress !== "string") {
       console.error("Invalid email parameter:", emailAddress);
@@ -201,18 +202,6 @@ export default function DWIAcademySalesPage({
             body: JSON.stringify({ emailAddress }),
           }
         );
-        console.log("res", res);
-        // const text = await res.text();
-        // console.log("Raw response:", text);
-
-        // // Try to extract JSON if needed
-        // try {
-        //   const jsonString = text.replace(/^Received:\s*/, "");
-        //   const data = JSON.parse(jsonString);
-        //   console.log("Parsed JSON:", data);
-        // } catch (e) {
-        //   console.error("Failed to parse JSON:", e);
-        // }
         const data = await res.json();
         console.log("data", data);
 
@@ -320,70 +309,40 @@ export default function DWIAcademySalesPage({
     ButASeeminglysplitIndex
   );
   const firstDescRest = courseData.james_intro.slice(ButASeeminglysplitIndex);
-  // const ThenTheresInflationSplit = firstDescRest.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some((child: { text: string | string[] }) =>
-  //       child.text.includes("Then There’s Inflation")
-  //     )
-  // );
-  // const ButASeeminglyText = firstDescRest.slice(0, ThenTheresInflationSplit);
-  // const firstDescRest2 = firstDescRest.slice(ThenTheresInflationSplit);
-  // const NotAlwaysObviousSplit = firstDescRest2.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some((child: { text: string | string[] }) =>
-  //       child.text.includes(
-  //         "It’s not always obvious at the time, but inflation’s like pouring petrol"
-  //       )
-  //     )
-  // );
-  // const ThenTheresInflationText = firstDescRest2.slice(
-  //   0,
-  //   NotAlwaysObviousSplit
-  // );
-  // const firstDescRest3 = firstDescRest2.slice(NotAlwaysObviousSplit);
-  // const in2022AloneSplit = firstDescRest3.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some((child: { text: string | string[] }) =>
-  //       child.text.includes(
-  //         "In 2022 Alone, £50,000 Dropped A Whopping 10% In Terms Of Buying Power"
-  //       )
-  //     )
-  // );
-  // const NotAlwaysObviousText = firstDescRest3.slice(0, in2022AloneSplit);
-  // const firstDescRest4 = firstDescRest3.slice(in2022AloneSplit);
-  // const targetText =
-  //   "“Compound Interest Is The Eighth Wonder Of The World. He Who Understands It, Earns It… He Who Doesn't… Pays It”";
 
-  // // Find the index of the object that matches the target text
-  // const CompoundInterestSplit = firstDescRest4.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some(
-  //       (child: { text: string | string[] }) => child.text === targetText // Direct match of the exact text
-  //     )
-  // );
-  // const In2022Text = firstDescRest4.slice(0, CompoundInterestSplit);
-  // const firstDescRest5 = firstDescRest4.slice(CompoundInterestSplit);
-  // const targetTextSmall =
-  //   "“Small Details Make A Big Difference  When Building A Precision Portfolio” ";
-  // const SmallDetailsSplit = firstDescRest5.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some(
-  //       (child: { text: string | string[] }) => child.text === targetTextSmall // Direct match of the exact text
-  //     )
-  // );
-  // const CompoundInterestText = firstDescRest5.slice(0, SmallDetailsSplit);
-  // const firstDescRest6 = firstDescRest5.slice(SmallDetailsSplit);
-  // const targetTextNoWonder =
-  //   "No Wonder 70% Of Newbie Investors Lose Money At First…";
-  // const NoWonderSplit = firstDescRest6.findIndex(
-  //   (obj: { children: { text: string | string[] }[] }) =>
-  //     obj.children.some(
-  //       (child: { text: string | string[] }) =>
-  //         child.text === targetTextNoWonder // Direct match of the exact text
-  //     )
-  // );
-  // const SmallDetailsText = firstDescRest6.slice(0, NoWonderSplit);
-  // const NoWonderText = firstDescRest6.slice(NoWonderSplit);
+  const importantSplit = courseData.summary.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes("IMPORTANT")
+      )
+  );
+  const summaryIntro = courseData.summary.slice(0, importantSplit);
+  const summaryRest = courseData.summary.slice(importantSplit);
+
+  const targetTextSpecial = "This Special £1000+Vat Offer… ";
+  const specialOffer = summaryRest.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some(
+        (child: { text: string | string[] }) => child.text === targetTextSpecial // Direct match of the exact text
+      )
+  );
+  const summaryImportantText = summaryRest.slice(0, specialOffer);
+  const summarySpecialOfferRest = summaryRest.slice(specialOffer);
+
+  const specialOfferDetailTarget =
+    "You won’t find this offer on our main website.";
+
+  const specialOfferDetailSplit = summarySpecialOfferRest.findIndex(
+    (obj: { children: any[] }) =>
+      obj.children?.some((child) => child.text === specialOfferDetailTarget)
+  );
+  const summarySpecialOffer = summarySpecialOfferRest.slice(
+    0,
+    specialOfferDetailSplit
+  );
+  const summarySpecialOfferDetail = summarySpecialOfferRest.slice(
+    specialOfferDetailSplit
+  );
 
   const same_playbook_image_urls = [
     "https://assets.dentistswhoinvest.com/1_7f95d90946/1_7f95d90946.webp",
@@ -781,14 +740,48 @@ export default function DWIAcademySalesPage({
 
         <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
           <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
-            <p>
-              {" "}
-              <span>
-                this needs to be adjusted, either broken up or added to strapi
-              </span>
-            </p>
-            <div className="dwiH5 articleContent space-y-4 lg:px-[150px]">
-              <BlocksRenderer content={courseData.summary} />
+            <div
+              id="summary intro"
+              className="dwiH5 articleContent space-y-4 lg:px-[150px]"
+            >
+              <BlocksRenderer content={summaryIntro} />
+            </div>
+            <div
+              id="summary important text & Luke image"
+              className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8"
+            >
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={summaryImportantText} />
+              </div>
+              <Image
+                src="https://assets.dentistswhoinvest.com/image_5_b78d4e0009/image_5_b78d4e0009.webp"
+                alt="Luke"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+            </div>
+            <div
+              id="summary special offer"
+              className="bg-white grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8"
+            >
+              <Image
+                src="https://assets.dentistswhoinvest.com/special_offe_2_0cb8cb0a04/special_offe_2_0cb8cb0a04.png"
+                alt="Special Offer"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={summarySpecialOffer} />
+              </div>
+            </div>
+
+            <div
+              id="summary special offer detail"
+              className="dwiH5 articleContent space-y-4 lg:px-[150px]"
+            >
+              <BlocksRenderer content={summarySpecialOfferDetail} />
             </div>
             <Link
               href={courseData.cta_navigation_url}
@@ -804,7 +797,7 @@ export default function DWIAcademySalesPage({
           </div>
         </section>
         <section id="testimonials">
-        <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <p>{courseData.testimonials_title}</p>
           </div>
           {testimonialImages.map((image, index) => {
@@ -823,7 +816,7 @@ export default function DWIAcademySalesPage({
               </div>
             );
           })}
-        
+
           <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.testimonials_detail} />
           </div>
@@ -831,20 +824,20 @@ export default function DWIAcademySalesPage({
 
         <section id="faq">
           <p>{courseData.faq_title}</p>
-        {courseData.faq_details.map((FAQ: any) => {
-          return (
-            <Accordion key={FAQ} type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
-                  {FAQ.title}
-                </AccordionTrigger>
-                <AccordionContent className="text-[16px] text-black">
-                  {FAQ.description[0].children[0].text}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          );
-        })}
+          {courseData.faq_details.map((FAQ: any) => {
+            return (
+              <Accordion key={FAQ} type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
+                    {FAQ.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[16px] text-black">
+                    {FAQ.description[0].children[0].text}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            );
+          })}
           <Link
             href={courseData.cta_navigation_url}
             className="flex justify-center"
