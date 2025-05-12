@@ -185,6 +185,7 @@ export default function DWIAcademySalesPage({
   useEffect(() => {
     if (!router.isReady) return;
     const emailAddress = router.query.email;
+    const campaignId = Number(router.query.c);
 
     if (!emailAddress || typeof emailAddress !== "string") {
       console.error("Invalid email parameter:", emailAddress);
@@ -199,7 +200,7 @@ export default function DWIAcademySalesPage({
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ emailAddress }),
+            body: JSON.stringify({ emailAddress, campaignId }),
           }
         );
         const data = await res.json();
