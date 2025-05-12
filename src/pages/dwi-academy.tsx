@@ -344,6 +344,17 @@ export default function DWIAcademySalesPage({
     specialOfferDetailSplit
   );
 
+  const noWonderTarget = "(I certainly did until I knew better)";
+
+  const noWonder_splitIndex = courseData.no_wonder.findIndex(
+    (obj: { children: { text: string | string[] }[] }) =>
+      obj.children.some((child: { text: string | string[] }) =>
+        child.text.includes(noWonderTarget)
+      )
+  );
+  const noWonderHeader = courseData.no_wonder.slice(0, noWonder_splitIndex);
+  const noWonderDetail = courseData.no_wonder.slice(noWonder_splitIndex);
+
   const same_playbook_image_urls = [
     "https://assets.dentistswhoinvest.com/1_7f95d90946/1_7f95d90946.webp",
     "https://assets.dentistswhoinvest.com/2_5156297d3a/2_5156297d3a.webp",
@@ -419,7 +430,7 @@ export default function DWIAcademySalesPage({
           >
             <BlocksRenderer content={firstDescRest} />
           </div>
-          <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
+          <div className="relative z-10 h-[280px] w-screen overflow-hidden md:h-[202px] lg:h-[282px]">
             <Image
               src="https://assets.dentistswhoinvest.com/image_3_0a8019a594/image_3_0a8019a594.webp"
               alt={"inflation background"}
@@ -430,7 +441,7 @@ export default function DWIAcademySalesPage({
 
             <div
               id="inflation"
-              className="dwiH5 articleContent relative m-8 w-full space-y-4 bg-white text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+              className="articleContent relative w-[30%] justify-self-center bg-white text-center text-lg font-bold leading-10 md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
             >
               <BlocksRenderer content={courseData.inflation} />
             </div>
@@ -441,7 +452,7 @@ export default function DWIAcademySalesPage({
           >
             <BlocksRenderer content={courseData.inflation_explainer} />
           </div>
-          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[602px] lg:h-[542px]">
+          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[542px] lg:h-[502px]">
             <Image
               src="https://assets.dentistswhoinvest.com/Group_11_47373f98dd/Group_11_47373f98dd.png"
               alt={"buying power decreasing background"}
@@ -452,7 +463,7 @@ export default function DWIAcademySalesPage({
 
             <div
               id="inflation"
-              className="dwiH5 articleContent relative m-8 w-full space-y-4 bg-white text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+              className="dwiH5 articleContent relative m-8 w-full space-y-4 text-lg text-white md:m-[55px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
             >
               <BlocksRenderer content={courseData.buying_power} />
             </div>
@@ -465,7 +476,7 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id="small"
-            className="dwiH5 articleContent m-8 space-y-4 bg-blue-secondary text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            className="dwiH5 articleContent space-y-4 bg-blue-secondary px-12 py-8 text-lg text-white xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
             <BlocksRenderer content={courseData.small_details} />
           </div>
@@ -473,22 +484,26 @@ export default function DWIAcademySalesPage({
             id="james"
             className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
+            <div>
+              {" "}
+              <BlocksRenderer content={noWonderHeader} />
+            </div>
             <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
               <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
-                <BlocksRenderer content={courseData.no_wonder} />
+                <BlocksRenderer content={noWonderDetail} />
               </div>
               <Image
                 src="https://assets.dentistswhoinvest.com/wrap_up_founder_226931dc58/wrap_up_founder_226931dc58.webp"
                 alt="James speaking"
                 width={315}
                 height={315}
-                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+                className=" w-full md:h-[564px] lg:size-[492px] xl:h-[550px] xl:place-self-center"
               />
             </div>
           </div>
         </section>
-        <section id="collective-content" className="bg-gray-100">
-          <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
+        <section id="collective-content" className="">
+          <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[242px] lg:h-[542px]">
             <Image
               src="https://assets.dentistswhoinvest.com/Group_36_8ab2aba150/Group_36_8ab2aba150.webp"
               alt={"James and Luke"}
@@ -499,7 +514,7 @@ export default function DWIAcademySalesPage({
 
             <div
               id=""
-              className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+              className="articleContent justify-self-center text-center font-bold leading-8 w-3/5 relative m-8 space-y-4 text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
             >
               <BlocksRenderer
                 content={courseData.collective_content_description}
@@ -508,19 +523,19 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id=""
-            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            className="dwiH5 bg-white articleContent m-8 relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
             <BlocksRenderer content={courseData.no_one_cares} />{" "}
           </div>
           <div
             id="same playbook header"
-            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            className="dwiH5 bg-white articleContent m-8 relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
             <BlocksRenderer content={courseData.same_playbook_heading} />{" "}
           </div>
           <div
             id="inflation"
-            className="dwiH5 articleContent  relative m-8 w-full space-y-4 text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            className="dwiH5 articleContent bg-white m-8 relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
             <ul>
               {courseData.same_playbook_list[0].children.map(
@@ -536,26 +551,24 @@ export default function DWIAcademySalesPage({
                   return (
                     <li
                       key={index}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: 8,
-                      }}
+                      className="mb-8 flex items-center justify-start"
                     >
                       <Image
                         src={same_playbook_image_urls[index]}
                         alt={`icon-${index + 1}`}
-                        width={24}
-                        height={24}
-                        className="mr-2"
+                        width={80}
+                        height={80}
+                        className="mr-4"
                       />
-                      <span>{text}</span>
+                      <span className="w-5/6 text-wrap">{text}</span>
                     </li>
                   );
                 }
               )}
             </ul>
           </div>
+        </section>
+        <section className="bg-[#EFF3F6]">
           <div
             id="the academy takes you"
             className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
@@ -567,7 +580,7 @@ export default function DWIAcademySalesPage({
             className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
             <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
-              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+              <div className="space-y-8 text-blue-primary lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
                 <BlocksRenderer content={courseData.instead_the_academy} />
               </div>
               <Image
@@ -575,7 +588,7 @@ export default function DWIAcademySalesPage({
                 alt="Course image"
                 width={315}
                 height={315}
-                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+                className="h-auto w-full md:size-[264px] lg:size-[392px] xl:size-[450px] xl:place-self-center"
               />
             </div>
           </div>
@@ -611,7 +624,32 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={courseData.companies_who_say} />
           </div>
           <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
-            <BlocksRenderer content={courseData.what_I_am_list} />
+            {/* <BlocksRenderer content={courseData.what_I_am_list} /> */}
+            {courseData.what_I_am_list[0].children.map(
+              (item: { children: any[] }, index: number) => (
+                <div
+                  key={index}
+                  className={`flex items-start gap-3 rounded-lg p-4 ${
+                    index % 2 === 0 ? "bg-[#65ADC1]" : "bg-[#E1EBF0]"
+                  }`}
+                >
+                  <div className="text-2xl leading-6">✅</div>
+                  <div className="leading-relaxed">
+                    {item.children.map((child, i) => {
+                      if (child.bold) {
+                        return (
+                          <strong key={i} className="font-semibold">
+                            {child.text}
+                          </strong>
+                        );
+                      } else {
+                        return <span key={i}>{child.text}</span>;
+                      }
+                    })}
+                  </div>
+                </div>
+              )
+            )}
           </div>
           <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.how_the_academy} />
@@ -738,7 +776,7 @@ export default function DWIAcademySalesPage({
           </div>
         </section>
 
-        <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
+        <section id="sign off" className="space-y-8 bg-[white] p-8 ">
           <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
             <div
               id="summary intro"
@@ -746,6 +784,10 @@ export default function DWIAcademySalesPage({
             >
               <BlocksRenderer content={summaryIntro} />
             </div>
+          </div>
+        </section>
+        <section id="sign off" className="space-y-8 bg-blue-secondary p-8 ">
+          <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
             <div
               id="summary important text & Luke image"
               className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8"
@@ -761,6 +803,10 @@ export default function DWIAcademySalesPage({
                 className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
               />
             </div>
+          </div>
+        </section>
+        <section id="sign off" className="space-y-8 bg-[white] p-8 ">
+          <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
             <div
               id="summary special offer"
               className="bg-white grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8"
@@ -796,26 +842,28 @@ export default function DWIAcademySalesPage({
             </div>
           </div>
         </section>
-        <section id="testimonials">
-          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+        <section id="testimonials" className="bg-[#E1EBF0] py-2">
+          <div className="articleContent m-8 w-1/2 space-y-4 justify-self-center text-center text-xl font-bold md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <p>{courseData.testimonials_title}</p>
           </div>
-          {testimonialImages.map((image, index) => {
-            return (
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:px-[150px]">
+            {testimonialImages.map((image, index) => (
               <div
                 key={index}
-                className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]"
+                className="flex flex-col items-center justify-self-center"
               >
-                <Image
-                  src={image}
-                  alt={`Testimonial image ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className="inset-0"
-                />
+                <div className="relative">
+                  <Image
+                    src={image}
+                    alt={`Testimonial author ${index + 1}`}
+                    width={315}
+                    height={315}
+                    className="object-cover size-50 justify-self-center"
+                  />
+                </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
 
           <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
             <BlocksRenderer content={courseData.testimonials_detail} />
@@ -823,33 +871,39 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="faq">
-          <p>{courseData.faq_title}</p>
-          {courseData.faq_details.map((FAQ: any) => {
-            return (
-              <Accordion key={FAQ} type="single" collapsible>
-                <AccordionItem value="item-1">
-                  <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
-                    {FAQ.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-[16px] text-black">
-                    {FAQ.description[0].children[0].text}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            );
-          })}
-          <Link
-            href={courseData.cta_navigation_url}
-            className="flex justify-center"
-          >
-            <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-2/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
-              {courseData.cta_text}
-            </Button>
-          </Link>
+          <p className="text-xl font-bold text-center p-8">
+            {courseData.faq_title}
+          </p>
+          <div className="m-8 max-w-[1140px] justify-self-center">
+            {courseData.faq_details.map((FAQ: any) => {
+              return (
+                <Accordion key={FAQ} type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger className="my-2 text-left text-[15px] md:text-[20px]">
+                      {FAQ.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-[16px] text-black">
+                      {FAQ.description[0].children[0].text}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              );
+            })}
+          </div>
+          <div className="m-auto flex-col space-y-8 py-8 lg:flex lg:max-w-[1140px] lg:justify-center">
+            <Link
+              href={courseData.cta_navigation_url}
+              className="flex justify-center"
+            >
+              <Button className="size-full rounded-md bg-orange-400 px-2 py-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-1/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
+                {courseData.cta_text}
+              </Button>
+            </Link>
+          </div>
         </section>
 
         <section id="sign off">
-          <div className="relative h-[440px] w-full ">
+          <div className="relative h-[340px] w-full ">
             <div className="absolute inset-0 ">
               <Image
                 src={courseData.sign_off_cover.data.attributes.url}
