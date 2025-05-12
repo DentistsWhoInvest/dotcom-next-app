@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import DWIBanner from "@/components/DWIBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 type TextNode = {
   text: string;
@@ -116,6 +117,29 @@ type AcademyCoursePageData = {
   sign_off_testimonial: Testimonial;
   sign_off_cover: ImageData;
   post_sign_off_description: any;
+  james_intro: any;
+  inflation: any;
+  inflation_explainer: any;
+  buying_power: any;
+  compound_interest: any;
+  small_details: any;
+  no_wonder: any;
+  no_one_cares: any;
+  same_playbook_heading: any;
+  same_playbook_list: any;
+  the_academy_takes_you: any;
+  instead_the_academy: any;
+  secret_trade_handover: any;
+  quick_question: any;
+  quick_question_detail: any;
+  companies_who_say: any;
+  what_I_am_list: any;
+  how_the_academy: any;
+  testimonials_title: any;
+  testimonials: any;
+  testimonials_detail: any;
+  faq_title: any;
+  faq_details: any;
 };
 
 export const getStaticProps = async () => {
@@ -132,6 +156,7 @@ export const getStaticProps = async () => {
     "informed_investor_club.sales_cards.image",
     "informed_investor_club.video_club",
     "sign_off_cover",
+    "faq_details"
   ];
   const pageData = await fetchEndpointData(`/dwi-academy-page`, populateFields);
 
@@ -147,20 +172,21 @@ export default function DWIAcademySalesPage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
+  console.log("courseData", courseData);
   const router = useRouter();
 
   const [status, setStatus] = useState("loading"); // 'loading', 'valid', 'expired', 'invalid'
 
   useEffect(() => {
     if (!router.isReady) return;
-    const email = router.query.email;
+    const emailAddress = router.query.email;
     console.log("router query", router.query);
-    console.log("router query email:", email);
-    console.log("router query email type:", typeof email);
-    console.log("email", email);
+    console.log("router query email:", emailAddress);
+    console.log("router query email type:", typeof emailAddress);
+    console.log("email", emailAddress);
 
-    if (!email || typeof email !== "string") {
-      console.error("Invalid email parameter:", email);
+    if (!emailAddress || typeof emailAddress !== "string") {
+      console.error("Invalid email parameter:", emailAddress);
       setStatus("invalid");
       return;
     }
@@ -168,11 +194,11 @@ export default function DWIAcademySalesPage({
     const checkAccess = async () => {
       try {
         const res = await fetch(
-          "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/academy-offer-access-check/hello",
+          "https://europe-west2-electric-node-426223-s2.cloudfunctions.net/academy-offer-access-check/access-check",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ emailAddress }),
           }
         );
         console.log("res", res);
@@ -188,11 +214,14 @@ export default function DWIAcademySalesPage({
         //   console.error("Failed to parse JSON:", e);
         // }
         const data = await res.json();
+        console.log("data", data);
 
-        if (data?.access === "granted") {
+        if (data?.status === "granted") {
           setStatus("valid");
-        } else if (data?.access === "expired") {
+        } else if (data?.status === "expired") {
           setStatus("expired");
+        } else if (data?.status === "invalid") {
+          setStatus("invalid");
         } else {
           setStatus("valid"); // fail open
         }
@@ -234,7 +263,7 @@ export default function DWIAcademySalesPage({
           <span className="my-8 text-5xl font-bold">
             Sorry, this link is not valid.{" "}
           </span>
-          <span>You can view the Dentist Who Invest Academy here:</span>
+          <span>You can view the Dentists Who Invest Academy here:</span>
 
           <Link
             href="/the-academy"
@@ -259,7 +288,7 @@ export default function DWIAcademySalesPage({
           <span className="my-8 text-5xl font-bold">
             Sorry, this offer has expired.{" "}
           </span>
-          <span>You can view the Dentist Who Invest Academy here:</span>
+          <span>You can view the Dentists Who Invest Academy here:</span>
 
           <Link
             href="/the-academy"
@@ -280,83 +309,95 @@ export default function DWIAcademySalesPage({
   if (status === "invalid") return MissingEmail();
   if (status === "expired") return ExpiredOffer();
 
-  const ButASeeminglysplitIndex = courseData.first_description.findIndex(
+  const ButASeeminglysplitIndex = courseData.james_intro.findIndex(
     (obj: { children: { text: string | string[] }[] }) =>
       obj.children.some((child: { text: string | string[] }) =>
         child.text.includes("But A Seemingly Innocent Game Of Football")
       )
   );
-  const firstDescJames = courseData.first_description.slice(
+  const firstDescJames = courseData.james_intro.slice(
     0,
     ButASeeminglysplitIndex
   );
-  const firstDescRest = courseData.first_description.slice(
-    ButASeeminglysplitIndex
-  );
-  const ThenTheresInflationSplit = firstDescRest.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some((child: { text: string | string[] }) =>
-        child.text.includes("Then There’s Inflation")
-      )
-  );
-  const ButASeeminglyText = firstDescRest.slice(0, ThenTheresInflationSplit);
-  const firstDescRest2 = firstDescRest.slice(ThenTheresInflationSplit);
-  const NotAlwaysObviousSplit = firstDescRest2.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some((child: { text: string | string[] }) =>
-        child.text.includes(
-          "It’s not always obvious at the time, but inflation’s like pouring petrol"
-        )
-      )
-  );
-  const ThenTheresInflationText = firstDescRest2.slice(
-    0,
-    NotAlwaysObviousSplit
-  );
-  const firstDescRest3 = firstDescRest2.slice(NotAlwaysObviousSplit);
-  const in2022AloneSplit = firstDescRest3.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some((child: { text: string | string[] }) =>
-        child.text.includes(
-          "In 2022 Alone, £50,000 Dropped A Whopping 10% In Terms Of Buying Power"
-        )
-      )
-  );
-  const NotAlwaysObviousText = firstDescRest3.slice(0, in2022AloneSplit);
-  const firstDescRest4 = firstDescRest3.slice(in2022AloneSplit);
-  const targetText =
-    "“Compound Interest Is The Eighth Wonder Of The World. He Who Understands It, Earns It… He Who Doesn't… Pays It”";
+  const firstDescRest = courseData.james_intro.slice(ButASeeminglysplitIndex);
+  // const ThenTheresInflationSplit = firstDescRest.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some((child: { text: string | string[] }) =>
+  //       child.text.includes("Then There’s Inflation")
+  //     )
+  // );
+  // const ButASeeminglyText = firstDescRest.slice(0, ThenTheresInflationSplit);
+  // const firstDescRest2 = firstDescRest.slice(ThenTheresInflationSplit);
+  // const NotAlwaysObviousSplit = firstDescRest2.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some((child: { text: string | string[] }) =>
+  //       child.text.includes(
+  //         "It’s not always obvious at the time, but inflation’s like pouring petrol"
+  //       )
+  //     )
+  // );
+  // const ThenTheresInflationText = firstDescRest2.slice(
+  //   0,
+  //   NotAlwaysObviousSplit
+  // );
+  // const firstDescRest3 = firstDescRest2.slice(NotAlwaysObviousSplit);
+  // const in2022AloneSplit = firstDescRest3.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some((child: { text: string | string[] }) =>
+  //       child.text.includes(
+  //         "In 2022 Alone, £50,000 Dropped A Whopping 10% In Terms Of Buying Power"
+  //       )
+  //     )
+  // );
+  // const NotAlwaysObviousText = firstDescRest3.slice(0, in2022AloneSplit);
+  // const firstDescRest4 = firstDescRest3.slice(in2022AloneSplit);
+  // const targetText =
+  //   "“Compound Interest Is The Eighth Wonder Of The World. He Who Understands It, Earns It… He Who Doesn't… Pays It”";
 
-  // Find the index of the object that matches the target text
-  const CompoundInterestSplit = firstDescRest4.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some(
-        (child: { text: string | string[] }) => child.text === targetText // Direct match of the exact text
-      )
-  );
-  const In2022Text = firstDescRest4.slice(0, CompoundInterestSplit);
-  const firstDescRest5 = firstDescRest4.slice(CompoundInterestSplit);
-  const targetTextSmall =
-    "“Small Details Make A Big Difference  When Building A Precision Portfolio” ";
-  const SmallDetailsSplit = firstDescRest5.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some(
-        (child: { text: string | string[] }) => child.text === targetTextSmall // Direct match of the exact text
-      )
-  );
-  const CompoundInterestText = firstDescRest5.slice(0, SmallDetailsSplit);
-  const firstDescRest6 = firstDescRest5.slice(SmallDetailsSplit);
-  const targetTextNoWonder =
-    "No Wonder 70% Of Newbie Investors Lose Money At First…";
-  const NoWonderSplit = firstDescRest6.findIndex(
-    (obj: { children: { text: string | string[] }[] }) =>
-      obj.children.some(
-        (child: { text: string | string[] }) =>
-          child.text === targetTextNoWonder // Direct match of the exact text
-      )
-  );
-  const SmallDetailsText = firstDescRest6.slice(0, NoWonderSplit);
-  const NoWonderText = firstDescRest6.slice(NoWonderSplit);
+  // // Find the index of the object that matches the target text
+  // const CompoundInterestSplit = firstDescRest4.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some(
+  //       (child: { text: string | string[] }) => child.text === targetText // Direct match of the exact text
+  //     )
+  // );
+  // const In2022Text = firstDescRest4.slice(0, CompoundInterestSplit);
+  // const firstDescRest5 = firstDescRest4.slice(CompoundInterestSplit);
+  // const targetTextSmall =
+  //   "“Small Details Make A Big Difference  When Building A Precision Portfolio” ";
+  // const SmallDetailsSplit = firstDescRest5.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some(
+  //       (child: { text: string | string[] }) => child.text === targetTextSmall // Direct match of the exact text
+  //     )
+  // );
+  // const CompoundInterestText = firstDescRest5.slice(0, SmallDetailsSplit);
+  // const firstDescRest6 = firstDescRest5.slice(SmallDetailsSplit);
+  // const targetTextNoWonder =
+  //   "No Wonder 70% Of Newbie Investors Lose Money At First…";
+  // const NoWonderSplit = firstDescRest6.findIndex(
+  //   (obj: { children: { text: string | string[] }[] }) =>
+  //     obj.children.some(
+  //       (child: { text: string | string[] }) =>
+  //         child.text === targetTextNoWonder // Direct match of the exact text
+  //     )
+  // );
+  // const SmallDetailsText = firstDescRest6.slice(0, NoWonderSplit);
+  // const NoWonderText = firstDescRest6.slice(NoWonderSplit);
+
+  const same_playbook_image_urls = [
+    "https://assets.dentistswhoinvest.com/1_7f95d90946/1_7f95d90946.webp",
+    "https://assets.dentistswhoinvest.com/2_5156297d3a/2_5156297d3a.webp",
+    "https://assets.dentistswhoinvest.com/3_8897df434d/3_8897df434d.webp",
+  ];
+
+  const testimonialImages = [
+    "https://assets.dentistswhoinvest.com/2_1_39fa6f5dba/2_1_39fa6f5dba.webp",
+    "https://assets.dentistswhoinvest.com/1_1_5f35c428d8/1_1_5f35c428d8.webp",
+    "https://assets.dentistswhoinvest.com/4_31caf2f764/4_31caf2f764.webp",
+    "https://assets.dentistswhoinvest.com/5_c7af1c19c7/5_c7af1c19c7.webp",
+    "https://assets.dentistswhoinvest.com/Testimonials_1_a9fb002db7/Testimonials_1_a9fb002db7.webp",
+  ];
 
   return (
     <>
@@ -402,8 +443,8 @@ export default function DWIAcademySalesPage({
           >
             <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
               <Image
-                src={courseData.collective_content_image.data.attributes.url}
-                alt="Collective content image"
+                src="https://assets.dentistswhoinvest.com/image_2_b16a366e12/image_2_b16a366e12.webp"
+                alt="James in Dubai"
                 width={315}
                 height={315}
                 className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
@@ -417,34 +458,12 @@ export default function DWIAcademySalesPage({
             id="seemingly"
             className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
-            <BlocksRenderer content={ButASeeminglyText} />
+            <BlocksRenderer content={firstDescRest} />
           </div>
           <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
             <Image
-              src={courseData.hero_cover.data.attributes.url}
-              alt={"mobile"}
-              layout="fill"
-              objectFit="cover"
-              className="inset-0"
-            />
-
-            <div
-              id="inflation"
-              className="dwiH5 bg-white w-full articleContent relative m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
-            >
-              <BlocksRenderer content={ThenTheresInflationText} />
-            </div>
-          </div>
-          <div
-            id="not always"
-            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
-          >
-            <BlocksRenderer content={NotAlwaysObviousText} />
-          </div>
-          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[602px] lg:h-[542px]">
-            <Image
-              src={courseData.hero_cover.data.attributes.url}
-              alt={"mobile"}
+              src="https://assets.dentistswhoinvest.com/image_3_0a8019a594/image_3_0a8019a594.webp"
+              alt={"inflation background"}
               layout="fill"
               objectFit="cover"
               className="inset-0"
@@ -454,20 +473,42 @@ export default function DWIAcademySalesPage({
               id="inflation"
               className="dwiH5 articleContent relative m-8 w-full space-y-4 bg-white text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
             >
-              <BlocksRenderer content={In2022Text} />
+              <BlocksRenderer content={courseData.inflation} />
+            </div>
+          </div>
+          <div
+            id="not always"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={courseData.inflation_explainer} />
+          </div>
+          <div className="relative z-10 h-[680px] w-screen overflow-hidden md:h-[602px] lg:h-[542px]">
+            <Image
+              src="https://assets.dentistswhoinvest.com/Group_11_47373f98dd/Group_11_47373f98dd.png"
+              alt={"buying power decreasing background"}
+              layout="fill"
+              objectFit="cover"
+              className="inset-0"
+            />
+
+            <div
+              id="inflation"
+              className="dwiH5 articleContent relative m-8 w-full space-y-4 bg-white text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+            >
+              <BlocksRenderer content={courseData.buying_power} />
             </div>
           </div>
           <div
             id="compound"
             className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
-            <BlocksRenderer content={CompoundInterestText} />
+            <BlocksRenderer content={courseData.compound_interest} />
           </div>
           <div
             id="small"
             className="dwiH5 articleContent m-8 space-y-4 bg-blue-secondary text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
           >
-            <BlocksRenderer content={SmallDetailsText} />
+            <BlocksRenderer content={courseData.small_details} />
           </div>
           <div
             id="james"
@@ -475,11 +516,11 @@ export default function DWIAcademySalesPage({
           >
             <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
               <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
-                <BlocksRenderer content={NoWonderText} />
+                <BlocksRenderer content={courseData.no_wonder} />
               </div>
               <Image
-                src={courseData.collective_content_image.data.attributes.url}
-                alt="Collective content image"
+                src="https://assets.dentistswhoinvest.com/wrap_up_founder_226931dc58/wrap_up_founder_226931dc58.webp"
+                alt="James speaking"
                 width={315}
                 height={315}
                 className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
@@ -490,26 +531,131 @@ export default function DWIAcademySalesPage({
         <section id="collective-content" className="bg-gray-100">
           <div className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]">
             <Image
-              src={courseData.hero_cover.data.attributes.url}
-              alt={"mobile"}
+              src="https://assets.dentistswhoinvest.com/Group_36_8ab2aba150/Group_36_8ab2aba150.webp"
+              alt={"James and Luke"}
               layout="fill"
               objectFit="cover"
               className="inset-0"
             />
 
             <div
-              id="inflation"
-              className="dwiH5 text-white  w-full articleContent relative m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+              id=""
+              className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
             >
               <BlocksRenderer
                 content={courseData.collective_content_description}
               />{" "}
             </div>
           </div>
+          <div
+            id=""
+            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={courseData.no_one_cares} />{" "}
+          </div>
+          <div
+            id="same playbook header"
+            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={courseData.same_playbook_heading} />{" "}
+          </div>
+          <div
+            id="inflation"
+            className="dwiH5 articleContent  relative m-8 w-full space-y-4 text-lg text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <ul>
+              {courseData.same_playbook_list[0].children.map(
+                (item: { children: any[] }, index: number) => {
+                  const text = item.children.map((child, i) => {
+                    return child.bold ? (
+                      <strong key={i}>{child.text}</strong>
+                    ) : (
+                      child.text
+                    );
+                  });
+
+                  return (
+                    <li
+                      key={index}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: 8,
+                      }}
+                    >
+                      <Image
+                        src={same_playbook_image_urls[index]}
+                        alt={`icon-${index + 1}`}
+                        width={24}
+                        height={24}
+                        className="mr-2"
+                      />
+                      <span>{text}</span>
+                    </li>
+                  );
+                }
+              )}
+            </ul>
+          </div>
+          <div
+            id="the academy takes you"
+            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={courseData.the_academy_takes_you} />{" "}
+          </div>
+          <div
+            id="james"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={courseData.instead_the_academy} />
+              </div>
+              <Image
+                src="https://assets.dentistswhoinvest.com/image_19_0880e64b1a/image_19_0880e64b1a.png"
+                alt="Course image"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+            </div>
+          </div>
+          <div
+            id="same playbook header"
+            className="dwiH5  articleContent relative m-8 w-full space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <BlocksRenderer content={courseData.secret_trade_handover} />{" "}
+          </div>
         </section>
         <section id="second-description">
           <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
-            <BlocksRenderer content={courseData.second_description} />
+            <BlocksRenderer content={courseData.quick_question} />
+          </div>
+          <div
+            id="james"
+            className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]"
+          >
+            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:mx-auto xl:max-w-[1140px] xl:gap-8">
+              <Image
+                src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
+                alt="James speaking"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[364px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+              />
+              <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
+                <BlocksRenderer content={courseData.quick_question_detail} />
+              </div>
+            </div>
+          </div>
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.companies_who_say} />
+          </div>
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.what_I_am_list} />
+          </div>
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.how_the_academy} />
           </div>
         </section>
         <section className="flex justify-center bg-blue-secondary p-2">
@@ -635,6 +781,12 @@ export default function DWIAcademySalesPage({
 
         <section id="sign off" className="space-y-8 bg-[#dbe2e9] p-8 ">
           <div className="m-auto flex-col space-y-8 lg:flex lg:max-w-[1140px] lg:justify-center">
+            <p>
+              {" "}
+              <span>
+                this needs to be adjusted, either broken up or added to strapi
+              </span>
+            </p>
             <div className="dwiH5 articleContent space-y-4 lg:px-[150px]">
               <BlocksRenderer content={courseData.summary} />
             </div>
@@ -651,24 +803,78 @@ export default function DWIAcademySalesPage({
             </div>
           </div>
         </section>
-        <section id="post-sign-off-description">
-          <div className="m-8 space-y-4 text-sm md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
-            <BlocksRenderer content={courseData.post_sign_off_description} />
+        <section id="testimonials">
+        <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <p>{courseData.testimonials_title}</p>
+          </div>
+          {testimonialImages.map((image, index) => {
+            return (
+              <div
+                key={index}
+                className="relative z-10 h-[380px] w-screen overflow-hidden md:h-[302px] lg:h-[542px]"
+              >
+                <Image
+                  src={image}
+                  alt={`Testimonial image ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="inset-0"
+                />
+              </div>
+            );
+          })}
+        
+          <div className="dwiH5 articleContent m-8 space-y-4 text-lg md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+            <BlocksRenderer content={courseData.testimonials_detail} />
           </div>
         </section>
-        <div className="relative h-[440px] w-full ">
-          <div className="absolute inset-0 ">
-            <Image
-              src={courseData.sign_off_cover.data.attributes.url}
-              alt={"Sign off image"}
-              layout="fill"
-              objectPosition="center"
-              objectFit="cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
+
+        <section id="faq">
+          <p>{courseData.faq_title}</p>
+        {courseData.faq_details.map((FAQ: any) => {
+          return (
+            <Accordion key={FAQ} type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="my-1 text-left text-[15px] md:text-[20px]">
+                  {FAQ.title}
+                </AccordionTrigger>
+                <AccordionContent className="text-[16px] text-black">
+                  {FAQ.description[0].children[0].text}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          );
+        })}
+          <Link
+            href={courseData.cta_navigation_url}
+            className="flex justify-center"
+          >
+            <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-2/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
+              {courseData.cta_text}
+            </Button>
+          </Link>
+        </section>
+
+        <section id="sign off">
+          <div className="relative h-[440px] w-full ">
+            <div className="absolute inset-0 ">
+              <Image
+                src={courseData.sign_off_cover.data.attributes.url}
+                alt={"Sign off image"}
+                layout="fill"
+                objectPosition="center"
+                objectFit="cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
+              <div className="relative m-8 space-y-4 text-sm text-white md:m-[50px] lg:mx-[150px] xl:mx-auto xl:max-w-[1140px] xl:px-[150px]">
+                <BlocksRenderer
+                  content={courseData.post_sign_off_description}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </main>{" "}
     </>
   );
