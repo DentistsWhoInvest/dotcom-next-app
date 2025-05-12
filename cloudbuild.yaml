@@ -101,18 +101,18 @@ steps:
       - gs://${_BUCKET}-staging/public/
       - --recursive
 
-  - id: set-content-type-to-css
-    name: *gcloud
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        #!/bin/bash
-        set -euo pipefail
+  # - id: set-content-type-to-css
+  #   name: *gcloud
+  #   entrypoint: bash
+  #   args:
+  #     - -c
+  #     - |
+  #       #!/bin/bash
+  #       set -euo pipefail
 
-        find out -type f -name "*.css" | sed 's|^out/||' | \
-          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}/{}"
-      # todo: add --content-type=text/css to _next css stuff
+  #       find out -type f -name "*.css" | sed 's|^out/||' | \
+  #         xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}/{}"
+  #     # todo: add --content-type=text/css to _next css stuff
 
   - id: publish-to-prod-bucket
     name: *gcloud
