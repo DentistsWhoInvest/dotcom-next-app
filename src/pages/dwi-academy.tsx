@@ -6,7 +6,6 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import DWIBanner from "@/components/DWIBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import {
@@ -231,7 +230,6 @@ export default function DWIAcademySalesPage({
   const LoadingPage = () => {
     return (
       <main className="flex h-dvh flex-col">
-        <DWIBanner />
         <Header />
         <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
           <p className="my-4 text-2xl font-bold">Loading...</p>
@@ -248,7 +246,6 @@ export default function DWIAcademySalesPage({
   const MissingEmail = () => {
     return (
       <main className="flex h-dvh flex-col">
-        <DWIBanner />
         <Header />
         <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
           <span className="my-8 text-5xl font-bold">
@@ -272,7 +269,6 @@ export default function DWIAcademySalesPage({
   const ExpiredOffer = () => {
     return (
       <main className="flex h-dvh flex-col">
-        <DWIBanner />
         <Header />
         <div className="flex h-full flex-col justify-center bg-blue-primary text-center text-white ">
           <span className="my-8 text-5xl font-bold">
