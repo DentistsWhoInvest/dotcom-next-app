@@ -537,7 +537,7 @@ export default function DWIAcademySalesPage({
 
             <div
               id=""
-              className="articleContent relative m-4 w-4/5 space-y-4 justify-self-center text-center text-xl font-semibold leading-8 text-white md:m-8 lg:text-2xl lg:m-24"
+              className="articleContent relative m-4 w-4/5 space-y-4 justify-self-center text-center text-xl font-semibold leading-8 text-white md:m-8 lg:m-24 lg:text-2xl"
             >
               <BlocksRenderer
                 content={courseData.collective_content_description}
@@ -546,19 +546,19 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id=""
-            className="dwiH5 articleContent my-6 md:my-8 relative mt-4 w-full space-y-4 bg-white text-lg"
+            className="dwiH5 articleContent relative my-6 mt-4 w-full space-y-4 bg-white text-lg md:my-8"
           >
             <BlocksRenderer content={courseData.no_one_cares} />{" "}
           </div>
           <div
             id="same playbook header"
-            className="dwiH5 articleContent my-6 md:my-8 relative w-full space-y-4 bg-white text-lg"
+            className="dwiH5 articleContent relative my-6 w-full space-y-4 bg-white text-lg md:my-8"
           >
             <BlocksRenderer content={courseData.same_playbook_heading} />{" "}
           </div>
           <div
             id="inflation"
-            className="dwiH5 articleContent my-6 md:my-8 relative w-full space-y-4 bg-white text-lg"
+            className="dwiH5 articleContent relative my-6 w-full space-y-4 bg-white text-lg md:my-8"
           >
             <ul>
               {courseData.same_playbook_list[0].children.map(
@@ -591,10 +591,10 @@ export default function DWIAcademySalesPage({
             </ul>
           </div>
         </section>
-        <section className="-mx-4 bg-[#EFF3F6] py-4 md:-mx-10 lg:-mx-40 my-6 md:my-8">
+        <section className="-mx-4 my-6 bg-[#EFF3F6] py-4 md:-mx-10 md:my-8 lg:-mx-40">
           <div
             id="the academy takes you"
-            className="dwiH5  articleContent relative mx-4 my-6 md:my-8 w-fit space-y-4 py-4 text-lg md:mx-10 lg:mx-40 "
+            className="dwiH5  articleContent relative mx-4 my-6 w-fit space-y-4 py-4 text-lg md:mx-10 md:my-8 lg:mx-40 "
           >
             <BlocksRenderer content={courseData.the_academy_takes_you} />{" "}
           </div>
@@ -603,7 +603,7 @@ export default function DWIAcademySalesPage({
             className="dwiH5 articleContent mx-4 space-y-4 text-lg md:mx-10 lg:mx-40 "
           >
             <div className="my-4 grid grid-cols-1 items-center space-y-8 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8">
-              <div className="space-y-8 text-blue-primary lg:pl-[20px] lg:pr-[120px] xl:pr-[100px] lg:text-2xl">
+              <div className="space-y-8 text-blue-primary lg:pl-[20px] lg:pr-[120px] lg:text-2xl xl:pr-[100px]">
                 <BlocksRenderer content={courseData.instead_the_academy} />
               </div>
               <Image
@@ -617,7 +617,7 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id="same playbook header"
-            className="dwiH5 my-6 md:my-8 articleContent relative mx-4 w-fit space-y-4 text-lg md:mx-10 lg:mx-40"
+            className="dwiH5 articleContent relative mx-4 my-6 w-fit space-y-4 text-lg md:mx-10 md:my-8 lg:mx-40"
           >
             <BlocksRenderer content={courseData.secret_trade_handover} />{" "}
           </div>
@@ -641,7 +641,7 @@ export default function DWIAcademySalesPage({
               </div>
             </div>
           </div>
-          <div className="dwiH5 articleContent space-y-4 text-lg my-6 md:my-8">
+          <div className="dwiH5 articleContent my-6 space-y-4 text-lg md:my-8">
             <BlocksRenderer content={courseData.companies_who_say} />
           </div>
           <div className="dwiH5 articleContent mt-4 space-y-4 text-lg">
@@ -670,11 +670,11 @@ export default function DWIAcademySalesPage({
               )
             )}
           </div>
-          <div className="dwiH5 articleContent space-y-4 text-lg my-6 md:my-10 lg:w-[90%] lg:justify-self-center">
+          <div className="dwiH5 articleContent my-6 space-y-4 text-lg md:my-10 lg:w-[90%] lg:justify-self-center">
             <BlocksRenderer content={courseData.how_the_academy} />
           </div>
         </section>
-        <section className="-mx-4 flex justify-center bg-blue-secondary p-2 md:-mx-10 lg:-mx-40 my-6 md:my-8">
+        <section className="-mx-4 my-6 flex justify-center bg-blue-secondary p-2 md:-mx-10 md:my-8 lg:-mx-40">
           <Image
             src="https://assets.dentistswhoinvest.com/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
@@ -684,7 +684,7 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="informed-investor-club">
-          <div className="my-6 md:my-8 flex flex-col items-center space-y-2">
+          <div className="my-6 flex flex-col items-center space-y-2 md:my-8">
             <div className="grid grid-cols-1 gap-2">
               <div className="space-y-2 text-center font-bold">
                 <p className="flex flex-row justify-center text-xl text-blue-secondary md:text-[30px] md:leading-9">
@@ -804,7 +804,7 @@ export default function DWIAcademySalesPage({
         </section>
         <section
           id="sign off"
-          className="-mx-10 space-y-8 pb-0.5 bg-blue-secondary text-white lg:-mx-40"
+          className="-mx-10 space-y-8 bg-blue-secondary pb-0.5 text-white lg:-mx-40"
         >
           <div className="m-10 flex-col space-y-8 lg:flex lg:justify-center ">
             <div
@@ -813,7 +813,7 @@ export default function DWIAcademySalesPage({
             >
               <div className="mt-8 space-y-2 justify-self-end font-normal md:mb-4 lg:w-2/3">
                 {/* <BlocksRenderer content={summaryImportantText} /> */}
-                <p className="text-xl lg:text-2xl font-bold text-blue-primary">
+                <p className="text-xl font-bold text-blue-primary lg:text-2xl">
                   IMPORTANT!
                 </p>
                 <p className="font-semibold">
@@ -876,10 +876,10 @@ export default function DWIAcademySalesPage({
               <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
                 {/* <BlocksRenderer content={summarySpecialOffer} /> */}
 
-                <p className="text-xl lg:text-2xl font-bold text-orange-400">
+                <p className="text-xl font-bold text-orange-400 lg:text-2xl">
                   This Special £1000+Vat Offer…
                 </p>
-                <p className="text-xl lg:text-2xl font-semibold text-blue-primary">
+                <p className="text-xl font-semibold text-blue-primary lg:text-2xl">
                   With The Informed Investors Club Included… & One Hour Call
                   With Luke… Is Reserved For The Dentists Who Invest Email
                   Community <span className="underline">Only</span>
@@ -973,7 +973,7 @@ export default function DWIAcademySalesPage({
                     alt={`Testimonial author ${index + 4}`}
                     width={315}
                     height={315}
-                  className="object-cover lg:size-[452px]"
+                    className="object-cover lg:size-[452px]"
                   />
                 </div>
               ))}
@@ -983,7 +983,10 @@ export default function DWIAcademySalesPage({
             {testimonialImages.slice(3).map((image, index) => (
               <div
                 key={`mobile-${index + 3}`}
-                className="flex flex-col items-center lg:hidden"
+                className={`
+        flex flex-col items-center lg:hidden
+        ${index === 1 ? "md:col-span-2 md:justify-self-center " : ""}
+      `}
               >
                 <Image
                   src={image}
@@ -995,7 +998,6 @@ export default function DWIAcademySalesPage({
               </div>
             ))}
           </div>
-
           <div className="dwiH5 articleContent mx-4 space-y-4 text-lg md:mx-10 lg:mx-40">
             {/* <BlocksRenderer content={courseData.testimonials_detail} /> */}
             <div className="rounded-lg p-6 text-black">
