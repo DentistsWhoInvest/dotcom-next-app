@@ -501,13 +501,13 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id="james"
-            className="dwiH5 articleContent my-6 text-lg md:my-8 lg:-mx-20 space-y-8"
+            className="dwiH5 articleContent my-6 space-y-8 text-lg md:my-8 lg:-mx-20"
           >
             <div>
               {" "}
               <BlocksRenderer content={noWonderHeader} />
             </div>
-            <div className="grid grid-cols-1 items-center space-y-4 text-lg md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8">
+            <div className="grid grid-cols-1 items-center space-y-4 text-lg leading-6 md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8">
               <div className="space-y-2 md:py-2 ">
                 <BlocksRenderer content={IcertainlyDid} />
               </div>
@@ -516,7 +516,8 @@ export default function DWIAcademySalesPage({
                 alt="James speaking"
                 width={315}
                 height={315}
-                className=" h-[420px] md:h-[564px] lg:size-[492px] xl:h-[450px] place-self-center"
+                objectFit="cover"
+                className=" aspect-[4/5] h-[420px] place-self-center md:h-[434px] lg:h-auto"
               />
             </div>
             <div className="space-y-2">
@@ -632,7 +633,8 @@ export default function DWIAcademySalesPage({
                 alt="James speaking"
                 width={315}
                 height={315}
-                className="h-auto w-full md:size-[404px] lg:size-[492px] xl:size-[550px] xl:place-self-center"
+                objectFit="cover"
+                className=" aspect-square h-[420px] place-self-center md:h-[434px] lg:h-auto"
               />
               <div className="space-y-8 leading-5">
                 <BlocksRenderer content={courseData.quick_question_detail} />
@@ -802,7 +804,7 @@ export default function DWIAcademySalesPage({
         </section>
         <section
           id="sign off"
-          className="-mx-10 mt-4 space-y-8 bg-blue-secondary pb-4 text-white lg:-mx-40"
+          className="-mx-10 space-y-8 pb-0.5 bg-blue-secondary text-white lg:-mx-40"
         >
           <div className="m-10 flex-col space-y-8 lg:flex lg:justify-center ">
             <div
@@ -853,7 +855,7 @@ export default function DWIAcademySalesPage({
                 width={315}
                 height={315}
                 objectFit="cover"
-                className="h-auto lg:h-[500px] w-auto pb-8 md:pb-0 xl:place-self-center"
+                className=" aspect-[4/5] h-[350px] place-self-center md:h-[434px] lg:h-auto"
               />
             </div>
           </div>
@@ -874,10 +876,10 @@ export default function DWIAcademySalesPage({
               <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
                 {/* <BlocksRenderer content={summarySpecialOffer} /> */}
 
-                <p className="text-xl font-bold text-orange-400">
+                <p className="text-xl lg:text-2xl font-bold text-orange-400">
                   This Special £1000+Vat Offer…
                 </p>
-                <p className="text-xl font-semibold text-blue-primary">
+                <p className="text-xl lg:text-2xl font-semibold text-blue-primary">
                   With The Informed Investors Club Included… & One Hour Call
                   With Luke… Is Reserved For The Dentists Who Invest Email
                   Community <span className="underline">Only</span>
@@ -933,7 +935,7 @@ export default function DWIAcademySalesPage({
               href={courseData.cta_navigation_url}
               className="flex justify-center"
             >
-              <Button className="size-full rounded-md bg-orange-400 px-8 py-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-2/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
+              <Button className="size-full rounded-md bg-orange-400 p-4 text-xl text-white hover:text-blue-primary md:size-1/2 lg:size-1/3 lg:px-[60px] lg:py-8 lg:text-[33px]">
                 {courseData.cta_text}
               </Button>
             </Link>
