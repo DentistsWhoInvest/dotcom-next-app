@@ -178,7 +178,6 @@ export default function DWIAcademySalesPage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
-  console.log("courseData", courseData);
   const router = useRouter();
 
   const [status, setStatus] = useState("loading"); // 'loading', 'valid', 'expired', 'invalid'
@@ -209,7 +208,6 @@ export default function DWIAcademySalesPage({
           }
         );
         const data = await res.json();
-        console.log("data", data);
 
         if (data?.status === "granted") {
           setStatus("valid");
@@ -231,7 +229,6 @@ export default function DWIAcademySalesPage({
 
   // probably tweak the pages to have the DWI banner
   const LoadingPage = () => {
-    console.log("Loading page");
     return (
       <main className="flex h-dvh flex-col">
         <DWIBanner />
@@ -249,7 +246,6 @@ export default function DWIAcademySalesPage({
   };
 
   const MissingEmail = () => {
-    console.log("Missing email");
     return (
       <main className="flex h-dvh flex-col">
         <DWIBanner />
@@ -274,7 +270,6 @@ export default function DWIAcademySalesPage({
   };
 
   const ExpiredOffer = () => {
-    console.log("Expired offer");
     return (
       <main className="flex h-dvh flex-col">
         <DWIBanner />
@@ -298,7 +293,6 @@ export default function DWIAcademySalesPage({
     );
   };
 
-  console.log("status", status);
 
   if (status === "loading") return LoadingPage();
   if (status === "invalid") return MissingEmail();
@@ -361,7 +355,6 @@ export default function DWIAcademySalesPage({
   const noWonderHeader = courseData.no_wonder.slice(0, noWonder_splitIndex);
   const noWonderDetail = courseData.no_wonder.slice(noWonder_splitIndex);
 
-  // console.log("noWonderDetail", noWonderDetail);
 
   // const whatIwantTarget = "'And that’s what I want for you:'";
 
