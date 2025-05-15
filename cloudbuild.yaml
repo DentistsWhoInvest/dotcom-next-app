@@ -103,10 +103,6 @@ steps:
 
   - id: set-content-type-to-css
     name: *gcloud
-    waitFor:
-      - upload-html-files
-      - upload-rest-of-site
-      - upload-public-assets
     entrypoint: bash
     args:
       - -c
@@ -115,7 +111,7 @@ steps:
         set -euo pipefail
 
         find out -type f -name "*.css" | sed 's|^out/||' | \
-          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}/{}"
+          xargs -I {} -P 30 gsutil setmeta -h "Content-Type:text/css" "gs://${_BUCKET}-staging/{}"
       # todo: add --content-type=text/css to _next css stuff
 
   - id: publish-to-prod-bucket
