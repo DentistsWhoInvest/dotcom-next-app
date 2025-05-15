@@ -104,9 +104,9 @@ steps:
   - id: set-content-type-to-css
     name: *gcloud
     waitFor:
-      - *upload-html-files
-      - *upload-rest-of-site
-      - *upload-public-assets
+      - upload-html-files
+      - upload-rest-of-site
+      - upload-public-assets
     entrypoint: bash
     args:
       - -c
