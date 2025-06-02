@@ -185,6 +185,12 @@ export default function DWIAcademySalesPage({
     if (!router.isReady) return;
     const emailAddress = router.query.email;
     const campaignId = Number(router.query.c);
+    const hidden = router.query.hidden;
+
+    if (hidden !== undefined) {
+      setStatus("valid");
+      return;
+    }
 
     if (!emailAddress || typeof emailAddress !== "string" || !campaignId) {
       console.error(
