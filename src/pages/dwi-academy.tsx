@@ -185,9 +185,9 @@ export default function DWIAcademySalesPage({
     if (!router.isReady) return;
     const emailAddress = router.query.email;
     const campaignId = Number(router.query.c);
-    const hidden = router.query.hidden;
+    const offer = router.query.offer;
 
-    if (hidden !== undefined) {
+    if (offer !== undefined) {
       setStatus("valid");
       return;
     }
