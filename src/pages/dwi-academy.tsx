@@ -74,7 +74,7 @@ type ImageData = {
 
 type InformedInvestorClub = {
   id: number;
-  sales_part_1: Paragraph[];
+  sales_part_1: any;
   sales_part_2: any;
   sales_part_3_cost: any;
   description: any;
@@ -164,6 +164,7 @@ export const getStaticProps = async () => {
     "faq_details",
   ];
   const pageData = await fetchEndpointData(`/dwi-academy-page`, populateFields);
+  console.log("pageData", pageData);
 
   return {
     props: {
@@ -177,6 +178,7 @@ export default function DWIAcademySalesPage({
 }: {
   courseData: AcademyCoursePageData;
 }) {
+  console.log("courseData", courseData);
   const router = useRouter();
 
   const [status, setStatus] = useState("loading"); // 'loading', 'valid', 'expired', 'invalid'
@@ -682,79 +684,15 @@ export default function DWIAcademySalesPage({
           <div className="my-6 flex flex-col items-center space-y-2 md:my-8">
             <div className="grid grid-cols-1 gap-2">
               <div className="space-y-2 text-center font-bold">
-                <p className="flex flex-row justify-center text-xl text-blue-secondary md:text-[30px] md:leading-9">
-                  {courseData.informed_investor_club.sales_part_1.map(
-                    (item: any, index: number) => {
-                      return (
-                        <p key={index}>
-                          <span>{item.children[0].text}</span>
-                          <span
-                            id="wrapper"
-                            className="relative inline-block overflow-visible"
-                          >
-                            <span className="text-orange-400">
-                              {item.children[1].text}
-                            </span>
-                            <svg
-                              className="absolute left-1/2 top-1/2 z-[2] size-[calc(100%+20px)] -translate-x-1/2 -translate-y-1/2 overflow-visible"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 500 150"
-                              preserveAspectRatio="none"
-                            >
-                              <path
-                                d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7"
-                                stroke="red"
-                                stroke-width="9"
-                                fill="none"
-                                // eslint-disable-next-line tailwindcss/no-custom-classname
-                                className="path-1"
-                              ></path>
-                            </svg>
-                            <style jsx>{`
-                              @keyframes draw {
-                                0% {
-                                  stroke-dasharray: 0, 1500; /* Start with no visible stroke */
-                                  opacity: 0;
-                                }
-                                10% {
-                                  stroke-dasharray: 0, 1500; /* Start with no visible stroke */
-                                  opacity: 1;
-                                }
-                                30% {
-                                  stroke-dasharray: 1500, 0; /* Complete visible stroke */
-                                  opacity: 1;
-                                }
-                                80% {
-                                  stroke-dasharray: 1500, 0; /* Keep the stroke */
-                                  opacity: 1;
-                                }
-                                100% {
-                                  opacity: 0;
-                                }
-                              }
-
-                              .path-1 {
-                                animation: draw 5s forwards; /* Animate drawing and fading */
-                                animation-iteration-count: infinite;
-                              }
-                            `}</style>
-                          </span>
-                          <span>{item.children[2].text}</span>
-                        </p>
-                      );
-                    }
-                  )}
+ <p className="text-2xl text-blue-secondary md:m-[-20px] md:text-[40px]">
+                  <BlocksRenderer
+                    content={courseData.informed_investor_club.sales_part_1}
+                  />
                 </p>
+                     
                 <p className="text-3xl text-blue-primary md:m-[-20px] md:text-[45px]">
                   <BlocksRenderer
                     content={courseData.informed_investor_club.sales_part_2}
-                  />
-                </p>
-                <p className="font-semibold text-orange-400 md:text-2xl">
-                  <BlocksRenderer
-                    content={
-                      courseData.informed_investor_club.sales_part_3_cost
-                    }
                   />
                 </p>
               </div>
@@ -872,11 +810,11 @@ export default function DWIAcademySalesPage({
                 {/* <BlocksRenderer content={summarySpecialOffer} /> */}
 
                 <p className="text-xl font-bold text-orange-400 lg:text-2xl">
-                  This Special £1000+Vat Offer…
+                  This Special £997+Vat Offer…
                 </p>
                 <p className="text-xl font-semibold text-blue-primary lg:text-2xl">
-                  With The Informed Investors Club Included… & One Hour Call
-                  With Luke… Is Reserved For The Dentists Who Invest Email
+                  With One To One Session With Luke Hurley Financial Planner Included....
+                  Is Reserved For The Dentists Who Invest Email
                   Community <span className="underline">Only</span>
                 </p>
               </div>
