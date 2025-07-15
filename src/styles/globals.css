@@ -10,12 +10,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -37,14 +34,14 @@ body {
     font-weight: 700;
     font-size: 20px;
   }
-  
+
   @media (min-width: 768px) {
     .dwiH5 h5 {
       margin-left: 23%;
       margin-right: 23%;
     }
   }
-  
+
   @media (max-width: 767px) {
     .dwiH5 h5 {
       margin-left: 5%;
@@ -52,7 +49,30 @@ body {
     }
   }
 
-  .articleContent ul, .articleContent ol {
+  .dwiAH5 h5 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .dwiAH5 h5 {
+      margin-left: 23%;
+      margin-right: 23%;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .dwiAH5 {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1140px;
+    }
+  }
+
+  .articleContent ul,
+  .articleContent ol {
     list-style: revert;
     margin-left: 2rem;
     margin-bottom: 2rem;
@@ -60,8 +80,7 @@ body {
   }
 
   .privacy-policy h5,
-  .t-and-c h5
-   {
+  .t-and-c h5 {
     font-size: 16px;
     font-weight: 700;
     line-height: 22.4px;
@@ -79,6 +98,7 @@ body {
     margin-bottom: 8px;
     color: rgb(45, 55, 72);
   }
+
   .privacy-policy p,
   .t-and-c p {
     font-size: 16px;
@@ -99,20 +119,23 @@ body {
   /* I'm sure there's a better name for this */
   .show-bullet ul,
   .show-bullet ol {
-    list-style: none; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
+    list-style: none;
+    /* Remove the default marker since strapi block renderer doesn't seem to show it*/
     padding-left: 1.5rem;
   }
 
   .show-bulleted-disc ul,
   .show-bulleted-disc ol {
-    list-style: disc; /* Remove the default marker since strapi block renderer doesn't seem to show it*/
+    list-style: disc;
+    /* Remove the default marker since strapi block renderer doesn't seem to show it*/
     padding-left: 0rem;
   }
 
   /* Probably used in conjunction with the show-bullet class */
   .custom-bullet-checkmark ul li::before,
   .custom-bullet-checkmark ol li::before {
-    content: "✔"; /* Checkmark symbol, could try to replace with another icon */
+    content: "✔";
+    /* Checkmark symbol, could try to replace with another icon */
     display: inline-block;
     width: 1rem;
     height: 1rem;
@@ -123,11 +146,14 @@ body {
     font-size: 0.65rem;
     line-height: 1rem;
     margin-right: 0.5rem;
-    margin-left: -1.5rem; /* To make up for the default padding-left */
+    margin-left: -1.5rem;
+    /* To make up for the default padding-left */
   }
+
   .custom-bullet-question ul li::before,
   .custom-bullet-question ol li::before {
-    content: "?"; /* Checkmark symbol, could try to replace with another icon */
+    content: "?";
+    /* Checkmark symbol, could try to replace with another icon */
     display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
@@ -140,6 +166,7 @@ body {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     margin-right: 0.5rem;
-    margin-left: -1.5rem; /* To make up for the default padding-left */
+    margin-left: -1.5rem;
+    /* To make up for the default padding-left */
   }
 }
