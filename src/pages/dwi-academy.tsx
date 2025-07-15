@@ -929,7 +929,7 @@ export default function DWIAcademySalesPage({
                 deadline arrives, you won’t find it anywhere. So, if you’re
                 ready to get the playbook, here’s what to do:
               </p>
-              <div className="space-y-3 text-base leading-relaxed text-black text-sm">
+              <div className="space-y-3 leading-relaxed text-black text-sm">
                 <div className="flex items-start">
                   <span className="mr-2 text-xl text-orange-500">➜</span>
                   <span className="font-bold">
@@ -964,7 +964,7 @@ export default function DWIAcademySalesPage({
                     From there all you do is show up to the call.
                   </span>
                 </div>
-                <div>Here's the button:</div>
+                <div>Here’s the button:</div>
               </div>
             </div>
             <Link
