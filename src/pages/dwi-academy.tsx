@@ -548,10 +548,10 @@ export default function DWIAcademySalesPage({
           >
             <BlocksRenderer content={courseData.compound_interest.slice(31, 40)} />
           </div>
-          <div className="bg-blue-secondary w-screen">
+          <div className="bg-blue-secondary w-screen -mx-4">
             <div
               id="small"
-              className="dwiAH5 articleContent -mx-4 space-y-4  px-4 py-8 text-sm lg:text-base text-white lg:max-w-[1140px] lg:mx-auto "
+              className="dwiAH5 articleContent space-y-4 px-4 py-8 text-sm lg:text-base text-white lg:max-w-[1140px] lg:mx-auto "
             >
               <BlocksRenderer content={courseData.small_details} />
             </div>
@@ -715,7 +715,7 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={courseData.quick_question} />
           </div>
           <div id="james" className="dwiAH5 articleContent space-y-4 text-lg lg:max-w-[1140px] lg:mx-auto lg:my-8">
-            <div className="mx-auto grid max-w-[1140px] grid-cols-2 items-center gap-8 px-6 py-4 lg:px-0">
+            <div className="mx-auto grid max-w-[1140px] grid-cols-2 items-center gap-8 px-6 py-4 lg:px-0 sm:hidden md:block">
               <Image
                 src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
                 alt="James speaking"
@@ -838,9 +838,9 @@ export default function DWIAcademySalesPage({
         </section>
         <section
           id="sign off"
-          className="sm:-mx-10 md:-mx-0 space-y-8 bg-blue-secondary pb-0.5 text-white"
+          className="sm:-mx-4 md:-mx-0 space-y-8 bg-blue-secondary pb-0.5 text-white"
         >
-          <div className="m-10 flex-col space-y-8 lg:flex lg:justify-center lg:mx-auto lg:max-w-[1140px]">
+          <div className="m-4 flex-col space-y-8 lg:flex lg:justify-center lg:mx-auto lg:max-w-[1140px]">
             <div
               id="summary important text & Luke image"
               className="mt-4 grid grid-cols-1 items-center space-y-8 text-sm lg:text-base md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8"
