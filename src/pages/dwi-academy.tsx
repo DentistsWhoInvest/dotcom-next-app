@@ -715,7 +715,7 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={courseData.quick_question} />
           </div>
           <div id="james" className="dwiAH5 articleContent space-y-4 text-lg lg:max-w-[1140px] lg:mx-auto lg:my-8">
-            <div className="mx-auto grid max-w-[1140px] grid-cols-2 items-center gap-8 px-6 py-4 lg:px-0 sm:hidden md:block">
+            <div className="grid grid-cols-2 items-center gap-8 px-6 py-4 lg:px-0 sm:hidden md:grid">
               <Image
                 src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
                 alt="James speaking"
