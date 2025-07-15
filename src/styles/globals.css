@@ -52,6 +52,20 @@ body {
     }
   }
 
+   .dwiAH5 h5 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  @media (min-width: 768px) {
+    .dwiAH5 h5 {
+      margin-left: 23%;
+      margin-right: 23%;
+    }
+  }
+
   .articleContent ul, .articleContent ol {
     list-style: revert;
     margin-left: 2rem;
