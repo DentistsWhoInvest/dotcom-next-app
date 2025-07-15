@@ -620,19 +620,19 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id=""
-            className="dwiAH5 articleContent relative my-6 mt-4 w-full space-y-4 bg-white text-lg md:my-8"
+            className="dwiAH5 articleContent relative my-8 w-full space-y-4 bg-white text-sm md:my-8"
           >
             <BlocksRenderer content={courseData.no_one_cares} />{" "}
           </div>
           <div
             id="same playbook header"
-            className="dwiAH5 articleContent relative my-6 w-full space-y-4 bg-white text-lg md:my-8"
+            className="dwiAH5 articleContent relative my-6 w-full space-y-4 bg-white text-md text-center md:my-8"
           >
             <BlocksRenderer content={courseData.same_playbook_heading} />{" "}
           </div>
           <div
             id="inflation"
-            className="dwiAH5 articleContent relative my-6 w-full space-y-4 bg-white text-lg md:my-8"
+            className="dwiAH5 articleContent relative my-8 w-full space-y-4 bg-white text-sm md:my-8"
           >
             <ul>
               {courseData.same_playbook_list[0].children.map(
@@ -648,14 +648,14 @@ export default function DWIAcademySalesPage({
                   return (
                     <li
                       key={index}
-                      className="mb-8 flex items-center justify-start"
+                      className="mb-8 flex items-center justify-start -ml-4"
                     >
                       <Image
                         src={same_playbook_image_urls[index]}
                         alt={`icon-${index + 1}`}
                         width={80}
                         height={80}
-                        className="mr-4"
+                        className="mr-4 -ml-4"
                       />
                       <span className="w-5/6 text-wrap">{text}</span>
                     </li>
@@ -668,7 +668,7 @@ export default function DWIAcademySalesPage({
         <section className="-mx-4 my-6 bg-[#EFF3F6] py-4 md:-mx-10 md:my-8 lg:-mx-40">
           <div
             id="the academy takes you"
-            className="dwiAH5  articleContent relative mx-4 my-6 w-fit space-y-4 py-4 text-lg md:mx-10 md:my-8 lg:mx-40 "
+            className="dwiAH5  articleContent relative mx-4 my-8 w-fit space-y-4 py-4 text-sm md:mx-10 md:my-8 lg:mx-40 "
           >
             <BlocksRenderer content={courseData.the_academy_takes_you} />{" "}
           </div>
@@ -676,7 +676,14 @@ export default function DWIAcademySalesPage({
             id="james"
             className="dwiAH5 articleContent mx-4 space-y-4 text-lg md:mx-10 lg:mx-40 "
           >
-            <div className="my-4 grid grid-cols-1 items-center space-y-8 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8">
+            <div className="my-4 grid grid-cols-1 items-center space-y-8 text-sm md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8">
+              <Image
+                src="https://assets.dentistswhoinvest.com/image_19_0880e64b1a/image_19_0880e64b1a.png"
+                alt="Course image"
+                width={315}
+                height={315}
+                className="h-auto w-full md:size-[264px] lg:size-[392px] xl:size-[450px] xl:place-self-center md:hidden"
+              />
               <div className="space-y-8 text-blue-primary lg:pl-[20px] lg:pr-[120px] lg:text-2xl xl:pr-[100px]">
                 <BlocksRenderer content={courseData.instead_the_academy} />
               </div>
@@ -685,45 +692,56 @@ export default function DWIAcademySalesPage({
                 alt="Course image"
                 width={315}
                 height={315}
-                className="h-auto w-full md:size-[264px] lg:size-[392px] xl:size-[450px] xl:place-self-center"
+                className="h-auto w-full md:size-[264px] lg:size-[392px] xl:size-[450px] xl:place-self-center sm:hidden"
               />
             </div>
           </div>
           <div
             id="same playbook header"
-            className="dwiAH5 articleContent relative mx-4 my-6 w-fit space-y-4 text-lg md:mx-10 md:my-8 lg:mx-40"
+            className="dwiAH5 articleContent relative mx-4 my-8 w-fit space-y-4 text-sm md:mx-10 md:my-8 lg:mx-40"
           >
             <BlocksRenderer content={courseData.secret_trade_handover} />{" "}
           </div>
         </section>
         <section id="second-description">
-          <div className="dwiAH5 articleContent mt-4 space-y-4 text-lg">
+          <div className="dwiAH5 articleContent mt-4 space-y-4 text-sm text-blue-primary">
             <BlocksRenderer content={courseData.quick_question} />
           </div>
           <div id="james" className="dwiAH5 articleContent space-y-4 text-lg">
-            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8">
+            <div className="grid grid-cols-1 items-center space-y-8 px-6 py-4 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8 sm:hidden">
               <Image
                 src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
                 alt="James speaking"
                 width={315}
                 height={315}
                 objectFit="cover"
-                className=" aspect-square h-[420px] place-self-center md:h-[434px] lg:h-auto"
+                className=" aspect-square h-[420px] place-self-center md:h-[434px] lg:h-auto "
               />
               <div className="space-y-8 leading-5">
                 <BlocksRenderer content={courseData.quick_question_detail} />
-              </div>
+              </div>            </div>
+            <div>  <div className="space-y-8 leading-5 text-sm my-8">
+              <BlocksRenderer content={courseData.quick_question_detail} />
+            </div>
+            <div className="h-[320px] mx-4">
+              <Image
+                src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
+                alt="James speaking"
+                width={315}
+                height={315}
+                className=" aspect-square place-self-center md:h-[434px] lg:h-auto md:hidden "
+              /></div>
             </div>
           </div>
-          <div className="dwiAH5 articleContent my-6 space-y-4 text-lg md:my-8">
+          <div className="dwiAH5 articleContent my-8 space-y-4 text-sm md:my-8">
             <BlocksRenderer content={courseData.companies_who_say} />
           </div>
-          <div className="dwiAH5 articleContent mt-4 space-y-4 text-lg">
+          <div className="dwiAH5 articleContent text-sm">
             {courseData.what_I_am_list[0].children.map(
               (item: { children: any[] }, index: number) => (
                 <div
                   key={index}
-                  className={`flex items-start gap-3 rounded-lg p-4 ${index % 2 === 0 ? "bg-[#65ADC1]" : "bg-[#E1EBF0]"
+                  className={`flex items-start p-4 ${index % 2 === 0 ? "bg-[#65ADC1]" : "bg-[#E1EBF0]"
                     }`}
                 >
                   <div className="leading-relaxed">
@@ -743,11 +761,11 @@ export default function DWIAcademySalesPage({
               )
             )}
           </div>
-          <div className="dwiAH5 articleContent my-6 space-y-4 text-lg md:my-10 lg:w-[90%] lg:justify-self-center">
+          <div className="dwiAH5 articleContent my-8 space-y-4 text-sm md:my-10 lg:w-[90%] lg:justify-self-center">
             <BlocksRenderer content={courseData.how_the_academy} />
           </div>
         </section>
-        <section className="-mx-4 my-6 flex justify-center bg-blue-secondary p-2 md:-mx-10 md:my-8 lg:-mx-40">
+        <section className="-mx-4 my-8 flex justify-center bg-blue-secondary p-2 md:-mx-10 md:my-8 lg:-mx-40">
           <Image
             src="https://assets.dentistswhoinvest.com/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
             alt="Collective content image"
@@ -757,10 +775,10 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="informed-investor-club">
-          <div className="my-6 flex flex-col items-center space-y-2 md:my-8">
+          <div className="my-8 flex flex-col items-center space-y-2 md:my-8">
             <div className="grid grid-cols-1 gap-2">
               <div className="space-y-2 text-center font-bold">
-                <p className="text-2xl text-blue-secondary md:m-[-20px] md:text-[40px]">
+                <p className="text-lg text-blue-secondary md:m-[-20px] md:text-[40px]">
                   <BlocksRenderer
                     content={courseData.informed_investor_club.sales_part_1}
                   />
@@ -773,19 +791,19 @@ export default function DWIAcademySalesPage({
                 </p>
               </div>
 
-              <div className="flex flex-col items-center space-y-4 lg:mx-[120px] lg:space-y-8 lg:py-5 xl:mx-auto">
+              <div className="flex flex-col text-sm my-8 items-center space-y-4 lg:mx-[120px] lg:space-y-8 lg:py-5 xl:mx-auto">
                 <BlocksRenderer
                   content={courseData.informed_investor_club.description}
                 />
               </div>
             </div>
-            <div className="m-[10px] grid size-full grid-cols-1 justify-center gap-4 space-y-4 md:grid-cols-4 md:space-y-0 lg:gap-8 lg:px-[50px] xl:px-[200px]">
+            <div className="m-[10px] grid size-full grid-cols-2 justify-center gap-4 md:grid-cols-4 md:space-y-0 lg:gap-8 lg:px-[50px] xl:px-[200px] pb-4">
               {courseData.informed_investor_club.sales_cards.map(
                 (card: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-8 md:h-[266] md:w-[162] md:px-4 md:py-8 xl:px-4"
+                      className="flex h-[266] w-[295] flex-col items-center space-y-4 rounded-lg bg-blue-secondary p-4 md:h-[266] md:w-[162] md:px-4 md:py-8 xl:px-4"
                     >
                       <Image
                         src={card.image.data.attributes.url}
@@ -793,7 +811,7 @@ export default function DWIAcademySalesPage({
                         width={90}
                         height={90}
                       />
-                      <span className="size-full text-center text-lg font-bold text-white">
+                      <span className="size-full text-center text-md font-semibold text-white">
                         {card.reason}
                       </span>
                     </div>
@@ -806,7 +824,7 @@ export default function DWIAcademySalesPage({
 
         <section id="sign off" className="my-4 space-y-8 bg-[white]">
           <div className="m-auto flex-col space-y-8 lg:flex lg:justify-center">
-            <div id="summary intro" className="dwiAH5 articleContent space-y-4">
+            <div id="summary intro" className="dwiAH5 articleContent space-y-4 text-sm my-8">
               <BlocksRenderer content={summaryIntro} />
             </div>
           </div>
@@ -818,20 +836,28 @@ export default function DWIAcademySalesPage({
           <div className="m-10 flex-col space-y-8 lg:flex lg:justify-center ">
             <div
               id="summary important text & Luke image"
-              className="mt-4 grid grid-cols-1 items-center space-y-8 text-lg md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8"
+              className="mt-4 grid grid-cols-1 items-center space-y-8 text-sm md:grid-cols-2 md:gap-4 md:space-x-4 md:space-y-0 xl:gap-8"
             >
               <div className="mt-8 space-y-2 justify-self-end font-normal md:mb-4 lg:w-2/3">
                 {/* <BlocksRenderer content={summaryImportantText} /> */}
-                <p className="text-xl font-bold text-blue-primary lg:text-2xl">
+                <p className="text-xl font-bold text-blue-primary lg:text-2xl ml-3">
                   IMPORTANT!
                 </p>
-                <p className="font-semibold">
+                <p className="font-semibold text-lg ml-2">
                   You Also Get A Special One Hour Call With Financial Planner
                   Luke Hurley
                 </p>
+                  <Image
+                src="https://assets.dentistswhoinvest.com/image_5_b78d4e0009/image_5_b78d4e0009.webp"
+                alt="Luke"
+                width={315}
+                height={315}
+                objectFit="cover"
+                className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden mb-4"
+              />
                 <div>
-                  <p className="mt-2">The call is to:</p>
-                  <ul className="mb-4">
+                  <p className="mt-8 mb-4">The call is to:</p>
+                  <ul className="mb-4 space-y-4">
                     <li className="font-semibold">
                       ✅ Answer your key questions in private
                     </li>
@@ -847,11 +873,11 @@ export default function DWIAcademySalesPage({
                   <p>
                     Because when it comes to investing, wise counsel can only
                     help.
-                  </p>{" "}
+                  </p>{" "}<br/>
                   <p>
                     And even after all these years the depth of Luke’s knowledge
                     continues to blow me away.{" "}
-                  </p>
+                  </p><br/>
                   <p>
                     I guess that’s what happens after having helped hundreds of
                     dentists already.
@@ -864,7 +890,7 @@ export default function DWIAcademySalesPage({
                 width={315}
                 height={315}
                 objectFit="cover"
-                className=" aspect-[4/5] h-[350px] place-self-center md:h-[434px] lg:h-auto"
+                className=" aspect-[4/5] h-[350px] place-self-center md:h-[434px] lg:h-auto sm:hidden"
               />
             </div>
           </div>
@@ -885,10 +911,10 @@ export default function DWIAcademySalesPage({
               <div className="space-y-8 lg:pl-[20px] lg:pr-[120px] xl:pr-[100px]">
                 {/* <BlocksRenderer content={summarySpecialOffer} /> */}
 
-                <p className="text-xl font-bold text-orange-400 lg:text-2xl">
+                <p className="text-xl font-bold text-orange-400 lg:text-2xl text-center">
                   This Special £997+Vat Offer…
                 </p>
-                <p className="text-xl font-semibold text-blue-primary lg:text-2xl">
+                <p className="text-lg font-semibold text-blue-primary lg:text-2xl py-4">
                   With One To One Session With Luke Hurley Financial Planner Included....
                   Is Reserved For The Dentists Who Invest Email
                   Community <span className="underline">Only</span>
@@ -896,14 +922,14 @@ export default function DWIAcademySalesPage({
               </div>
             </div>
 
-            <div id="summary special offer detail" className="">
+            <div id="summary special offer detail" className="text-sm">
               {/* <BlocksRenderer content={summarySpecialOfferDetail} /> */}
-              <p className="-mt-8 mb-4">
+              <p className="-mt-8 mb-4 text-sm">
                 You won’t find this offer on our main website. And when the
                 deadline arrives, you won’t find it anywhere. So, if you’re
                 ready to get the playbook, here’s what to do:
               </p>
-              <div className="space-y-3 text-base leading-relaxed text-black">
+              <div className="space-y-3 text-base leading-relaxed text-black text-sm">
                 <div className="flex items-start">
                   <span className="mr-2 text-xl text-orange-500">➜</span>
                   <span className="font-bold">
@@ -938,6 +964,7 @@ export default function DWIAcademySalesPage({
                     From there all you do is show up to the call.
                   </span>
                 </div>
+                <div>Here's the button:</div>
               </div>
             </div>
             <Link
@@ -948,7 +975,7 @@ export default function DWIAcademySalesPage({
                 {courseData.cta_text}
               </Button>
             </Link>
-            <div className="flex flex-col items-center space-y-8 md:pb-8">
+            <div className="flex flex-col items-center space-y-8 pb-8 text-sm">
               <BlocksRenderer content={courseData.sign_off} />
             </div>
           </div>
@@ -957,7 +984,7 @@ export default function DWIAcademySalesPage({
           id="testimonials"
           className="-mx-4 bg-[#E1EBF0] py-2 md:-mx-10 lg:-mx-40"
         >
-          <div className="articleContent mx-4 mt-4 w-1/2 space-y-4 justify-self-center text-center text-xl font-bold md:mx-10 lg:mx-40">
+          <div className="articleContent mx-4 mt-4 space-y-4 justify-self-center text-center text-xl font-bold md:mx-10 lg:mx-40">
             <p>{courseData.testimonials_title}</p>
           </div>
           <div className="mx-4 grid grid-cols-1 gap-6 md:mx-10 md:grid-cols-2 lg:grid-cols-3">
@@ -1007,11 +1034,11 @@ export default function DWIAcademySalesPage({
               </div>
             ))}
           </div>
-          <div className="dwiAH5 articleContent mx-4 space-y-4 text-lg md:mx-10 lg:mx-40">
+          <div className="dwiAH5 articleContent mx-4 space-y-4 text-sm md:mx-10 lg:mx-40">
             {/* <BlocksRenderer content={courseData.testimonials_detail} /> */}
-            <div className="rounded-lg p-6 text-black">
-              <h2 className="mb-6 text-center text-lg font-bold md:text-xl">
-                Dr Max Al–Nakib is an experienced implant dentist who <br />
+            <div className="rounded-lg p-2 text-black text-sm">
+              <h2 className="mb-6 text-center text-base font-bold md:text-xl">
+                Dr Max Al–Nakib is an experienced implant dentist who 
                 enrolled in the Dentists Who Invest Academy in 2024
               </h2>
 
@@ -1091,7 +1118,7 @@ export default function DWIAcademySalesPage({
         </section>
 
         <section id="sign off" className="-mx-4 md:-mx-10 lg:-mx-40">
-          <div className="relative h-[420px] w-full md:h-[300px] lg:h-[250px]">
+          <div className="relative h-[320px] w-full md:h-[300px] lg:h-[250px]">
             <div className="absolute inset-0 ">
               <Image
                 src={courseData.sign_off_cover.data.attributes.url}
@@ -1099,10 +1126,10 @@ export default function DWIAcademySalesPage({
                 layout="fill"
                 objectPosition="center"
                 objectFit="cover"
-                priority
+                className=""
               />
               <div className="absolute inset-0 bg-blue-primary opacity-70"></div>
-              <div className="relative m-8 space-y-4 text-sm text-white md:m-[50px]">
+              <div className="relative m-8 space-y-4 text-xs text-white md:m-[50px]">
                 <BlocksRenderer
                   content={courseData.post_sign_off_description}
                 />
