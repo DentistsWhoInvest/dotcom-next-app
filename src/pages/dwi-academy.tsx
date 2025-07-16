@@ -564,21 +564,21 @@ export default function DWIAcademySalesPage({
               {" "}
               <BlocksRenderer content={noWonderHeader} />
             </div>
-            <div className="items-center space-y-4 text-sm lg:text-base leading-6 md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8 md:hidden">
+            <div className="flex flex-col space-y-4 text-sm lg:text-base leading-6 md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8 md:hidden">
               <Image
                 src="https://assets.dentistswhoinvest.com/wrap_up_founder_226931dc58/wrap_up_founder_226931dc58.webp"
                 alt="James speaking"
                 width={315}
                 height={315}
                 objectFit="scale-down"
-                className=" aspect-[4/5] place-self-center"
+                className=" aspect-[4/5] place-self-center "
               />
               <div className="space-y-2 md:py-2 pt-8">
                 <BlocksRenderer content={IcertainlyDid} />
               </div>
 
             </div>
-            <div className="grid grid-cols-1 items-center space-y-4 text-sm lg:text-base leading-6 md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8 sm:hidden md:block lg:max-w-[1140px] lg:mx-auto">
+            <div className="grid grid-cols-1 items-center space-y-4 text-sm lg:text-base leading-6 md:grid-cols-2 md:gap-4 md:space-y-0 lg:gap-8 sm:hidden md:grid lg:max-w-[1140px] lg:mx-auto">
               <div className="space-y-2 md:py-2 ">
                 <BlocksRenderer content={IcertainlyDid} />
               </div>
@@ -730,7 +730,7 @@ export default function DWIAcademySalesPage({
             <div className="md:hidden">  <div className="space-y-8 leading-5 text-sm lg:text-base my-8">
               <BlocksRenderer content={courseData.quick_question_detail} />
             </div>
-              <div className="h-[320px] mx-4">
+              <div className="h-[320px] mx-4 flex flex-col">
                 <Image
                   src="https://assets.dentistswhoinvest.com/Group_4_9a98ec265b/Group_4_9a98ec265b.jpg"
                   alt="James speaking"
@@ -774,7 +774,7 @@ export default function DWIAcademySalesPage({
         </section>
         <section className="-mx-4 my-8 flex justify-center bg-blue-secondary md:-mx-10 md:my-8 lg:mx-0 w-screen lg:py-8">
           <Image
-            src="https://assets.dentistswhoinvest.com/on_the_call_photo_d885beeb5c/on_the_call_photo_d885beeb5c.webp"
+            src="https://assets.dentistswhoinvest.com/on_the_call_1b6fad93f2/on_the_call_1b6fad93f2.webp"
             alt="Collective content image"
             width={courseData.collective_content_image.data.attributes.width}
             height={courseData.collective_content_image.data.attributes.height}
@@ -785,7 +785,7 @@ export default function DWIAcademySalesPage({
           <div className="my-8 flex flex-col items-center space-y-2 md:my-8 ">
             <div className="grid grid-cols-1 gap-2 lg:mx-auto lg:max-w-[1140px]">
               <div className="space-y-2 text-center font-bold">
-                <p className="text-lg text-blue-secondary md:m-[-20px] md:text-[40px] lg:mx-0 lg:pt-8 pb-12">
+                <p className="text-lg text-blue-secondary md:m-[-20px] md:text-[40px] lg:mx-0 lg:pt-8 lg:pb-12 pb-6">
                   <BlocksRenderer
                     content={courseData.informed_investor_club.sales_part_1}
                   />
@@ -854,6 +854,7 @@ export default function DWIAcademySalesPage({
                   You Also Get A Special One Hour Call With Financial Planner
                   Luke Hurley
                 </p>
+                <div className="flex flex-col">
                 <Image
                   src="https://assets.dentistswhoinvest.com/image_5_b78d4e0009/image_5_b78d4e0009.webp"
                   alt="Luke"
@@ -861,7 +862,7 @@ export default function DWIAcademySalesPage({
                   height={315}
                   objectFit="cover"
                   className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden mb-4"
-                />
+                /></div>
                 <div>
                   <p className="mt-8 mb-4">The call is to:</p>
                   <ul className="mb-4 space-y-4">
