@@ -772,7 +772,7 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={courseData.how_the_academy} />
           </div>
         </section>
-        <section className="-mx-4 my-8 flex justify-center bg-blue-secondary md:-mx-10 md:my-8 lg:mx-0 w-screen lg:py-8">
+        <section className="-mx-4 my-8 flex justify-center bg-blue-secondary md:-mx-10 md:my-8 lg:mx-0 w-screen py-4 lg:py-8">
           <Image
             src="https://assets.dentistswhoinvest.com/on_the_call_1b6fad93f2/on_the_call_1b6fad93f2.webp"
             alt="Collective content image"
@@ -861,10 +861,10 @@ export default function DWIAcademySalesPage({
                   width={315}
                   height={315}
                   objectFit="cover"
-                  className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden mb-4"
+                  className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden"
                 /></div>
                 <div>
-                  <p className="mt-8 mb-4">The call is to:</p>
+                  <p className="mt-6 mb-4">The call is to:</p>
                   <ul className="mb-4 space-y-4">
                     <li className="font-semibold">
                       ✅ Answer your key questions in private
