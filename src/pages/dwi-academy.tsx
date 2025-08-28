@@ -380,7 +380,8 @@ export default function DWIAcademySalesPage({
     "https://assets.dentistswhoinvest.com/1_1_5f35c428d8/1_1_5f35c428d8.webp",
     "https://assets.dentistswhoinvest.com/4_31caf2f764/4_31caf2f764.webp",
     "https://assets.dentistswhoinvest.com/5_c7af1c19c7/5_c7af1c19c7.webp",
-    "https://assets.dentistswhoinvest.com/Testimonials_1_a9fb002db7/Testimonials_1_a9fb002db7.webp",
+    // "https://assets.dentistswhoinvest.com/Testimonials_1_a9fb002db7/Testimonials_1_a9fb002db7.webp",
+    "https://assets.dentistswhoinvest.com/Testimonials_6_453168bd94/Testimonials_6_453168bd94.webp"
   ];
 
   return (
