@@ -346,7 +346,7 @@ export default function DWIAcademySalesPage({
     specialOfferDetailSplit
   );
 
-  const noWonderTarget = "(I certainly did until I knew better)";
+  const noWonderTarget = "(I certainly did until I figured a lot of this stuff out)";
 
   const noWonder_splitIndex = courseData.no_wonder.findIndex(
     (obj: { children: { text: string | string[] }[] }) =>
@@ -380,7 +380,8 @@ export default function DWIAcademySalesPage({
     "https://assets.dentistswhoinvest.com/1_1_5f35c428d8/1_1_5f35c428d8.webp",
     "https://assets.dentistswhoinvest.com/4_31caf2f764/4_31caf2f764.webp",
     "https://assets.dentistswhoinvest.com/5_c7af1c19c7/5_c7af1c19c7.webp",
-    "https://assets.dentistswhoinvest.com/Testimonials_1_a9fb002db7/Testimonials_1_a9fb002db7.webp",
+    // "https://assets.dentistswhoinvest.com/Testimonials_1_a9fb002db7/Testimonials_1_a9fb002db7.webp",
+    "https://assets.dentistswhoinvest.com/Testimonials_6_453168bd94/Testimonials_6_453168bd94.webp"
   ];
 
   return (
@@ -410,7 +411,7 @@ export default function DWIAcademySalesPage({
                     <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-4/5 md:text-[25px] md:leading-[35px] lg:text-[30px]">
                       {courseData.hero_text}
                     </h1>
-                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[65%] md:text-[25px] md:leading-[35px] lg:text-[30px]">
+                    <h1 className="mt-[32px] text-left text-[30px] font-bold text-white [text-shadow:_0_0_10px_rgb(0_0_0_/_30%)] md:w-[90%] md:text-[25px] md:leading-[35px] lg:text-[30px]">
                       {courseData.second_hero_text}
                     </h1>
                   </div>
@@ -460,7 +461,7 @@ export default function DWIAcademySalesPage({
             <BlocksRenderer content={firstDescRest.slice(0, firstDescRest.findIndex(
               (obj: { children: { text: string | string[] }[] }) =>
                 obj.children.some((child: { text: string | string[] }) =>
-                  child.text.includes("My knee:")
+                  child.text.includes("A crunching")
                 )))} />
           </div><div className="dwiAH5 articleContent text-sm lg:text-base space-y-4 my-8">
             <BlocksRenderer content={firstDescRest.slice(-firstDescRest.findIndex(
@@ -525,7 +526,7 @@ export default function DWIAcademySalesPage({
           </div>
           <div
             id="compound"
-            className="dwiAH5 articleContent my-8 space-y-4 text-sm lg:text-base md:my-8 text-blue-primary"
+            className="dwiAH5 articleContent my-8 space-y-4 text-sm lg:text-base md:my-8"
           >
             <BlocksRenderer content={courseData.compound_interest.slice(16, 17)} />
           </div>
@@ -855,14 +856,14 @@ export default function DWIAcademySalesPage({
                   Luke Hurley
                 </p>
                 <div className="flex flex-col">
-                <Image
-                  src="https://assets.dentistswhoinvest.com/image_5_b78d4e0009/image_5_b78d4e0009.webp"
-                  alt="Luke"
-                  width={315}
-                  height={315}
-                  objectFit="cover"
-                  className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden"
-                /></div>
+                  <Image
+                    src="https://assets.dentistswhoinvest.com/image_5_b78d4e0009/image_5_b78d4e0009.webp"
+                    alt="Luke"
+                    width={315}
+                    height={315}
+                    objectFit="cover"
+                    className=" aspect-[4/5] h-[310px] p-2 place-self-center md:h-[434px] lg:h-auto md:hidden"
+                  /></div>
                 <div>
                   <p className="mt-6 mb-4">The call is to:</p>
                   <ul className="mb-4 space-y-4">
@@ -920,7 +921,7 @@ export default function DWIAcademySalesPage({
                 {/* <BlocksRenderer content={summarySpecialOffer} /> */}
 
                 <p className="text-xl font-bold text-orange-400 lg:text-2xl text-center">
-                  This Special £997+Vat Offer…
+                  This Special £1000+Vat Offer…
                 </p>
                 <p className="text-lg font-semibold text-blue-primary lg:text-2xl py-4">
                   With One To One Session With Luke Hurley Financial Planner Included....
@@ -1055,16 +1056,15 @@ export default function DWIAcademySalesPage({
                 <div>
                   <h3 className="mb-4 font-bold">Before the course:</h3>
                   <ul className="list-inside list-disc space-y-2">
-                    <li>
-                      Max had a series of investments that were managed by a
-                      financial adviser including a pension and an ISA
+                   <li>
+                      Max was super busy wondering how he would ever find the time to learn about finance and investing around career and family life
                     </li>
                     <li>
                       Max was paying high fees with little explanation as to
                       what his money was invested
                     </li>
                     <li>Was not gaining much returns on his investments</li>
-                    <li>Had no clear idea of when he could retire</li>
+                    <li>Concerned about his high tax bill every year</li>
                   </ul>
                 </div>
 
@@ -1077,11 +1077,9 @@ export default function DWIAcademySalesPage({
                       his adviser that he is no longer required
                     </li>
                     <li>
-                      Frequently attends the financial coaching calls asking
-                      questions each time his circumstances change/he learns
-                      something new
+                      Has now reduced his working hours as he no longer feels as much of a financial burden now his money is working for him
                     </li>
-                    <li>Is working towards a clear retirement date</li>
+                    <li>Saved £12,500 of tax in his first year</li>
                     <li>
                       No more high fees meaning he can reinvest these into his
                       portfolio and boost its growth
