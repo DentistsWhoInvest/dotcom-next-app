@@ -88,6 +88,7 @@ type QuizCongratulationsAttributes = {
   aims: any;
   course_name: string;
   form_id: number;
+  slug?: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -108,20 +109,41 @@ interface ShowErrorObject {
 
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
-
+  const paths: any[] = [];
+  
+  results.forEach((result: { id: string; attributes: { slug?: string } }) => {
+    if (result.attributes.slug) {
+      const cleanSlug = result.attributes.slug.startsWith('/') 
+        ? result.attributes.slug.slice(1) 
+        : result.attributes.slug;
+      paths.push({ params: { id: cleanSlug } });
+    } else {
+      paths.push({ params: { id: result.id.toString() } });
+    }
+  });
+  
   return {
-    paths: results.map((result: { id: string }) => ({
-      params: { id: result.id.toString() },
-    })),
+    paths,
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  const CPDQuestions = CPDData.find(
-    (course: { id: string }) => course.id.toString() === params.id
-  );
+  // First try to find by slug (with or without leading slash), then by ID
+  let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
+    if (!course.attributes.slug) return false;
+    const cleanSlug = course.attributes.slug.startsWith('/') 
+      ? course.attributes.slug.slice(1) 
+      : course.attributes.slug;
+    return cleanSlug === params.id;
+  });
+  // If not found by slug, try by ID
+  if (!CPDQuestions) {
+    CPDQuestions = CPDData.find((course: { id: string }) => 
+      course.id.toString() === params.id
+    );
+  }
 
   return {
     props: {

@@ -107,6 +107,7 @@ type QuizResultsAttributes = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  slug?: string;
   quiz_result_pass_horizontal_banner: Banner;
   quiz_result_fail_horizontal_banner: Banner;
   quiz_questions: Question[];
@@ -120,20 +121,44 @@ type QuizResults = {
 
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
-
+  const paths: any[] = [];
+  
+  results.forEach((result: { id: string; attributes: { slug?: string } }) => {
+    if (result.attributes.slug) {
+      const cleanSlug = result.attributes.slug.startsWith('/') 
+        ? result.attributes.slug.slice(1) 
+        : result.attributes.slug;
+      paths.push({ params: { id: cleanSlug } });
+    } else {
+      paths.push({ params: { id: result.id.toString() } });
+    }
+  });
+  
   return {
-    paths: results.map((result: { id: string }) => ({
-      params: { id: result.id.toString() },
-    })),
+    paths,
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  const CPDQuestions = CPDData.find(
-    (course: { id: string }) => course.id.toString() === params.id
-  );
+  
+  // First try to find by slug (with or without leading slash), then by ID
+  let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
+    if (!course.attributes.slug) return false;
+    const cleanSlug = course.attributes.slug.startsWith('/') 
+      ? course.attributes.slug.slice(1) 
+      : course.attributes.slug;
+    return cleanSlug === params.id;
+  });
+  
+  // If not found by slug, try by ID
+  if (!CPDQuestions) {
+    CPDQuestions = CPDData.find((course: { id: string }) => 
+      course.id.toString() === params.id
+    );
+  }
+  
   return {
     props: {
       pageData: CPDQuestions,
@@ -143,6 +168,17 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function Results({ pageData }: { pageData: QuizResults }) {
   const { selectedAnswers, resetAnswers } = useQuizStore();
+
+  // Helper function to get the course identifier (slug or id)
+  const getCourseIdentifier = () => {
+    if (pageData.attributes.slug) {
+      // Remove leading slash if present
+      return pageData.attributes.slug.startsWith('/') 
+        ? pageData.attributes.slug.slice(1) 
+        : pageData.attributes.slug;
+    }
+    return pageData.id;
+  };
 
   const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
     q.potential_answers.find(
@@ -157,7 +193,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
 
   function handleRetake() {
     resetAnswers();
-    Router.push(`/cpd/${pageData.id}/quiz`);
+    Router.push(`/cpd/${getCourseIdentifier()}/quiz`);
   }
 
   return (
@@ -196,7 +232,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
                 certificate.
               </p>
               <Link
-                href={`/cpd/${pageData.id}/reflections`}
+                href={`/cpd/${getCourseIdentifier()}/reflections`}
                 className="place-self-center"
               >
                 <button className="m-2 rounded-md bg-orange-600 px-6 py-3 text-white transition duration-200 ease-in-out hover:scale-105">
