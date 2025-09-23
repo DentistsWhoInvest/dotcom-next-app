@@ -107,6 +107,7 @@ type QuizQuestionsAttributes = {
   course_name: string;
   aims: List[];
   course_duration: string;
+  slug?: string;
   form_id: number;
   createdAt: string;
   updatedAt: string;
@@ -123,20 +124,43 @@ type QuizQuestions = {
 
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
-
+  const paths: any[] = [];
+  
+  results.forEach((result: { id: string; attributes: { slug?: string } }) => {
+    if (result.attributes.slug) {
+      const cleanSlug = result.attributes.slug.startsWith('/') 
+        ? result.attributes.slug.slice(1) 
+        : result.attributes.slug;
+      paths.push({ params: { id: cleanSlug } });
+    } else {
+      paths.push({ params: { id: result.id.toString() } });
+    }
+  });
+  
   return {
-    paths: results.map((result: { id: string }) => ({
-      params: { id: result.id.toString() },
-    })),
+    paths,
     fallback: false,
   };
 };
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  const CPDQuestions = CPDData.find(
-    (course: { id: string }) => course.id.toString() === params.id
-  );
+  
+  // First try to find by slug (with or without leading slash), then by ID
+  let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
+    if (!course.attributes.slug) return false;
+    const cleanSlug = course.attributes.slug.startsWith('/') 
+      ? course.attributes.slug.slice(1) 
+      : course.attributes.slug;
+    return cleanSlug === params.id;
+  });
+  
+  // If not found by slug, try by ID
+  if (!CPDQuestions) {
+    CPDQuestions = CPDData.find((course: { id: string }) => 
+      course.id.toString() === params.id
+    );
+  }
 
   return {
     props: {
@@ -150,6 +174,17 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
 
   const { selectedAnswers, setAnswer } = useQuizStore();
 
+  // Helper function to get the course identifier (slug or id)
+  const getCourseIdentifier = () => {
+    if (pageData.attributes.slug) {
+      // Remove leading slash if present
+      return pageData.attributes.slug.startsWith('/') 
+        ? pageData.attributes.slug.slice(1) 
+        : pageData.attributes.slug;
+    }
+    return pageData.id;
+  };
+
   const handleSelect = (questionId: number, answerId: number) => {
     setAnswer(questionId, answerId);
   };
@@ -162,7 +197,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
       setError(true);
       return;
     } else {
-      Router.push(`/cpd/${pageData.id}/results`);
+      Router.push(`/cpd/${getCourseIdentifier()}/results`);
     }
   };
 
