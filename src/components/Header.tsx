@@ -17,7 +17,7 @@ const menuLinksList: MenuLink[] = [
   { href: "/podcast/1/", text: "Podcast", category: "podcast" },
   { href: "/articles/1/", text: "Articles", category: "articles" },
   { href: "/courses/", text: "Courses" },
-  { href: "/dwimarket/", text: "Store" },
+  { href: "https://courses.dentistswhoinvest.com/partners-page", text: "Partners" },
   { href: "/video/1/", text: "Videos/CPD" },
   { href: "/contact/", text: "Contact" },
 ];
