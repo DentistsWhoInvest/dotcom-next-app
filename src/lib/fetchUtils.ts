@@ -27,15 +27,6 @@ export async function fetchEndpointData(
   paginationOptions?: PaginationOptions
 ) {
   const endpoint = `${process.env.NEXT_ADMIN_STRAPI_URL}${requestedEndpoint}`;
-  let headers = {
-    Authorization: `bearer ${process.env.STRAPI_API_KEY}`,
-    "Proxy-Authorization": "",
-    "Content-Type": "application/json",
-  };
-  if (process.env["ENV"] !== "dev" || !endpoint.includes("localhost")) {
-    let jwt = await signJwt(endpoint);
-    headers["Proxy-Authorization"] = `Bearer ${jwt}`;
-  }
 
   function buildUrl(
     endpoint: string,
@@ -50,7 +41,21 @@ export async function fetchEndpointData(
       return baseUrl;
     }
   }
+
   const url = buildUrl(endpoint, makingPaginatedRequest, paginationOptions);
+
+  let headers = {
+    Authorization: `bearer ${process.env.STRAPI_API_KEY}`,
+    "Proxy-Authorization": "",
+    "Content-Type": "application/json",
+  };
+
+  if (process.env["ENV"] !== "dev" || !url.includes("localhost")) {
+    // Strip query parameters from URL for JWT audience
+    const baseUrl = url.split('?')[0];
+    let jwt = await signJwt(baseUrl);
+    headers["Proxy-Authorization"] = `Bearer ${jwt}`;
+  }
   const fetchRequest = await fetch(url, { method: "GET", headers });
 
   if (!fetchRequest.ok) {
