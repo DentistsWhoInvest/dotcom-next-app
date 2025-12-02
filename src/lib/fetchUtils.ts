@@ -42,7 +42,8 @@ export async function fetchEndpointData(
     makingPaginatedRequest: boolean,
     paginationOptions?: PaginationOptions
   ) {
-    const baseUrl: string = `${endpoint}?populate=${populateFields.join(",")}`;
+    const separator = endpoint.includes("?") ? "&" : "?";
+    const baseUrl: string = `${endpoint}${separator}populate=${populateFields.join(",")}`;
     if (makingPaginatedRequest && paginationOptions) {
       return `${baseUrl}&pagination[page]=${paginationOptions.page}&pagination[pageSize]=${paginationOptions.pageSize}`;
     } else {
@@ -51,6 +52,19 @@ export async function fetchEndpointData(
   }
   const url = buildUrl(endpoint, makingPaginatedRequest, paginationOptions);
   const fetchRequest = await fetch(url, { method: "GET", headers });
-  const resultJSON = await fetchRequest.json();
-  return resultJSON;
+
+  if (!fetchRequest.ok) {
+    const errorText = await fetchRequest.text();
+    console.error(`Fetch failed for ${url}: ${fetchRequest.status} ${fetchRequest.statusText}`, errorText);
+    throw new Error(`Fetch failed: ${fetchRequest.status} ${fetchRequest.statusText} - ${errorText}`);
+  }
+
+  try {
+    const resultJSON = await fetchRequest.json();
+    return resultJSON;
+  } catch (e) {
+    const errorText = await fetchRequest.text().catch(() => "Could not read text");
+    console.error(`Invalid JSON response from ${url}:`, errorText);
+    throw new Error(`Invalid JSON response: ${errorText.substring(0, 100)}...`);
+  }
 }

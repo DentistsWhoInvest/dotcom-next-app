@@ -84,7 +84,7 @@ type LandingPageAttributes = {
   publishedAt: string;
   contributor: Contributor;
   slug: string;
-  form_id: number; 
+  form_id: number;
   page_metadata: {
     title: string;
     description: string;
@@ -106,7 +106,7 @@ type LeadMagnetAttributes = {
   show_recaptcha: boolean;
   post_form_disclaimer: string;
   image: ImageData;
-  background_colour: string;  
+  background_colour: string;
   page_metadata: {
     title: string;
     description: string;
@@ -126,11 +126,37 @@ type LeadMagnetPage = {
 
 //todo: add type for Lead Magnet
 
+const fetchAllItems = async (endpoint: string) => {
+  let allItems: any[] = [];
+  let page = 1;
+  const pageSize = 100;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await fetchEndpointData(endpoint, undefined, true, {
+      page,
+      pageSize,
+    });
+    if (response.data) {
+      allItems = allItems.concat(response.data);
+      if (response.meta && response.meta.pagination) {
+        hasMore = page < response.meta.pagination.pageCount;
+        page++;
+      } else {
+        hasMore = false;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+  return { data: allItems };
+};
+
 export const getStaticPaths = async () => {
-  const targetedDataCollectionResults: any = await fetchEndpointData(
+  const targetedDataCollectionResults: any = await fetchAllItems(
     `/targeted-data-collection-pages`
   );
-  const leadMagnetsResults: any = await fetchEndpointData(
+  const leadMagnetsResults: any = await fetchAllItems(
     `/lead-magnets`
   );
 
@@ -160,46 +186,43 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({
   params
 }: {
-  params: { targetedlandingpage: string, isLeadMagnet: boolean };
+  params: { targetedlandingpage: string };
 }) => {
+  const slug = params.targetedlandingpage;
+
+  // Helper to fetch by slug
+  const fetchBySlug = async (endpoint: string, fields: string[]) => {
+    const filterQuery = `filters[slug][$in][0]=${slug}&filters[slug][$in][1]=/${slug}`;
+    const res = await fetchEndpointData(`${endpoint}?${filterQuery}`, fields);
+    return res.data && res.data.length > 0 ? res.data[0] : null;
+  };
+
   const landingPageFields = ["contributor", "contributor.profilePicture"];
-  const landingPages = await fetchEndpointData(
-    `/targeted-data-collection-pages/`,
-    landingPageFields
-  );
+  const matchingLandingPage = await fetchBySlug('/targeted-data-collection-pages', landingPageFields);
+
+  if (matchingLandingPage) {
+    return {
+      props: {
+        targettedLandingPage: matchingLandingPage,
+        leadMagnet: null
+      }
+    };
+  }
+
   const leadMagnetFields = ["image.data.thumbnail", "page_metadata.image.data.thumbnail"];
-  const leadMagnetPages = await fetchEndpointData(
-    `/lead-magnets/`,
-    leadMagnetFields
-  );
+  const matchingLeadMagnet = await fetchBySlug('/lead-magnets', leadMagnetFields);
 
-  const isLeadMagnet = leadMagnetPages.data.some((page: LeadMagnetPage) =>
-    createSlug(page.attributes.slug) === params.targetedlandingpage
-  );
-
-  if (isLeadMagnet) {
-    const matchingPage = leadMagnetPages.data.find(
-      (page: LeadMagnetPage) =>
-        createSlug(page.attributes.slug).replace(/^\//, "") === params.targetedlandingpage
-    );
+  if (matchingLeadMagnet) {
     return {
       props: {
         targettedLandingPage: null,
-        leadMagnet: matchingPage
-      },
+        leadMagnet: matchingLeadMagnet
+      }
     };
-  } else {
-    const matchingPage = landingPages.data.find(
-      (page: LandingPage) =>
-        createSlug(page.attributes.slug).replace(/^\//, "") === params.targetedlandingpage
-    );
+  }
 
-    return {
-      props: {
-        targettedLandingPage: matchingPage,
-        leadMagnet: null
-      },
-    };
+  return {
+    notFound: true
   };
 };
 
@@ -207,7 +230,7 @@ function embed(form_id: number) {
   return (
     <>
       <div className={"_form_" + form_id}></div>
-      <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + form_id}/>
+      <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + form_id} />
     </>
   );
 }
@@ -221,7 +244,7 @@ export default function TargetedMarketingLandingPage({
 }) {
   if (targettedLandingPage) {
     const embedForm = embed(targettedLandingPage.attributes.form_id);
-  
+
     return (
       <>
         <Head>
@@ -230,15 +253,15 @@ export default function TargetedMarketingLandingPage({
           <meta name="description" content={targettedLandingPage.attributes.page_metadata?.description || targettedLandingPage.attributes.description} />
           <meta name="author" content="Dr. James Martin" />
           {/* todo: add proper author, not always James, default to James if empty. */}
-          
-          <meta property="og:type" content="website"/>
+
+          <meta property="og:type" content="website" />
           <meta property="og:title" content={targettedLandingPage.attributes.page_metadata?.title || targettedLandingPage.attributes.title} />
-          <meta property="og:description" content={targettedLandingPage.attributes.page_metadata?.description || targettedLandingPage.attributes.title}  />
-          <meta property="og:url" content={targettedLandingPage.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(targettedLandingPage.attributes.slug)}`}/> 
+          <meta property="og:description" content={targettedLandingPage.attributes.page_metadata?.description || targettedLandingPage.attributes.title} />
+          <meta property="og:url" content={targettedLandingPage.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(targettedLandingPage.attributes.slug)}`} />
           {/* todo: distinguish between beta and prod somehow? */}
           {/* <meta property="og:image" content={leadMagnet.attributes.page_metadata.image?.data.data.attributes .attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} /> */}
-          <meta property="og:site_name" content="Dentists Who Invest"/>
-          </Head>
+          <meta property="og:site_name" content="Dentists Who Invest" />
+        </Head>
         <main
           className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary xl:h-screen`}
         >
@@ -246,21 +269,21 @@ export default function TargetedMarketingLandingPage({
             <div className="flex flex-col items-center justify-center space-y-5 p-5 xl:m-auto xl:max-w-[1140px] xl:flex-row">
               {targettedLandingPage.attributes.contributor.data?.attributes
                 .profilePicture && (
-                <Image
-                  src={
-                    targettedLandingPage.attributes.contributor.data.attributes
-                      .profilePicture.data.attributes.url
-                  }
-                  alt={
-                    targettedLandingPage.attributes.contributor.data.attributes
-                      .profilePicture.data.attributes.name
-                  }
-                  height={335}
-                  width={251}
-                  layout="instrisic"
-                  className="rounded-3xl md:h-[550px] md:w-[413px]"
-                />
-              )}
+                  <Image
+                    src={
+                      targettedLandingPage.attributes.contributor.data.attributes
+                        .profilePicture.data.attributes.url
+                    }
+                    alt={
+                      targettedLandingPage.attributes.contributor.data.attributes
+                        .profilePicture.data.attributes.name
+                    }
+                    height={335}
+                    width={251}
+                    layout="instrisic"
+                    className="rounded-3xl md:h-[550px] md:w-[413px]"
+                  />
+                )}
               <div className="px-[20px] py-2 md:px-[40px] md:py-8 xl:px-[80px]">
                 <div className="flex flex-col content-center items-center pb-5 text-center text-[25px] font-bold leading-[1.2em] text-white xl:text-[35px]">
                   <BlocksRenderer content={targettedLandingPage.attributes.description} />
@@ -281,14 +304,14 @@ export default function TargetedMarketingLandingPage({
           <meta name="description" content={leadMagnet.attributes.page_metadata?.description || leadMagnet.attributes.main_text} />
           <meta name="author" content="Dr. James Martin" />
           {/* todo: add proper author, not always James, default to James if empty. */}
-          
-          <meta property="og:type" content="website"/>
+
+          <meta property="og:type" content="website" />
           <meta property="og:title" content={leadMagnet.attributes.page_metadata?.title || leadMagnet.attributes.name} />
-          <meta property="og:description" content={leadMagnet.attributes.page_metadata?.description || leadMagnet.attributes.main_text}  />
-          <meta property="og:url" content={leadMagnet.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(leadMagnet.attributes.slug)}`}/> 
+          <meta property="og:description" content={leadMagnet.attributes.page_metadata?.description || leadMagnet.attributes.main_text} />
+          <meta property="og:url" content={leadMagnet.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/${createSlug(leadMagnet.attributes.slug)}`} />
           {/* todo: distinguish between beta and prod somehow? */}
           {/* <meta property="og:image" content={leadMagnet.attributes.page_metadata.image?.data.data.attributes .attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} /> */}
-          <meta property="og:site_name" content="Dentists Who Invest"/>
+          <meta property="og:site_name" content="Dentists Who Invest" />
         </Head>
         <main
           className={`size-full bg-gradient-to-b from-blue-secondary to-blue-primary md:h-screen `}
@@ -310,7 +333,7 @@ export default function TargetedMarketingLandingPage({
                   // eslint-disable-next-line tailwindcss/no-custom-classname
                   className={"_form_" + leadMagnet.attributes.form_id}
                 ></div>
-                <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + leadMagnet.attributes.form_id}/>
+                <Script src={"https://dentistswhoinvest.activehosted.com/f/embed.php?id=" + leadMagnet.attributes.form_id} />
                 <p className="ml-5 text-center text-xs md:text-left lg:text-base">
                   {embed(leadMagnet.attributes.form_id)}
                 </p>
