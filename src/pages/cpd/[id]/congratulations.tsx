@@ -110,18 +110,18 @@ interface ShowErrorObject {
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
   const paths: any[] = [];
-  
+
   results.forEach((result: { id: string; attributes: { slug?: string } }) => {
     if (result.attributes.slug) {
-      const cleanSlug = result.attributes.slug.startsWith('/') 
-        ? result.attributes.slug.slice(1) 
+      const cleanSlug = result.attributes.slug.startsWith('/')
+        ? result.attributes.slug.slice(1)
         : result.attributes.slug;
       paths.push({ params: { id: cleanSlug } });
     } else {
       paths.push({ params: { id: result.id.toString() } });
     }
   });
-  
+
   return {
     paths,
     fallback: false,
@@ -133,14 +133,14 @@ export const getStaticProps = async ({ params }: any) => {
   // First try to find by slug (with or without leading slash), then by ID
   let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
     if (!course.attributes.slug) return false;
-    const cleanSlug = course.attributes.slug.startsWith('/') 
-      ? course.attributes.slug.slice(1) 
+    const cleanSlug = course.attributes.slug.startsWith('/')
+      ? course.attributes.slug.slice(1)
       : course.attributes.slug;
     return cleanSlug === params.id;
   });
   // If not found by slug, try by ID
   if (!CPDQuestions) {
-    CPDQuestions = CPDData.find((course: { id: string }) => 
+    CPDQuestions = CPDData.find((course: { id: string }) =>
       course.id.toString() === params.id
     );
   }
@@ -158,9 +158,14 @@ export default function Congratulations({
   pageData: QuizCongratulations;
 }) {
   const { reflectionAnswers } = useQuizStore();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (Object.keys(reflectionAnswers).length === 0) {
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded && Object.keys(reflectionAnswers).length === 0) {
       window.location.href = `/cpd/${pageData.id}/aims`;
     }
   });

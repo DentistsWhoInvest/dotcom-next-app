@@ -124,18 +124,18 @@ type QuizReflections = {
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
   const paths: any[] = [];
-  
+
   results.forEach((result: { id: string; attributes: { slug?: string } }) => {
     if (result.attributes.slug) {
-      const cleanSlug = result.attributes.slug.startsWith('/') 
-        ? result.attributes.slug.slice(1) 
+      const cleanSlug = result.attributes.slug.startsWith('/')
+        ? result.attributes.slug.slice(1)
         : result.attributes.slug;
       paths.push({ params: { id: cleanSlug } });
     } else {
       paths.push({ params: { id: result.id.toString() } });
     }
   });
-  
+
   return {
     paths,
     fallback: false,
@@ -144,19 +144,19 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  
+
   // First try to find by slug (with or without leading slash), then by ID
   let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
     if (!course.attributes.slug) return false;
-    const cleanSlug = course.attributes.slug.startsWith('/') 
-      ? course.attributes.slug.slice(1) 
+    const cleanSlug = course.attributes.slug.startsWith('/')
+      ? course.attributes.slug.slice(1)
       : course.attributes.slug;
     return cleanSlug === params.id;
   });
-  
+
   // If not found by slug, try by ID
   if (!CPDQuestions) {
-    CPDQuestions = CPDData.find((course: { id: string }) => 
+    CPDQuestions = CPDData.find((course: { id: string }) =>
       course.id.toString() === params.id
     );
   }
@@ -175,23 +175,28 @@ export default function Reflections({
 }) {
   const { selectedAnswers, reflectionAnswers, setReflectionAnswers } =
     useQuizStore();
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const [error, setError] = React.useState<boolean>(false);
   const [errorType, setErrorType] = React.useState<string>("");
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   // Helper function to get the course identifier (slug or id)
   const getCourseIdentifier = () => {
     if (pageData.attributes.slug) {
       // Remove leading slash if present
-      return pageData.attributes.slug.startsWith('/') 
-        ? pageData.attributes.slug.slice(1) 
+      return pageData.attributes.slug.startsWith('/')
+        ? pageData.attributes.slug.slice(1)
         : pageData.attributes.slug;
     }
     return pageData.id;
   };
 
   useEffect(() => {
-    if (Object.keys(selectedAnswers).length === 0) {
+    if (isLoaded && Object.keys(selectedAnswers).length === 0) {
       window.location.href = `/cpd/${getCourseIdentifier()}/aims`;
     }
   });
@@ -204,7 +209,7 @@ export default function Reflections({
     );
     if (
       Object.keys(reflectionAnswers).length !==
-        pageData.attributes.reflections.length ||
+      pageData.attributes.reflections.length ||
       hasEmptyAnswer
     ) {
       setErrorType("missingreflection");
@@ -222,6 +227,11 @@ export default function Reflections({
     } else {
       Router.push(`/cpd/${getCourseIdentifier()}/congratulations`);
     }
+  };
+
+  const getAnswerLength = (questionId: number) => {
+    const answer = reflectionAnswers.find((item) => item.questionId === questionId)?.answer;
+    return answer ? answer.length : 0;
   };
 
   return (
@@ -262,9 +272,9 @@ export default function Reflections({
                   className="h-[170px] w-full border-2 border-blue-primary p-4 lg:h-32"
                   placeholder=""
                   value={
-                    reflectionAnswers.find(
+                    isLoaded ? (reflectionAnswers.find(
                       (item) => item.questionId === question.id
-                    )?.answer || ""
+                    )?.answer || "") : ""
                   }
                   onChange={(e) =>
                     setReflectionAnswers(
@@ -275,15 +285,12 @@ export default function Reflections({
                   }
                 />
                 <div
-                  className={`flex justify-end text-sm ${
-                    reflectionAnswers[question.id]?.answer.length > 350
+                  className={`flex justify-end text-sm ${getAnswerLength(question.id) > 350
                       ? "text-red-500"
                       : "text-gray-600"
-                  }`}
+                    }`}
                 >
-                  {reflectionAnswers[question.id]?.answer
-                    ? reflectionAnswers[question.id]?.answer.length
-                    : 0}{" "}
+                  {getAnswerLength(question.id)}{" "}
                   / 350
                 </div>
               </div>

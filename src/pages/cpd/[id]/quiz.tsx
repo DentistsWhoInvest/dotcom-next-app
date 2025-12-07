@@ -125,18 +125,18 @@ type QuizQuestions = {
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
   const paths: any[] = [];
-  
+
   results.forEach((result: { id: string; attributes: { slug?: string } }) => {
     if (result.attributes.slug) {
-      const cleanSlug = result.attributes.slug.startsWith('/') 
-        ? result.attributes.slug.slice(1) 
+      const cleanSlug = result.attributes.slug.startsWith('/')
+        ? result.attributes.slug.slice(1)
         : result.attributes.slug;
       paths.push({ params: { id: cleanSlug } });
     } else {
       paths.push({ params: { id: result.id.toString() } });
     }
   });
-  
+
   return {
     paths,
     fallback: false,
@@ -145,19 +145,19 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  
+
   // First try to find by slug (with or without leading slash), then by ID
   let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
     if (!course.attributes.slug) return false;
-    const cleanSlug = course.attributes.slug.startsWith('/') 
-      ? course.attributes.slug.slice(1) 
+    const cleanSlug = course.attributes.slug.startsWith('/')
+      ? course.attributes.slug.slice(1)
       : course.attributes.slug;
     return cleanSlug === params.id;
   });
-  
+
   // If not found by slug, try by ID
   if (!CPDQuestions) {
-    CPDQuestions = CPDData.find((course: { id: string }) => 
+    CPDQuestions = CPDData.find((course: { id: string }) =>
       course.id.toString() === params.id
     );
   }
@@ -171,15 +171,20 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
   const [error, setError] = React.useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const { selectedAnswers, setAnswer } = useQuizStore();
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   // Helper function to get the course identifier (slug or id)
   const getCourseIdentifier = () => {
     if (pageData.attributes.slug) {
       // Remove leading slash if present
-      return pageData.attributes.slug.startsWith('/') 
-        ? pageData.attributes.slug.slice(1) 
+      return pageData.attributes.slug.startsWith('/')
+        ? pageData.attributes.slug.slice(1)
         : pageData.attributes.slug;
     }
     return pageData.id;
@@ -237,7 +242,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
                       type="radio"
                       id={`question-${q.id}-answer-${a.id}`}
                       name={`question-${q.id}`}
-                      checked={selectedAnswers[q.id] === a.id}
+                      checked={isLoaded && selectedAnswers[q.id] === a.id}
                       onChange={() => handleSelect(q.id, a.id)}
                       className="hidden"
                     />
@@ -247,11 +252,10 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
                       className={`flex cursor-pointer items-center space-x-2`}
                     >
                       <span
-                        className={`flex size-4 flex-shrink-0 items-center justify-center rounded-full border-2 md:size-6 ${
-                          selectedAnswers[q.id] === a.id
+                        className={`flex size-4 flex-shrink-0 items-center justify-center rounded-full border-2 md:size-6 ${selectedAnswers[q.id] === a.id
                             ? "border-blue-primary bg-blue-secondary"
                             : "border-gray-400 bg-white"
-                        }`}
+                          }`}
                       />
                       <span className="text-black">{a.answer}</span>
                     </label>
