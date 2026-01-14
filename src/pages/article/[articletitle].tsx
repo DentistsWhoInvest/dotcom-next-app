@@ -123,6 +123,51 @@ export const getStaticProps = async ({ params }: any) => {
   };
 };
 
+const renderContentWithIframes = (content: any[]) => {
+  if (!Array.isArray(content)) return null;
+
+  const chunks: any[] = [];
+  let currentChunk: any[] = [];
+
+  content.forEach((block) => {
+    // Check if block is a paragraph containing a raw iframe string
+    if (
+      block.type === "paragraph" &&
+      block.children?.length === 1 &&
+      block.children[0]?.type === "text" &&
+      block.children[0]?.text?.trim().startsWith("<iframe") &&
+      block.children[0]?.text?.trim().endsWith("</iframe>")
+    ) {
+      if (currentChunk.length > 0) {
+        chunks.push({ type: "blocks", data: currentChunk });
+        currentChunk = [];
+      }
+      chunks.push({ type: "iframe", data: block.children[0].text });
+    } else {
+      currentChunk.push(block);
+    }
+  });
+
+  if (currentChunk.length > 0) {
+    chunks.push({ type: "blocks", data: currentChunk });
+  }
+
+  return chunks.map((chunk, index) => {
+    if (chunk.type === "iframe") {
+      return (
+        <div
+          key={index}
+          className="w-full my-4"
+          dangerouslySetInnerHTML={{ __html: chunk.data }}
+        />
+      );
+    } else {
+      return <BlocksRenderer key={index} content={chunk.data} />;
+    }
+  });
+};
+
+
 export default function ArticlePage({
   pageData,
   // associatedHorizontalBanner,
@@ -148,18 +193,18 @@ export default function ArticlePage({
         {/* <meta name="keywords" content={pageData.attributes.page_metadata.keywords.join(", "))} /> */}
         <meta name="author" content="Dr. James Martin" />
         {/* todo: add proper author, not always James, default to James if empty. */}
-        
-        <meta property="og:type" content="article"/>
+
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={pageData.attributes.title} />
         <meta property="og:description" content={pageData.attributes.page_metadata?.description} />
-        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`}/> 
+        <meta property="og:url" content={pageData.attributes.page_metadata?.url || `https://www.dentistswhoinvest.com/article/${createSlug(pageData.attributes.title)}`} />
         {/* todo: distinguish between beta and prod somehow? */}
         <meta property="og:image" content={pageData.attributes.thumbnail?.data?.attributes.formats.large?.url || pageData.attributes.thumbnail?.data?.attributes.url || pageData.attributes.cover?.data?.attributes.formats.large?.url || pageData.attributes.cover?.data?.attributes.url} />
-        <meta property="og:site_name" content="Dentists Who Invest"/>
+        <meta property="og:site_name" content="Dentists Who Invest" />
 
-        <meta property="og:article:author" content="Dr. James Martin"/>
+        <meta property="og:article:author" content="Dr. James Martin" />
         {/* todo: add proper author, not always James, default to James if empty. */}
-        <meta property="og:article:published_time" content={pageData.attributes.publish_date}/>
+        <meta property="og:article:published_time" content={pageData.attributes.publish_date} />
 
       </Head>
       <div className="mx-auto mt-5 grid w-full max-w-md grid-cols-1 p-5 sm:max-w-xl md:max-w-[1140px] md:grid-cols-3 md:gap-8 xl:my-5 xl:gap-16">
@@ -184,10 +229,9 @@ export default function ArticlePage({
           <div className="articleContent py-5 text-[18px] leading-7 md:text-xl">
             {pageData.attributes.content_sections.map((contentParagraph) => {
               return (
-                <BlocksRenderer
-                  content={contentParagraph.content}
-                  key={contentParagraph.id}
-                />
+                <React.Fragment key={contentParagraph.id}>
+                  {renderContentWithIframes(contentParagraph.content)}
+                </React.Fragment>
               );
             })}
           </div>
