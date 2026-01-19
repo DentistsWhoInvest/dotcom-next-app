@@ -157,7 +157,8 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
-  const { reflectionAnswers } = useQuizStore();
+  const { reflectionAnswers, resetReflectionAnswers } = useQuizStore();
+  const quizReflectionAnswers = reflectionAnswers[pageData.id] || [];
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -165,10 +166,10 @@ export default function Congratulations({
   }, []);
 
   useEffect(() => {
-    if (isLoaded && Object.keys(reflectionAnswers).length === 0) {
+    if (isLoaded && quizReflectionAnswers.length === 0) {
       window.location.href = `/cpd/${pageData.id}/aims`;
     }
-  });
+  }, [isLoaded, quizReflectionAnswers, pageData.id]);
 
   const [firstName, setFirstName] = useState<string | "">("");
   const [lastName, setLastName] = useState<string | "">("");
@@ -226,8 +227,7 @@ export default function Congratulations({
         listItem.children.map((child: any) => child.text)
       )
     );
-
-    const formattedReflectionAnswers = Object.values(reflectionAnswers).map(
+    const formattedReflectionAnswers = quizReflectionAnswers.map(
       ({ question, answer }) => ({
         question,
         answer,
@@ -262,6 +262,7 @@ export default function Congratulations({
         setHasSuccessfullySubmitted(true);
         const text = await response.text();
         setCertificateLink(text);
+        resetReflectionAnswers(pageData.id);
       } else {
         console.log("error");
         setIsLoading(false);

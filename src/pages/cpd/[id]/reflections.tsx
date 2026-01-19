@@ -173,8 +173,10 @@ export default function Reflections({
 }: {
   pageData: QuizReflections;
 }) {
+  console.log("pageData", pageData.id);
   const { selectedAnswers, reflectionAnswers, setReflectionAnswers } =
     useQuizStore();
+  const quizReflectionAnswers = reflectionAnswers[pageData.id] || [];
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   const [error, setError] = React.useState<boolean>(false);
@@ -199,16 +201,16 @@ export default function Reflections({
     if (isLoaded && Object.keys(selectedAnswers).length === 0) {
       window.location.href = `/cpd/${getCourseIdentifier()}/aims`;
     }
-  });
+}, [isLoaded, selectedAnswers]);
 
   const handleSubmitQuiz = () => {
     setErrorType("");
     setError(false);
-    const hasEmptyAnswer = Object.values(reflectionAnswers).some(
+    const hasEmptyAnswer = quizReflectionAnswers.some(
       (reflection) => reflection.answer.length === 0
     );
     if (
-      Object.keys(reflectionAnswers).length !==
+      quizReflectionAnswers.length !==
       pageData.attributes.reflections.length ||
       hasEmptyAnswer
     ) {
@@ -216,7 +218,7 @@ export default function Reflections({
       setError(true);
       return;
     }
-    const hasTooLongAnswer = Object.values(reflectionAnswers).some(
+    const hasTooLongAnswer = quizReflectionAnswers.some(
       (reflection) => reflection.answer.length > 350
     );
 
@@ -230,7 +232,7 @@ export default function Reflections({
   };
 
   const getAnswerLength = (questionId: number) => {
-    const answer = reflectionAnswers.find((item) => item.questionId === questionId)?.answer;
+    const answer = quizReflectionAnswers.find((item) => item.questionId === questionId)?.answer;
     return answer ? answer.length : 0;
   };
 
@@ -272,12 +274,13 @@ export default function Reflections({
                   className="h-[170px] w-full border-2 border-blue-primary p-4 lg:h-32"
                   placeholder=""
                   value={
-                    isLoaded ? (reflectionAnswers.find(
+                    (quizReflectionAnswers.find(
                       (item) => item.questionId === question.id
-                    )?.answer || "") : ""
+                    )?.answer || "")
                   }
                   onChange={(e) =>
                     setReflectionAnswers(
+                      pageData.id,
                       question.id,
                       question.reflection_question,
                       e.target.value
