@@ -173,7 +173,6 @@ export default function Reflections({
 }: {
   pageData: QuizReflections;
 }) {
-  console.log("pageData", pageData.id);
   const { selectedAnswers, reflectionAnswers, setReflectionAnswers } =
     useQuizStore();
   const quizReflectionAnswers = reflectionAnswers[pageData.id] || [];
