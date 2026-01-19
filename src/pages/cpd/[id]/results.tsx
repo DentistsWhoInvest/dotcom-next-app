@@ -168,6 +168,7 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function Results({ pageData }: { pageData: QuizResults }) {
   const { selectedAnswers, resetAnswers } = useQuizStore();
+  const quizSelectedAnswers = selectedAnswers[pageData.id] || {};
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -187,7 +188,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
 
   const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
     q.potential_answers.find(
-      (a) => a.is_correct && a.id === selectedAnswers[q.id]
+      (a) => a.is_correct && a.id === quizSelectedAnswers[q.id]
     )
   );
 
@@ -197,7 +198,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
     numberOfCorrectAnswers >= pageData.attributes.quiz_questions.length / 2;
 
   function handleRetake() {
-    resetAnswers();
+    resetAnswers(pageData.id);
     Router.push(`/cpd/${getCourseIdentifier()}/quiz`);
   }
 

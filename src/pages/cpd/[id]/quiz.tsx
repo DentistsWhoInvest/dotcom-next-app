@@ -174,6 +174,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   const { selectedAnswers, setAnswer } = useQuizStore();
+  const quizSelectedAnswers = selectedAnswers[pageData.id] || {};
 
   React.useEffect(() => {
     setIsLoaded(true);
@@ -191,12 +192,12 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
   };
 
   const handleSelect = (questionId: number, answerId: number) => {
-    setAnswer(questionId, answerId);
+    setAnswer(pageData.id, questionId, answerId);
   };
 
   const handleSubmitQuiz = () => {
     if (
-      Object.keys(selectedAnswers).length !==
+      Object.keys(quizSelectedAnswers).length !==
       pageData.attributes.quiz_questions.length
     ) {
       setError(true);
@@ -242,7 +243,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
                       type="radio"
                       id={`question-${q.id}-answer-${a.id}`}
                       name={`question-${q.id}`}
-                      checked={isLoaded && selectedAnswers[q.id] === a.id}
+                      checked={isLoaded && quizSelectedAnswers[q.id] === a.id}
                       onChange={() => handleSelect(q.id, a.id)}
                       className="hidden"
                     />
@@ -252,7 +253,7 @@ export default function Quiz({ pageData }: { pageData: QuizQuestions }) {
                       className={`flex cursor-pointer items-center space-x-2`}
                     >
                       <span
-                        className={`flex size-4 flex-shrink-0 items-center justify-center rounded-full border-2 md:size-6 ${selectedAnswers[q.id] === a.id
+                        className={`flex size-4 flex-shrink-0 items-center justify-center rounded-full border-2 md:size-6 ${quizSelectedAnswers[q.id] === a.id
                             ? "border-blue-primary bg-blue-secondary"
                             : "border-gray-400 bg-white"
                           }`}

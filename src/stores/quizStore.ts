@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type QuizState = {
-  selectedAnswers: Record<number, number>;
-  setAnswer: (questionId: number, answerId: number) => void;
-  resetAnswers: () => void;
+  selectedAnswers: Record<number, Record<number, number>>;
+  setAnswer: (quizId: number, questionId: number, answerId: number) => void;
+  resetAnswers: (quizId: number) => void;
   reflectionAnswers: Record<number, { questionId: number; question: string; answer: string }[]>;
   setReflectionAnswers: (
     quizId: number,
@@ -19,11 +19,24 @@ export const useQuizStore = create<QuizState>()(
   persist(
     (set) => ({
       selectedAnswers: {},
-      setAnswer: (questionId, answerId) =>
+      
+      setAnswer: (quizId, questionId, answerId) =>
         set((state) => ({
-          selectedAnswers: { ...state.selectedAnswers, [questionId]: answerId },
+          selectedAnswers: {
+            ...state.selectedAnswers,
+            [quizId]: {
+              ...(state.selectedAnswers[quizId] || {}),
+              [questionId]: answerId
+            }
+          },
         })),
-      resetAnswers: () => set({ selectedAnswers: {} }),
+      
+      resetAnswers: (quizId) =>
+        set((state) => {
+          const updated = { ...state.selectedAnswers };
+          delete updated[quizId];
+          return { selectedAnswers: updated };
+        }),
 
       reflectionAnswers: {},
 
@@ -58,7 +71,7 @@ export const useQuizStore = create<QuizState>()(
         }),
     }),
     {
-      name: 'quiz-storage', // unique name for localStorage key
+      name: 'quiz-storage',
     }
   )
 );

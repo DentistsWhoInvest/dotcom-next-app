@@ -197,11 +197,12 @@ export default function Reflections({
     return pageData.id;
   };
 
-  useEffect(() => {
-    if (isLoaded && Object.keys(selectedAnswers).length === 0) {
-      window.location.href = `/cpd/${getCourseIdentifier()}/aims`;
-    }
-}, [isLoaded, selectedAnswers]);
+useEffect(() => {
+  const quizSelectedAnswers = selectedAnswers[pageData.id] || {};
+  if (isLoaded && Object.keys(quizSelectedAnswers).length === 0) {
+    window.location.href = `/cpd/${getCourseIdentifier()}/aims`;
+  }
+}, [isLoaded, selectedAnswers, pageData.id]);
 
   const handleSubmitQuiz = () => {
     setErrorType("");
