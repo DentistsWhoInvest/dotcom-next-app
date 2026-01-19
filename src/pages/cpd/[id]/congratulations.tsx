@@ -157,32 +157,30 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
-  const { reflectionAnswers, resetReflectionAnswers } = useQuizStore();
+  const { reflectionAnswers, resetReflectionAnswers, resetAnswers } = useQuizStore();
   const quizReflectionAnswers = reflectionAnswers[pageData.id] || [];
   const [isLoaded, setIsLoaded] = useState(false);
+  const [firstName, setFirstName] = useState<string | "">("");
+  const [lastName, setLastName] = useState<string | "">("");
+  const [gdcNumberEntry, setGDCNumberEntry] = useState<string | "">("");
+  const [email, setEmail] = useState<string | "">("");
+  const gdcNumber = Number(gdcNumberEntry);
+  const [error, setError] = useState<ShowErrorObject | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] =
+    useState<boolean>(false);
+  const [certificateLink, setCertificateLink] = useState<string | null>(null);
+
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (isLoaded && quizReflectionAnswers.length === 0) {
+    if (isLoaded && quizReflectionAnswers.length === 0 && !hasSuccessfullySubmitted) {
       window.location.href = `/cpd/${pageData.id}/aims`;
     }
-  }, [isLoaded, quizReflectionAnswers, pageData.id]);
-
-  const [firstName, setFirstName] = useState<string | "">("");
-  const [lastName, setLastName] = useState<string | "">("");
-  const [gdcNumberEntry, setGDCNumberEntry] = useState<string | "">("");
-  const [email, setEmail] = useState<string | "">("");
-  const gdcNumber = Number(gdcNumberEntry);
-
-  const [error, setError] = useState<ShowErrorObject | null>(null);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] =
-    useState<boolean>(false);
-  const [certificateLink, setCertificateLink] = useState<string | null>(null);
+  }, [isLoaded, quizReflectionAnswers, pageData.id, hasSuccessfullySubmitted]);
 
   const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error?.type == type) {
@@ -262,6 +260,7 @@ export default function Congratulations({
         setHasSuccessfullySubmitted(true);
         const text = await response.text();
         setCertificateLink(text);
+        resetAnswers(pageData.id);
         resetReflectionAnswers(pageData.id);
       } else {
         console.log("error");
