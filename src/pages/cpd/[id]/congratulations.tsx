@@ -110,18 +110,18 @@ interface ShowErrorObject {
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
   const paths: any[] = [];
-  
+
   results.forEach((result: { id: string; attributes: { slug?: string } }) => {
     if (result.attributes.slug) {
-      const cleanSlug = result.attributes.slug.startsWith('/') 
-        ? result.attributes.slug.slice(1) 
+      const cleanSlug = result.attributes.slug.startsWith('/')
+        ? result.attributes.slug.slice(1)
         : result.attributes.slug;
       paths.push({ params: { id: cleanSlug } });
     } else {
       paths.push({ params: { id: result.id.toString() } });
     }
   });
-  
+
   return {
     paths,
     fallback: false,
@@ -133,14 +133,14 @@ export const getStaticProps = async ({ params }: any) => {
   // First try to find by slug (with or without leading slash), then by ID
   let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
     if (!course.attributes.slug) return false;
-    const cleanSlug = course.attributes.slug.startsWith('/') 
-      ? course.attributes.slug.slice(1) 
+    const cleanSlug = course.attributes.slug.startsWith('/')
+      ? course.attributes.slug.slice(1)
       : course.attributes.slug;
     return cleanSlug === params.id;
   });
   // If not found by slug, try by ID
   if (!CPDQuestions) {
-    CPDQuestions = CPDData.find((course: { id: string }) => 
+    CPDQuestions = CPDData.find((course: { id: string }) =>
       course.id.toString() === params.id
     );
   }
@@ -157,26 +157,30 @@ export default function Congratulations({
 }: {
   pageData: QuizCongratulations;
 }) {
-  const { reflectionAnswers } = useQuizStore();
-
-  useEffect(() => {
-    if (Object.keys(reflectionAnswers).length === 0) {
-      window.location.href = `/cpd/${pageData.id}/aims`;
-    }
-  });
-
+  const { reflectionAnswers, resetReflectionAnswers, resetAnswers } = useQuizStore();
+  const quizReflectionAnswers = reflectionAnswers[pageData.id] || [];
+  const [isLoaded, setIsLoaded] = useState(false);
   const [firstName, setFirstName] = useState<string | "">("");
   const [lastName, setLastName] = useState<string | "">("");
   const [gdcNumberEntry, setGDCNumberEntry] = useState<string | "">("");
   const [email, setEmail] = useState<string | "">("");
   const gdcNumber = Number(gdcNumberEntry);
-
   const [error, setError] = useState<ShowErrorObject | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] =
     useState<boolean>(false);
   const [certificateLink, setCertificateLink] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded && quizReflectionAnswers.length === 0 && !hasSuccessfullySubmitted) {
+      window.location.href = `/cpd/${pageData.id}/aims`;
+    }
+  }, [isLoaded, quizReflectionAnswers, pageData.id, hasSuccessfullySubmitted]);
 
   const showError = (type: string) => {
     if (error && Object.entries(error).length > 0 && error?.type == type) {
@@ -221,8 +225,7 @@ export default function Congratulations({
         listItem.children.map((child: any) => child.text)
       )
     );
-
-    const formattedReflectionAnswers = Object.values(reflectionAnswers).map(
+    const formattedReflectionAnswers = quizReflectionAnswers.map(
       ({ question, answer }) => ({
         question,
         answer,
@@ -257,6 +260,8 @@ export default function Congratulations({
         setHasSuccessfullySubmitted(true);
         const text = await response.text();
         setCertificateLink(text);
+        resetAnswers(pageData.id);
+        resetReflectionAnswers(pageData.id);
       } else {
         console.log("error");
         setIsLoading(false);

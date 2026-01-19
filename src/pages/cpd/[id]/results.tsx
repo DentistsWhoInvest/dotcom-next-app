@@ -122,18 +122,18 @@ type QuizResults = {
 export const getStaticPaths = async () => {
   const results = await fetchCPD();
   const paths: any[] = [];
-  
+
   results.forEach((result: { id: string; attributes: { slug?: string } }) => {
     if (result.attributes.slug) {
-      const cleanSlug = result.attributes.slug.startsWith('/') 
-        ? result.attributes.slug.slice(1) 
+      const cleanSlug = result.attributes.slug.startsWith('/')
+        ? result.attributes.slug.slice(1)
         : result.attributes.slug;
       paths.push({ params: { id: cleanSlug } });
     } else {
       paths.push({ params: { id: result.id.toString() } });
     }
   });
-  
+
   return {
     paths,
     fallback: false,
@@ -142,23 +142,23 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const CPDData = await fetchCPD();
-  
+
   // First try to find by slug (with or without leading slash), then by ID
   let CPDQuestions = CPDData.find((course: { attributes: { slug?: string } }) => {
     if (!course.attributes.slug) return false;
-    const cleanSlug = course.attributes.slug.startsWith('/') 
-      ? course.attributes.slug.slice(1) 
+    const cleanSlug = course.attributes.slug.startsWith('/')
+      ? course.attributes.slug.slice(1)
       : course.attributes.slug;
     return cleanSlug === params.id;
   });
-  
+
   // If not found by slug, try by ID
   if (!CPDQuestions) {
-    CPDQuestions = CPDData.find((course: { id: string }) => 
+    CPDQuestions = CPDData.find((course: { id: string }) =>
       course.id.toString() === params.id
     );
   }
-  
+
   return {
     props: {
       pageData: CPDQuestions,
@@ -168,13 +168,19 @@ export const getStaticProps = async ({ params }: any) => {
 
 export default function Results({ pageData }: { pageData: QuizResults }) {
   const { selectedAnswers, resetAnswers } = useQuizStore();
+  const quizSelectedAnswers = selectedAnswers[pageData.id] || {};
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   // Helper function to get the course identifier (slug or id)
   const getCourseIdentifier = () => {
     if (pageData.attributes.slug) {
       // Remove leading slash if present
-      return pageData.attributes.slug.startsWith('/') 
-        ? pageData.attributes.slug.slice(1) 
+      return pageData.attributes.slug.startsWith('/')
+        ? pageData.attributes.slug.slice(1)
         : pageData.attributes.slug;
     }
     return pageData.id;
@@ -182,7 +188,7 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
 
   const correctAnswers = pageData.attributes.quiz_questions.filter((q) =>
     q.potential_answers.find(
-      (a) => a.is_correct && a.id === selectedAnswers[q.id]
+      (a) => a.is_correct && a.id === quizSelectedAnswers[q.id]
     )
   );
 
@@ -192,8 +198,26 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
     numberOfCorrectAnswers >= pageData.attributes.quiz_questions.length / 2;
 
   function handleRetake() {
-    resetAnswers();
+    resetAnswers(pageData.id);
     Router.push(`/cpd/${getCourseIdentifier()}/quiz`);
+  }
+
+  if (!isLoaded) {
+    return (
+      <>
+        <Head>
+          <title>DWI CPD Result</title>
+        </Head>
+        <section className="w-full bg-gray-50">
+          <CPDPagesHeader title="Results" />
+          <section className="mx-3 mt-12 flex flex-col items-center space-y-12 lg:mx-auto lg:max-w-[1000px]">
+            <div className="flex size-40 items-center justify-center rounded-full border-8 border-gray-200 text-gray-400">
+              <span className="text-xl font-semibold">Loading...</span>
+            </div>
+          </section>
+        </section>
+      </>
+    );
   }
 
   return (
@@ -210,11 +234,10 @@ export default function Results({ pageData }: { pageData: QuizResults }) {
         <CPDPagesHeader title="Results" />
         <section className="mx-3 mt-12 flex flex-col items-center space-y-12 lg:mx-auto lg:max-w-[1000px]">
           <div
-            className={`flex size-40 items-center justify-center rounded-full border-8 ${
-              isSuccessful
+            className={`flex size-40 items-center justify-center rounded-full border-8 ${isSuccessful
                 ? "border-green-500 text-green-500"
                 : "border-red-500 text-red-500"
-            }`}
+              }`}
           >
             <span className="text-4xl font-semibold">
               {numberOfCorrectAnswers}/
